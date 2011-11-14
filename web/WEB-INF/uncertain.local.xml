@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<uncertain-engine defaultLogLevel="INFO">         
+    <path-config logPath="D:/WorkDevSpace/eclipse3.3/workspace/AuroraWeb/logs" uiPackageBasePath="D:/WorkDevSpace/eclipse3.3/workspace/AuroraUI/src" />  
+</uncertain-engine>

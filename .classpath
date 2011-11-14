@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/aurora"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/aurora-plugin"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/uncertain"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/c3p0-0.9.1.2.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/classes12.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-fileupload.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/jotm-client.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/ow2-jta-1.1-spec.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/xapool.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/xerces_2_5_0.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/xmlbeans-2.3.0.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/saxon.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/saxon-jdom.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/saxon-xml-apis.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/xslthl-2.0.2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
