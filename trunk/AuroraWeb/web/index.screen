@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure>
+        <model-query fetchAll="true" model="doc.doc_category" rootPath="category_list"/>
+    </a:init-procedure>
+    <a:view>
+        <style><![CDATA[
+            html,body {
+                overflow:hidden;
+                background-color:#e7e8e8;
+            }
+            html {
+                padding:1px;
+            }
+            .mainAreaClass{
+                vertical-align:top;
+            }
+            .bottomAreaClass {
+                color:#333;
+            }
+            .topAreaClass, .menuAreaClass, .mainAreaClass, .bottomAreaClass{
+                border:1px solid #ccc;
+            }
+            
+            .theme_default .topAreaClass,.theme_default .menuAreaClass,.theme_default .mainAreaClass{
+                border:1px solid #ccc;
+            }
+            .theme_black .topAreaClass,.theme_black .menuAreaClass,.theme_black .mainAreaClass{
+                border:1px solid #2a2d32;
+            }
+            .theme_mac .topAreaClass,.theme_mac .menuAreaClass,.theme_mac .mainAreaClass{
+                border:1px solid #ccc;
+            }
+            
+            .theme_default #menuBox .form_head {
+                border-top:1px solid #ccc;
+            }
+            .theme_black #menuBox .form_head {
+                border-top:1px solid #2a2d32;
+            }
+            .theme_mac #menuBox .form_head {
+                border-top:1px solid #ccc;
+            }
+            .spliter {
+                float:left;
+                height:18px;
+                margin-top:3px;
+                width:0px;
+                border-left:1px solid #cccccc;
+                border-right:1px solid #ffffff;
+            }
+            .unactive .thinTab{
+                background-image:none;
+            }
+        ]]></style>
+        <script language="javascript"><![CDATA[
+            function shMenu() { 
+                var menu = document.getElementById('menuArea');
+                var arrow = document.getElementById('ImgArrow');
+                if(menu.style.display == 'none'){
+                    menu.style.display = '';
+                    arrow.src='images/mini-left.gif';
+                    
+                }else{
+                    menu.style.display = 'none';
+                    arrow.src='images/mini-right.gif';
+                }
+                syncMainAreaSize();
+            }
+            
+            function linkrenderer(text, record, node){
+                return text;
+            }
+            
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="MENU_DS">
+                <a:datas dataSource="/model/category_list"/>
+            </a:dataSet>
+        </a:dataSets>
+        <table id="main" border="0" cellPadding="0" cellSpacing="0" style="width:100%;height:100%;">
+            <tbody>
+                <tr>
+                    <td class="topAreaClass" colspan="3" style="height:35px;background-color:#e0e0e0;background-image:url(&apos;images/banner_bg.gif&apos;)">
+                        <div style="float:left;width:443px;height:35px;background-image:url(&apos;images/banner.gif&apos;)"><![CDATA[ ]]></div>
+                        <div style="float:right;height:35px;font-weight:bold;color:#ffffff;margin-right:25px;line-height:30px;padding-left:10px;">
+                            <span style="margin-left:5px;"><![CDATA[|]]></span>
+                            <a href="javascript:;" style="color:#fff;margin-left:5px;"><![CDATA[用户]]></a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="height: 1px;"/>
+                </tr>
+                <tr>
+                    <td id="menuArea" height="100%" class="menuAreaClass" style="background-color:#fff;vertical-align:top;width:210px;">
+                        <a:tree id="menuTree" style="margin-top:5px;" bindTarget="MENU_DS" displayField="category_name" sequenceField="sequence" idField="category_id" parentField="parent_id" renderer="linkrenderer" showCheckBox="false" width="210"/>
+                                               
+                    </td>
+                    <td id="menuBar" style="width: 5px;">
+                        <IMG name="ImgArrow" id="ImgArrow" alt="打开/关闭 菜单" border="0" onclick="shMenu()" src="images/mini-left.gif" style="cursor:pointer" width="5"/>
+                    </td>
+                    <td id="mainArea" class="mainAreaClass" style="width:100%">
+                        <iframe name="main" id="mainFrame" border="0" style="width:100%;height:100%" frameborder="0" height="100%" src="artical.screen?aid=1" width="100%"><![CDATA[ ]]></iframe>
+                    </td>
+                </tr>
+            </tbody>
+        </table><script language="javascript"><![CDATA[
+            function syncMainAreaSize(){
+                var screenWidth = Aurora.getViewportWidth() - 2;
+                var menu = document.getElementById('menuArea');
+                if(menu.style.display == 'none') {
+                    screenWidth = screenWidth - 5;
+                }else {
+                    screenWidth = screenWidth - 219;
+                    document.cookie = "vw="+screenWidth;
+                }
+                Ext.get('mainArea').setWidth(screenWidth);                
+            }
+
+            function initSize(){
+                var screenHeight = Aurora.getViewportHeight();
+                var bottomHeight = screenHeight - 5 - 35;
+                Ext.get('menuArea').setHeight(bottomHeight);
+                Ext.get('mainArea').setHeight(bottomHeight);
+                document.cookie = "vh="+(bottomHeight-2);
+                syncMainAreaSize();
+                $('menuTree').setHeight(bottomHeight-9);
+                Ext.get('main').show();
+            }
+            
+            initSize();
+            Ext.lib.Event.on(window, "resize", function(){
+                initSize();
+            }, this);
+            
+            
+        ]]></script>
+    </a:view>
+</a:screen>

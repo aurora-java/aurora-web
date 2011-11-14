@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+
+	<display-name>Aurora Framework</display-name>
+
+	<listener>
+		<listener-class>aurora.service.http.WebContextInit</listener-class>
+	</listener>
+	<listener>
+		<listener-class>aurora.security.HttpSessionCleaner</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>service</servlet-name>
+		<servlet-class>aurora.service.http.FacadeServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>autocrud</servlet-name>
+		<servlet-class>aurora.service.http.AutoCrudServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>resource</servlet-name>
+		<servlet-class>aurora.presentation.ResourceDispatchServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>viewlog</servlet-name>
+		<servlet-class>aurora.service.http.ViewLogServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>service</servlet-name>
+		<url-pattern>*.screen</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>service</servlet-name>
+		<url-pattern>*.svc</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>autocrud</servlet-name>
+		<url-pattern>/autocrud/*</url-pattern>
+	</servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>resource</servlet-name>
+        <url-pattern>/resource/*</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>viewlog</servlet-name>
+		<url-pattern>/viewlog</url-pattern>
+	</servlet-mapping>
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	<welcome-file-list>
+		<welcome-file>index.screen</welcome-file>
+	</welcome-file-list>
+
+</web-app>
