@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.aurora-framework.org/schema/bm" xmlns:ns2="aurora.database.local.oracle">
+    <operations>
+        <operation name="execute">
+            <parameters>
+                <parameter name="type_code"  dataType="java.lang.String" input="false" output="true" inputPath="@type_code" outputPath="/parameter/@type_code"/>
+                <parameter name="attachment_id"  dataType="java.lang.Long" input="false" output="true" inputPath="@attachment_id" outputPath="/parameter/@attachment_id"/>
+            </parameters>
+            <update-sql>
+            	declare
+            	    p_multi_attachment_id integer;
+            	    p_attachment_id integer;
+                begin
+                    p_multi_attachment_id := fnd_fileupload.get_multi_attachment_id(
+                        p_source_type        => ${/parameter/@source_type},
+                        p_source_record_id   => ${/parameter/@pkvalue},
+                        p_user_id            => ${/session/@user_id}
+                    );
+                    p_attachment_id := fnd_fileupload.get_attachment_id(
+                        p_source_type        => 'fnd_atm_attachment_multi',
+                        p_pkvalue            => p_multi_attachment_id,
+                        p_user_id            => ${/session/@user_id}
+                    );
+                    ${@attachment_id} := p_attachment_id;
+                    fnd_fileupload.set_attachment_file(
+                        p_record_id        => p_attachment_id,
+                        p_file_name        => ${/parameter/@file_name},
+                        p_type_code        => ${@type_code}
+                    );
+                    update fnd_atm_attachment_multi set attachment_id = p_attachment_id where record_id = p_multi_attachment_id;
+                    update fnd_atm_attachment t set t.file_size = ${/parameter/@file_size},t.created_by = ${/session/@user_id} where t.attachment_id = p_attachment_id;
+                end;
+            </update-sql>
+        </operation>
+    </operations>
+</model>
