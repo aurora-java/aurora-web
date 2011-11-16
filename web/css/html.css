@@ -1,186 +1,70 @@
-/*A {
-    color: #003399;
-}
-
-A:active {
-    color: #003399;
-}
-
-A:visited {
-    color: #888888;
-}
-
-P, OL, UL, LI, DL, DT, DD, BLOCKQUOTE {
-    color: #000000;
-}
-
-TD, TH, SPAN {
-    color: #000000;
-}
-
-BLOCKQUOTE {
-    margin-right: 0px;
-}
-
-
-H1, H2, H3, H4, H5, H6    {
-    color: #000000;
-    font-weight:500;
-    margin-top:10px;
-    padding-top:15px;
-}
-
-TABLE  {
-    border-collapse: collapse;
-    border-spacing:0;
-    border: 1px thin black;
-    empty-cells: hide;
-}
-
-TD  {
-    padding: 4pt;
-}
-
-H1 { font-size: 150%; }
-H2 { font-size: 140%; }
-H3 { font-size: 110%; font-weight: bold; }
-H4 { font-size: 110%; font-weight: bold;}
-H5 { font-size: 100%; font-style: italic; }
-H6 { font-size: 100%; font-style: italic; }
-
-TT {
-font-size: 90%;
-    font-family: "Courier New", Courier, monospace;
-    color: #000000;
-}
-
-PRE {
-font-size: 100%;
-    padding: 5px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #CCCCCC;
-    background-color: #F4F4F4;
-}
-
-UL, OL, LI {
-    list-style: disc;
-}
-
-HR  {
-    width: 100%;
-    height: 1px;
-    background-color: #CCCCCC;
-    border-width: 0px;
-    padding: 0px;
-    color: #CCCCCC;
-}
-
-.variablelist { 
-    padding-top: 10; 
-    padding-bottom:10; 
-    margin:0;
-}
-
-.itemizedlist, UL { 
-    padding-top: 0; 
-    padding-bottom:0; 
-    margin:0; 
-}
-
-.term { 
-    font-weight:bold;
-}
-*/
-
-body {
+.docbook {
     font-family: sans-serif;
     font-size: 10pt;
     color: black;
     background-color: white;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.docbook h1,.docbook h2,.docbook h3,.docbook h4,.docbook h5,.docbook h6 {
     color: #394986;
     font-height: bold;
     margin-top: 1.33ex;
     margin-bottom: 1.33ex;
 }
 
-h1 {
+.docbook h1 {
     font-size: 1.8em;
 }
 
-h2 {
+.docbook h2 {
     font-size: 1.6em;
 }
 
-h3 {
+.docbook h3 {
     font-size: 1.4em;
 }
 
-h4 {
+.docbook h4 {
     font-size: 1.2em;
 }
 
-h5,
-h6 {
+.docbook h5,.docbook h6 {
     font-size: 1em;
 }
 
-table {
+.docbook table {
     border-spacing: 0;
     font-size: 1em;
 }
 
-thead,
-tfoot {
+.docbook thead,.docbook tfoot {
     background-color: #EEEEEE;
 }
 
-th,
-td {
+.docbook th,.docbook td {
     padding: 0 0.5ex;
 }
 
-blockquote {
+.docbook blockquote {
     margin-top: 1.33ex 4ex;
 }
 
-p,
-th,
-td,
-li,
-dt,
-dd {
+.docbook p,.docbook th,.docbook td,.docbook li,.docbook dt,.docbook dd {
     font-size: 1em;
 }
 
-p,
-pre,
-ol,
-dl,
-ul,
-table {
+.docbook p,.docbook pre,.docbook ol,.docbook dl,.docbook ul,.docbook table {
     margin-top: 1.33ex;
     margin-bottom: 1.33ex;
 }
 
-code,
-kbd,
-tt,
-pre {
+.docbook code,.docbook kbd,.docbook tt,.docbook pre {
     /*font-family: monospace;*/
     font-family: Courier New, Courier, monospace;
     font-size: 90%;
 }
 
-pre {
+.docbook pre {
     white-space: pre;
     background-color: #f7f7f7;
     
@@ -188,89 +72,89 @@ pre {
     padding: 1ex;
 }
 
-li {
+.docbook li {
     margin-top: 1.33ex;
     margin-bottom: 1.33ex;
 }
 
-*[compact] > li {
+.docbook *[compact] > li {
     margin-top: 0;
     margin-bottom: 0;
 }
 
-dt {
+.docbook dt {
     margin-top: 1.33ex;
     margin-bottom: 0;
 }
 
-dd {
+.docbook dd {
     margin-top: 0;
     margin-bottom: 1.33ex;
 }
 
-*[compact] > dt {
+.docbook *[compact] > dt {
     margin-top: 0;
 }
 
-*[compact] > dd {
+.docbook *[compact] > dd {
     margin-bottom: 0;
 }
 
-div.toc,
-div.index,
-div.list-of-figures,
-div.list-of-tables,
-div.list-of-examples,
-div.list-of-equations,
-div.list-of-procedures {
+.docbook div.toc,
+.docbook div.index,
+.docbook div.list-of-figures,
+.docbook div.list-of-tables,
+.docbook div.list-of-examples,
+.docbook div.list-of-equations,
+.docbook div.list-of-procedures {
     margin-top: 1.33ex;
     margin-bottom: 1.33ex;
 }
 
-div.toc dl,
-div.index dl,
-div.list-of-figures dl,
-div.list-of-tables dl,
-div.list-of-examples dl,
-div.list-of-equations dl,
-div.list-of-procedures dl {
+.docbook div.toc dl,
+.docbook div.index dl,
+.docbook div.list-of-figures dl,
+.docbook div.list-of-tables dl,
+.docbook div.list-of-examples dl,
+.docbook div.list-of-equations dl,
+.docbook div.list-of-procedures dl {
     margin-top: 0;
     margin-bottom: 0;
 }
 
-div.toc dt,
-div.index dt,
-div.list-of-figures dt,
-div.list-of-tables dt,
-div.list-of-examples dt,
-div.list-of-equations dt,
-div.list-of-procedures dt {
+.docbook div.toc dt,
+.docbook div.index dt,
+.docbook div.list-of-figures dt,
+.docbook div.list-of-tables dt,
+.docbook div.list-of-examples dt,
+.docbook div.list-of-equations dt,
+.docbook div.list-of-procedures dt {
     margin-top: 0.25ex;
     margin-bottom: 0.25ex;
 }
 
-div.toc dd,
-div.index dd,
-div.list-of-figures dd,
-div.list-of-tables dd,
-div.list-of-examples dd,
-div.list-of-equations dd,
-div.list-of-procedures dd {
+.docbook div.toc dd,
+.docbook div.index dd,
+.docbook div.list-of-figures dd,
+.docbook div.list-of-tables dd,
+.docbook div.list-of-examples dd,
+.docbook div.list-of-equations dd,
+.docbook div.list-of-procedures dd {
     margin-top: 0;
     margin-bottom: 0;
 }
 
-div.toc span.part,
-div.toc span.chapter,
-div.toc span.appendix {
+.docbook div.toc span.part,
+.docbook div.toc span.chapter,
+.docbook div.toc span.appendix {
     font-weight: bold;
 }
 
-div.attribution {
+.docbook div.attribution {
     text-align: right;
 }
 
-div.sidebar {
+.docbook div.sidebar {
     background-color: #EEEEFF;
     border: 1px solid #C0C0DD;
     padding: 1ex;
@@ -278,82 +162,81 @@ div.sidebar {
     margin-bottom: 1.33ex;
 }
 
-div.sidebar > p.title {
+.docbook div.sidebar > p.title {
     margin-top: 0.33ex;
 }
 
-div.example > p.title,
-div.figure > p.title,
-div.table > p.title,
-div.procedure > p.title,
-div.equation > p.title {
+.docbook div.example > p.title,
+.docbook div.figure > p.title,
+.docbook div.table > p.title,
+.docbook div.procedure > p.title,
+.docbook div.equation > p.title {
     color: #394986;
     font-weight: bold;
 }
 
-div.orderedlist,
-div.calloutlist {
+.docbook div.orderedlist,
+.docbook div.calloutlist {
     margin-top: 1.33ex;
     margin-bottom: 1.33ex;
 }
 
-div.orderedlist > table,
-div.calloutlist > table {
+.docbook div.orderedlist > table,
+.docbook div.calloutlist > table {
     margin: 0;
 }
 
-div.orderedlist > table td,
-div.calloutlist > table td {
+.docbook div.orderedlist > table td,
+.docbook div.calloutlist > table td {
     vertical-align: baseline;
 }
 
-div.footnote {
+.docbook div.footnote {
     font-size: 0.9em;
 }
 
-a:link {
+.docbook a:link {
     text-decoration: none;
     color: #004668;
 }
 
-a:hover,
-a:visited:hover {
+.docbook a:hover,
+.docbook a:visited:hover {
     text-decoration: underline;
     color: #004668;
 }
 
-a:visited {
+.docbook a:visited {
     text-decoration: none;
     color: #135678;
 }
 
-span.term {
+.docbook span.term {
     font-weight: bold;
 }
 
-abbr,
-acronym {
+.docbook abbr,
+.docbook acronym {
     font-weight: bold;
 }
 
-span.keycap,
-span.keycode,
-span.keysym,
-span.mousebutton {
-    /*font-family: monospace;*/
+.docbook span.keycap,
+.docbook span.keycode,
+.docbook span.keysym,
+.docbook span.mousebutton {
     font-family: Courier New, Courier, monospace;
     font-size: 90%;
     background-color: #EEEEEE;
     padding: 0.2ex;
 }
 
-span.guimenu,
-span.guisubmenu,
-span.guimenuitem,
-span.guibutton,
-span.guiicon,
-span.interface,
-span.guilabel {
+.docbook span.guimenu,
+.docbook span.guisubmenu,
+.docbook span.guimenuitem,
+.docbook span.guibutton,
+.docbook span.guiicon,
+.docbook span.interface,
+.docbook span.guilabel {
     font-weight: bold;
 }
 

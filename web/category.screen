@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure><![CDATA[
+    ]]></a:init-procedure>
+    <a:view >
+        <style>
+            .cateList {
+                border-bottom:none;
+            }
+            .cateList .table-navbar{
+                border:none;
+            }
+            .cateList .table-hc {
+                background:none;
+                background-color:#97aecc;
+                color:#fff;
+                font-size:13px;
+            }
+            .cateList .table-cell {
+                height:30px;
+                line-height:30px;
+            }
+            .cateList td {
+                background-color:#fff;
+            }
+            
+            .link:hover {
+                TEXT-DECORATION: underline
+            }
+        </style>
+        <script><![CDATA[
+        
+            function articalRenderer(value,record,name){
+                return '<a class="link" style="font-size:12px;" href="artical.screen?artical_id='+record.get('artical_id')+'">'+value+"</a>";
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="artical_query_ds">
+                <a:fields>
+                    <a:field name="category_id" defaultValue="${/parameter/@cid}"/>
+                </a:fields>
+            </a:dataSet>
+            <a:dataSet id="artical_result_ds" autoCount="true" pageSize="20" autoQuery="true" fetchAll="false" model="doc.doc_artical_v" queryDataSet="artical_query_ds">
+            </a:dataSet>
+        </a:dataSets>
+        <div style="margin:5px;">
+            <div style="float:right;margin:5px;font-size:15px;">发表新帖</div>
+        <a:table id="grid" className="cateList" canWheel="false" bindTarget="artical_result_ds" navBar="true" navBarType="simple" style="width:100%" >
+            <a:columns>
+                <a:column name="artical_title" prompt="题目"  renderer="articalRenderer"/>
+                <a:column name="nick_name" prompt="最后更新人" align="center" width="100"/>
+                <a:column name="creation_date" prompt="发表时间" align="center" width="150" renderer="Aurora.formatDateTime"/>
+                <a:column name="last_update_date" prompt="最后更新时间" align="center" width="150" renderer="Aurora.formatDateTime"/>
+            </a:columns>
+        </a:table>
+        </div>
+    </a:view>
+</a:screen>

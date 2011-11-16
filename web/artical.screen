@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
-    <a:init-procedure/>
+   <a:init-procedure>
+        <model-query fetchAll="true" model="doc.doc_artical_detail" rootPath="artical"/>
+    </a:init-procedure>
     <a:view >
-        <div>
-            <a:htmlInclude id="${/parameter/@aid}"/>
-        </div>
+        <script><![CDATA[
         
+            function test(){
+                Aurora.showMessage('xxx','sdfsdfdsf')
+            }
+        ]]></script>
+        <div style="font-family:arial;font-size:16px">${/model/artical/record/@artical_title}</div>
+        <div class="docbook">
+            <a:htmlInclude id="${/parameter/@artical_id}"/>
+        </div>
     </a:view>
 </a:screen>
