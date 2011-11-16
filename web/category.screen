@@ -44,7 +44,7 @@
             </a:dataSet>
         </a:dataSets>
         <div style="margin:5px;">
-            <div style="float:right;margin:5px;font-size:15px;">发表新帖</div>
+            <a style="float:right;margin:5px;font-size:15px;" href="post_artical.screen">发表新帖</a>
         <a:table id="grid" className="cateList" canWheel="false" bindTarget="artical_result_ds" navBar="true" navBarType="simple" style="width:100%" >
             <a:columns>
                 <a:column name="artical_title" prompt="题目"  renderer="articalRenderer"/>

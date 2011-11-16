@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:service trace="true" xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc">
+    <a:init-procedure>
+        <!-- 保存到数据库中 
+        <a:atm-manager actionType="upload" saveType="db"/>
+        -->
+        <!-- 以文件类型保存-->
+        <a:atm-manager actionType="upload" saveType="file" savePath="D:/WorkDevSpace/eclipse3.3/workspace/AuroraWeb/web/WEB-INF/attachments"/>
+        
+    </a:init-procedure>
+</a:service>

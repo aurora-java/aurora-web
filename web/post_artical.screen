@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure>
+        <model-query fetchAll="true" model="doc.doc_artical_detail" rootPath="artical"/>
+    </a:init-procedure>
+    <a:view >
+        <style>
+            TH {
+                background-color:#EEEEEE;
+                text-align:right;
+                padding-right:15px;
+                font-size:13px;
+            }
+        </style>
+        <div style="margin:10px;">
+            <div>当前分类 -- UI组件</div>
+            <div style="margin:5px 0px 5px 0px;height:2px;background-color:#97aecc"></div>
+            <TABLE cellSpacing="1" cellPadding="4" width="99%" align="center">
+                <TBODY>
+                    <TR>
+                        <TH width="100" align="right">标题:</TH>
+                        <TD>
+                            <a:textField width="400"/>
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TH align="right">内容:</TH>
+                        <TD>
+                            <a:textArea width="600" marginWidth="250" height="500"/>
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TH align="right">附件:</TH>
+                        <TD>
+                            <div style="width:600px;">
+                                <a:upload buttonWidth="75" fileType="*.jpg" pkvalue="1" sourcetype="znjq" text="上传附件"/>
+                            </div>
+                        </TD>
+                    </TR>
+                </TBODY>
+            </TABLE>
+        </div>
+    </a:view>
+</a:screen>
