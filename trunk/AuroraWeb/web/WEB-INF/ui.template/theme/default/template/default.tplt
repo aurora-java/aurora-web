@@ -9,7 +9,7 @@ ${page:html.head.script}
 <body>
     <script language="javascript">
         function init(){
-            if(Aurora){
+            if(window['Aurora']){
                 Aurora.Status.enable = false;
                 Aurora.SideBar.enable = false;
             }
