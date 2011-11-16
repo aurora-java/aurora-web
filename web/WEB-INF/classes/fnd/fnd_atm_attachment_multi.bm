@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:ns2="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="fam" baseTable="fnd_atm_attachment_multi">
+    <bm:fields>
+        <bm:field databaseType="NUMBER" datatype="java.lang.Long" name="record_id"/>
+        <bm:field databaseType="VARCHAR" datatype="java.lang.String" name="table_name"/>
+        <bm:field databaseType="VARCHAR" datatype="java.lang.String" name="table_pk_value"/>
+        <bm:field databaseType="NUMBER" datatype="java.lang.Long" name="attachment_id"/>
+    </bm:fields>
+    <bm:primary-key>
+        <pk-field name="record_id"/>
+    </bm:primary-key>
+    <bm:query-fields>
+        <bm:query-field field="record_id" queryOperator="="/>
+    </bm:query-fields>
+    <bm:features>
+        <f:standard-who/>
+    </bm:features>
+    <bm:ref-fields/>
+</bm:model>

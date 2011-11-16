@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:ns2="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="fa" baseTable="fnd_atm_attachment">
+    <bm:fields>
+        <bm:field databaseType="NUMBER" datatype="java.lang.Long" name="attachment_id"/>
+        <bm:field databaseType="VARCHAR" datatype="java.lang.String" name="source_type_code"/>
+        <bm:field databaseType="VARCHAR" datatype="java.lang.String" name="source_pk_value"/>
+        <bm:field databaseType="VARCHAR" datatype="java.lang.String" name="file_name"/>
+        <bm:field databaseType="NUMBER" datatype="java.lang.Long" name="file_size"/>
+        <bm:field databaseType="VARCHAR" datatype="java.lang.String" name="file_path"/>
+        <bm:field databaseType="VARCHAR" datatype="java.lang.String" name="status" forInsert="false" forUpdate="false" expression="'1'"/>
+    </bm:fields>
+    <bm:primary-key>
+        <pk-field name="attachment_id"/>
+    </bm:primary-key>
+    <bm:query-fields>
+        <bm:query-field field="attachment_id" queryOperator="="/>
+    </bm:query-fields>
+    <bm:relations>
+        <bm:relation joinType="LEFT OUTER" name="fam" refModel="fnd.fnd_atm_attachment_multi">
+            <bm:reference foreignField="attachment_id" localField="attachment_id"/>
+        </bm:relation>
+    </bm:relations>
+    <bm:ref-fields>
+        <bm:ref-field name="table_name" relationName="fam" sourceField="table_name"/>
+        <bm:ref-field name="table_pk_value" relationName="fam" sourceField="table_pk_value"/>
+    </bm:ref-fields>
+    <bm:features>
+        <ns2:sequence-pk/>
+        <f:standard-who/>
+    </bm:features>
+    <bm:operations>    
+        <bm:operation name="delete">
+            <bm:update-sql>
+            begin
+                delete from fnd_atm_attachment at where at.attachment_id = ${@attachment_id};
+                delete from fnd_atm_attachment_multi atm where atm.attachment_id = ${@attachment_id};
+            end;                
+            </bm:update-sql>
+        </bm:operation>
+    </bm:operations>
+</bm:model>
