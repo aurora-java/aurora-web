@@ -7,6 +7,15 @@ ${page:html.head.css}
 ${page:html.head.script}
 </head>
 <body>
+    <script language="javascript">
+        function init(){
+            if(Aurora){
+                Aurora.Status.enable = false;
+                Aurora.SideBar.enable = false;
+            }
+        }
+        init();
+    </script>
 	${page:init}
 	${page:content}	
 </body>

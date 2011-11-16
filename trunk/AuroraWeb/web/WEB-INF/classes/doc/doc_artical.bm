@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bm:model xmlns:o="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="DOC_ARTICAL">
     <bm:fields>
-        <bm:field name="artical_id" databaseType="NUMBER" datatype="java.lang.Integer" physicalName="ARTICAL_ID" prompt="DOC_ARTICAL.ARTICAL_ID"/>
-        <bm:field name="artical_path" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="ARTICAL_PATH" prompt="DOC_ARTICAL.ARTICAL_PATH"/>
+        <bm:field name="artical_id" databaseType="NUMBER" datatype="java.lang.Integer" />
+        <bm:field name="artical_path" databaseType="VARCHAR2" datatype="java.lang.String" />
+        <bm:field name="artical_title" databaseType="VARCHAR2" datatype="java.lang.String"/>
     </bm:fields>
-    <bm:features>
-        <f:standard-who/>
-        <o:sequence-pk/>
-    </bm:features>
     <bm:primary-key>
         <bm:pk-field name="artical_id"/>
     </bm:primary-key>
     <bm:query-fields>
         <bm:query-field field="artical_id" queryOperator="="/>
     </bm:query-fields>
+    <bm:features>
+        <f:standard-who/>
+        <o:sequence-pk/>
+    </bm:features>
 </bm:model>

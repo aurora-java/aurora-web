@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:o="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="DOC_ARTICAL_V">
+    <bm:fields>
+        <bm:field name="artical_id" databaseType="NUMBER" datatype="java.lang.Integer" />
+        <bm:field name="artical_title" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="category_id" databaseType="NUMBER" datatype="java.lang.Integer" />
+        <bm:field name="nick_name" databaseType="VARCHAR2" datatype="java.lang.String"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="artical_id"/>
+    </bm:primary-key>
+    <bm:query-fields>
+    </bm:query-fields>
+    <bm:data-filters>
+        <bm:data-filter enforceOperations="query" expression="t1.artical_id =${/parameter/@artical_id}"/>
+    </bm:data-filters>
+    <bm:features>
+        <f:standard-who/>
+        <o:sequence-pk/>
+    </bm:features>
+</bm:model>
