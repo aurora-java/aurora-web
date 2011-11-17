@@ -15,7 +15,7 @@
         <div style="margin:10px;">
             <div>当前分类 -- UI组件</div>
             <div style="margin:5px 0px 5px 0px;height:2px;background-color:#97aecc"></div>
-            <TABLE cellSpacing="1" cellPadding="4" width="99%" align="center">
+            <TABLE cellSpacing="1" cellPadding="4" width="100%" align="center">
                 <TBODY>
                     <TR>
                         <TH width="100" align="right">标题:</TH>
@@ -39,6 +39,7 @@
                     </TR>
                 </TBODY>
             </TABLE>
+            <a:button style="margin-top:10px;" text="发 表 文 章" width="100"/>
         </div>
     </a:view>
 </a:screen>
