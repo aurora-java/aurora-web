@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: l  
+    $Date: 2011-11-11 下午01:52:35  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:o="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="DOC_COMMENT" defaultorderby="creation_date">
+    <bm:fields>
+        <bm:field name="comment_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="COMMENT_ID" prompt="DOC_COMMENT.COMMENT_ID"/>
+        <bm:field name="content" databaseType="CLOB" datatype="java.sql.Clob" physicalName="CONTENT" prompt="DOC_COMMENT.CONTENT"/>
+        <bm:field name="table_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="TABLE_ID" prompt="DOC_COMMENT.TABLE_ID"/>
+        <bm:field name="table_name" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="TABLE_NAME" prompt="DOC_COMMENT.TABLE_NAME"/>
+        <bm:field name="creation_date" databaseType="TIMESTAMP" datatype="java.sql.Timestamp" forInsert="true" forUpdate="false" insertExpression="sysdate" physicalName="CREATION_DATE"/>
+        <bm:field name="created_by" databaseType="NUMBER" datatype="java.lang.Double" forInsert="true" forUpdate="false" insertExpression="${/session/@user_id}" physicalName="CREATED_BY"/>
+        <bm:field name="last_update_date" databaseType="TIMESTAMP" datatype="java.sql.Timestamp" forInsert="false" forUpdate="true" physicalName="LAST_UPDATE_DATE" updateExpression="sysdate"/>
+        <bm:field name="last_updated_by" databaseType="NUMBER" datatype="java.lang.Double" forInsert="false" forUpdate="true" physicalName="LAST_UPDATED_BY" updateExpression="${/session/@user_id}"/>
+    </bm:fields>
+    <bm:features>
+        <o:sequence-pk/>
+    </bm:features>
+    <bm:primary-key>
+        <bm:pk-field name="comment_id"/>
+    </bm:primary-key>
+    <bm:query-fields>
+        <bm:query-field field="table_id" queryOperator="="/>
+        <bm:query-field field="table_name" queryOperator="="/>
+    </bm:query-fields>
+    <bm:order-by>
+        <bm:order-field name="creation_date"/>
+    </bm:order-by>
+    <bm:relations>
+        <bm:relation name="da" joinType="INNER" refModel="sys.sys_user">
+            <bm:reference foreignfield="user_id" localfield="created_by"/>
+        </bm:relation>
+    </bm:relations>
+    <bm:ref-fields>
+        <bm:ref-field name="user_name" relationname="da" sourcefield="user_name"/>
+    </bm:ref-fields>
+</bm:model>
