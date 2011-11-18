@@ -90,11 +90,16 @@
         <table id="main" border="0" cellPadding="0" cellSpacing="0" style="width:100%;height:100%;">
             <tbody>
                 <tr>
-                    <td class="topAreaClass" colspan="3" style="height:35px;background-color:#e0e0e0;background-image:url(&apos;images/banner_bg.gif&apos;)">
-                        <div style="float:left;width:443px;height:35px;background-image:url(&apos;images/banner.gif&apos;)"><![CDATA[ ]]></div>
+                    <td class="topAreaClass" colspan="3" style="height:35px;background-color:#97aecc;background-image:url(&apos;images/banner_bg.gif&apos;)">
                         <div style="float:right;height:35px;font-weight:bold;color:#ffffff;margin-right:25px;line-height:30px;padding-left:10px;">
                             <span style="margin-left:5px;"><![CDATA[|]]></span>
-                            <a href="javascript:;" style="color:#fff;margin-left:5px;"><![CDATA[用户]]></a>
+                            <a href="javascript:;" style="color:#fff;margin-left:5px;"><![CDATA[注册]]></a>
+                            <span style="margin-left:5px;"><![CDATA[|]]></span>
+                            <a href="javascript:;" style="color:#fff;margin-left:5px;"><![CDATA[登陆]]></a>
+                            <span style="margin-left:5px;"><![CDATA[|]]></span>
+                            <a href="javascript:;" style="color:#fff;margin-left:5px;"><![CDATA[我的帖子]]></a>
+                            <span style="margin-left:5px;"><![CDATA[|]]></span>
+                            <a href="javascript:;" style="color:#fff;margin-left:5px;"><![CDATA[搜索]]></a>
                         </div>
                     </td>
                 </tr>
