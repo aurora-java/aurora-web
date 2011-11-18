@@ -12,7 +12,6 @@
         <batch-apply sourcepath="/parameter">
             <a:model-insert model="doc.doc_article"/>
         </batch-apply>
-        
     </a:init-procedure>
     <a:service-output output="/model/result"/>
 </a:service>
