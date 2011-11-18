@@ -30,8 +30,8 @@
         ]]></style>
         <script><![CDATA[
         
-            function articalRenderer(value,record,name){
-                return '<a class="link" style="font-size:12px;" href="artical.screen?artical_id='+record.get('artical_id')+'">'+value+"</a>";
+            function articleRenderer(value,record,name){
+                return '<a class="link" style="font-size:12px;" href="article.screen?article_id='+record.get('article_id')+'">'+value+"</a>";
             }
         ]]></script>
         <a:switch test="/parameter/@cid">
@@ -40,19 +40,19 @@
             </a:case>
             <a:case value="*">
                 <a:dataSets>
-                    <a:dataSet id="artical_query_ds">
+                    <a:dataSet id="article_query_ds">
                         <a:fields>
                             <a:field name="category_id" defaultValue="${/parameter/@cid}"/>
                         </a:fields>
                     </a:dataSet>
-                    <a:dataSet id="artical_result_ds" autoCount="true" autoQuery="true" fetchAll="false" model="doc.doc_artical_v" pageSize="20" queryDataSet="artical_query_ds"><![CDATA[
+                    <a:dataSet id="article_result_ds" autoCount="true" autoQuery="true" fetchAll="false" model="doc.doc_article_v" pageSize="20" queryDataSet="article_query_ds"><![CDATA[
                     ]]></a:dataSet>
                 </a:dataSets>
                 <div style="margin:5px;">
-                    <a href="post_artical.screen?cid=${/parameter/@cid}" style="float:right;margin:5px;font-size:15px;"><![CDATA[发表新帖]]></a>
-                    <a:table id="grid" bindTarget="artical_result_ds" canWheel="false" className="cateList" navBar="true" navBarType="simple" style="width:100%;float:left;">
+                    <a href="post_article.screen?cid=${/parameter/@cid}" style="float:right;margin:5px;font-size:15px;"><![CDATA[发表新帖]]></a>
+                    <a:table id="grid" bindTarget="article_result_ds" canWheel="false" className="cateList" navBar="true" navBarType="simple" style="width:100%;float:left;">
                         <a:columns>
-                            <a:column name="artical_title" prompt="题目" renderer="articalRenderer"/>
+                            <a:column name="article_title" prompt="题目" renderer="articleRenderer"/>
                             <a:column name="nick_name" align="center" prompt="最后更新人" width="100"/>
                             <a:column name="creation_date" align="center" prompt="发表时间" renderer="Aurora.formatDateTime" width="150"/>
                             <a:column name="last_update_date" align="center" prompt="最后更新时间" renderer="Aurora.formatDateTime" width="150"/>
