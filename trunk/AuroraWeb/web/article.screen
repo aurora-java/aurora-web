@@ -2,6 +2,7 @@
 <a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
    <a:init-procedure>
         <model-query fetchAll="true" model="doc.doc_article_detail" rootPath="article"/>
+        <model-query fetchAll="true" model="fnd.fnd_atm_attachment" defaultWhereClause="fam.table_name = 'DOC_ARTICLE'  and fam.table_pk_value = ${/parameter/@article_id}" rootPath="atms"/>
     </a:init-procedure>
     <a:view >
         <script><![CDATA[
@@ -16,10 +17,20 @@
             </div>
             <div style="margin:5px 0px 5px 0px;height:2px;background-color:#dddddd"></div>
             <div class="docbook" style="margin-top:25px;">
-                
                 <a:htmlInclude id="${/parameter/@article_id}"/>
             </div>
             <div style="margin:25px 0px 15px 0px;height:2px;background-color:#dddddd"></div>
+            <div style="background-color:#f4f4f4;padding:10px;">
+                <div style="font-family:Tahoma, Arial, Verdana;font-size:16px;color:#222222">Attachments</div>
+                <ol style="background-color:#fff;margin-top:5px;">
+                <a:repeater datamodel="/model/atms">
+                    <li style="border-bottom:1px dashed #ccc;height:25px;line-height:25px;padding-left:5px;font-size:12px;">
+                    <a href="${/request/@context_path}/atm_download.svc?attachment_id=${@attachment_id}" target="_self"><![CDATA[${@file_name}]]></a>
+                    </li>
+                </a:repeater>
+                </ol>
+            </div>
+            <div style="margin:25px 0px 15px 0px;height:2px;"></div>
             <a:comment bindId="${/parameter/@article_id}" tableName="DOC_ARTICLE" width="800"/>
         </div>
     </a:view>
