@@ -31,7 +31,7 @@
                 </ol>
             </div>
             <div style="margin:25px 0px 15px 0px;height:2px;"></div>
-            <a:comment bindId="${/parameter/@article_id}" tableName="DOC_ARTICLE" width="800"/>
+            <a:comment bindId="${/parameter/@article_id}" tableName="DOC_ARTICLE" registerurl="xxx" width="750"/>
         </div>
     </a:view>
 </a:screen>

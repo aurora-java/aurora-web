@@ -107,8 +107,8 @@
                     <td colspan="3" style="height: 1px;"/>
                 </tr>
                 <tr>
-                    <td id="menuArea" height="100%" class="menuAreaClass" style="background-color:#fff;vertical-align:top;width:210px;">
-                        <a:tree id="menuTree" style="margin-top:5px;" bindTarget="MENU_DS" displayField="category_name" sequenceField="sequence" idField="category_id" parentField="parent_id" renderer="linkrenderer" showCheckBox="false" width="210"/>
+                    <td id="menuArea" height="100%" class="menuAreaClass" style="background-color:#fff;vertical-align:top;width:150px;">
+                        <a:tree id="menuTree" style="margin-top:5px;" bindTarget="MENU_DS" displayField="category_name" sequenceField="sequence" idField="category_id" parentField="parent_id" renderer="linkrenderer" showCheckBox="false" width="150"/>
                                                
                     </td>
                     <td id="menuBar" style="width: 5px;">
