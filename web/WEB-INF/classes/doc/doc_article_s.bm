@@ -3,7 +3,7 @@
     <bm:operations>
         <bm:operation name="query">
             <bm:query-sql><![CDATA[
-                select doc_artical_s.nextval sequence from dual
+                select doc_article_s.nextval sequence from dual
             ]]></bm:query-sql>
         </bm:operation>
     </bm:operations>
