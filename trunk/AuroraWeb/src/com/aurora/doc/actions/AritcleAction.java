@@ -21,7 +21,7 @@ import uncertain.ocm.IObjectRegistry;
 import aurora.application.sourcecode.SourceCodeUtil;
 import aurora.presentation.component.std.IDGenerator;
 
-public class AritcalAction {
+public class AritcleAction {
 	
 	private static final String DOC_BASE_HOME = "build";
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -41,7 +41,7 @@ public class AritcalAction {
 
 	
 	@SuppressWarnings("unchecked")
-	public static CompositeMap postArtical(IObjectRegistry registry,CompositeMap parameter, String content,Integer cid) throws TransformerException, IOException{
+	public static CompositeMap postArticle(IObjectRegistry registry,CompositeMap parameter, String content,Integer cid) throws TransformerException, IOException{
 		File webHome = SourceCodeUtil.getWebHome(registry);
 		File baseHome = new File(webHome, DOC_BASE_HOME);
 		if(!inited) init(webHome);
@@ -55,7 +55,7 @@ public class AritcalAction {
 		List list = parameter.getChilds();
 		if(list !=null && list.size() > 0){
 			CompositeMap record = (CompositeMap)list.get(0);
-			record.put("artical_path", "/"+ DOC_BASE_HOME + "/" + datePath + "/" + fileName);
+			record.put("article_path", "/"+ DOC_BASE_HOME + "/" + datePath + "/" + fileName);
 		}
 		CompositeMap result = new CompositeMap();
 		result.put("category_id", cid);
