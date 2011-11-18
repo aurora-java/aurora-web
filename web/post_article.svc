@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <a:service xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
     <a:init-procedure>
-        <p:method-invoke className="com.aurora.doc.actions.AritcalAction" methodName="postArtical" resultPath="/model/result">
+        <p:method-invoke className="com.aurora.doc.actions.AritcleAction" methodName="postArticle" resultPath="/model/result">
             <p:arguments>
                 <p:argument path="instance" type="uncertain.ocm.IObjectRegistry"/>
                 <p:argument type="uncertain.composite.CompositeMap" path="/parameter"/>
@@ -10,7 +10,7 @@
             </p:arguments>
         </p:method-invoke>
         <batch-apply sourcepath="/parameter">
-            <a:model-insert model="doc.doc_artical"/>
+            <a:model-insert model="doc.doc_article"/>
         </batch-apply>
         
     </a:init-procedure>
