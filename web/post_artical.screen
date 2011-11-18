@@ -1,45 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+<a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
     <a:init-procedure>
-        <model-query fetchAll="true" model="doc.doc_artical_detail" rootPath="artical"/>
+        <model-query model="doc.doc_artical_s" rootPath="artical"/>
     </a:init-procedure>
-    <a:view >
-        <style>
-            TH {
-                background-color:#EEEEEE;
-                text-align:right;
-                padding-right:15px;
-                font-size:13px;
-            }
-        </style>
-        <div style="margin:10px;">
-            <div>当前分类 -- UI组件</div>
-            <div style="margin:5px 0px 5px 0px;height:2px;background-color:#97aecc"></div>
-            <TABLE cellSpacing="1" cellPadding="4" width="100%" align="center">
-                <TBODY>
-                    <TR>
-                        <TH width="100" align="right">标题:</TH>
-                        <TD>
-                            <a:textField width="400"/>
-                        </TD>
-                    </TR>
-                    <TR>
-                        <TH align="right">内容:</TH>
-                        <TD>
-                            <a:textArea width="600" marginWidth="250" height="500"/>
-                        </TD>
-                    </TR>
-                    <TR>
-                        <TH align="right">附件:</TH>
-                        <TD>
-                            <div style="width:600px;">
-                                <a:upload buttonWidth="75" fileType="*.jpg" pkvalue="1" sourcetype="znjq" text="上传附件"/>
-                            </div>
-                        </TD>
-                    </TR>
-                </TBODY>
-            </TABLE>
-            <a:button style="margin-top:10px;" text="发 表 文 章" width="100"/>
-        </div>
+    <a:view>
+        <a:switch test="/parameter/@cid">
+            <a:case value="null">
+                <div>路径不正确!</div>
+            </a:case>
+            <a:case value="*">
+                <script><![CDATA[
+            
+                    function postArtical(){
+                        $('postButton').disable();
+                        $('artical_create_ds').submit();
+                    }  
+                    
+                    function onSubmitSuccess(ds,res){
+                        window.location.href='${/request/@context_path}/category.screen?cid=${/parameter/@cid}';
+                    } 
+                    
+                    function onSubmitFailed(){
+                        $('postButton').enable();
+                    }        
+                    
+                ]]></script>
+                <a:dataSets>
+                    <a:dataSet id="artical_create_ds" autoCreate="true" submitUrl="${/request/@context_path}/post_artical.svc" >
+                        <a:fields>
+                            <a:field name="artical_id" defaultValue="${/model/artical/record/@sequence}"/>
+                            <a:field name="category_id" defaultValue="${/parameter/@cid}"/>
+                        </a:fields>
+                        <a:events>
+                            <a:event name="submitsuccess" handler="onSubmitSuccess"/>
+                            <a:event name="submitfailed" handler="onSubmitFailed"/>
+                        </a:events>
+                    </a:dataSet>
+                </a:dataSets>
+                <style>
+                    TH {
+                        background-color:#EEEEEE;
+                        text-align:right;
+                        padding-right:15px;
+                        font-size:13px;
+                    }
+                </style>
+                <div style="margin:10px;">
+                    <div>当前分类 -- UI组件</div>
+                    <div style="margin:5px 0px 5px 0px;height:2px;background-color:#97aecc"></div>
+                    <TABLE cellSpacing="1" cellPadding="4" width="100%" align="center">
+                        <TBODY>
+                            <TR>
+                                <TH width="100" align="right">标题:</TH>
+                                <TD>
+                                    <a:textField name="artical_title" bindTarget="artical_create_ds" width="400"/>
+                                </TD>
+                            </TR>
+                            <TR>
+                                <TH align="right">内容:</TH>
+                                <TD>
+                                    <a:textArea name="content" bindTarget="artical_create_ds" width="600" marginWidth="250" height="500"/>
+                                </TD>
+                            </TR>
+                            <TR>
+                                <TH align="right">附件:</TH>
+                                <TD>
+                                    <div style="width:600px;">
+                                        <a:upload buttonWidth="75" fileType="*.gif;*.jpg;*.screen;*.bm;*.xml;*.zip;*.rar" pkvalue="${/model/artical/record/@sequence}" sourcetype="DOC_ARTICAL" text="上传附件"/>
+                                    </div>
+                                </TD>
+                            </TR>
+                        </TBODY>
+                    </TABLE>
+                    <a:button id="postButton" style="margin-top:10px;" text="发 表 文 章" width="100" click="postArtical"/>
+                </div>
+            </a:case>
+        </a:switch>
+        
     </a:view>
 </a:screen>
