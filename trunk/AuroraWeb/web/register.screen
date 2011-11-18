@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: andy  
+    $Date: 2011-11-18 下午04:58:05  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view>
+        <script><![CDATA[
+    		function passwordValidate(record, name, value) {
+    		    if (name == 'password' || name == 'password_new') {
+    		        var password = record.get('password');
+    		        var password_new = record.get('password_new');    		
+    		        if (password != password_new) {
+    		            return '确认密码与密码不一致!!';
+    		        }    		
+    		        return true;
+    		    }
+    		}
+    		
+    		function sureFunction() {
+    		    debugger;
+    		    $('sys_user_ds').submit();
+    		}
+    		
+    		function submitSuccess(ds, res) {
+    		    debugger;
+    		    var success = res.result.success;
+    		    if (success == 0) {
+    		        Aurora.showMessage('提示', '此用户名已存在!!');
+    		        return;
+    		    }
+    		    $('register_screen').close();
+    		}
+		]]></script>
+        <a:dataSets>
+            <a:dataSet id="sys_user_ds" autoCreate="true" model="sys.sys_register" submitUrl="${/request/@context_path}/register.svc">
+                <a:fields>
+                    <a:field name="user_name" required="true"/>
+                    <a:field name="password" required="true"/>
+                    <a:field name="password_new" required="true" validator="passwordValidate"/>
+                    <a:field name="nick_name" required="true"/>
+                </a:fields>
+                <a:events>
+                    <a:event name="submitsuccess" handler="submitSuccess"/>
+                </a:events>
+            </a:dataSet>
+        </a:dataSets>
+        <a:vBox labelWidth="75" style="margin-top:20px">
+            <a:textField name="user_name" bindTarget="sys_user_ds" prompt="用户名"/>
+            <a:passWord name="password" bindTarget="sys_user_ds" prompt="密码"/>
+            <a:passWord name="password_new" bindTarget="sys_user_ds" prompt="确认密码"/>
+            <a:textField name="nick_name" bindTarget="sys_user_ds" prompt="昵称"/>
+        </a:vBox>
+        <a:button click="sureFunction" style="float:right;margin-top:15px;margin-right:20px;" text="确认"/>
+    </a:view>
+</a:screen>
