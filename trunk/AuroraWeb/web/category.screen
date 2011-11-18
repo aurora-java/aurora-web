@@ -2,8 +2,8 @@
 <a:screen xmlns:a="http://www.aurora-framework.org/application">
     <a:init-procedure><![CDATA[
     ]]></a:init-procedure>
-    <a:view >
-        <style>
+    <a:view>
+        <style><![CDATA[
             .cateList {
                 border-bottom:none;
             }
@@ -27,7 +27,7 @@
             .link:hover {
                 TEXT-DECORATION: underline
             }
-        </style>
+        ]]></style>
         <script><![CDATA[
         
             function articalRenderer(value,record,name){
@@ -36,7 +36,7 @@
         ]]></script>
         <a:switch test="/parameter/@cid">
             <a:case value="null">
-                <div>路径不正确!</div>
+                <div><![CDATA[路径不正确!]]></div>
             </a:case>
             <a:case value="*">
                 <a:dataSets>
@@ -45,19 +45,19 @@
                             <a:field name="category_id" defaultValue="${/parameter/@cid}"/>
                         </a:fields>
                     </a:dataSet>
-                    <a:dataSet id="artical_result_ds" autoCount="true"  pageSize="20" autoQuery="true" fetchAll="false" model="doc.doc_artical_v" queryDataSet="artical_query_ds">
-                    </a:dataSet>
+                    <a:dataSet id="artical_result_ds" autoCount="true" autoQuery="true" fetchAll="false" model="doc.doc_artical_v" pageSize="20" queryDataSet="artical_query_ds"><![CDATA[
+                    ]]></a:dataSet>
                 </a:dataSets>
                 <div style="margin:5px;">
-                    <a style="float:right;margin:5px;font-size:15px;" href="post_artical.screen?cid=${/parameter/@cid}">发表新帖</a>
-                <a:table id="grid" className="cateList" canWheel="false" bindTarget="artical_result_ds" navBar="true" navBarType="simple" style="width:100%" >
-                    <a:columns>
-                        <a:column name="artical_title" prompt="题目"  renderer="articalRenderer"/>
-                        <a:column name="nick_name" prompt="最后更新人" align="center" width="100"/>
-                        <a:column name="creation_date" prompt="发表时间" align="center" width="150" renderer="Aurora.formatDateTime"/>
-                        <a:column name="last_update_date" prompt="最后更新时间" align="center" width="150" renderer="Aurora.formatDateTime"/>
-                    </a:columns>
-                </a:table>
+                    <a href="post_artical.screen?cid=${/parameter/@cid}" style="float:right;margin:5px;font-size:15px;"><![CDATA[发表新帖]]></a>
+                    <a:table id="grid" bindTarget="artical_result_ds" canWheel="false" className="cateList" navBar="true" navBarType="simple" style="width:100%;float:left;">
+                        <a:columns>
+                            <a:column name="artical_title" prompt="题目" renderer="articalRenderer"/>
+                            <a:column name="nick_name" align="center" prompt="最后更新人" width="100"/>
+                            <a:column name="creation_date" align="center" prompt="发表时间" renderer="Aurora.formatDateTime" width="150"/>
+                            <a:column name="last_update_date" align="center" prompt="最后更新时间" renderer="Aurora.formatDateTime" width="150"/>
+                        </a:columns>
+                    </a:table>
                 </div>
             </a:case>
         </a:switch>
