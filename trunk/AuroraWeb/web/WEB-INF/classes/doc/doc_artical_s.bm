@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+                select doc_artical_s.nextval sequence from dual
+            ]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+</bm:model>

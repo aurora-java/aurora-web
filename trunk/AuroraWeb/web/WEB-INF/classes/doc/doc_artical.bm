@@ -4,6 +4,8 @@
         <bm:field name="artical_id" databaseType="NUMBER" datatype="java.lang.Integer" />
         <bm:field name="artical_path" databaseType="VARCHAR2" datatype="java.lang.String" />
         <bm:field name="artical_title" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="content" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="category_id" databaseType="NUMBER" datatype="java.lang.Integer" />
     </bm:fields>
     <bm:primary-key>
         <bm:pk-field name="artical_id"/>
@@ -13,6 +15,5 @@
     </bm:query-fields>
     <bm:features>
         <f:standard-who/>
-        <o:sequence-pk/>
     </bm:features>
 </bm:model>

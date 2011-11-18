@@ -5,8 +5,8 @@
         <bm:field name="artical_title" databaseType="VARCHAR2" datatype="java.lang.String"/>
         <bm:field name="category_id" databaseType="NUMBER" datatype="java.lang.Integer" />
         <bm:field name="nick_name" databaseType="VARCHAR2" datatype="java.lang.String"/>
-        <bm:field name="creation_date" databaseType="DATE" datatype="java.util.Date"/>
-        <bm:field name="last_update_date" databaseType="DATE" datatype="java.util.Date"/>
+        <bm:field name="creation_date" databaseType="TIMESTAMP" datatype="java.sql.Timestamp"/>
+        <bm:field name="last_update_date" databaseType="TIMESTAMP" datatype="java.sql.Timestamp"/>
     </bm:fields>
     <bm:primary-key>
         <bm:pk-field name="artical_id"/>
