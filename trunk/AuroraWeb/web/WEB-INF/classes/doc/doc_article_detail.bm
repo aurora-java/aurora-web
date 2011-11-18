@@ -5,6 +5,7 @@
         <bm:field name="artical_title" databaseType="VARCHAR2" datatype="java.lang.String"/>
         <bm:field name="category_id" databaseType="NUMBER" datatype="java.lang.Integer" />
         <bm:field name="nick_name" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="creation_date" databaseType="VARCHAR2" datatype="java.lang.String" expression="to_char(t1.creation_date,'yyyy-mm-dd HH24:MI:SS')"/>
     </bm:fields>
     <bm:primary-key>
         <bm:pk-field name="artical_id"/>
@@ -14,8 +15,4 @@
     <bm:data-filters>
         <bm:data-filter enforceOperations="query" expression="t1.artical_id =${/parameter/@artical_id}"/>
     </bm:data-filters>
-    <bm:features>
-        <f:standard-who/>
-        <o:sequence-pk/>
-    </bm:features>
 </bm:model>
