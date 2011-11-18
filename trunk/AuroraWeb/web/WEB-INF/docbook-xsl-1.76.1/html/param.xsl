@@ -213,7 +213,7 @@ set       toc,title
 <xsl:param name="html.head.legalnotice.link.types">copyright</xsl:param>
 <xsl:param name="html.longdesc" select="1"/>
 <xsl:param name="html.longdesc.link" select="$html.longdesc"/>
-<xsl:param name="html.stylesheet" select="'html.css'"/>
+<xsl:param name="html.stylesheet" select="'../../../../css/html.css'"/>
 <xsl:param name="html.stylesheet.type">text/css</xsl:param>
 <xsl:param name="htmlhelp.alias.file">alias.h</xsl:param>
 <xsl:param name="htmlhelp.autolabel" select="0"/>
