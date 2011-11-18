@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: andy  
+    $Date: 2011-11-18 下午02:55:32  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="execute">
+            <bm:parameters>
+                <bm:parameter name="success" dataType="java.lang.Integer" input="false" inputPath="@success" output="true" outputPath="/parameter/@success"/>
+            </bm:parameters>
+            <bm:update-sql><![CDATA[
+                begin
+                    SYS_LOGIN_PKG.REGISTER
+                    (
+                        p_user_name=>${@user_name},
+                        p_password=>${@password},
+                        p_nick_name=>${@nick_name},
+                        p_success=>${@success}
+                    );
+                end;]]></bm:update-sql>
+        </bm:operation>
+    </bm:operations>
+</bm:model>
