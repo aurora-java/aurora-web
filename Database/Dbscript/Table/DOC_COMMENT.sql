@@ -14,7 +14,7 @@ create table DOC_COMMENT
 	COMMENT_ID					NUMBER not null,
 	CONTENT						CLOB,
 	TABLE_ID					NUMBER not null,
-	TABLE_NAME					VARCHAR(50),
+	TABLE_NAME					VARCHAR(50) not null,
 	CREATED_BY					NUMBER,
 	CREATION_DATE				DATE,
 	LAST_UPDATED_BY				NUMBER,
@@ -22,23 +22,23 @@ create table DOC_COMMENT
 )
 ;
 comment on table DOC_COMMENT
-  is 'ÆÀÂÛ±í';
+  is 'ï¿½ï¿½ï¿½Û±ï¿½';
 comment on column DOC_COMMENT.COMMENT_ID
-  is 'ÆÀÂÛID';
+  is 'ï¿½ï¿½ï¿½ï¿½ID';
 comment on column DOC_COMMENT.CONTENT
-  is 'ÆÀÂÛÄÚÈÝ';
+  is 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
 comment on column DOC_COMMENT.TABLE_ID
-  is 'ÆÀÂÛ¶ÔÏóµÄID';
+  is 'ï¿½ï¿½ï¿½Û¶ï¿½ï¿½ï¿½ï¿½ID';
 comment on column DOC_COMMENT.TABLE_NAME
-  is 'ÆÀÂÛ¶ÔÏóµÄ±í'; 
+  is 'ï¿½ï¿½ï¿½Û¶ï¿½ï¿½ï¿½Ä±ï¿½'; 
 comment on column DOC_COMMENT.CREATED_BY
-  is '´´½¨ÕßID';
+  is 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ID';
 comment on column DOC_COMMENT.CREATION_DATE
-  is '´´½¨ÈÕÆÚ';
+  is 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
 comment on column DOC_COMMENT.LAST_UPDATED_BY
-  is '×î½ü¸üÐÂÕßID';
+  is 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ID';
 comment on column DOC_COMMENT.LAST_UPDATE_DATE
-  is '×î½ü¸üÐÂÈÕÆÚ';
+  is 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
 
 alter table DOC_COMMENT
   add constraint DOC_COMMENT_PK primary key (COMMENT_ID);
