@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
    <a:init-procedure>
-        <model-query fetchAll="true" model="doc.doc_artical_detail" rootPath="artical"/>
+        <model-query fetchAll="true" model="doc.doc_article_detail" rootPath="article"/>
     </a:init-procedure>
     <a:view >
         <script><![CDATA[
@@ -10,17 +10,17 @@
             }
         ]]></script>
         <div style="margin:15px;">
-            <h1 style="color:#222222;font-size:20px;font-family:Tahoma, Arial, Verdana">${/model/artical/record/@artical_title}</h1>
+            <h1 style="color:#222222;font-size:20px;font-family:Tahoma, Arial, Verdana">${/model/article/record/@article_title}</h1>
             <div style="background-image:url(images/icon_time.png);background-repeat:no-repeat;padding-left:18px;margin-top:5px;font-size:12px;">
-                <span>${/model/artical/record/@creation_date}</span><span style="margin-left:15px;">by ${/model/artical/record/@nick_name}</span>
+                <span>${/model/article/record/@creation_date}</span><span style="margin-left:15px;">by ${/model/article/record/@nick_name}</span>
             </div>
             <div style="margin:5px 0px 5px 0px;height:2px;background-color:#dddddd"></div>
             <div class="docbook" style="margin-top:25px;">
                 
-                <a:htmlInclude id="${/parameter/@artical_id}"/>
+                <a:htmlInclude id="${/parameter/@article_id}"/>
             </div>
             <div style="margin:25px 0px 15px 0px;height:2px;background-color:#dddddd"></div>
-            <a:comment bindId="${/parameter/@artical_id}" tableName="DOC_ARTICAL" width="800"/>
+            <a:comment bindId="${/parameter/@article_id}" tableName="DOC_ARTICLE" width="800"/>
         </div>
     </a:view>
 </a:screen>

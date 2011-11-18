@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
     <a:init-procedure>
-        <model-query model="doc.doc_artical_s" rootPath="artical"/>
+        <model-query model="doc.doc_article_s" rootPath="article"/>
     </a:init-procedure>
     <a:view>
         <a:switch test="/parameter/@cid">
@@ -11,9 +11,9 @@
             <a:case value="*">
                 <script><![CDATA[
             
-                    function postArtical(){
+                    function postArticle(){
                         $('postButton').disable();
-                        $('artical_create_ds').submit();
+                        $('article_create_ds').submit();
                     }  
                     
                     function onSubmitSuccess(ds,res){
@@ -26,9 +26,9 @@
                     
                 ]]></script>
                 <a:dataSets>
-                    <a:dataSet id="artical_create_ds" autoCreate="true" submitUrl="${/request/@context_path}/post_artical.svc" >
+                    <a:dataSet id="article_create_ds" autoCreate="true" submitUrl="${/request/@context_path}/post_article.svc" >
                         <a:fields>
-                            <a:field name="artical_id" defaultValue="${/model/artical/record/@sequence}"/>
+                            <a:field name="article_id" defaultValue="${/model/article/record/@sequence}"/>
                             <a:field name="category_id" defaultValue="${/parameter/@cid}"/>
                         </a:fields>
                         <a:events>
@@ -53,26 +53,26 @@
                             <TR>
                                 <TH width="100" align="right">标题:</TH>
                                 <TD>
-                                    <a:textField name="artical_title" bindTarget="artical_create_ds" width="400"/>
+                                    <a:textField name="article_title" bindTarget="article_create_ds" width="400"/>
                                 </TD>
                             </TR>
                             <TR>
                                 <TH align="right">内容:</TH>
                                 <TD>
-                                    <a:textArea name="content" bindTarget="artical_create_ds" width="600" marginWidth="250" height="500"/>
+                                    <a:textArea name="content" bindTarget="article_create_ds" width="600" marginWidth="250" height="500"/>
                                 </TD>
                             </TR>
                             <TR>
                                 <TH align="right">附件:</TH>
                                 <TD>
                                     <div style="width:600px;">
-                                        <a:upload buttonWidth="75" fileType="*.gif;*.jpg;*.screen;*.bm;*.xml;*.zip;*.rar" pkvalue="${/model/artical/record/@sequence}" sourcetype="DOC_ARTICAL" text="上传附件"/>
+                                        <a:upload buttonWidth="75" fileType="*.gif;*.jpg;*.screen;*.bm;*.xml;*.zip;*.rar" pkvalue="${/model/article/record/@sequence}" sourcetype="DOC_ARTICLE" text="上传附件"/>
                                     </div>
                                 </TD>
                             </TR>
                         </TBODY>
                     </TABLE>
-                    <a:button id="postButton" style="margin-top:10px;" text="发 表 文 章" width="100" click="postArtical"/>
+                    <a:button id="postButton" style="margin-top:10px;" text="发 表 文 章" width="100" click="postArticle"/>
                 </div>
             </a:case>
         </a:switch>
