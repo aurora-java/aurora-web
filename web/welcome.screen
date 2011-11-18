@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:view>
+        <style>
+            body {
+                background-color:#fff;
+            }
+        </style>
+        <div>Welcome!</div>
+    </a:view>
+</a:screen>
