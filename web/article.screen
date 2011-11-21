@@ -13,7 +13,15 @@
         <div style="margin:15px;">
             <h1 style="color:#222222;font-size:20px;font-family:Tahoma, Arial, Verdana">${/model/article/record/@article_title}</h1>
             <div style="background-image:url(images/icon_time.png);background-repeat:no-repeat;padding-left:18px;margin-top:5px;font-size:12px;">
-                <span>${/model/article/record/@creation_date}</span><span style="margin-left:15px;">by ${/model/article/record/@nick_name}</span>
+                <span>${/model/article/record/@creation_date}</span>
+                <span style="margin-left:15px;">by ${/model/article/record/@nick_name}</span>
+                <a:switch test="/session/@user_id">
+                    <a:case value="${/model/article/record/@user_id}">
+                        <span style="margin-left:15px;float:right"><a href="#" style="background-image:url('${/request/@context_path}/images/page_edit.gif');padding-left:19px;background-repeat:no-repeat;">编辑</a></span>
+                        <span style="float:right"><a href="#" style="background-image:url('${/request/@context_path}/images/page_delete.gif');padding-left:19px;background-repeat:no-repeat;">删除</a></span>
+                    </a:case>
+                 </a:switch>
+
             </div>
             <div style="margin:5px 0px 5px 0px;height:2px;background-color:#dddddd"></div>
             <div class="docbook" style="margin-top:25px;">
