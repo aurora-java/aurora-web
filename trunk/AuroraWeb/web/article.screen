@@ -17,7 +17,7 @@
                 <span style="margin-left:15px;">by ${/model/article/record/@nick_name}</span>
                 <a:switch test="/session/@user_id">
                     <a:case value="${/model/article/record/@user_id}">
-                        <span style="margin-left:15px;float:right"><a href="#" style="background-image:url('${/request/@context_path}/images/page_edit.gif');padding-left:19px;background-repeat:no-repeat;">编辑</a></span>
+                        <span style="margin-left:15px;float:right"><a href="edit_article.screen?article_id=${/model/article/record/@article_id}" style="background-image:url('${/request/@context_path}/images/page_edit.gif');padding-left:19px;background-repeat:no-repeat;">编辑</a></span>
                         <span style="float:right"><a href="#" style="background-image:url('${/request/@context_path}/images/page_delete.gif');padding-left:19px;background-repeat:no-repeat;">删除</a></span>
                     </a:case>
                  </a:switch>
