@@ -54,44 +54,44 @@
             }
         ]]></style>
         <script language="javascript"><![CDATA[
-            function shMenu() { 
+            function shMenu() {
                 var menu = document.getElementById('menuArea');
                 var arrow = document.getElementById('ImgArrow');
-                if(menu.style.display == 'none'){
+                if (menu.style.display == 'none') {
                     menu.style.display = '';
-                    arrow.src='images/mini-left.gif';
-                    
-                }else{
+                    arrow.src = 'images/mini-left.gif';
+            
+                } else {
                     menu.style.display = 'none';
-                    arrow.src='images/mini-right.gif';
+                    arrow.src = 'images/mini-right.gif';
                 }
                 syncMainAreaSize();
             }
             
-            function linkrenderer(text, record, node){
-                if(node.isLeaf()){
+            function linkrenderer(text, record, node) {
+                if (node.isLeaf()) {
                     var cid = record.get('category_id');
-                    return  '<a href="javascript:openCategory('+cid+');">'+text+'</a>';
-                }else{
+                    return '<a href="javascript:openCategory(' + cid + ');">' + text + '</a>';
+                } else {
                     return text;
                 }
             }
             
-             function openCategory(id){
-                document.getElementById('mainFrame').src = "category.screen?cid="+id;
+            function openCategory(id) {
+                document.getElementById('mainFrame').src = "category.screen?cid=" + id;
             }
             
-            function register(){                
-			    new Aurora.Window({
-					url:'register.screen',
-					title:'注册',
-					id:'register_screen',
-					width:280,
-					height:200
-				});
+            function register() {
+                new Aurora.Window({
+                    url: 'register.screen',
+                    title: '注册',
+                    id: 'register_screen',
+                    width: 280,
+                    height: 200
+                });
             }
             
-            function login() {
+            function login() {                
                 new Aurora.Window({
                     url: 'sys_login.screen',
                     title: '登录',
@@ -107,17 +107,13 @@
                         url: 'logout.svc',
                         para: {},
                         success: function() {
-                            try {
-                                window.location.reload();
-                            } catch (e) {}
-                            window.close();                            
+                            window.location.reload();
                         },
                         scope: this
                     });
                 }, null, null, 100);
             
             }
-            
         ]]></script>
         <a:dataSets>
             <a:dataSet id="MENU_DS">

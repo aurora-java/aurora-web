@@ -1,0 +1,184 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <title></title><link rel="stylesheet" type="text/css" href="../../../../css/html.css"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article"><div class="titlepage"></div><div class="sect2" title="&#31383;&#21475;&#32452;&#20214;(Window)"><div class="titlepage"><div><div><h3 class="title"><a name="presentation-client-window"></a>&#31383;&#21475;&#32452;&#20214;(Window)</h3></div></div></div><p>
+        APL&#20013;&#25552;&#20379;&#30340;&#31383;&#21475;&#32452;&#20214;&#19981;&#21516;&#20110;html&#20013;&#30340;&#21407;&#29983;window,&#23427;&#26159;&#36890;&#36807;div&#27169;&#25311;&#20986;&#26469;&#30340;.&#26412;&#36136;&#19978;&#21644;&#29238;&#39029;&#38754;&#26159;&#22312;&#21516;&#19968;&#20010;dom&#26641;&#20013;.
+	</p><p>
+        window&#32452;&#20214;&#30340;&#20869;&#23481;&#26159;&#36890;&#36807;ajax&#21160;&#24577;&#21152;&#36733;&#36827;&#26469;&#30340;.&#25152;&#20197;&#21152;&#36733;&#39029;&#38754;&#20013;&#30340;&#25152;&#26377;&#23545;&#35937;&#22312;&#29238;&#39029;&#38754;&#20013;&#37117;&#21487;&#20197;&#30452;&#25509;&#33719;&#21462;&#21040;,&#21453;&#36807;&#26469;window&#20063;&#21487;&#20197;&#30452;&#25509;&#33719;&#21462;&#29238;&#39029;&#38754;&#30340;&#25152;&#26377;&#23545;&#35937;.
+    </p><p>
+        window&#32452;&#20214;&#30340;&#21019;&#24314;&#37117;&#26159;&#36890;&#36807;JavaScript&#33050;&#26412;&#21019;&#24314;&#30340;.
+    </p><pre class="programlisting">                
+function openWindow(){
+    var win = new Aurora.Window({id:'mywin', url:'user.screen',title:'&#31383;&#21475;', height:400,width:700});
+}
+</pre><div class="mediaobject"><img src="atm_download.svc?attachment_id=51"></div><p>
+        &#36890;&#36807;new Aurora.Window&#25105;&#20204;&#21487;&#20197;&#21019;&#24314;&#20986;&#19968;&#20010;window&#31383;&#21475;.id&#26159;&#31383;&#21475;&#30340;&#21807;&#19968;&#26631;&#35782;,url&#25351;&#23450;&#24403;&#21069;&#31383;&#21475;&#38656;&#35201;&#21152;&#36733;&#30340;screen&#25991;&#20214;.title&#25351;&#23450;&#25171;&#24320;&#31383;&#21475;&#30340;&#26631;&#39064;,height&#21644;width&#20998;&#21035;&#25351;&#23450;&#31383;&#21475;&#30340;&#22823;&#23567;.
+    </p><div class="table"><a name="presentation-client-window-properties"></a><p class="title"><b>Table&nbsp;1.&nbsp;</b></p><div class="table-contents"><table border="1"><colgroup><col width="25%" class="c1"><col width="50%" class="c2"><col width="12%" class="c3"><col width="13%" class="c4"></colgroup><thead><tr><th>
+                        &#21442;&#25968;&#21517;
+                    </th><th>
+                        &#29992;&#36884;
+                    </th><th>
+                       &#40664;&#35748;&#20540;
+                    </th><th>
+                       &#26159;&#21542;&#24517;&#22635;
+                    </th></tr></thead><tbody><tr><td>
+                        id
+                    </td><td>
+                        window&#31383;&#21475;&#30340;id&#12290;
+                    </td><td>
+                    </td><td>
+                    	true
+                    </td></tr><tr><td>
+                        title
+                    </td><td>
+                        window&#31383;&#21475;&#30340;&#26631;&#39064;&#12290;
+                    </td><td>
+                    </td><td>
+                        false
+                    </td></tr><tr><td>
+                        url
+                    </td><td>
+                        window&#31383;&#21475;&#30340;url&#12290;
+                    </td><td>
+                    </td><td>
+                        true
+                    </td></tr><tr><td>
+                        height
+                    </td><td>
+                        window&#31383;&#21475;&#30340;&#39640;&#24230;&#12290;
+                    </td><td>
+                        400
+                    </td><td>
+                        false
+                    </td></tr><tr><td>
+                        width
+                    </td><td>
+                        window&#31383;&#21475;&#30340;&#23485;&#24230;&#12290;
+                    </td><td>
+                        350
+                    </td><td>
+                        false
+                    </td></tr></tbody></table></div></div><br class="table-break"><p>
+        &#26377;&#26102;&#20505;&#25105;&#20204;&#20165;&#20165;&#38656;&#35201;&#26174;&#31034;&#19968;&#20010;&#25552;&#31034;&#20449;&#24687;,&#25110;&#32773;&#19968;&#20010;&#31616;&#21333;&#30340;&#35686;&#21578;.&#36825;&#20010;&#26102;&#20505;&#36890;&#36807;url&#21152;&#36733;&#23601;&#27604;&#36739;&#40635;&#28902;.
+       APL&#20026;&#25105;&#20204;&#25552;&#20379;&#20102;&#20960;&#20010;&#36890;&#29992;&#30340;&#31383;&#21475;&#20989;&#25968;.
+    </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+               &#25552;&#31034;&#20449;&#24687;&#31383;&#21475;
+            </p><pre class="programlisting">
+Aurora.showMessage(title, msg,callback,width,height);    
+            </pre><div class="table"><a name="presentation-client-window-info-properties"></a><p class="title"><b>Table&nbsp;2.&nbsp;</b></p><div class="table-contents"><table border="1"><colgroup><col width="25%" class="c1"><col width="50%" class="c2"><col width="12%" class="c3"><col width="13%" class="c4"></colgroup><thead><tr><th>
+                                &#21442;&#25968;&#21517;
+                            </th><th>
+                                &#29992;&#36884;
+                            </th><th>
+                               &#40664;&#35748;&#20540;
+                            </th><th>
+                               &#26159;&#21542;&#24517;&#22635;
+                            </th></tr></thead><tbody><tr><td>
+                                title
+                            </td><td>
+                                window&#31383;&#21475;&#30340;&#26631;&#39064;&#12290;
+                            </td><td>
+                            </td><td>
+                                true
+                            </td></tr><tr><td>
+                                msg
+                            </td><td>
+                                &#38656;&#35201;&#25552;&#31034;&#30340;&#20449;&#24687;&#20869;&#23481;
+                            </td><td>
+                            </td><td>
+                                true
+                            </td></tr><tr><td>
+                                callback
+                            </td><td>
+                                &#22238;&#35843;&#20989;&#25968;,&#19981;&#38656;&#35201;&#30340;&#35805;&#29992;null
+                            </td><td>
+                            </td><td>
+                                false
+                            </td></tr><tr><td>
+                                height
+                            </td><td>
+                                window&#31383;&#21475;&#30340;&#39640;&#24230;&#12290;
+                            </td><td>
+                                100
+                            </td><td>
+                                false
+                            </td></tr><tr><td>
+                                width
+                            </td><td>
+                                window&#31383;&#21475;&#30340;&#23485;&#24230;&#12290;
+                            </td><td>
+                                300
+                            </td><td>
+                                false
+                            </td></tr></tbody></table></div></div><br class="table-break"></li><li class="listitem"><p>
+               &#24102;&#35686;&#21578;&#22270;&#26631;&#30340;&#31383;&#21475;
+            </p><pre class="programlisting">
+Aurora.showWarningMessage(title, msg,callback,width,height);    
+            </pre><p>
+               &#37197;&#32622;&#21442;&#25968;&#21442;&#32771;"&#25552;&#31034;&#20449;&#24687;&#31383;&#21475;"
+            </p></li><li class="listitem"><p>
+               &#24102;&#20449;&#24687;&#22270;&#26631;&#30340;&#31383;&#21475;
+            </p><pre class="programlisting">
+Aurora.showInfoMessage(title, msg,callback,width,height);    
+            </pre><p>
+               &#37197;&#32622;&#21442;&#25968;&#21442;&#32771;"&#25552;&#31034;&#20449;&#24687;&#31383;&#21475;"
+            </p></li><li class="listitem"><p>
+               &#24102;&#38169;&#35823;&#22270;&#26631;&#30340;&#31383;&#21475;
+            </p><pre class="programlisting">
+Aurora.showErrorMessage(title, msg,callback,width,height);    
+            </pre><p>
+               &#37197;&#32622;&#21442;&#25968;&#21442;&#32771;"&#25552;&#31034;&#20449;&#24687;&#31383;&#21475;"
+            </p></li><li class="listitem"><p>
+               &#24102;&#30830;&#23450;&#21462;&#28040;&#25353;&#38062;&#30340;&#30830;&#35748;&#31383;&#21475;
+            </p><pre class="programlisting">
+Aurora.showConfirm(title, msg, okfun,cancelfun, width, height);    
+            </pre><div class="table"><a name="presentation-client-window-okcancel-properties"></a><p class="title"><b>Table&nbsp;3.&nbsp;</b></p><div class="table-contents"><table border="1"><colgroup><col width="25%" class="c1"><col width="50%" class="c2"><col width="12%" class="c3"><col width="13%" class="c4"></colgroup><thead><tr><th>
+                                &#21442;&#25968;&#21517;
+                            </th><th>
+                                &#29992;&#36884;
+                            </th><th>
+                               &#40664;&#35748;&#20540;
+                            </th><th>
+                               &#26159;&#21542;&#24517;&#22635;
+                            </th></tr></thead><tbody><tr><td>
+                                title
+                            </td><td>
+                                window&#31383;&#21475;&#30340;&#26631;&#39064;&#12290;
+                            </td><td>
+                            </td><td>
+                                true
+                            </td></tr><tr><td>
+                                msg
+                            </td><td>
+                                &#38656;&#35201;&#25552;&#31034;&#30340;&#20449;&#24687;&#20869;&#23481;
+                            </td><td>
+                            </td><td>
+                                true
+                            </td></tr><tr><td>
+                                okfun
+                            </td><td>
+                                &#30830;&#23450;&#25353;&#38062;&#22238;&#35843;&#20989;&#25968;,&#19981;&#38656;&#35201;&#30340;&#35805;&#29992;null
+                            </td><td>
+                            </td><td>
+                            </td></tr><tr><td>
+                                cancelfun
+                            </td><td>
+                                &#21462;&#28040;&#25353;&#38062;&#22238;&#35843;&#20989;&#25968;,&#19981;&#38656;&#35201;&#30340;&#35805;&#29992;null
+                            </td><td>
+                            </td><td>
+                            </td></tr><tr><td>
+                                height
+                            </td><td>
+                                window&#31383;&#21475;&#30340;&#39640;&#24230;&#12290;
+                            </td><td>
+                                100
+                            </td><td>
+                                false
+                            </td></tr><tr><td>
+                                width
+                            </td><td>
+                                window&#31383;&#21475;&#30340;&#23485;&#24230;&#12290;
+                            </td><td>
+                                300
+                            </td><td>
+                                false
+                            </td></tr></tbody></table></div></div><br class="table-break"></li></ul></div></div></div></body></html>

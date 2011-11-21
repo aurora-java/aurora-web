@@ -1,0 +1,82 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <title></title><link rel="stylesheet" type="text/css" href="../../../../css/html.css"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article"><div class="titlepage"></div><div class="sect2" title="Table&#32452;&#20214;"><div class="titlepage"><div><div><h3 class="title"><a name="presentation-client-table"></a>Table&#32452;&#20214;</h3></div></div></div><p>
+        Table&#32452;&#20214;&#26159;&#19968;&#20010;&#25968;&#25454;UI&#32452;&#20214;&#65292;&#31867;&#20284;&#20110;Grid&#32452;&#20214;&#12290;
+    </p><div class="sect3" title="Table&#23450;&#20041;"><div class="titlepage"><div><div><h4 class="title"><a name="presentation-client-table-tag"></a>Table&#23450;&#20041;</h4></div></div></div><p>
+        &#22312;screen&#25991;&#20214;&#20013;&#25105;&#20204;&#36890;&#36807;&lt;a:table&gt;&#26631;&#31614;&#26469;&#23450;&#20041;&#19968;&#20010;table&#23545;&#35937;.
+    </p><pre class="programlisting">
+<strong class="hl-tag" style="color: #000096">&lt;a:table</strong> <span class="hl-attribute" style="color: #993300">id</span>=<span class="hl-value" style="color: #F5844C">"sys_user_define_grid"</span> <span class="hl-attribute" style="color: #993300">bindTarget</span>=<span class="hl-value" style="color: #F5844C">"sys_user_result_ds"</span> <span class="hl-attribute" style="color: #993300">percentWidth</span>=<span class="hl-value" style="color: #F5844C">"90"</span>
+	<span class="hl-attribute" style="color: #993300">style</span>=<span class="hl-value" style="color: #F5844C">"margin:7px;"</span> <span class="hl-attribute" style="color: #993300">navBar</span>=<span class="hl-value" style="color: #F5844C">"true"</span> <span class="hl-attribute" style="color: #993300">navBarType</span>=<span class="hl-value" style="color: #F5844C">"simple"</span> <span class="hl-attribute" style="color: #993300">title</span>=<span class="hl-value" style="color: #F5844C">"SYS_USER.USER_SEARCH"</span><strong class="hl-tag" style="color: #000096">&gt;</strong>
+    <strong class="hl-tag" style="color: #000096">&lt;a:columns&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:column&gt;</strong>
+            <strong class="hl-tag" style="color: #000096">&lt;a:column</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"user_name"</span> <span class="hl-attribute" style="color: #993300">footerRenderer</span>=<span class="hl-value" style="color: #F5844C">"frdr"</span> <span class="hl-attribute" style="color: #993300">percentWidth</span>=<span class="hl-value" style="color: #F5844C">"10"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+            <strong class="hl-tag" style="color: #000096">&lt;a:column</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"description"</span> <span class="hl-attribute" style="color: #993300">editor</span>=<span class="hl-value" style="color: #F5844C">"description_tf"</span> <span class="hl-attribute" style="color: #993300">percentWidth</span>=<span class="hl-value" style="color: #F5844C">"20"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;/a:column&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:column</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"start_date"</span> <span class="hl-attribute" style="color: #993300">align</span>=<span class="hl-value" style="color: #F5844C">"center"</span> <span class="hl-attribute" style="color: #993300">footerRenderer</span>=<span class="hl-value" style="color: #F5844C">"frdr"</span>
+		<span class="hl-attribute" style="color: #993300">percentWidth</span>=<span class="hl-value" style="color: #F5844C">"10"</span> <span class="hl-attribute" style="color: #993300">renderer</span>=<span class="hl-value" style="color: #F5844C">"Aurora.formatDate"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:column</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"end_date"</span> <span class="hl-attribute" style="color: #993300">align</span>=<span class="hl-value" style="color: #F5844C">"center"</span> <span class="hl-attribute" style="color: #993300">percentWidth</span>=<span class="hl-value" style="color: #F5844C">"10"</span> <span class="hl-attribute" style="color: #993300">renderer</span>=<span class="hl-value" style="color: #F5844C">"Aurora.formatDate"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:column</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"frozen_flag_display"</span> <span class="hl-attribute" style="color: #993300">align</span>=<span class="hl-value" style="color: #F5844C">"center"</span> <span class="hl-attribute" style="color: #993300">percentWidth</span>=<span class="hl-value" style="color: #F5844C">"10"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:column</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"frozen_date"</span> <span class="hl-attribute" style="color: #993300">align</span>=<span class="hl-value" style="color: #F5844C">"center"</span> <span class="hl-attribute" style="color: #993300">editor</span>=<span class="hl-value" style="color: #F5844C">"frozen_date_table_dp"</span>
+		<span class="hl-attribute" style="color: #993300">percentWidth</span>=<span class="hl-value" style="color: #F5844C">"10"</span> <span class="hl-attribute" style="color: #993300">renderer</span>=<span class="hl-value" style="color: #F5844C">"Aurora.formatDate"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:column</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"assign_role"</span> <span class="hl-attribute" style="color: #993300">align</span>=<span class="hl-value" style="color: #F5844C">"center"</span> <span class="hl-attribute" style="color: #993300">percentWidth</span>=<span class="hl-value" style="color: #F5844C">"10"</span> <span class="hl-attribute" style="color: #993300">prompt</span>=<span class="hl-value" style="color: #F5844C">"SYS_USER.ROLE_ASSIGN"</span>
+		<span class="hl-attribute" style="color: #993300">renderer</span>=<span class="hl-value" style="color: #F5844C">"assignRole"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:column</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"set_password"</span> <span class="hl-attribute" style="color: #993300">align</span>=<span class="hl-value" style="color: #F5844C">"center"</span> <span class="hl-attribute" style="color: #993300">percentWidth</span>=<span class="hl-value" style="color: #F5844C">"10"</span> <span class="hl-attribute" style="color: #993300">prompt</span>=<span class="hl-value" style="color: #F5844C">"MODIFY_PASSWORD"</span>
+		<span class="hl-attribute" style="color: #993300">renderer</span>=<span class="hl-value" style="color: #F5844C">"setPassword"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:column</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"edit"</span> <span class="hl-attribute" style="color: #993300">align</span>=<span class="hl-value" style="color: #F5844C">"center"</span> <span class="hl-attribute" style="color: #993300">percentWidth</span>=<span class="hl-value" style="color: #F5844C">"10"</span> <span class="hl-attribute" style="color: #993300">prompt</span>=<span class="hl-value" style="color: #F5844C">"HAP_EDIT"</span> <span class="hl-attribute" style="color: #993300">renderer</span>=<span class="hl-value" style="color: #F5844C">"editUser"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+    <strong class="hl-tag" style="color: #000096">&lt;/a:columns&gt;</strong>
+    <strong class="hl-tag" style="color: #000096">&lt;a:editors&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:datePicker</strong> <span class="hl-attribute" style="color: #993300">id</span>=<span class="hl-value" style="color: #F5844C">"frozen_date_table_dp"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:textField</strong> <span class="hl-attribute" style="color: #993300">id</span>=<span class="hl-value" style="color: #F5844C">"description_tf"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+    <strong class="hl-tag" style="color: #000096">&lt;/a:editors&gt;</strong>
+<strong class="hl-tag" style="color: #000096">&lt;/a:table&gt;</strong>            
+</pre><p>
+        &#29983;&#25104;&#30340;&#30028;&#38754;&#22914;&#19979;:
+    </p><div class="mediaobject"><img src="atm_download.svc?attachment_id=52"></div></div><div class="sect3" title="Table&#19982;Grid&#30340;&#24322;&#21516;"><div class="titlepage"><div><div><h4 class="title"><a name="presentation-client-table-differences"></a>Table&#19982;Grid&#30340;&#24322;&#21516;</h4></div></div></div><div class="table"><a name="presentation-client-table-differences-table"></a><p class="title"><b>Table&nbsp;1.&nbsp;</b></p><div class="table-contents"><table border="1"><colgroup><col width="75%" class="c1"><col width="12%" class="c2"><col width="13%" class="c3"></colgroup><thead><tr><th>
+                    	&#24322;&#21516;&#39033;
+                    </th><th>
+                        Grid
+                    </th><th>
+                       Table
+                    </th></tr></thead><tbody><tr><td>
+&#27809;&#26377;height&#23646;&#24615;&#65292;&#39640;&#24230;&#26159;&#33258;&#36866;&#24212;&#39640;&#24230;&#65292;&#38543;&#30528;&#34892;&#25968;&#30340;&#22686;&#21152;&#32780;&#22686;&#39640;&#12290;           
+                    </td><td>
+                        &times;
+                    </td><td>
+                    	&#8730;
+                    </td></tr><tr><td>
+&#36890;&#36807;percentWidth&#23646;&#24615;&#65292;&#23485;&#24230;&#33021;&#35774;&#25104;&#30334;&#20998;&#27604;&#23485;&#24230;&#12290;
+                    </td><td>
+                    	&times;
+                    </td><td>
+                    	&#8730;
+                    </td></tr><tr><td>
+&#36890;&#36807;title&#23646;&#24615;&#33021;&#35774;&#32622;&#26631;&#39064;&#12290;
+                    </td><td>
+                    	&times;
+                    </td><td>
+                    	&#8730;
+                    </td></tr><tr><td>
+                        &#26377;&#38145;&#23450;&#21015;&#30340;&#21151;&#33021;&#12290;
+                    </td><td>
+                        &#8730;
+                    </td><td>
+                    	&times;
+                    </td></tr><tr><td>
+&#26377;&#35843;&#25972;&#21015;&#23485;&#30340;&#21151;&#33021;&#12290;
+                    </td><td>
+                        &#8730;
+                    </td><td>
+                    	&times;
+                    </td></tr><tr><td>
+&#26377;&#25490;&#24207;&#21151;&#33021;&#12290;
+                    </td><td>
+                        &#8730;
+                    </td><td>
+                    	&times;
+                    </td></tr><tr><td>
+&#26377;&#24037;&#20855;&#26639;toolBar&#12290;
+                    </td><td>
+                        &#8730;
+                    </td><td>
+                    	&times;
+                    </td></tr></tbody></table></div></div><br class="table-break"></div></div></div></body></html>

@@ -1,44 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
-   <a:init-procedure>
+    <a:init-procedure>
         <model-query fetchAll="true" model="doc.doc_article_detail" rootPath="article"/>
-        <model-query fetchAll="true" model="fnd.fnd_atm_attachment" defaultWhereClause="fam.table_name = 'DOC_ARTICLE'  and fam.table_pk_value = ${/parameter/@article_id}" rootPath="atms"/>
+        <model-query defaultWhereClause="fam.table_name = &apos;DOC_ARTICLE&apos;  and fam.table_pk_value = ${/parameter/@article_id}" fetchAll="true" model="fnd.fnd_atm_attachment" rootPath="atms"/>
     </a:init-procedure>
-    <a:view >
+    <a:view>
         <script><![CDATA[
-            function test(){
-                Aurora.showMessage('xxx','sdfsdfdsf')
+            function test() {
+                Aurora.showMessage('xxx', 'sdfsdfdsf');
+            }
+            
+            function loginHandler() {
+                top.login();
+            }
+            
+            function registerHandler() {
+                top.register();
             }
         ]]></script>
         <div style="margin:15px;">
-            <h1 style="color:#222222;font-size:20px;font-family:Tahoma, Arial, Verdana">${/model/article/record/@article_title}</h1>
+            <h1 style="color:#222222;font-size:20px;font-family:Tahoma, Arial, Verdana"><![CDATA[${/model/article/record/@article_title}]]></h1>
             <div style="background-image:url(images/icon_time.png);background-repeat:no-repeat;padding-left:18px;margin-top:5px;font-size:12px;">
-                <span>${/model/article/record/@creation_date}</span>
-                <span style="margin-left:15px;">by ${/model/article/record/@nick_name}</span>
+                <span><![CDATA[${/model/article/record/@creation_date}]]></span>
+                <span style="margin-left:15px;"><![CDATA[by ${/model/article/record/@nick_name}]]></span>
                 <a:switch test="/session/@user_id">
                     <a:case value="${/model/article/record/@user_id}">
-                        <span style="margin-left:15px;float:right"><a href="edit_article.screen?article_id=${/model/article/record/@article_id}" style="background-image:url('${/request/@context_path}/images/page_edit.gif');padding-left:19px;background-repeat:no-repeat;">编辑</a></span>
-                        <span style="float:right"><a href="#" style="background-image:url('${/request/@context_path}/images/page_delete.gif');padding-left:19px;background-repeat:no-repeat;">删除</a></span>
+                        <span style="margin-left:15px;float:right">
+                            <a href="edit_article.screen?article_id=${/model/article/record/@article_id}" style="background-image:url(&apos;${/request/@context_path}/images/page_edit.gif&apos;);padding-left:19px;background-repeat:no-repeat;"><![CDATA[编辑]]></a>
+                        </span>
+                        <span style="float:right">
+                            <a href="#" style="background-image:url(&apos;${/request/@context_path}/images/page_delete.gif&apos;);padding-left:19px;background-repeat:no-repeat;"><![CDATA[删除]]></a>
+                        </span>
                     </a:case>
-                 </a:switch>
+                </a:switch>
             </div>
-            <div style="margin:5px 0px 5px 0px;height:2px;background-color:#dddddd"></div>
+            <div style="margin:5px 0px 5px 0px;height:2px;background-color:#dddddd"/>
             <div class="docbook" style="margin-top:25px;">
                 <a:htmlInclude id="${/parameter/@article_id}"/>
             </div>
-            <div style="margin:25px 0px 15px 0px;height:2px;background-color:#dddddd"></div>
+            <div style="margin:25px 0px 15px 0px;height:2px;background-color:#dddddd"/>
             <div style="background-color:#f4f4f4;padding:10px;">
-                <div style="font-family:Tahoma, Arial, Verdana;font-size:16px;color:#222222">Attachments</div>
+                <div style="font-family:Tahoma, Arial, Verdana;font-size:16px;color:#222222"><![CDATA[Attachments]]></div>
                 <ol style="background-color:#fff;margin-top:5px;">
-                <a:repeater datamodel="/model/atms">
-                    <li style="border-bottom:1px dashed #ccc;height:25px;line-height:25px;padding-left:5px;font-size:12px;">
-                    <a href="${/request/@context_path}/atm_download.svc?attachment_id=${@attachment_id}" target="_self"><![CDATA[${@file_name}]]></a>
-                    </li>
-                </a:repeater>
+                    <a:repeater datamodel="/model/atms">
+                        <li style="border-bottom:1px dashed #ccc;height:25px;line-height:25px;padding-left:5px;font-size:12px;">
+                            <a href="${/request/@context_path}/atm_download.svc?attachment_id=${@attachment_id}" target="_self"><![CDATA[${@file_name}]]></a>
+                        </li>
+                    </a:repeater>
                 </ol>
             </div>
-            <div style="margin:25px 0px 15px 0px;height:2px;"></div>
-            <a:comment bindId="${/parameter/@article_id}" tableName="DOC_ARTICLE" registerurl="xxx" width="750"/>
+            <div style="margin:25px 0px 15px 0px;height:2px;"/>
+            <a:comment bindId="${/parameter/@article_id}" loginhandler="loginHandler" registerhandler="registerHandler" registerurl="xxx" tableName="DOC_ARTICLE" width="750"/>
         </div>
     </a:view>
 </a:screen>
