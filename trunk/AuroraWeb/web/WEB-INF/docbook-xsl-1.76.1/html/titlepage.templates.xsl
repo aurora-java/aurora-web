@@ -73,7 +73,7 @@
 <xsl:template name="article.titlepage.verso">
 </xsl:template>
 
-<xsl:template name="article.titlepage.separator"><hr/>
+<xsl:template name="article.titlepage.separator">
 </xsl:template>
 
 <xsl:template name="article.titlepage.before.recto">
