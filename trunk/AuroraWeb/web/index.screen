@@ -133,7 +133,7 @@
                                 <span style="margin-left:5px;"><![CDATA[|]]></span>
                                 <a href="javascript:register();" style="color:#fff;margin-left:5px;"><![CDATA[注册]]></a>
                                 <span style="margin-left:5px;"><![CDATA[|]]></span>
-                                <a href="javascript:login();" style="color:#fff;margin-left:5px;"><![CDATA[登陆]]></a>
+                                <a href="javascript:login();" style="color:#fff;margin-left:5px;"><![CDATA[登录]]></a>
                             </div>
                             <div id="login" style="float:right;display:none;">
                                 <span style="margin-left:5px;"><![CDATA[${/session/@nick_name},欢迎您回来]]></span>
