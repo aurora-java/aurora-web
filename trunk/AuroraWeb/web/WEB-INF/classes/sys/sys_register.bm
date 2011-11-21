@@ -9,7 +9,8 @@
     <bm:operations>
         <bm:operation name="execute">
             <bm:parameters>
-                <bm:parameter name="success" dataType="java.lang.Integer" input="false" inputPath="@success" output="true" outputPath="/parameter/@success"/>
+                <bm:parameter name="success" dataType="java.lang.Integer" input="false" inputPath="@success" output="true" outputPath="@success"/>
+                <bm:parameter name="user_id" dataType="java.lang.Integer" input="false" inputPath="@user_id" output="true" outputPath="@user_id"/>
             </bm:parameters>
             <bm:update-sql><![CDATA[
                 begin
@@ -18,6 +19,7 @@
                         p_user_name=>${@user_name},
                         p_password=>${@password},
                         p_nick_name=>${@nick_name},
+                        p_user_id=>${@user_id},
                         p_success=>${@success}
                     );
                 end;]]></bm:update-sql>
