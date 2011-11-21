@@ -49,7 +49,9 @@
                     ]]></a:dataSet>
                 </a:dataSets>
                 <div style="margin:5px;">
-                    <a href="post_article.screen?cid=${/parameter/@cid}" style="float:right;margin:5px;font-size:15px;"><![CDATA[发表新帖]]></a>
+                    <div id="login" style="float:right;display:none;">
+                        <a href="post_article.screen?cid=${/parameter/@cid}" style="float:right;margin:5px;font-size:15px;"><![CDATA[发表新帖]]></a>
+                    </div>
                     <a:table id="grid" bindTarget="article_result_ds" canWheel="false" className="cateList" navBar="true" navBarType="simple" style="width:100%;float:left;">
                         <a:columns>
                             <a:column name="article_title" prompt="题目" renderer="articleRenderer"/>
@@ -61,5 +63,15 @@
                 </div>
             </a:case>
         </a:switch>
+        <script language="javascript"><![CDATA[            
+            Aurora.onReady(function() {                
+                var login_success = '${/session/@login_success}';
+                if (login_success == 1) {                    
+                    Ext.fly('login').setStyle('display', 'block');
+                } else {                    
+                    Ext.fly('login').setStyle('display', 'none');
+                }
+            });
+        ]]></script>
     </a:view>
 </a:screen>
