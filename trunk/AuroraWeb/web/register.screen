@@ -9,32 +9,32 @@
     <a:init-procedure/>
     <a:view>
         <script><![CDATA[
-    		function passwordValidate(record, name, value) {
-    		    if (name == 'password' || name == 'password_new') {
-    		        var password = record.get('password');
-    		        var password_new = record.get('password_new');    		
-    		        if (password != password_new) {
-    		            return '确认密码与密码不一致!!';
-    		        }    		
-    		        return true;
-    		    }
-    		}
-    		
-    		function sureFunction() {
-    		    debugger;
-    		    $('sys_user_ds').submit();
-    		}
-    		
-    		function submitSuccess(ds, res) {
-    		    debugger;
-    		    var success = res.result.success;
-    		    if (success == 0) {
-    		        Aurora.showMessage('提示', '此用户名已存在!!');
-    		        return;
-    		    }
-    		    $('register_screen').close();
-    		}
-		]]></script>
+            function passwordValidate(record, name, value) {
+                if (name == 'password' || name == 'password_new') {
+                    var password = record.get('password');
+                    var password_new = record.get('password_new');
+                    if (password != password_new) {
+                        return '确认密码与密码不一致!!';
+                    }
+                    return true;
+                }
+            }
+            
+            function sureFunction() {
+                $('sys_user_ds').submit();
+            }
+            
+            function submitSuccess(ds, res) {
+                var success = res.result.record.success;                            
+                if (success == 0) {
+                    Aurora.showMessage('提示', '此用户名已存在!!');
+                    return;
+                }
+                $('register_screen').close();
+                var src = document.getElementById('mainFrame').contentWindow.location.href;
+                window.location.href = 'login.screen?user_id=' + res.result.record.user_id + '&nick_name=' + res.result.record.nick_name + '&success=' + success + '&src=' + src;
+            }
+        ]]></script>
         <a:dataSets>
             <a:dataSet id="sys_user_ds" autoCreate="true" model="sys.sys_register" submitUrl="${/request/@context_path}/register.svc">
                 <a:fields>

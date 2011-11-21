@@ -91,6 +91,33 @@
 				});
             }
             
+            function login() {
+                new Aurora.Window({
+                    url: 'sys_login.screen',
+                    title: '登录',
+                    id: 'login_screen',
+                    width: 280,
+                    height: 130
+                });
+            }
+            
+            function exitSystem() {
+                Aurora.showConfirm('退出', '确认退出', function(cmp) {
+                    Aurora.request({
+                        url: 'logout.svc',
+                        para: {},
+                        success: function() {
+                            try {
+                                window.location.reload();
+                            } catch (e) {}
+                            window.close();                            
+                        },
+                        scope: this
+                    });
+                }, null, null, 100);
+            
+            }
+            
         ]]></script>
         <a:dataSets>
             <a:dataSet id="MENU_DS">
@@ -102,14 +129,23 @@
                 <tr>
                     <td class="topAreaClass" colspan="3" style="height:35px;background-color:#97aecc;background-image:url(&apos;images/banner_bg.gif&apos;)">
                         <div style="float:right;height:35px;font-weight:bold;color:#ffffff;margin-right:25px;line-height:30px;padding-left:10px;">
-                            <span style="margin-left:5px;"><![CDATA[|]]></span>
-                            <a href="javascript:register();" style="color:#fff;margin-left:5px;"><![CDATA[注册]]></a>
-                            <span style="margin-left:5px;"><![CDATA[|]]></span>
-                            <a href="javascript:;" style="color:#fff;margin-left:5px;"><![CDATA[登陆]]></a>
-                            <span style="margin-left:5px;"><![CDATA[|]]></span>
-                            <a href="javascript:;" style="color:#fff;margin-left:5px;"><![CDATA[我的帖子]]></a>
-                            <span style="margin-left:5px;"><![CDATA[|]]></span>
-                            <a href="javascript:;" style="color:#fff;margin-left:5px;"><![CDATA[搜索]]></a>
+                            <div style="float:right">
+                                <span style="margin-left:5px;"><![CDATA[|]]></span>
+                                <a href="javascript:;" style="color:#fff;margin-left:5px;"><![CDATA[搜索]]></a>
+                            </div>
+                            <div id="nologin" style="float:right;">
+                                <span style="margin-left:5px;"><![CDATA[|]]></span>
+                                <a href="javascript:register();" style="color:#fff;margin-left:5px;"><![CDATA[注册]]></a>
+                                <span style="margin-left:5px;"><![CDATA[|]]></span>
+                                <a href="javascript:login();" style="color:#fff;margin-left:5px;"><![CDATA[登陆]]></a>
+                            </div>
+                            <div id="login" style="float:right;display:none;">
+                                <span style="margin-left:5px;"><![CDATA[${/session/@nick_name},欢迎您回来]]></span>
+                                <span style="margin-left:5px;"><![CDATA[|]]></span>
+                                <a href="javascript:;" style="color:#fff;margin-left:5px;"><![CDATA[我的帖子]]></a>
+                                <span style="margin-left:5px;"><![CDATA[|]]></span>
+                                <a href="javascript:exitSystem();" style="color:#fff;margin-left:5px;"><![CDATA[退出]]></a>
+                            </div>
                         </div>
                     </td>
                 </tr>
@@ -124,41 +160,55 @@
                         <IMG name="ImgArrow" id="ImgArrow" alt="打开/关闭 菜单" border="0" onclick="shMenu()" src="images/mini-left.gif" style="cursor:pointer" width="5"/>
                     </td>
                     <td id="mainArea" class="mainAreaClass" style="width:100%">
-                        <iframe name="main" id="mainFrame" border="0" frameborder="0" height="100%" src="welcome.screen" style="width:100%;height:100%" width="100%"><![CDATA[ ]]></iframe>
+                        <iframe name="main" id="mainFrame" border="0" frameborder="0" height="100%" style="width:100%;height:100%" width="100%"><![CDATA[ ]]></iframe>
                     </td>
                 </tr>
             </tbody>
         </table>
         <script language="javascript"><![CDATA[
-            function syncMainAreaSize(){
+            function syncMainAreaSize() {
                 var screenWidth = Aurora.getViewportWidth() - 2;
                 var menu = document.getElementById('menuArea');
-                if(menu.style.display == 'none') {
+                if (menu.style.display == 'none') {
                     screenWidth = screenWidth - 5;
-                }else {
+                } else {
                     screenWidth = screenWidth - 219;
-                    document.cookie = "vw="+screenWidth;
+                    document.cookie = "vw=" + screenWidth;
                 }
-                Ext.get('mainArea').setWidth(screenWidth);                
+                Ext.get('mainArea').setWidth(screenWidth);
             }
-
-            function initSize(){
+            
+            function initSize() {
                 var screenHeight = Aurora.getViewportHeight();
                 var bottomHeight = screenHeight - 5 - 35;
                 Ext.get('menuArea').setHeight(bottomHeight);
                 Ext.get('mainArea').setHeight(bottomHeight);
-                document.cookie = "vh="+(bottomHeight-2);
+                document.cookie = "vh=" + (bottomHeight - 2);
                 syncMainAreaSize();
-                $('menuTree').setHeight(bottomHeight-9);
+                $('menuTree').setHeight(bottomHeight - 9);
                 Ext.get('main').show();
             }
             
             initSize();
-            Ext.lib.Event.on(window, "resize", function(){
+            Ext.lib.Event.on(window, "resize", function() {
                 initSize();
             }, this);
-            
-            
+            Aurora.onReady(function() {
+                var src = '${/parameter/@src}';
+                if (src != '' && src != null) {
+                    document.getElementById('mainFrame').src = src;
+                } else {
+                    document.getElementById('mainFrame').src = "welcome.screen";
+                }
+                var login_success = '${/session/@login_success}';
+                if (login_success == 1) {
+                    Ext.fly('nologin').setStyle('display', 'none');
+                    Ext.fly('login').setStyle('display', 'block');
+                } else {
+                    Ext.fly('nologin').setStyle('display', 'block');
+                    Ext.fly('login').setStyle('display', 'none');
+                }
+            });
         ]]></script>
     </a:view>
 </a:screen>
