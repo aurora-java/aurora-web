@@ -21,7 +21,6 @@
                         <span style="float:right"><a href="#" style="background-image:url('${/request/@context_path}/images/page_delete.gif');padding-left:19px;background-repeat:no-repeat;">删除</a></span>
                     </a:case>
                  </a:switch>
-
             </div>
             <div style="margin:5px 0px 5px 0px;height:2px;background-color:#dddddd"></div>
             <div class="docbook" style="margin-top:25px;">
