@@ -1,0 +1,162 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <title></title><link rel="stylesheet" type="text/css" href="../../../../css/html.css"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article"><div class="titlepage"></div><div class="sect3" title="TextField"><div class="titlepage"><div><div><h4 class="title"><a name="presentation-client-editor-textfield"></a>TextField</h4></div></div></div><p>
+       TextField&#26159;&#19968;&#20010;&#25552;&#20379;&#25991;&#26412;&#36755;&#20837;&#32534;&#36753;&#30340;&#32452;&#20214;&#65292;&#21487;&#38480;&#21046;&#22823;&#23567;&#20889;&#30340;&#36755;&#20837;&#12290;
+    </p><div class="mediaobject"><img src="atm_download.svc?attachment_id=54"><div class="caption"><p>
+				&#19978;&#22270;&#26159;TextField&#32452;&#20214;&#22312;&#39029;&#38754;&#20013;&#30340;&#21576;&#29616;&#65292;&#36755;&#20837;&#26694;&#21069;&#30340;&#25991;&#23383;&#20449;&#24687;&#26159;&#36890;&#36807;TextField&#26631;&#31614;&#23646;&#24615;prompt&#26469;&#23450;&#20041;&#30340;&#12290;
+			</p></div></div><div class="sect4" title="TextField&#23450;&#20041;"><div class="titlepage"><div><div><h5 class="title"><a name="presentation-client-editor-textfield-tag"></a>TextField&#23450;&#20041;</h5></div></div></div><p>
+    	 &#22312;screen&#25991;&#20214;&#20013;&#25105;&#20204;&#36890;&#36807;&lt;a:textField&gt;&#26631;&#31614;&#26469;&#23450;&#20041;&#19968;&#20010;TextField&#23545;&#35937;&#12290;
+    </p><pre class="programlisting">
+<strong class="hl-tag" style="color: #000096">&lt;a:textField</strong> <span class="hl-attribute" style="color: #993300">bindTarget</span>=<span class="hl-value" style="color: #F5844C">"login_dataset"</span> <span class="hl-attribute" style="color: #993300">id</span>=<span class="hl-value" style="color: #F5844C">"user_name_tf"</span> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"user_name"</span>
+	<span class="hl-attribute" style="color: #993300">prompt</span>=<span class="hl-value" style="color: #F5844C">"HAP_USERNAME"</span> <span class="hl-attribute" style="color: #993300">width</span>=<span class="hl-value" style="color: #F5844C">"150"</span> <span class="hl-attribute" style="color: #993300">typeCase</span>=<span class="hl-value" style="color: #F5844C">"upper"</span><strong class="hl-tag" style="color: #000096">&gt;</strong>
+    <strong class="hl-tag" style="color: #000096">&lt;a:events&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:event</strong> <span class="hl-attribute" style="color: #993300">handler</span>=<span class="hl-value" style="color: #F5844C">"login"</span> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"enterdown"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+    <strong class="hl-tag" style="color: #000096">&lt;/a:events&gt;</strong>
+<strong class="hl-tag" style="color: #000096">&lt;/a:textField&gt;</strong>
+</pre><p>
+    	textField&#26631;&#31614;&#21487;&#20197;&#35774;&#32622;&#19968;&#20010;id&#23646;&#24615;&#65292;id&#26159;&#32452;&#20214;&#30340;&#21807;&#19968;&#26631;&#35782;&#65292;&#25105;&#20204;&#21487;&#20197;&#22312;&#39029;&#38754;&#33050;&#26412;&#20013;&#29992;$('id')&#30340;&#26041;&#27861;&#33719;&#24471;&#35813;id&#23545;&#24212;&#30340;&#32452;&#20214;&#23545;&#35937;&#65292;&#36827;&#32780;&#21487;&#20197;&#35843;&#29992;&#30456;&#24212;&#30340;&#20989;&#25968;&#26041;&#27861;&#12290;
+    </p><p>
+    	textField&#26631;&#31614;&#30340;bindTarget&#23646;&#24615;&#21487;&#25351;&#23450;&#19968;&#20010;dataset&#23545;&#35937;&#30340;id&#65292;name&#23646;&#24615;&#21487;&#25351;&#23450;&#35813;dataset&#20854;&#20013;&#19968;&#20010;field&#30340;&#21517;&#23383;&#12290;&#36825;&#20004;&#20010;&#23646;&#24615;&#24517;&#39035;&#32852;&#21512;&#20351;&#29992;&#65292;&#20854;&#21151;&#33021;&#26159;&#23558;TextField&#23545;&#35937;&#32465;&#23450;&#21040;dataset&#20013;&#30340;&#19968;&#20010;field&#19978;&#65292;&#36827;&#32780;&#25105;&#20204;&#21482;&#35201;&#23545;dataset&#36827;&#34892;&#25805;&#20316;&#23601;&#33021;&#21363;&#26102;&#21453;&#26144;&#22312;TextField&#19978;&#65292;&#21478;&#22806;TextField&#19978;&#30340;&#25991;&#23383;&#32534;&#36753;&#20063;&#20250;&#31435;&#21051;&#20462;&#25913;dataset&#20013;&#30340;&#25968;&#25454;&#12290;
+    </p><p>
+    	events&#26631;&#31614;&#23450;&#20041;&#20102;&#38656;&#35201;&#21709;&#24212;&#30340;&#20107;&#20214;&#20989;&#25968;&#65292;&#20363;&#22914;enterdown&#20107;&#20214;&#65292;&#24403;&#38190;&#30424;&#38190;&#20837;&#22238;&#36710;&#38190;&#26102;&#65292;TextField&#20250;&#35302;&#21457;enterdown&#20107;&#20214;&#65292;&#36825;&#26679;&#25105;&#20204;&#21487;&#20197;&#36890;&#36807;&#37197;&#32622;&#19968;&#20010;&#23458;&#25143;&#31471;&#20989;&#25968;login&#26469;&#21709;&#24212;&#12290;
+    </p><pre class="programlisting">
+<strong class="hl-keyword" style="color:#7F0055">function</strong> login(){
+    <strong class="hl-keyword" style="color:#7F0055">var</strong> lds = $(<strong class="hl-string"><em style="color:red">'login_dataset'</em></strong>);
+    <strong class="hl-keyword" style="color:#7F0055">var</strong> record = lds.getCurrentRecord();
+    Aurora.request({url:<strong class="hl-string"><em style="color:red">'login.svc'</em></strong>, para:record.data, success:<strong class="hl-keyword" style="color:#7F0055">function</strong>(){
+        window.location.href=<strong class="hl-string"><em style="color:red">'role_select.screen'</em></strong>
+    },scope:<strong class="hl-keyword" style="color:#7F0055">this</strong>});
+}
+</pre></div><div class="sect4" title="TextField&#26631;&#31614;&#23646;&#24615;"><div class="titlepage"><div><div><h5 class="title"><a name="d0e28"></a>TextField&#26631;&#31614;&#23646;&#24615;</h5></div></div></div><div class="table"><a name="presentation-client-editor-textfield-properties"></a><p class="title"><b>Table&nbsp;1.&nbsp;</b></p><div class="table-contents"><table border="1"><colgroup><col width="25%" class="c1"><col width="50%" class="c2"><col width="12%" class="c3"><col width="13%" class="c4"></colgroup><thead><tr><th>
+                        &#23646;&#24615;&#21517;
+                    </th><th>
+                        &#29992;&#36884;
+                    </th><th>
+                       &#40664;&#35748;&#20540;
+                    </th><th>
+                       &#26159;&#21542;&#24517;&#22635;
+                    </th></tr></thead><tbody><tr><td>
+                        bindTarget
+                    </td><td>
+                        &#32452;&#20214;&#25152;&#32465;&#23450;&#30340;dataset&#25968;&#25454;&#38598;&#65292;&#23646;&#24615;&#20540;&#26159;dataset&#30340;ID&#12290;
+                    </td><td>
+                    </td><td>
+                    </td></tr><tr><td>
+                        className
+                    </td><td>
+                    	&#32452;&#20214;&#30340;&#26679;&#24335;&#34920;&#12290;
+                    </td><td>
+                    </td><td>
+                    </td></tr><tr><td>
+                        emptyText
+                    </td><td>
+                    	&#24403;&#32452;&#20214;&#27809;&#26377;&#20540;&#30340;&#26102;&#20505;&#26174;&#31034;&#22312;&#32452;&#20214;&#19978;&#30340;&#25552;&#31034;&#20449;&#24687;&#12290;
+                    </td><td>
+                    </td><td>
+                    </td></tr><tr><td>
+                        id
+                    </td><td>
+                        &#32452;&#20214;&#30340;&#21807;&#19968;&#26631;&#35782;&#65292;&#21487;&#29992;$(id)&#26041;&#27861;&#33719;&#24471;&#32452;&#20214;&#23545;&#35937;&#12290;
+                    </td><td>
+                    </td><td>
+                    </td></tr><tr><td>
+                        marginWidth
+                    </td><td>
+                    	&#32452;&#20214;&#19982;&#31383;&#21475;&#20043;&#38388;&#30340;&#23485;&#24230;&#24046;&#65292;&#21333;&#20301;&#20687;&#32032;(px)&#65292;&#21487;&#20197;&#26681;&#25454;&#31383;&#21475;&#23485;&#24230;&#30340;&#25913;&#21464;&#32780;&#25913;&#21464;&#12290;
+                    </td><td>
+                    </td><td>
+                    </td></tr><tr><td>
+                        name
+                    </td><td>
+                        &#32452;&#20214;&#23545;&#24212;dataset&#25968;&#25454;&#38598;&#20013;&#30340;&#19968;&#20010;&#23383;&#27573;field&#65292;&#23646;&#24615;&#20540;&#26159;&#23383;&#27573;&#21517;&#12290;
+                    </td><td>
+                    </td><td>
+                    </td></tr><tr><td>
+                        prompt
+                    </td><td>
+                    	&#36755;&#20837;&#26694;&#21069;&#30340;&#25552;&#31034;&#25991;&#23383;&#65292;&#40664;&#35748;&#35843;&#29992;BM&#30340;prompt&#12290;
+                    </td><td>
+                    </td><td>
+                    </td></tr><tr><td>
+                        readOnly
+                    </td><td>
+                    	&#35774;&#23450;&#32452;&#20214;&#26159;&#21542;&#21482;&#35835;&#12290;
+                    	<p>
+                    		<span class="strong"><strong>&#21462;&#20540;</strong></span>
+                    		<code class="literal">true</code> | <code class="literal">false</code> 
+                    	</p>
+                    </td><td><code class="literal">false</code>
+                    </td><td>
+                    </td></tr><tr><td>
+                        required
+                    </td><td>
+                    	&#35774;&#23450;&#32452;&#20214;&#26159;&#21542;&#24517;&#22635;&#12290;
+                    	<p>
+                    		<span class="strong"><strong>&#21462;&#20540;</strong></span>
+                    		<code class="literal">true</code> | <code class="literal">false</code> 
+                    	</p>
+                    </td><td><code class="literal">false</code>
+                    </td><td>
+                    </td></tr><tr><td>
+                        style
+                    </td><td>
+                    	&#32452;&#20214;&#30340;&#26679;&#24335;&#12290;
+                    </td><td>
+                    </td><td>
+                    </td></tr><tr><td>
+                        typeCase
+                    </td><td>
+                    	&#32452;&#20214;&#30340;&#22823;&#23567;&#20889;&#36755;&#20837;&#38480;&#21046;&#12290;
+                    	<p>
+                    		<span class="strong"><strong>&#21462;&#20540;</strong></span>
+                    		<code class="literal">upper</code> | <code class="literal">lower</code> 
+                    	</p>
+                    </td><td>
+                    </td><td>
+                    </td></tr><tr><td>
+                        width
+                    </td><td>
+                    	&#32452;&#20214;&#30340;&#23485;&#24230;&#65292;&#21333;&#20301;&#20687;&#32032;(px)&#12290;
+                    </td><td><code class="literal">150</code>
+                    </td><td>
+                    </td></tr></tbody></table></div></div><br class="table-break"></div><div class="sect4" title="TextField&#23545;&#35937;&#20107;&#20214;"><div class="titlepage"><div><div><h5 class="title"><a name="d0e198"></a>TextField&#23545;&#35937;&#20107;&#20214;</h5></div></div></div><div class="table"><a name="presentation-client-editor-textfield-events"></a><p class="title"><b>Table&nbsp;2.&nbsp;</b></p><div class="table-contents"><table border="1"><colgroup><col width="20%" class="c1"><col width="80%" class="c2"></colgroup><thead><tr><th>
+                        &#20107;&#20214;&#21517;
+                    </th><th>
+                        &#29992;&#36884;
+                    </th></tr></thead><tbody><tr><td>
+                        blur
+                    </td><td>
+                        &#22833;&#21435;&#28966;&#28857;&#26102;&#35302;&#21457;&#30340;&#20107;&#20214;&#12290;
+                    </td></tr><tr><td>
+                        change
+                    </td><td>
+                        &#25991;&#26412;&#20869;&#23481;&#21457;&#29983;&#25913;&#21464;&#26102;&#35302;&#21457;&#30340;&#20107;&#20214;&#12290;
+                    </td></tr><tr><td>
+                        enterdown
+                    </td><td>
+                       &#25970;&#20987;&#22238;&#36710;&#38190;&#26102;&#35302;&#21457;&#30340;&#20107;&#20214;&#12290;
+                    </td></tr><tr><td>
+                        focus
+                    </td><td>
+                        &#33719;&#24471;&#28966;&#28857;&#26102;&#35302;&#21457;&#30340;&#20107;&#20214;&#12290;
+                    </td></tr><tr><td>
+                        keydown
+                    </td><td>
+                        &#38190;&#30424;&#25353;&#19979;&#26102;&#35302;&#21457;&#30340;&#20107;&#20214;&#12290;
+                    </td></tr><tr><td>
+                        keypress
+                    </td><td>
+                        &#38190;&#30424;&#25970;&#20987;&#26102;&#35302;&#21457;&#30340;&#20107;&#20214;&#12290;
+                    </td></tr><tr><td>
+                        keyup
+                    </td><td>
+                        &#38190;&#30424;&#25260;&#36215;&#26102;&#35302;&#21457;&#30340;&#20107;&#20214;&#12290;
+                    </td></tr><tr><td>
+                        mouseover
+                    </td><td>
+                        &#40736;&#26631;&#31227;&#21040;&#32452;&#20214;&#19978;&#26102;&#35302;&#21457;&#30340;&#20107;&#20214;&#12290;
+                    </td></tr><tr><td>
+                        mouseout
+                    </td><td>
+                         &#40736;&#26631;&#31227;&#20986;&#32452;&#20214;&#26102;&#35302;&#21457;&#30340;&#20107;&#20214;&#12290;
+                    </td></tr></tbody></table></div></div><br class="table-break"></div></div></div></body></html>

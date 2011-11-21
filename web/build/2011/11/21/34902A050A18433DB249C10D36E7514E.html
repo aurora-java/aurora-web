@@ -1,0 +1,78 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <title></title><link rel="stylesheet" type="text/css" href="../../../../css/html.css"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article"><div class="titlepage"></div><div class="sect3" title="NumberField"><div class="titlepage"><div><div><h4 class="title"><a name="presentation-client-editor-numberfield"></a>NumberField</h4></div></div></div><p>
+       NumberField&#26159;&#19968;&#20010;&#25552;&#20379;&#25968;&#23383;&#36755;&#20837;&#32534;&#36753;&#30340;&#32452;&#20214;&#65292;&#32487;&#25215;&#33258;TextField&#32452;&#20214;&#65292;&#25317;&#26377;TextField&#26631;&#31614;&#30340;&#23646;&#24615;&#20197;&#21450;TextField&#23545;&#35937;&#30340;&#26041;&#27861;&#21644;&#20107;&#20214;&#12290;
+    </p><div class="mediaobject"><img src="atm_download.svc?attachment_id=55"><div class="caption"><p>
+				&#19978;&#22270;&#26159;NumberField&#32452;&#20214;&#22312;&#39029;&#38754;&#20013;&#30340;&#21576;&#29616;&#65292;&#36755;&#20837;&#26694;&#21069;&#30340;&#25991;&#23383;&#20449;&#24687;&#26159;&#36890;&#36807;NumberField&#26631;&#31614;&#23646;&#24615;prompt&#26469;&#23450;&#20041;&#30340;&#12290;
+			</p></div></div><div class="sect4" title="NumberField&#23450;&#20041;"><div class="titlepage"><div><div><h5 class="title"><a name="presentation-client-editor-numberfield-tag"></a>NumberField&#23450;&#20041;</h5></div></div></div><p>
+    	 &#22312;screen&#25991;&#20214;&#20013;&#25105;&#20204;&#36890;&#36807;&lt;a:numberField&gt;&#26631;&#31614;&#26469;&#23450;&#20041;&#19968;&#20010;NumberField&#23545;&#35937;&#12290;
+    </p><pre class="programlisting">
+<strong class="hl-tag" style="color: #000096">&lt;a:numberField</strong> <span class="hl-attribute" style="color: #993300">bindTarget</span>=<span class="hl-value" style="color: #F5844C">"fnd_tax_type_codes_query_ds"</span> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"tax_type_rate"</span>
+	<span class="hl-attribute" style="color: #993300">allowDecimals</span>=<span class="hl-value" style="color: #F5844C">"true"</span> <span class="hl-attribute" style="color: #993300">allowFormat</span>=<span class="hl-value" style="color: #F5844C">"true"</span> <span class="hl-attribute" style="color: #993300">decimalPrecision</span>=<span class="hl-value" style="color: #F5844C">"1"</span><strong class="hl-tag" style="color: #000096">&gt;</strong>
+    <strong class="hl-tag" style="color: #000096">&lt;a:events&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:event</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"enterdown"</span> <span class="hl-attribute" style="color: #993300">handler</span>=<span class="hl-value" style="color: #F5844C">"queryTaxTypeCodes"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+    <strong class="hl-tag" style="color: #000096">&lt;/a:events&gt;</strong>
+<strong class="hl-tag" style="color: #000096">&lt;/a:numberField&gt;</strong>
+</pre><p>
+    	numberField&#26631;&#31614;&#21487;&#20197;&#35774;&#32622;&#19968;&#20010;id&#23646;&#24615;&#65292;id&#26159;&#32452;&#20214;&#30340;&#21807;&#19968;&#26631;&#35782;&#65292;&#25105;&#20204;&#21487;&#20197;&#22312;&#39029;&#38754;&#33050;&#26412;&#20013;&#29992;$('id')&#30340;&#26041;&#27861;&#33719;&#24471;&#35813;id&#23545;&#24212;&#30340;&#32452;&#20214;&#23545;&#35937;&#65292;&#36827;&#32780;&#21487;&#20197;&#35843;&#29992;&#30456;&#24212;&#30340;&#20989;&#25968;&#26041;&#27861;&#12290;
+    </p><p>
+    	numberField&#26631;&#31614;&#30340;bindTarget&#23646;&#24615;&#21487;&#25351;&#23450;&#19968;&#20010;dataset&#23545;&#35937;&#30340;id&#65292;name&#23646;&#24615;&#21487;&#25351;&#23450;&#35813;dataset&#20854;&#20013;&#19968;&#20010;field&#30340;&#21517;&#23383;&#12290;&#36825;&#20004;&#20010;&#23646;&#24615;&#24517;&#39035;&#32852;&#21512;&#20351;&#29992;&#65292;&#20854;&#21151;&#33021;&#26159;&#23558;NumberField&#23545;&#35937;&#32465;&#23450;&#21040;dataset&#20013;&#30340;&#19968;&#20010;field&#19978;&#65292;&#36827;&#32780;&#25105;&#20204;&#21482;&#35201;&#23545;dataset&#36827;&#34892;&#25805;&#20316;&#23601;&#33021;&#21363;&#26102;&#21453;&#26144;&#22312;NumberField&#19978;&#65292;&#21478;&#22806;NumberField&#19978;&#30340;&#25991;&#23383;&#32534;&#36753;&#20063;&#20250;&#31435;&#21051;&#20462;&#25913;dataset&#20013;&#30340;&#25968;&#25454;&#12290;
+    </p><p>
+    	events&#26631;&#31614;&#23450;&#20041;&#20102;&#38656;&#35201;&#21709;&#24212;&#30340;&#20107;&#20214;&#20989;&#25968;&#65292;&#20363;&#22914;enterdown&#20107;&#20214;&#65292;&#24403;&#38190;&#30424;&#38190;&#20837;&#22238;&#36710;&#38190;&#26102;&#65292;NumberField&#20250;&#35302;&#21457;enterdown&#20107;&#20214;&#65292;&#36825;&#26679;&#25105;&#20204;&#21487;&#20197;&#36890;&#36807;&#37197;&#32622;&#19968;&#20010;&#23458;&#25143;&#31471;&#20989;&#25968;queryTaxTypeCodes&#26469;&#21709;&#24212;&#12290;
+    </p><pre class="programlisting">
+<strong class="hl-keyword" style="color:#7F0055">function</strong> queryTaxTypeCodes(){
+    $(<strong class="hl-string"><em style="color:red">'fnd_tax_type_codes_result_ds'</em></strong>).query();
+}
+</pre></div><div class="sect4" title="NumberField&#26631;&#31614;&#23646;&#24615;"><div class="titlepage"><div><div><h5 class="title"><a name="d0e28"></a>NumberField&#26631;&#31614;&#23646;&#24615;</h5></div></div></div><div class="table"><a name="presentation-client-editor-numberfield-properties"></a><p class="title"><b>Table&nbsp;1.&nbsp;</b></p><div class="table-contents"><table border="1"><colgroup><col width="22%" class="c1"><col width="55%" class="c2"><col width="11%" class="c3"><col width="12%" class="c4"></colgroup><thead><tr><th>
+                        &#23646;&#24615;&#21517;
+                    </th><th>
+                        &#29992;&#36884;
+                    </th><th>
+                       &#40664;&#35748;&#20540;
+                    </th><th>
+                       &#26159;&#21542;&#24517;&#22635;
+                    </th></tr></thead><tbody><tr><td>
+                        allowDecimals
+                    </td><td>
+                    	&#26159;&#21542;&#20801;&#35768;NumberField&#30340;&#20540;&#20026;&#23567;&#25968;&#12290;
+                    	<p>
+                    		<span class="strong"><strong>&#21462;&#20540;</strong></span>
+                    		<code class="literal">true</code> | <code class="literal">false</code> 
+                    	</p>
+                    </td><td><code class="literal">true</code>
+                    </td><td>
+                    </td></tr><tr><td>
+                        allowNegative
+                    </td><td>
+                    	&#26159;&#21542;&#20801;&#35768;NumberField&#30340;&#20540;&#20026;&#36127;&#25968;&#12290;
+                    	<p>
+                    		<span class="strong"><strong>&#21462;&#20540;</strong></span>
+                    		<code class="literal">true</code> | <code class="literal">false</code> 
+                    	</p>
+                    </td><td><code class="literal">true</code>
+                    </td><td>
+                    </td></tr><tr><td>
+                        allowFormat
+                    </td><td>
+                    	&#26159;&#21542;&#20801;&#35768;NumberField&#30340;&#20540;&#25353;&#29031;&#21315;&#20998;&#20301;&#26174;&#31034;&#12290;
+                    	<p>
+                    		<span class="strong"><strong>&#21462;&#20540;</strong></span>
+                    		<code class="literal">true</code> | <code class="literal">false</code> 
+                    	</p>
+                    </td><td><code class="literal">true</code>
+                    </td><td>
+                    </td></tr><tr><td>
+                        decimalPrecision
+                    </td><td>
+                    	&#32452;&#20214;&#30340;&#23567;&#25968;&#20301;&#31934;&#24230;&#65292;&#24517;&#39035;&#22312;allowDecimals&#20026;<code class="literal">true</code>&#30340;&#24773;&#20917;&#19979;&#25165;&#33021;&#20351;&#29992;&#12290;
+                    </td><td><code class="literal">2</code>
+                    </td><td>
+                    </td></tr><tr><td>
+                        &#20854;&#20182;
+                    </td><td>
+                       &#21442;&#38405;TextField&#26631;&#31614;&#23646;&#24615;&#12290;
+                    </td><td>
+                    </td><td>
+                    </td></tr></tbody></table></div></div><br class="table-break"></div><div class="sect4" title="NumberField&#23545;&#35937;&#20107;&#20214;"><div class="titlepage"><div><div><h5 class="title"><a name="d0e140"></a>NumberField&#23545;&#35937;&#20107;&#20214;</h5></div></div></div><p>
+			&#35831;&#21442;&#38405;TextField&#30340;&#23545;&#35937;&#20107;&#20214;&#12290;
+		</p></div></div></div></body></html>

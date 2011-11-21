@@ -1,0 +1,139 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <title></title><link rel="stylesheet" type="text/css" href="../../../../css/html.css"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article"><div class="titlepage"></div><div class="sect2" title="DataSet"><div class="titlepage"><div><div><h3 class="title"><a name="presentation-client-dataset"></a>DataSet</h3></div></div></div><p>
+                &#20160;&#20040;&#26159;DataSet?
+            </p><p>
+                DataSet&#26159;&#19968;&#20010;&#36816;&#34892;&#22312;&#23458;&#25143;&#31471;&#27983;&#35272;&#22120;&#20013;&#30340;&#32452;&#20214;,&#26412;&#36136;&#19978;&#26469;&#35828;&#26159;&#19968;&#20010;JavaScript&#26500;&#24314;&#30340;&#23545;&#35937;.
+                DataSet&#26159;&#19968;&#20010;&#25968;&#25454;&#23481;&#22120;,&#20182;&#23553;&#35013;&#20102;&#24120;&#29992;&#30340;&#19968;&#20123;&#25968;&#25454;&#25805;&#20316;,&#25105;&#20204;&#21487;&#20197;&#36890;&#36807;&#19979;&#38754;&#36825;&#24352;&#22270;&#26469;&#26356;&#28145;&#21051;&#30340;&#29702;&#35299;DataSet&#30340;&#21547;&#20041;
+            </p><div class="mediaobject"><img src="atm_download.svc?attachment_id=45"></div><p>
+                &#36890;&#36807;&#19978;&#22270;&#25105;&#20204;&#21487;&#20197;&#30475;&#21040;DataSet&#26159;&#19968;&#20010;&#25968;&#25454;&#23481;&#22120;,&#23427;&#21253;&#21547;&#20102;&#19968;&#20010;&#25968;&#32452;&#23545;&#35937;&#29992;&#26469;&#23384;&#25918;&#25152;&#26377;&#30340;record&#23545;&#35937;.
+            </p><p>
+              Record&#20195;&#34920;&#19968;&#26465;&#25968;&#25454;&#23545;&#35937;,DataSet&#21644;Record&#30340;&#20851;&#31995;&#25105;&#20204;&#21487;&#20197;&#36825;&#26679;&#29702;&#35299;:&#20551;&#22914;&#25105;&#20204;&#25226;dataset&#27604;&#20316;&#25968;&#25454;&#24211;&#20013;&#30340;&#19968;&#24352;&#34920;,
+                &#37027;&#20040;record&#23601;&#26159;&#34920;&#20013;&#30340;&#19968;&#34892;&#35760;&#24405;.
+            </p><div class="sect3" title="DataSet&#23450;&#20041;"><div class="titlepage"><div><div><h4 class="title"><a name="presentation-client-dataset-tag"></a>
+                  DataSet&#23450;&#20041;
+                </h4></div></div></div><p>
+                    &#22312;screen&#25991;&#20214;&#20013;&#25105;&#20204;&#36890;&#36807;&lt;a:dataSet&gt;&#26631;&#31614;&#26469;&#23450;&#20041;&#19968;&#20010;dataset&#23545;&#35937;
+                </p><pre class="programlisting">                
+<strong class="hl-tag" style="color: #000096">&lt;a:dataSet</strong> <span class="hl-attribute" style="color: #993300">model</span>=<span class="hl-value" style="color: #F5844C">"sys.sys_user"</span> <span class="hl-attribute" style="color: #993300">id</span>=<span class="hl-value" style="color: #F5844C">"sys_user_create_ds"</span><strong class="hl-tag" style="color: #000096">&gt;</strong>
+    <strong class="hl-tag" style="color: #000096">&lt;a:fields&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:field</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"user_name"</span> <span class="hl-attribute" style="color: #993300">required</span>=<span class="hl-value" style="color: #F5844C">"true"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:field</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"start_date"</span> <span class="hl-attribute" style="color: #993300">required</span>=<span class="hl-value" style="color: #F5844C">"true"</span> <span class="hl-attribute" style="color: #993300">validator</span>=<span class="hl-value" style="color: #F5844C">"dateValidator"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:field</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"description"</span> <span class="hl-attribute" style="color: #993300">required</span>=<span class="hl-value" style="color: #F5844C">"true"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+    <strong class="hl-tag" style="color: #000096">&lt;/a:fields&gt;</strong>
+    <strong class="hl-tag" style="color: #000096">&lt;events&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:event</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"submitsuccess"</span> <span class="hl-attribute" style="color: #993300">handler</span>=<span class="hl-value" style="color: #F5844C">"onCreateUserSuccess"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:event</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"update"</span> <span class="hl-attribute" style="color: #993300">handler</span>=<span class="hl-value" style="color: #F5844C">"onUpdate"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+    <strong class="hl-tag" style="color: #000096">&lt;/events&gt;</strong>
+<strong class="hl-tag" style="color: #000096">&lt;/a:dataSet&gt;</strong>
+                </pre><p>
+                    &#27599;&#19968;&#20010;dataset&#37117;&#24212;&#35813;&#23450;&#20041;&#19968;&#20010;id&#23646;&#24615;,&#22312;&#25972;&#20010;screen&#25991;&#20214;&#20013;&#19981;&#24471;&#20986;&#29616;&#37325;&#22797;&#30340;id&#20540;. &#23450;&#20041;&#20102;id&#20540;&#25105;&#20204;&#21487;&#20197;&#22312;&#39029;&#38754;&#33050;&#26412;&#20013;&#36890;&#36807;$('sys_user_create_ds')&#30340;&#26041;&#24335;
+                    &#33719;&#21462;&#21040;&#36825;&#20010;dataset&#23545;&#35937;,&#36827;&#32780;&#21487;&#20197;&#35843;&#29992;&#30456;&#24212;&#30340;&#20989;&#25968;&#26041;&#27861;.                    
+                </p><p>
+                    fields&#23376;&#33410;&#28857;&#23450;&#20041;&#20102;&#36825;&#20010;dataset&#37117;&#21253;&#21547;&#21738;&#20123;field&#20197;&#21450;field&#20013;&#30340;&#29305;&#24615;.
+                       &#22312;field&#19978;&#25105;&#20204;&#35201;&#25351;&#23450;&#23427;&#30340;name,&#36890;&#36807;ajax&#33719;&#21462;&#21040;&#30340;json&#25968;&#25454;&#20250;&#26681;&#25454;name&#26469;&#21305;&#37197;.
+                       &#22312;field&#19978;&#25105;&#20204;&#36824;&#21487;&#20197;&#23450;&#20041;&#19968;&#20123;&#20854;&#20182;&#30340;&#38468;&#21152;&#29305;&#24615;,&#20363;&#22914;&#26159;&#21542;&#24517;&#36755;,&#26159;&#21542;&#21482;&#35835;&#31561;&#31561;.
+                </p><p>
+                    events&#26631;&#31614;&#23450;&#20041;&#20102;&#38656;&#35201;&#21709;&#24212;&#30340;&#20107;&#20214;&#20989;&#25968;,&#20363;&#22914;update&#20107;&#20214;,&#24403;dataset&#23545;&#20854;&#20013;&#19968;&#26465;record&#30340;field&#36827;&#34892;&#26356;&#26032;&#30340;&#26102;&#20505;,dataset&#20250;&#35302;&#21457;&#19968;&#20010;update&#20107;&#20214;,
+                    &#36825;&#26679;&#25105;&#20204;&#21487;&#20197;&#36890;&#36807;&#37197;&#32622;&#19968;&#20010;&#23458;&#25143;&#31471;&#20989;&#25968;onUpdate&#26469;&#21709;&#24212;.                 
+                </p><pre class="programlisting">                
+<strong class="hl-keyword" style="color:#7F0055">function</strong> onUpdate(ds,record,name,value){
+    <strong class="hl-keyword" style="color:#7F0055">if</strong>(name == <strong class="hl-string"><em style="color:red">'user_password'</em></strong> || name == <strong class="hl-string"><em style="color:red">'user_password_re'</em></strong>){
+        record.validate((name == <strong class="hl-string"><em style="color:red">'user_password'</em></strong>) ? <strong class="hl-string"><em style="color:red">'user_password_re'</em></strong> : <strong class="hl-string"><em style="color:red">'user_password'</em></strong>); 
+    }
+    <strong class="hl-keyword" style="color:#7F0055">if</strong>(name == <strong class="hl-string"><em style="color:red">'start_date'</em></strong> || name == <strong class="hl-string"><em style="color:red">'end_date'</em></strong>){
+        record.validate((name == <strong class="hl-string"><em style="color:red">'start_date'</em></strong>) ? <strong class="hl-string"><em style="color:red">'end_date'</em></strong> : <strong class="hl-string"><em style="color:red">'start_date'</em></strong>);
+    }
+}
+                </pre><p>
+                    &#26356;&#22810;&#35814;&#32454;&#37197;&#32622;&#21487;&#20197;&#21442;&#32771;AuroraTagDocument&#25991;&#26723;                  
+                </p></div><div class="sect3" title="&#21069;&#35328;"><div class="titlepage"><div><div><h4 class="title"><a name="presentation-client-dataset-action"></a>&#21069;&#35328;</h4></div></div></div><p>
+                    DataSet&#26159;&#19968;&#20010;&#23458;&#25143;&#31471;&#30340;JavaScript&#32452;&#20214;,&#23427;&#23553;&#35013;&#20102;&#30456;&#24212;&#30340;ajax&#25805;&#20316;,&#29992;&#26469;&#21644;&#26381;&#21153;&#31471;&#36827;&#34892;&#25968;&#25454;&#20132;&#20114;.
+                </p><pre class="programlisting">
+     &#23458;&#25143;&#31471;&#27983;&#35272;&#22120;                            &#26381;&#21153;&#31471;&#31243;&#24207;
+    _____________                       __________________
+   |             |                     |                  |     
+   |   DataSet   |                     |   Web Server     |     
+   |_____________|      request        |__________________| 
+   |             | ------------------&gt; |                  | 
+   |  record     |      AJAX           |  query()         |
+   |  record     | &lt;------------------ |  update()        |
+   |  ...        |      JSON           |  delete()        | 
+   |_____________|                     |__________________|                   
+                                                 
+                                                 
+ </pre><p>
+                    DataSet&#26159;&#19968;&#20010;&#23458;&#25143;&#31471;&#30340;JavaScript&#32452;&#20214;,&#23427;&#23553;&#35013;&#20102;&#30456;&#24212;&#30340;ajax&#25805;&#20316;,&#29992;&#26469;&#21644;&#26381;&#21153;&#31471;&#36827;&#34892;&#25968;&#25454;&#20132;&#20114;.
+                </p><p>
+                  DataSet&#25552;&#20379;&#20102;&#22522;&#26412;&#30340;&#25968;&#25454;&#25805;&#20316;,&#20027;&#35201;&#20998;&#20026;&#20004;&#31867;.&#19968;&#31867;&#26159;&#23458;&#25143;&#31471;&#25805;&#20316;,&#19968;&#31867;&#26159;&#21644;&#26381;&#21153;&#31471;&#36890;&#20449;.
+                </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>
+                       &#23458;&#25143;&#31471;&#25805;&#20316; -- &#20363;&#22914;&#24403;&#35843;&#29992;add&#20989;&#25968;&#21518;,&#20854;&#23454;&#26412;&#36136;&#19978;&#26159;&#22312;&#23458;&#25143;&#31471;dataset&#20013;&#22686;&#21152;&#19968;&#26465;record&#35760;&#24405;,&#36825;&#20010;&#24182;&#27809;&#26377;&#21516;&#27493;&#21040;&#26381;&#21153;&#31471;&#25968;&#25454;&#24211;&#20013;.
+                    </p></li><li class="listitem"><p>
+                      AJAX&#25805;&#20316; --  &#36890;&#36807;AJAX&#35843;&#29992;&#21644;&#26381;&#21153;&#31471;&#36827;&#34892;&#36890;&#35759;,&#20363;&#22914;query&#26597;&#35810;&#26381;&#21153;&#31471;&#36820;&#22238;&#30456;&#24212;&#30340;json&#25968;&#25454;,&#22635;&#20805;&#21040;&#23458;&#25143;&#31471;.
+                    </p></li></ul></div></div><div class="sect3" title="&#20803;&#25968;&#25454;(Metadata)"><div class="titlepage"><div><div><h4 class="title"><a name="presentation-client-dataset-metadata"></a>
+                  &#20803;&#25968;&#25454;(Metadata)
+                </h4></div></div></div><p>
+                    Metadata&#20803;&#25968;&#25454;&#20027;&#35201;&#29992;&#26469;&#25551;&#36848;field&#30340;&#38468;&#21152;&#29305;&#24615;,&#20363;&#22914;&#26159;&#21542;&#21482;&#35835;,&#26159;&#21542;&#24517;&#36755;&#31561;&#31561;.
+                </p><p>
+                    &#20363;&#22914;:&#35774;&#32622;&#26576;&#19968;&#23383;&#27573;&#24517;&#36755;,&#25105;&#20204;&#21487;&#20197;&#22312;&#37197;&#32622;dataset&#30340;&#26102;&#20505;&#25351;&#23450;&#23545;&#24212;field&#30340;required&#20540;
+                </p><pre class="programlisting">                
+<strong class="hl-tag" style="color: #000096">&lt;a:dataSet</strong> <span class="hl-attribute" style="color: #993300">id</span>=<span class="hl-value" style="color: #F5844C">"exp_employee_group_result_ds"</span><strong class="hl-tag" style="color: #000096">&gt;</strong>
+    <strong class="hl-tag" style="color: #000096">&lt;a:fields&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:field</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"expense_user_group_code"</span> <span class="hl-attribute" style="color: #993300">required</span>=<span class="hl-value" style="color: #F5844C">"true"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:field</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"description"</span> <span class="hl-attribute" style="color: #993300">required</span>=<span class="hl-value" style="color: #F5844C">"true"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+    <strong class="hl-tag" style="color: #000096">&lt;/a:fields&gt;</strong>
+<strong class="hl-tag" style="color: #000096">&lt;/a:dataSet&gt;</strong>
+                </pre><p>
+                    &#20363;&#22914;:&#35774;&#32622;&#26576;&#19968;&#23383;&#27573;&#21482;&#35835;,&#25105;&#20204;&#21487;&#20197;&#22312;&#37197;&#32622;dataset&#30340;&#26102;&#20505;&#25351;&#23450;&#23545;&#24212;field&#30340;readOnly&#20540;
+                </p><pre class="programlisting">                
+<strong class="hl-tag" style="color: #000096">&lt;a:dataSet</strong> <span class="hl-attribute" style="color: #993300">id</span>=<span class="hl-value" style="color: #F5844C">"exp_employee_group_result_ds"</span><strong class="hl-tag" style="color: #000096">&gt;</strong>
+    <strong class="hl-tag" style="color: #000096">&lt;a:fields&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:field</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"expense_user_group_code"</span> <span class="hl-attribute" style="color: #993300">readOnly</span>=<span class="hl-value" style="color: #F5844C">"true"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:field</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"description"</span> <span class="hl-attribute" style="color: #993300">required</span>=<span class="hl-value" style="color: #F5844C">"true"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+    <strong class="hl-tag" style="color: #000096">&lt;/a:fields&gt;</strong>
+<strong class="hl-tag" style="color: #000096">&lt;/a:dataSet&gt;</strong>
+                </pre></div><div class="sect3" title="&#26657;&#39564;(Validate)"><div class="titlepage"><div><div><h4 class="title"><a name="presentation-client-dataset-validate"></a>
+                  &#26657;&#39564;(Validate)
+                </h4></div></div></div><p>
+                   &#24456;&#22810;&#24773;&#20917;&#19979;&#25105;&#20204;&#38656;&#35201;&#23545;dataset&#30340;&#20540;&#36827;&#34892;&#26657;&#39564;,&#36825;&#20010;&#26102;&#20505;&#25105;&#20204;&#21487;&#20197;&#36890;&#36807;&#22312;field&#19978;&#37197;&#32622;&#26657;&#39564;&#20989;&#25968;(validator)&#26469;&#23454;&#29616;
+                </p><p>
+                   &#20363;&#22914;:&#25105;&#20204;&#23545;2&#20010;&#26085;&#26399;&#23383;&#27573;&#36827;&#34892;&#26657;&#39564;,&#35268;&#21017;&#26159;&#32467;&#26463;&#26085;&#26399;&#19981;&#24471;&#23567;&#20110;&#24320;&#22987;&#26085;&#26399;.&#39318;&#20808;&#25105;&#20204;&#22312;dataset&#30340;2&#20010;&#26085;&#26399;field&#19978;&#37197;&#32622;validator
+                </p><pre class="programlisting">                
+<strong class="hl-tag" style="color: #000096">&lt;a:dataSet</strong> <span class="hl-attribute" style="color: #993300">id</span>=<span class="hl-value" style="color: #F5844C">"fnd_companies_create_ds"</span>  <span class="hl-attribute" style="color: #993300">model</span>=<span class="hl-value" style="color: #F5844C">"fnd.fnd_companies"</span><strong class="hl-tag" style="color: #000096">&gt;</strong>
+    <strong class="hl-tag" style="color: #000096">&lt;a:fields&gt;</strong>
+        ...
+        <strong class="hl-tag" style="color: #000096">&lt;a:field</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"start_date_active"</span> <span class="hl-attribute" style="color: #993300">datatype</span>=<span class="hl-value" style="color: #F5844C">"date"</span> <span class="hl-attribute" style="color: #993300">required</span>=<span class="hl-value" style="color: #F5844C">"true"</span> <span class="hl-attribute" style="color: #993300">validator</span>=<span class="hl-value" style="color: #F5844C">"dateValidator"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:field</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"end_date_active"</span> <span class="hl-attribute" style="color: #993300">datatype</span>=<span class="hl-value" style="color: #F5844C">"date"</span> <span class="hl-attribute" style="color: #993300">validator</span>=<span class="hl-value" style="color: #F5844C">"dateValidator"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>        
+    <strong class="hl-tag" style="color: #000096">&lt;/a:fields&gt;</strong>
+<strong class="hl-tag" style="color: #000096">&lt;/a:dataSet&gt;</strong>
+                </pre><p>
+                   &#25509;&#19979;&#26469;&#25105;&#20204;&#38656;&#35201;&#23454;&#29616;&#26657;&#39564;&#20989;&#25968;dateValidator
+                </p><pre class="programlisting">                
+<strong class="hl-keyword" style="color:#7F0055">function</strong> dateValidator(record, name, value){
+    <strong class="hl-keyword" style="color:#7F0055">if</strong>(name == <strong class="hl-string"><em style="color:red">'start_date_active'</em></strong> || name == <strong class="hl-string"><em style="color:red">'end_date_active'</em></strong>){
+        <strong class="hl-keyword" style="color:#7F0055">var</strong> start_date = record.get(<strong class="hl-string"><em style="color:red">'start_date_active'</em></strong>);
+        <strong class="hl-keyword" style="color:#7F0055">var</strong> end_date = record.get(<strong class="hl-string"><em style="color:red">'end_date_active'</em></strong>);
+        <strong class="hl-keyword" style="color:#7F0055">if</strong>(<strong class="hl-keyword" style="color:#7F0055">typeof</strong>(end_date) != <strong class="hl-string"><em style="color:red">'undefined'</em></strong> &amp;&amp; !Ext.isEmpty(end_date)){
+            <strong class="hl-keyword" style="color:#7F0055">if</strong>(!compareDate(start_date, end_date)){
+                <strong class="hl-keyword" style="color:#7F0055">return</strong> <strong class="hl-string"><em style="color:red">'&#24320;&#22987;&#26102;&#38388;&#19981;&#33021;&#22823;&#20110;&#32467;&#26463;&#26102;&#38388;'</em></strong>;
+            }
+        }
+        <strong class="hl-keyword" style="color:#7F0055">return</strong> true;
+    }
+}
+                </pre><p>
+                   2&#20010;&#26085;&#26399;field&#20844;&#29992;&#20102;&#21516;&#19968;&#20010;&#26657;&#39564;&#20989;&#25968;,&#25152;&#20197;&#39318;&#20808;&#35201;&#21028;&#26029;name&#20540;,&#28982;&#21518;&#20998;&#21035;&#36890;&#36807;record&#33719;&#21462;&#23545;&#24212;&#30340;&#24320;&#22987;&#21644;&#32467;&#26463;&#26085;&#26399;.
+                   &#22914;&#26524;&#26657;&#39564;&#25104;&#21151;&#36820;&#22238;true,&#26657;&#39564;&#22833;&#36133;&#36820;&#22238;&#25552;&#31034;&#20449;&#24687;.
+                </p></div><div class="sect3" title="&#21160;&#24577;&#30028;&#38754;&#36923;&#36753;&#22788;&#29702;"><div class="titlepage"><div><div><h4 class="title"><a name="presentation-client-dataset-dynamic"></a>
+                  &#21160;&#24577;&#30028;&#38754;&#36923;&#36753;&#22788;&#29702;
+                </h4></div></div></div><p>
+                   &#24453;&#26356;&#26032;...
+                </p></div><div class="sect3" title="DataSet&#24120;&#29992;&#25805;&#20316;&#19982;&#20107;&#20214;"><div class="titlepage"><div><div><h4 class="title"><a name="presentation-client-dataset-event"></a>
+                  DataSet&#24120;&#29992;&#25805;&#20316;&#19982;&#20107;&#20214;
+                </h4></div></div></div><p>
+                  DataSet &#24120;&#29992;&#20989;&#25968;
+                </p><div class="table"><a name="d0e91"></a><p class="title"><b>Table&nbsp;1.&nbsp;DataSet&#30456;&#20851;&#20989;&#25968;</b></p><div class="table-contents"><table summary="DataSet&#30456;&#20851;&#20989;&#25968;" border="1"><colgroup><col width="28%"><col width="72%"></colgroup><thead><tr><th>&#20989;&#25968;</th><th>&#35828;&#26126;</th></tr></thead><tbody><tr><td>add</td><td>&#22312;&#23458;&#25143;&#31471;dataset&#20013;&#26032;&#22686;&#19968;&#26465;record&#35760;&#24405;</td></tr><tr><td>remove</td><td>&#22312;&#23458;&#25143;&#31471;dataset&#20013;&#21024;&#38500;&#25351;&#23450;&#30340;record</td></tr><tr><td>query</td><td>&#36890;&#36807;&#25351;&#23450;&#30340;url&#26597;&#35810;&#25968;&#25454;,&#26381;&#21153;&#31471;&#36820;&#22238;json&#25968;&#25454;&#22635;&#20805;&#21040;&#23458;&#25143;&#31471;dataset&#20013;</td></tr><tr><td>submit</td><td>&#38477;dataset&#20013;&#30340;&#25968;&#25454;&#25552;&#20132;&#21040;&#25351;&#23450;&#30340;url&#20013;</td></tr></tbody></table></div></div><br class="table-break"><p>
+                  DataSet &#24120;&#29992;&#20107;&#20214;
+                </p><div class="table"><a name="d0e126"></a><p class="title"><b>Table&nbsp;2.&nbsp;DataSet&#20107;&#20214;</b></p><div class="table-contents"><table summary="DataSet&#20107;&#20214;" border="1"><colgroup><col width="28%"><col width="72%"></colgroup><thead><tr><th>&#20107;&#20214;&#21517;</th><th>&#35828;&#26126;</th></tr></thead><tbody><tr><td>add</td><td>&#26032;&#22686;&#19968;&#26465;record&#21518;&#35302;&#21457;</td></tr><tr><td>remove</td><td>&#21024;&#38500;record&#21518;&#35302;&#21457;</td></tr><tr><td>update</td><td>&#24403;dataset&#20013;&#30340;record&#34987;&#26356;&#26032;&#21518;&#35302;&#21457;</td></tr><tr><td>load</td><td>&#24403;dataset&#25104;&#21151;&#21152;&#36733;&#25968;&#25454;&#21518;&#35302;&#21457;</td></tr><tr><td>submit</td><td>&#24403;dataset&#25552;&#20132;&#35831;&#27714;&#26102;&#35302;&#21457;</td></tr></tbody></table></div></div><br class="table-break"><p>
+                    &#26356;&#22810;&#35814;&#32454;&#30340;&#20989;&#25968;&#35831;&#21442;&#32771;AuroraJavaScriptDocument
+                </p></div></div></div></body></html>

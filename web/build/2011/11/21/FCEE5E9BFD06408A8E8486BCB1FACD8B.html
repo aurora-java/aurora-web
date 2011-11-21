@@ -1,0 +1,52 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <title></title><link rel="stylesheet" type="text/css" href="../../../../css/html.css"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article"><div class="titlepage"></div><div class="sect3" title="DateTimePicker"><div class="titlepage"><div><div><h4 class="title"><a name="presentation-client-editor-datetimepicker"></a>DateTimePicker</h4></div></div></div><p>
+		DateTimePicker&#26159;&#19968;&#20010;&#25552;&#20379;&#26085;&#26399;&#21450;&#26102;&#38388;&#36755;&#20837;&#32534;&#36753;&#30340;&#32452;&#20214;&#65292;&#32487;&#25215;&#33258;DatePicker&#32452;&#20214;&#65292;&#25317;&#26377;DatePicker&#26631;&#31614;&#30340;&#23646;&#24615;&#20197;&#21450;DatePicker&#23545;&#35937;&#30340;&#26041;&#27861;&#21644;&#20107;&#20214;&#12290;
+    </p><div class="mediaobject"><img src="atm_download.svc?attachment_id=59"><div class="caption"><p>
+				&#19978;&#22270;&#26159;DateTimePicker&#32452;&#20214;&#22312;&#39029;&#38754;&#20013;&#30340;&#21576;&#29616;&#65292;&#36755;&#20837;&#26694;&#21069;&#30340;&#25991;&#23383;&#20449;&#24687;&#26159;&#36890;&#36807;DateTimePicker&#26631;&#31614;&#23646;&#24615;prompt&#26469;&#23450;&#20041;&#30340;&#12290;
+			</p></div></div><div class="sect4" title="DateTimePicker&#23450;&#20041;"><div class="titlepage"><div><div><h5 class="title"><a name="presentation-client-editor-datetimepicker-tag"></a>DateTimePicker&#23450;&#20041;</h5></div></div></div><p>
+    	 &#22312;screen&#25991;&#20214;&#20013;&#25105;&#20204;&#36890;&#36807;&lt;a:dateTimePicker&gt;&#26631;&#31614;&#26469;&#23450;&#20041;&#19968;&#20010;DateTimePicker&#23545;&#35937;&#12290;
+    </p><pre class="programlisting">
+<strong class="hl-tag" style="color: #000096">&lt;a:dateTimePicker</strong> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"start_date"</span> <span class="hl-attribute" style="color: #993300">bindTarget</span>=<span class="hl-value" style="color: #F5844C">"sys_user_create_ds"</span> <span class="hl-attribute" style="color: #993300">viewSize</span>=<span class="hl-value" style="color: #F5844C">"2"</span>
+	<span class="hl-attribute" style="color: #993300">enableBesideDays</span>=<span class="hl-value" style="color: #F5844C">"both"</span> <span class="hl-attribute" style="color: #993300">enableMonthBtn</span>=<span class="hl-value" style="color: #F5844C">"both"</span><strong class="hl-tag" style="color: #000096">&gt;</strong>
+    <strong class="hl-tag" style="color: #000096">&lt;a:events&gt;</strong>
+        <strong class="hl-tag" style="color: #000096">&lt;a:event</strong> <span class="hl-attribute" style="color: #993300">handler</span>=<span class="hl-value" style="color: #F5844C">"login"</span> <span class="hl-attribute" style="color: #993300">name</span>=<span class="hl-value" style="color: #F5844C">"enterdown"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+    <strong class="hl-tag" style="color: #000096">&lt;/a:events&gt;</strong>
+<strong class="hl-tag" style="color: #000096">&lt;/a:dateTimePicker&gt;</strong>
+</pre><p>
+    	dateTimePicker&#26631;&#31614;&#21487;&#20197;&#35774;&#32622;&#19968;&#20010;id&#23646;&#24615;&#65292;id&#26159;&#32452;&#20214;&#30340;&#21807;&#19968;&#26631;&#35782;&#65292;&#25105;&#20204;&#21487;&#20197;&#22312;&#39029;&#38754;&#33050;&#26412;&#20013;&#29992;$('id')&#30340;&#26041;&#27861;&#33719;&#24471;&#35813;id&#23545;&#24212;&#30340;&#32452;&#20214;&#23545;&#35937;&#65292;&#36827;&#32780;&#21487;&#20197;&#35843;&#29992;&#30456;&#24212;&#30340;&#20989;&#25968;&#26041;&#27861;&#12290;
+    </p><p>
+    	dateTimePicker&#26631;&#31614;&#30340;bindTarget&#23646;&#24615;&#21487;&#25351;&#23450;&#19968;&#20010;dataset&#23545;&#35937;&#30340;id&#65292;name&#23646;&#24615;&#21487;&#25351;&#23450;&#35813;dataset&#20854;&#20013;&#19968;&#20010;field&#30340;&#21517;&#23383;&#12290;&#36825;&#20004;&#20010;&#23646;&#24615;&#24517;&#39035;&#32852;&#21512;&#20351;&#29992;&#65292;&#20854;&#21151;&#33021;&#26159;&#23558;DateTimePicker&#23545;&#35937;&#32465;&#23450;&#21040;dataset&#20013;&#30340;&#19968;&#20010;field&#19978;&#65292;&#36827;&#32780;&#25105;&#20204;&#21482;&#35201;&#23545;dataset&#36827;&#34892;&#25805;&#20316;&#23601;&#33021;&#21363;&#26102;&#21453;&#26144;&#22312;DateTimePicker&#19978;&#65292;&#21478;&#22806;DateTimePicker&#19978;&#30340;&#25991;&#23383;&#32534;&#36753;&#20063;&#20250;&#31435;&#21051;&#20462;&#25913;dataset&#20013;&#30340;&#25968;&#25454;&#12290;
+    </p><p>
+    	events&#26631;&#31614;&#23450;&#20041;&#20102;&#38656;&#35201;&#21709;&#24212;&#30340;&#20107;&#20214;&#20989;&#25968;&#65292;&#20363;&#22914;enterdown&#20107;&#20214;&#65292;&#24403;&#38190;&#30424;&#38190;&#20837;&#22238;&#36710;&#38190;&#26102;&#65292;DateTimePicker&#20250;&#35302;&#21457;enterdown&#20107;&#20214;&#65292;&#36825;&#26679;&#25105;&#20204;&#21487;&#20197;&#36890;&#36807;&#37197;&#32622;&#19968;&#20010;&#23458;&#25143;&#31471;&#20989;&#25968;login&#26469;&#21709;&#24212;&#12290;
+    </p><pre class="programlisting">
+<strong class="hl-keyword" style="color:#7F0055">function</strong> login(){
+    <strong class="hl-keyword" style="color:#7F0055">var</strong> lds = $(<strong class="hl-string"><em style="color:red">'login_dataset'</em></strong>);
+    <strong class="hl-keyword" style="color:#7F0055">var</strong> record = lds.getCurrentRecord();
+    Aurora.request({url:<strong class="hl-string"><em style="color:red">'login.svc'</em></strong>, para:record.data, success:<strong class="hl-keyword" style="color:#7F0055">function</strong>(){
+        window.location.href=<strong class="hl-string"><em style="color:red">'role_select.screen'</em></strong>
+    },scope:<strong class="hl-keyword" style="color:#7F0055">this</strong>});
+}
+</pre></div><div class="sect4" title="&#26085;&#26399;&#28210;&#26579;"><div class="titlepage"><div><div><h5 class="title"><a name="d0e28"></a>&#26085;&#26399;&#28210;&#26579;</h5></div></div></div><p>
+    		&#28210;&#26579;&#20989;&#25968;(dayRenderer)
+    	</p><p>
+&#24456;&#22810;&#24773;&#20917;&#19979;&#25105;&#20204;&#38656;&#35201;&#23558;&#26174;&#31034;&#30340;&#26085;&#26399;&#34920;&#36827;&#34892;&#19968;&#20123;&#29305;&#27530;&#22788;&#29702;&#65292;&#20363;&#22914;&#25105;&#20204;&#38656;&#35201;&#23558;&#20170;&#22825;&#20043;&#21069;&#30340;&#26085;&#26399;&#35774;&#20026;&#19981;&#33021;&#36873;&#25321;&#29366;&#24577;&#12290;&#36825;&#20010;&#26102;&#20505;&#25105;&#20204;&#23601;&#38656;&#35201; &#22312;datetimepicker&#26631;&#31614;&#19978;&#25351;&#23450;dayRenderer&#28210;&#26579;&#20989;&#25968;&#26469;&#23454;&#29616;.
+    	</p><p>
+&#39318;&#20808;&#25105;&#20204;&#38656;&#35201;&#23454;&#29616;&#19968;&#20010;dayRenderer&#20989;&#25968;&#65292;&#26469;&#21028;&#26029;&#24403;&#21069;&#26085;&#26399;&#65292;&#28982;&#21518;&#36820;&#22238;&#19968;&#27573;html&#20195;&#30721;&#12290; 
+    	</p><pre class="programlisting">
+<strong class="hl-keyword" style="color:#7F0055">function</strong> rendererDay(cell,date,text,currentMonth){
+	<strong class="hl-keyword" style="color:#7F0055">var</strong> today=<strong class="hl-keyword" style="color:#7F0055">new</strong> <strong class="hl-keyword" style="color:#7F0055">Date</strong>();
+	<strong class="hl-keyword" style="color:#7F0055">if</strong>(date &lt; <strong class="hl-keyword" style="color:#7F0055">new</strong> <strong class="hl-keyword" style="color:#7F0055">Date</strong>(today.getFullYear(),today.getMonth(),today.getDate())){
+		cell.disabled=true;
+	}
+	<strong class="hl-keyword" style="color:#7F0055">return</strong> text;
+}
+		</pre><p>
+&#25509;&#19979;&#26469;&#22312;datetimepicker&#26631;&#31614;&#19978;&#25351;&#23450;dayRenderer&#23646;&#24615;&#20026;rendererDay. 
+		</p><pre class="programlisting">
+<strong class="hl-tag" style="color: #000096">&lt;a:dateTimePicker</strong> <span class="hl-attribute" style="color: #993300">dayRenderer</span>=<span class="hl-value" style="color: #F5844C">"rendererDay"</span><strong class="hl-tag" style="color: #000096">/&gt;</strong>
+		</pre></div><div class="sect4" title="DateTimePicker&#26631;&#31614;&#23646;&#24615;"><div class="titlepage"><div><div><h5 class="title"><a name="d0e43"></a>DateTimePicker&#26631;&#31614;&#23646;&#24615;</h5></div></div></div><p>
+    		&#35831;&#21442;&#38405;DatePicker&#30340;&#26631;&#31614;&#23646;&#24615;&#12290;
+    	</p></div><div class="sect4" title="DateTimePicker&#23545;&#35937;&#20107;&#20214;"><div class="titlepage"><div><div><h5 class="title"><a name="d0e48"></a>DateTimePicker&#23545;&#35937;&#20107;&#20214;</h5></div></div></div><p>
+    		&#35831;&#21442;&#38405;DatePicker&#30340;&#23545;&#35937;&#20107;&#20214;&#12290;
+    	</p></div></div></div></body></html>
