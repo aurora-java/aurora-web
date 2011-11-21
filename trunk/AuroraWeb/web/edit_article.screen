@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:init-procedure>
+        <model-query fetchAll="true" model="doc.doc_article_detail" rootPath="article"/>
+    </a:init-procedure>
+    <a:view>
+        <style>
+            textarea {
+                font-family:Tahoma, Arial, Verdana !important;
+                font-size:12px !important;
+            }
+        </style>
+        <script><![CDATA[
+    
+            function postArticle(){
+                $('postButton').disable();
+                $('article_update_ds').getCurrentRecord().set('_r',new Date());
+                $('article_update_ds').submit();
+            }  
+            
+            function onSubmitSuccess(ds,res){
+                window.location.href='${/request/@context_path}/category.screen?cid=${/parameter/@cid}';
+            } 
+            
+            function onSubmitFailed(){
+                $('postButton').enable();
+            }        
+            
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="article_update_ds"  submitUrl="${/request/@context_path}/update_article.svc" >
+                <a:datas dataSource="/model/article"/>
+                <a:fields>
+                    <a:field name="article_title" required="true"/>
+                </a:fields>
+                <a:events>
+                    <a:event name="submitsuccess" handler="onSubmitSuccess"/>
+                    <a:event name="submitfailed" handler="onSubmitFailed"/>
+                </a:events>
+            </a:dataSet>
+        </a:dataSets>
+        <style>
+            TH {
+                background-color:#EEEEEE;
+                text-align:right;
+                padding-right:15px;
+                font-size:13px;
+            }
+        </style>
+        <div style="margin:10px;">
+            <div>当前分类 -- UI组件</div>
+            <div style="margin:5px 0px 5px 0px;height:2px;background-color:#97aecc"></div>
+            <TABLE cellSpacing="1" cellPadding="4" width="100%" align="center">
+                <TBODY>
+                    <TR>
+                        <TH width="100" align="right">标题:</TH>
+                        <TD>
+                            <a:textField name="article_title" bindTarget="article_update_ds" width="400"/>
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TH align="right">内容:</TH>
+                        <TD>
+                            <a:textArea name="content" className="postConent" bindTarget="article_update_ds" width="600" marginWidth="250" marginHeight="200"/>
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TH align="right">附件:</TH>
+                        <TD>
+                            <div style="width:600px;">
+                                <a:upload buttonWidth="75" fileType="*.gif;*.jpg;*.screen;*.bm;*.xml;*.zip;*.rar" pkvalue="${/model/article/record/@article_id}" sourcetype="DOC_ARTICLE" text="上传附件"/>
+                            </div>
+                        </TD>
+                    </TR>
+                </TBODY>
+            </TABLE>
+            <a:button id="postButton" style="margin-top:10px;" text="更 新 文 章" width="100" click="postArticle"/>
+        </div>
+        
+    </a:view>
+</a:screen>
