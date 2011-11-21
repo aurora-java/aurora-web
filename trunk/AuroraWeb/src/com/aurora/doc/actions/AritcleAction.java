@@ -65,7 +65,6 @@ public class AritcleAction {
 	private static void transformDocBook(File buildFile, File dest, String content) throws TransformerException {
 		Transformer transformer = tempaltes.newTransformer();
 		StringReader sr = new StringReader(content);
-		System.out.println(content);
 		transformer.transform(new StreamSource(sr), new StreamResult(dest));
 	}
 }
