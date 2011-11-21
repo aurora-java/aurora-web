@@ -2,27 +2,35 @@ create or replace package sys_login_pkg is
 
   -- Author  : huangshengbo
   -- Created : 2011-11-18 14:30
-  -- Purpose : ÏµÍ³µÇÂ¼
+  -- Purpose : ç³»ç»Ÿç™»å½•
 
-  --md5¼ÓÃÜ
+  --md5åŠ å¯†
   function md5(p_password in varchar2) return varchar2;
 
-  --ÓÃ»§×¢²á
+  --ç”¨æˆ·æ³¨å†Œ
   procedure register(p_user_name varchar,
                      p_password  varchar,
                      p_nick_name varchar,
+                     p_user_id   out number,
                      p_success   out number);
+
+  --ç”¨æˆ·ç™»å½•
+  procedure login(p_user_name varchar,
+                  p_password  varchar,
+                  p_user_id   out number,
+                  p_nick_name out varchar,
+                  p_success   out number);
 
 end sys_login_pkg;
 /
 create or replace package body sys_login_pkg is
 
   --************************************************************
-  --MD5ÃÜÂë×ª»»
+  --MD5å¯†ç è½¬æ¢
   -- parameter :
-  -- p_password  Ô­ÃÜÂë
+  -- p_password  åŽŸå¯†ç 
   -- return    :
-  -- md5ºóµÄÃÜÂë
+  -- md5åŽçš„å¯†ç 
   --************************************************************
 
   function md5(p_password in varchar2) return varchar2 is
@@ -33,18 +41,19 @@ create or replace package body sys_login_pkg is
   end md5;
 
   --************************************************************
-  --ÓÃ»§×¢²á
+  --ç”¨æˆ·æ³¨å†Œ
   -- parameter :
-  -- p_user_name  ÓÃ»§Ãû
-  -- p_password   ÃÜÂë
-  -- p_nick_name  êÇ³Æ
+  -- p_user_name  ç”¨æˆ·å
+  -- p_password   å¯†ç 
+  -- p_nick_name  æ˜µç§°
+  -- p_success    æ˜¯å¦æˆåŠŸ
   --************************************************************
   procedure register(p_user_name varchar,
                      p_password  varchar,
                      p_nick_name varchar,
+                     p_user_id   out number,
                      p_success   out number) is
-    v_user_id number;
-    v_count   number;
+    v_count number;
   begin
     select count(*)
       into v_count
@@ -54,7 +63,7 @@ create or replace package body sys_login_pkg is
       p_success := 0;
       return;
     end if;
-    v_user_id := sys_user_s.nextval;
+    p_user_id := sys_user_s.nextval;
     insert into sys_user
       (user_id,
        user_name,
@@ -65,15 +74,41 @@ create or replace package body sys_login_pkg is
        created_by,
        nick_name)
     values
-      (v_user_id,
+      (p_user_id,
        p_user_name,
        md5(p_password => p_password),
        sysdate,
-       v_user_id,
+       p_user_id,
        sysdate,
-       v_user_id,
+       p_user_id,
        p_nick_name);
     p_success := 1;
+  end;
+
+  --************************************************************
+  -- ç”¨æˆ·ç™»å½•
+  -- parameter :
+  -- p_user_name  ç”¨æˆ·å
+  -- p_password   å¯†ç 
+  -- p_user_id    ç”¨æˆ·ç¼–å·
+  -- p_nick_name  æ˜µç§°
+  -- p_success    æ˜¯å¦æˆåŠŸ
+  --************************************************************
+  procedure login(p_user_name varchar,
+                  p_password  varchar,
+                  p_user_id   out number,
+                  p_nick_name out varchar,
+                  p_success   out number) is
+  begin
+    select u.user_id, u.nick_name
+      into p_user_id, p_nick_name
+      from sys_user u
+     where u.user_name = p_user_name
+       and u.password = md5(p_password => p_password);
+    p_success := 1;
+  exception
+    when no_data_found then
+      p_success := 0;
   end;
 
 end sys_login_pkg;
