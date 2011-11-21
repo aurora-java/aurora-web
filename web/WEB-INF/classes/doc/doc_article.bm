@@ -2,10 +2,10 @@
 <bm:model xmlns:o="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="DOC_ARTICLE">
     <bm:fields>
         <bm:field name="article_id" databaseType="NUMBER" datatype="java.lang.Integer" />
-        <bm:field name="article_path" databaseType="VARCHAR2" datatype="java.lang.String" />
+        <bm:field name="article_path" databaseType="VARCHAR2" datatype="java.lang.String" forUpdate="false"/>
         <bm:field name="article_title" databaseType="VARCHAR2" datatype="java.lang.String"/>
         <bm:field name="content" databaseType="VARCHAR2" datatype="java.lang.String"/>
-        <bm:field name="category_id" databaseType="NUMBER" datatype="java.lang.Integer" />
+        <bm:field name="category_id" databaseType="NUMBER" datatype="java.lang.Integer" forUpdate="false"/>
     </bm:fields>
     <bm:primary-key>
         <bm:pk-field name="article_id"/>

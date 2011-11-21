@@ -5,6 +5,7 @@
         <bm:field name="article_title" databaseType="VARCHAR2" datatype="java.lang.String"/>
         <bm:field name="category_id" databaseType="NUMBER" datatype="java.lang.Integer" />
         <bm:field name="nick_name" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="content" databaseType="VARCHAR2" datatype="java.lang.String" />
         <bm:field name="user_id" databaseType="NUMBER" datatype="java.lang.Integer" />
         <bm:field name="creation_date" databaseType="VARCHAR2" datatype="java.lang.String" expression="to_char(t1.creation_date,'yyyy-mm-dd HH24:MI:SS')"/>
     </bm:fields>
