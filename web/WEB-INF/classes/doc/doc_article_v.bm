@@ -12,9 +12,10 @@
         <bm:pk-field name="article_id"/>
     </bm:primary-key>
     <bm:query-fields>
-        <bm:query-field field="article_id" queryOperator="="/>
-        <bm:query-field field="category_id" queryOperator="="/>
     </bm:query-fields>
+    <bm:data-filters>
+        <bm:data-filter enforceActions="query" expression="t1.category_id = nvl(${@category_id}, -1)"/>
+    </bm:data-filters>
     <bm:features>
         <o:sequence-pk/>
     </bm:features>
