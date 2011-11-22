@@ -36,7 +36,11 @@
             </div>
             <div style="margin:5px 0px 5px 0px;height:2px;background-color:#dddddd"/>
             <div class="docbook" style="margin-top:25px;">
-                <a:htmlInclude id="${/parameter/@article_id}"/>
+                <a:htmlInclude model="doc.doc_article" pathField="article_path">
+                    <a:params>
+                        <a:param name="article_id" value="${/parameter/@article_id}"/>
+                    </a:params>
+                </a:htmlInclude>
             </div>
             <div style="margin:25px 0px 15px 0px;height:2px;background-color:#dddddd"/>
             <div style="background-color:#f4f4f4;padding:10px;">
