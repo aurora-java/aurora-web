@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: andy  
+    $Date: 2011-11-22 上午10:39:07  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:o="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="DOC_ARTICLE_V">
+    <bm:fields>
+        <bm:field name="article_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
+        <bm:field name="article_title" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="category_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
+        <bm:field name="nick_name" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="creation_date" databaseType="TIMESTAMP" datatype="java.sql.Timestamp"/>
+        <bm:field name="last_update_date" databaseType="TIMESTAMP" datatype="java.sql.Timestamp"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="article_id"/>
+    </bm:primary-key>
+    <bm:query-fields><![CDATA[
+    ]]></bm:query-fields>
+    <bm:data-filters>
+        <bm:data-filter enforceActions="query" expression="t1.user_id = nvl(${/session/@user_id}, -1)"/>
+    </bm:data-filters>
+    <bm:features>
+        <o:sequence-pk/>
+    </bm:features>
+</bm:model>
