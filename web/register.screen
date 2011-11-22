@@ -49,16 +49,31 @@
             </a:dataSet>
         </a:dataSets>
         <a:vBox labelWidth="75" style="margin-top:20px">
-            <a:textField name="user_name" bindTarget="sys_user_ds" prompt="用户名"/>
-            <a:passWord name="password" bindTarget="sys_user_ds" prompt="密码"/>
-            <a:passWord name="password_new" bindTarget="sys_user_ds" prompt="确认密码"/>
-            <a:textField name="nick_name" bindTarget="sys_user_ds" prompt="昵称"/>
+            <a:textField name="user_name" bindTarget="sys_user_ds" prompt="用户名">
+                <a:events>
+                    <a:event name="enterdown" handler="sureFunction"/>
+                </a:events>
+            </a:textField>
+            <a:passWord name="password" bindTarget="sys_user_ds" prompt="密码">
+                <a:events>
+                    <a:event name="enterdown" handler="sureFunction"/>
+                </a:events>
+            </a:passWord>
+            <a:passWord name="password_new" bindTarget="sys_user_ds" prompt="确认密码">
+                <a:events>
+                    <a:event name="enterdown" handler="sureFunction"/>
+                </a:events>
+            </a:passWord>
+            <a:textField name="nick_name" bindTarget="sys_user_ds" prompt="昵称">
+                <a:events>
+                    <a:event name="enterdown" handler="sureFunction"/>
+                </a:events>
+            </a:textField>
         </a:vBox>
         <div class="win-toolbar" style="width:100%;height:40px;position:absolute; bottom:0px;">
             <a:hBox style="float:right;margin-right:10px;margin-top:5px;">
                 <a:button click="sureFunction" text="确认"/>
             </a:hBox>
         </div>
-        
     </a:view>
 </a:screen>
