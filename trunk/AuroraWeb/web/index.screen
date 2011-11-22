@@ -91,7 +91,7 @@
                 });
             }
             
-            function login() {                
+            function login() {
                 new Aurora.Window({
                     url: 'sys_login.screen',
                     title: '登录',
@@ -113,6 +113,10 @@
                     });
                 }, null, null, 100);
             
+            }
+            
+            function myCategory() {
+                document.getElementById('mainFrame').src = 'mycategory.screen';
             }
         ]]></script>
         <a:dataSets>
@@ -138,7 +142,7 @@
                             <div id="login" style="float:right;display:none;">
                                 <span style="margin-left:5px;"><![CDATA[${/session/@nick_name},欢迎您回来]]></span>
                                 <span style="margin-left:5px;"><![CDATA[|]]></span>
-                                <a href="javascript:;" style="color:#fff;margin-left:5px;"><![CDATA[我的帖子]]></a>
+                                <a href="javascript:myCategory();" style="color:#fff;margin-left:5px;"><![CDATA[我的帖子]]></a>
                                 <span style="margin-left:5px;"><![CDATA[|]]></span>
                                 <a href="javascript:exitSystem();" style="color:#fff;margin-left:5px;"><![CDATA[退出]]></a>
                             </div>
