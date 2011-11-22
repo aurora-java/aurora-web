@@ -4,6 +4,9 @@
         <batch-apply sourcepath="/parameter">
             <a:model-execute model="sys.sys_login"/>
         </batch-apply>
+        <a:session-write source="/parameter/record/@user_id" target="user_id"/>
+        <a:session-write source="/parameter/record/@nick_name" target="nick_name"/>
+        <a:session-write source="/parameter/record/@success" target="login_success"/>
     </a:init-procedure>
     <a:service-output output="/parameter"/>
 </a:service>

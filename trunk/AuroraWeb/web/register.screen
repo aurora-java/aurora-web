@@ -32,7 +32,7 @@
                 }
                 $('register_screen').close();
                 var src = document.getElementById('mainFrame').contentWindow.location.href;
-                window.location.href = 'login.screen?user_id=' + res.result.record.user_id + '&nick_name=' + res.result.record.nick_name + '&success=' + success + '&src=' + src;
+                window.location.href = 'login.screen?src=' + src;
             }
         ]]></script>
         <a:dataSets>
