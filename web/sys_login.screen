@@ -35,10 +35,14 @@
                 </a:events>
             </a:dataSet>
         </a:dataSets>
-        <a:vBox labelWidth="75" style="margin-top:20px">
+        <a:vBox labelWidth="75" style="margin-top:15px">
             <a:textField name="user_name" bindTarget="sys_user_ds" prompt="用户名"/>
             <a:passWord name="password" bindTarget="sys_user_ds" prompt="密码"/>
         </a:vBox>
-        <a:button click="sureFunction" style="float:right;margin-top:15px;margin-right:20px;" text="确认"/>
+        <div class="win-toolbar" style="width:100%;height:40px;position:absolute; bottom:0px;">
+            <a:hBox style="float:right;margin-right:10px;margin-top:5px;">
+                <a:button click="sureFunction" text="确认"/>
+            </a:hBox>
+        </div>
     </a:view>
 </a:screen>
