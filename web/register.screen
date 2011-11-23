@@ -25,7 +25,10 @@
             }
             
             function submitSuccess(ds, res) {
-                var success = res.result.record.success;                            
+                var success = 0;
+                if (res.result.record) {
+                    success = res.result.record.success;
+                }                            
                 if (success == 0) {
                     Aurora.showMessage('提示', '此用户名已存在!!');
                     return;
