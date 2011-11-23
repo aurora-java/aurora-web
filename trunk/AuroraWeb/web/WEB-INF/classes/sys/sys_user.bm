@@ -5,12 +5,15 @@
         <ns1:field name="user_name" databaseType="VARCHAR" datatype="java.lang.String"/>
         <ns1:field name="password" databaseType="VARCHAR" datatype="java.lang.String"/>
         <ns1:field name="nick_name" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <ns1:field name="authority" databaseType="VARCHAR" datatype="java.lang.String"/>
     </ns1:fields>
     <ns1:primary-key>
         <ns1:pk-field name="user_id"/>
     </ns1:primary-key>
     <ns1:query-fields>
         <ns1:query-field field="user_id" queryOperator="="/>
+        <ns1:query-field field="user_name" queryOperator="="/>
+        <ns1:query-field field="nick_name" queryOperator="="/>
     </ns1:query-fields>
     <ns1:features>
         <o:sequence-pk/>
