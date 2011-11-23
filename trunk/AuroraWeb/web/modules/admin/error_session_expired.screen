@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: niujiaqing1265 $
+    $Date: 2010/11/24 08:32:46 $
+    $Revision: 1.2 $
+    $Purpose: 没有权限提示页面
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure/>
+    <a:view package="aurora.ui.std" template="default">
+        <a:form id="tipForm" className="mytable" height="100" style="position:absolute;left:-2000px;top:-2000px;" title="提示" width="320">
+            <table>
+                <tr>
+                    <td>
+                        <img height="64" src="../../images/alert.png" style="margin:10px;" width="64"/>
+                    </td>
+                    <td>
+                        <span style="font-size:20px;"><![CDATA[Session 超时!]]></span>
+                    </td>
+                </tr>
+            </table>
+        </a:form>
+        <script><![CDATA[
+            Aurora.onReady(function(){
+                Aurora.center('tipForm');
+                Aurora.get('tipForm').show();
+               
+                if(parent && parent.showlogin){
+                    parent.showlogin();
+                }
+            })
+            
+            
+
+        ]]></script>
+    </a:view>
+</a:screen>
