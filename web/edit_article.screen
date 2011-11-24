@@ -73,7 +73,7 @@
                                 <TH align="right">附件:</TH>
                                 <TD>
                                     <div style="width:600px;">
-                                        <a:upload buttonWidth="75" fileType="*.gif;*.jpg;*.screen;*.bm;*.xml;*.zip;*.rar" pkvalue="${/model/article/record/@article_id}" sourcetype="DOC_ARTICLE" text="上传附件"/>
+                                        <a:upload buttonWidth="75" fileType="*.png;*.gif;*.jpg;*.screen;*.bm;*.xml;*.zip;*.rar" pkvalue="${/model/article/record/@article_id}" sourcetype="DOC_ARTICLE" text="上传附件"/>
                                     </div>
                                 </TD>
                             </TR>
