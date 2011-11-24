@@ -20,7 +20,7 @@
                         <a href="${/request/@context_path}">讨论板</a>
                     </li>
                     <li  class="menu-item menu-item-type-custom menu-item-object-custom">
-                        <a id="sysMenu" href="test">系统管理</a>
+                        <a id="sysMenu" href="#">系统管理</a>
                         <ul id="sysSubMenu" class="sub-menu">
                             <li class="menu-item menu-item-type-post_type menu-item-object-page">
                                 <a href="${/request/@context_path}/modules/admin/sys_user.screen">账号权限</a>
