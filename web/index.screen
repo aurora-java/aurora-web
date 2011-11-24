@@ -5,9 +5,6 @@
         <a:model-query defaultWhereClause="row_num &gt; 2*(to_number(nvl(${/parameter/@page},1))-1) and row_num &lt;= 2*to_number(nvl(${/parameter/@page},1))+1" model="doc.doc_news" rootPath="news"/>
     </a:init-procedure>
     <a:view>
-        <a:dataSets>
-            <a:dataSet/>
-        </a:dataSets>
         <script><![CDATA[
             var page = '${/parameter/@page}';
             var current_page, last_page;
