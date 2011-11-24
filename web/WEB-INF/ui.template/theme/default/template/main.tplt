@@ -13,7 +13,7 @@ ${page:html.head.script}
             <div id="wrapper" >
                 ${screen:/WEB-INF/ui.template/include/header.screen}
                 ${page:init}
-                <div id="content">
+                <div id="content" style="background:none;">
                         ${page:content}
                 </div>
             </div>
