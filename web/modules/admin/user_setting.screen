@@ -7,7 +7,7 @@
 -->
 <a:screen xmlns:a="http://www.aurora-framework.org/application">
     <a:init-procedure/>
-    <a:view>
+    <a:view package="aurora.ui.std" template="default">
         <script><![CDATA[
             function sureFunction() {
                 $('sys_user_ds').submit();
