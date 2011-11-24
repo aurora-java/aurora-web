@@ -1,26 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <a:screen xmlns:a="http://www.aurora-framework.org/application">
     <a:view template="fragment" package="ui.template">
-            <div id="header">
-                <div class="ddsmoothmenu" id="mainMenu">
-                    <ul id="menu-top_menu" class="menu">
-                        <li>
-                            <a href="${/request/@context_path}">首页</a>
-                        </li>
-                        <li>
-                            <a href="${/request/@context_path}">技术文章</a>
-                        </li>
-                        <li>
-                            <a href="${/request/@context_path}">相关项目</a>
-                        </li>
-                        <li>
-                            <a href="${/request/@context_path}">在线演示</a>
-                        </li>
-                        <li>
-                            <a href="${/request/@context_path}">讨论板</a>
-                        </li>
-                    </ul>
-                </div>
+        <div id="header">
+            <div class="ddsmoothmenu" id="mainMenu">
+                <ul id="menu-top_menu" class="menu">
+                    <li>
+                        <a href="${/request/@context_path}">首页</a>
+                    </li>
+                    <li>
+                        <a href="${/request/@context_path}">技术文章</a>
+                    </li>
+                    <li>
+                        <a href="${/request/@context_path}">相关项目</a>
+                    </li>
+                    <li>
+                        <a href="${/request/@context_path}">在线演示</a>
+                    </li>
+                    <li>
+                        <a href="${/request/@context_path}">讨论板</a>
+                    </li>
+                    <li  class="menu-item menu-item-type-custom menu-item-object-custom">
+                        <a id="sysMenu" href="test">系统管理</a>
+                        <ul id="sysSubMenu" class="sub-menu">
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                                <a href="${/request/@context_path}/modules/admin/sys_user.screen">账号权限</a>
+                            </li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                                <a href="${/request/@context_path}/modules/admin/doc_articles.screen">文章管理</a>
+                            </li>
+                            <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+                                <a href="${/request/@context_path}/modules/admin/doc_news.screen">新闻管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
+            <div class="ddsmoothmenu" id="userMenu" style="float:right;right:0px;">
+                <ul id="menu-top_menu" class="menu">
+                    <li>
+                        <a href="${/request/@context_path}">登陆</a>
+                    </li>
+                    <li>
+                        <a href="${/request/@context_path}">注册</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <script><![CDATA[
+                var doHide = false;
+                function hideMenu(){
+                    if(doHide){
+                        Ext.get('sysSubMenu').hide(true)
+                    }
+                }
+                Ext.onReady(function(){
+                    Ext.get('sysMenu').on('mouseover',function(){
+                        doHide = false;
+                        Ext.get('sysSubMenu').show(true)
+                    },this)
+                    Ext.get('sysMenu').on('mouseout',function(e){
+                        doHide = true;
+                        hideMenu.defer(50,this);
+                    },this)
+                    Ext.get('sysSubMenu').on('mouseover',function(e){
+                        doHide = false;
+                    },this)
+                     Ext.get('sysSubMenu').on('mouseout',function(e){
+                        doHide = true;
+                        hideMenu.defer(50,this);
+                    },this)
+                })
+        ]]></script>
     </a:view>
 </a:screen>
