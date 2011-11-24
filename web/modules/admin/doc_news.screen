@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:init-procedure>
+                
+    </a:init-procedure>
+    <a:view template="main" package="ui.template">
+        <a:dataSets>
+            <a:dataSet id="news_result_ds" autoCount="true" autoQuery="true" fetchAll="false" model="doc.doc_news_list" pageSize="20" />
+        </a:dataSets>
+        <style><![CDATA[
+            .link:hover {
+                TEXT-DECORATION: underline
+            }
+        ]]></style>
+         <script><![CDATA[
+        
+            function titleRenderer(value,record,name){
+                return '<a class="link" target="_blank" style="font-weight:bold;color:#333;height:35px;line-height:35px;font-size:14px;" href="${/request/@context_path}/news.screen?id='+record.get('news_id')+'">'+value+"</a>";
+            }
+        ]]></script>
+        <div style="float:right;">
+            <a href="post_article.screen?cid=${/parameter/@cid}" style="float:right;margin:5px;font-size:15px;"><![CDATA[发布新闻]]></a>
+        </div>
+        <a:table  bindTarget="news_result_ds" canWheel="false" className="cateList" navBar="true" navBarType="simple" style="background-color:#fff;width:100%;float:left;">
+            <a:columns>
+                <a:column name="title" prompt="题目" renderer="titleRenderer"/>
+                <a:column name="nick_name" align="center" prompt="发表人" width="100"/>
+                <a:column name="creation_date" align="center" prompt="发表时间" renderer="Aurora.formatDateTime" width="150"/>
+            </a:columns>
+        </a:table>
+    </a:view>
+</a:screen>
