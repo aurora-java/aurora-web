@@ -4,9 +4,9 @@
         <script><![CDATA[
             function login() {
                 new Aurora.Window({
-                    url: '${/request/@context_path}/sys_login.screen',
+                    url: '${/request/@context_path}/login.screen',
                     title: '登录',
-                    id: 'login_window',
+                    id: 'login_screen',
                     width: 280,
                     height: 130
                 });
@@ -40,58 +40,70 @@
                     <li>
                         <a href="${/request/@context_path}"><![CDATA[讨论板]]></a>
                     </li>
-                    <li id="adminMenu" class="menu-item menu-item-type-custom menu-item-object-custom">
-                        <a id="sysMenu" href="#"><![CDATA[系统管理]]></a>
-                        <ul id="sysSubMenu" class="sub-menu">
-                            <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                                <a href="${/request/@context_path}/modules/admin/sys_user.screen"><![CDATA[账号权限]]></a>
+                    <a:switch test="/session/@authority">
+                        <a:case value="Y">
+                            <li id="adminMenu" class="menu-item menu-item-type-custom menu-item-object-custom">
+                                <a id="sysMenu" href="#"><![CDATA[系统管理]]></a>
+                                <ul id="sysSubMenu" class="sub-menu">
+                                    <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                                        <a href="${/request/@context_path}/modules/admin/sys_user.screen"><![CDATA[账号权限]]></a>
+                                    </li>
+                                    <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                                        <a href="${/request/@context_path}/modules/admin/doc_articles.screen"><![CDATA[文章管理]]></a>
+                                    </li>
+                                    <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+                                        <a href="${/request/@context_path}/modules/admin/doc_news.screen"><![CDATA[新闻管理]]></a>
+                                    </li>
+                                </ul>
                             </li>
-                            <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                                <a href="${/request/@context_path}/modules/admin/doc_articles.screen"><![CDATA[文章管理]]></a>
+                        </a:case>
+                    </a:switch>
+                </ul>
+            </div>
+            <a:switch test="/session/@login_success">
+                <a:case value="null">
+                    <div id="userMenu" class="ddsmoothmenu" style="float:right;right:0px;">
+                        <ul id="menu-top_menu" class="menu">
+                            <li>
+                                <a href="javascript:login();"><![CDATA[登录]]></a>
                             </li>
-                            <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
-                                <a href="${/request/@context_path}/modules/admin/doc_news.screen"><![CDATA[新闻管理]]></a>
+                            <li>
+                                <a href="javascript:register();"><![CDATA[注册]]></a>
                             </li>
                         </ul>
-                    </li>
-                </ul>
-            </div>
-            <div id="userMenu" class="ddsmoothmenu" style="float:right;right:0px;">
-                <ul id="menu-top_menu" class="menu">
-                    <li>
-                        <a href="javascript:login();"><![CDATA[登录]]></a>
-                    </li>
-                    <li>
-                        <a href="javascript:register();"><![CDATA[注册]]></a>
-                    </li>
-                </ul>
-            </div>
+                    </div>
+                </a:case>
+            </a:switch>
         </div>
-        <script><![CDATA[
-            var doHide = false;
-            
-            function hideMenu() {
-                if (doHide) {
-                    Ext.get('sysSubMenu').hide(true);
-                }
-            }
-            Ext.onReady(function() {
-                    Ext.get('sysMenu').on('mouseover', function() {
-                        doHide = false;
-                        Ext.get('sysSubMenu').show(true);
-                    }, this);
-                    Ext.get('sysMenu').on('mouseout', function(e) {
-                        doHide = true;
-                        hideMenu.defer(50, this);
-                    }, this);
-                    Ext.get('sysSubMenu').on('mouseover', function(e) {
-                        doHide = false;
-                    }, this);
-                    Ext.get('sysSubMenu').on('mouseout', function(e) {
-                        doHide = true;
-                        hideMenu.defer(50, this);
-                    }, this);
-            });
-        ]]></script>
+        <a:switch test="/session/@authority">
+            <a:case value="Y">
+                <script><![CDATA[
+                    var doHide = false;
+                    
+                    function hideMenu() {
+                        if (doHide) {
+                            Ext.get('sysSubMenu').hide(true);
+                        }
+                    }
+                    Ext.onReady(function() {
+                        Ext.get('sysMenu').on('mouseover', function() {
+                            doHide = false;
+                            Ext.get('sysSubMenu').show(true);
+                        }, this);
+                        Ext.get('sysMenu').on('mouseout', function(e) {
+                            doHide = true;
+                            hideMenu.defer(50, this);
+                        }, this);
+                        Ext.get('sysSubMenu').on('mouseover', function(e) {
+                            doHide = false;
+                        }, this);
+                        Ext.get('sysSubMenu').on('mouseout', function(e) {
+                            doHide = true;
+                            hideMenu.defer(50, this);
+                        }, this);
+                    });
+                ]]></script>
+            </a:case>
+        </a:switch>
     </a:view>
 </a:screen>
