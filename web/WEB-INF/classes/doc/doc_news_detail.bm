@@ -3,8 +3,7 @@
     <bm:operations>
         <bm:operation name="query">
             <bm:query-sql><![CDATA[
-                SELECT t1.* from (select rownum as row_num, v.news_id,v.title,v.summary,v.creation_date,v.user_id,v.nick_name FROM DOC_NEWS_V v)t1
-                #WHERE_CLAUSE#
+                SELECT v.* FROM DOC_NEWS_V v where v.news_id = ${/parameter/@id}
             ]]></bm:query-sql>
         </bm:operation>
     </bm:operations>
@@ -12,7 +11,7 @@
         <bm:field name="news_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
         <bm:field name="title" databaseType="VARCHAR2" datatype="java.lang.String"/>
         <bm:field name="nick_name" databaseType="VARCHAR2" datatype="java.lang.String"/>
-        <bm:field name="summary" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="content" databaseType="VARCHAR2" datatype="java.lang.String"/>
         <bm:field name="creation_date" databaseType="TIMESTAMP" datatype="java.sql.Timestamp"/>
     </bm:fields>
 </bm:model>
