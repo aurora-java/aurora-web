@@ -64,9 +64,6 @@
                         <a href="${/request/@context_path}"><![CDATA[技术文章]]></a>
                     </li>
                     <li>
-                        <a href="${/request/@context_path}"><![CDATA[相关项目]]></a>
-                    </li>
-                    <li>
                         <a href="${/request/@context_path}"><![CDATA[在线演示]]></a>
                     </li>
                     <li>
@@ -107,7 +104,7 @@
                 </a:case>
                 <a:case value="1">
                     <div id="userMenu" class="userMenu" style="float:right;right:0px;">
-                        <span style="margin-left:5px;"><![CDATA[${/session/@nick_name},欢迎您回来]]></span>
+                        <span style="margin-left:5px;"><![CDATA[${/session/@nick_name} 欢迎您回来]]></span>
                         <span style="margin-left:5px;"><![CDATA[|]]></span>
                         <a href="javascript:exit();" style="margin-left:5px;"><![CDATA[退出]]></a>
                     </div>
