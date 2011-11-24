@@ -19,7 +19,7 @@
             }
         ]]></script>
         <div style="float:right;">
-            <a href="post_article.screen?cid=${/parameter/@cid}" style="float:right;margin:5px;font-size:15px;"><![CDATA[发布新闻]]></a>
+            <a href="post_new.screen" style="float:right;margin:5px;font-size:15px;"><![CDATA[发布新闻]]></a>
         </div>
         <a:table  bindTarget="news_result_ds" canWheel="false" className="cateList" navBar="true" navBarType="simple" style="background-color:#fff;width:100%;float:left;">
             <a:columns>
