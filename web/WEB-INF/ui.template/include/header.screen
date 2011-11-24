@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <a:screen xmlns:a="http://www.aurora-framework.org/application">
     <a:view package="ui.template" template="fragment">
+        <style><![CDATA[
+            .userMenu {
+                display:block;
+			    height:49px;
+			    color:#EAEAEA;
+			    padding:36px 10px 0;
+			    font-size:15px;
+            }
+            .userMenu a{
+                color:#EAEAEA;
+            }
+        ]]></style>
         <script><![CDATA[
             function login() {
                 new Aurora.Window({
@@ -20,6 +32,19 @@
                     width: 280,
                     height: 190
                 });
+            }
+            
+            function exit() {
+                Aurora.showConfirm('提示', '确认退出', function(cmp) {
+                    Aurora.request({
+                        url: '${/request/@context_path}/logout.svc',
+                        para: {},
+                        success: function() {
+                            window.location.reload();
+                        },
+                        scope: this
+                    });
+                }, null, null, 85);
             }
         ]]></script>
         <div id="header">
@@ -71,6 +96,13 @@
                                 <a href="javascript:register();"><![CDATA[注册]]></a>
                             </li>
                         </ul>
+                    </div>
+                </a:case>
+                <a:case value="1">
+                    <div id="userMenu" class="userMenu" style="float:right;right:0px;">
+                        <span style="margin-left:5px;"><![CDATA[${/session/@nick_name},欢迎您回来]]></span>
+                        <span style="margin-left:5px;"><![CDATA[|]]></span>
+                        <a href="javascript:exit();" style="margin-left:5px;"><![CDATA[退出]]></a>
                     </div>
                 </a:case>
             </a:switch>

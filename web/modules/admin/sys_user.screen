@@ -15,7 +15,7 @@
         ]]></style>
         <script><![CDATA[
             function userRenderer(value, record, name) {
-                return '<a class="link" style="font-size:12px;" href="javascript:openWindow(' + record.get('user_id') + ');">' + value + "</a>";
+                return '<a class="link" style="font-size:12px;" href="javascript:openWindow(' + record.get('user_id') + ');"><img src="../../images/page_edit.gif"></a>';
             }
             
             function openWindow(user_id) {
@@ -42,7 +42,6 @@
         </a:dataSets>
         <div style="margin:5px">
             <a:fieldSet column="3" title="查询">
-                <a:textField name="user_id" bindTarget="sys_user_query_ds" prompt="用户编号"/>
                 <a:textField name="user_name" bindTarget="sys_user_query_ds" prompt="用户名"/>
                 <a:textField name="nick_name" bindTarget="sys_user_query_ds" prompt="昵称"/>
             </a:fieldSet>
@@ -54,7 +53,7 @@
         <div style="margin:5px">
             <a:table bindTarget="sys_user_result_ds" canWheel="false" className="cateList" navBar="true" navBarType="simple" style="background-color:#fff;width:100%;float:left;">
                 <a:columns>
-                    <a:column name="user_id" prompt="用户编号" renderer="userRenderer"/>
+                    <a:column align="center" renderer="userRenderer" width="60"/>
                     <a:column name="user_name" align="center" prompt="用户名"/>
                     <a:column name="nick_name" align="center" prompt="昵称"/>
                     <a:column name="is_admin" align="center" prompt="权限"/>

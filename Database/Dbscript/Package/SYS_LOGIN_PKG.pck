@@ -19,6 +19,7 @@ create or replace package sys_login_pkg is
                   p_password  varchar,
                   p_user_id   out number,
                   p_nick_name out varchar,
+                  p_authority out varchar,
                   p_success   out number);
 
 end sys_login_pkg;
@@ -73,7 +74,7 @@ create or replace package body sys_login_pkg is
        creation_date,
        created_by,
        nick_name,
-       authority)
+       is_admin)
     values
       (p_user_id,
        p_user_name,
@@ -100,10 +101,11 @@ create or replace package body sys_login_pkg is
                   p_password  varchar,
                   p_user_id   out number,
                   p_nick_name out varchar,
+                  p_authority out varchar,
                   p_success   out number) is
   begin
-    select u.user_id, u.nick_name
-      into p_user_id, p_nick_name
+    select u.user_id, u.nick_name, u.is_admin
+      into p_user_id, p_nick_name, p_authority
       from sys_user u
      where u.user_name = p_user_name
        and u.password = md5(p_password => p_password);
