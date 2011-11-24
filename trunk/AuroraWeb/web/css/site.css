@@ -25,7 +25,7 @@ body,html {
     left:-18px;
     top:0;
 }
-#mainMenu ul li{
+#mainMenu ul li, #userMenu ul li{
     float:left;
 }
 
@@ -37,7 +37,13 @@ body,html {
     font-size:17px;
     background:url(../images/bk_mainmenu.png) 0 -78px no-repeat;
 }
-
+#userMenu ul li a {
+    display:block;
+    height:49px;
+    color:#EAEAEA;
+    padding:36px 10px 0;
+    font-size:15px;
+}
 #mainMenu ul li a span {
     font-size:10px; 
     color:#00DAD7;
