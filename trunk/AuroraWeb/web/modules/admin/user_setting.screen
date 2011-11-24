@@ -29,13 +29,13 @@
                 </a:events>
             </a:dataSet>
         </a:dataSets>
-        <a:vBox labelWidth="75" style="margin-top:15px">
+        <a:vBox labelWidth="95" style="margin-top:15px">
             <a:textField name="user_name" bindTarget="sys_user_ds" prompt="用户名">
                 <a:events>
                     <a:event name="enterdown" handler="sureFunction"/>
                 </a:events>
             </a:textField>
-            <a:checkBox name="is_admin" bindTarget="sys_user_ds" prompt="权限">
+            <a:checkBox name="is_admin" bindTarget="sys_user_ds" prompt="系统管理权限">
                 <a:events>
                     <a:event name="enterdown" handler="sureFunction"/>
                 </a:events>
