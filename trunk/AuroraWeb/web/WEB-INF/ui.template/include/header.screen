@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <a:screen xmlns:a="http://www.aurora-framework.org/application">
     <a:view package="ui.template" template="fragment">
-        <a:dataSets>
-            <a:dataSet />
-        </a:dataSets>
         <script><![CDATA[
             function login() {
                 new Aurora.Window({
                     url: '${/request/@context_path}/sys_login.screen',
                     title: '登录',
-                    id: 'login_screen',
+                    id: 'login_window',
                     width: 280,
                     height: 130
                 });
@@ -43,7 +40,7 @@
                     <li>
                         <a href="${/request/@context_path}"><![CDATA[讨论板]]></a>
                     </li>
-                    <li id="adminMenu" class="menu-item menu-item-type-custom menu-item-object-custom" style="display:none;">
+                    <li id="adminMenu" class="menu-item menu-item-type-custom menu-item-object-custom">
                         <a id="sysMenu" href="#"><![CDATA[系统管理]]></a>
                         <ul id="sysSubMenu" class="sub-menu">
                             <li class="menu-item menu-item-type-post_type menu-item-object-page">
@@ -79,11 +76,6 @@
                 }
             }
             Ext.onReady(function() {
-                var login_success = '${/session/@login_success}';
-                var authority = '${/session/@authority}';
-                if (login_success == 1 && authority == 'Y') {
-                    Ext.get('adminMenu').setStyle('display', 'block');
-                    Ext.get('userMenu').setStyle('display', 'none');
                     Ext.get('sysMenu').on('mouseover', function() {
                         doHide = false;
                         Ext.get('sysSubMenu').show(true);
@@ -99,9 +91,6 @@
                         doHide = true;
                         hideMenu.defer(50, this);
                     }, this);
-                } else if (login_success == 1) {
-                    Ext.get('userMenu').setStyle('display', 'none');
-                }
             });
         ]]></script>
     </a:view>
