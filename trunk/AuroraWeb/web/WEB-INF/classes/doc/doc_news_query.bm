@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:o="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="DOC_NEWS_V">
+    <bm:fields>
+        <bm:field name="news_id" databaseType="NUMBER" datatype="java.lang.Integer" />
+        <bm:field name="title" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="nick_name" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="createion_time" forInsert="false" forUpdate="false" physicalName="creation_date" databaseType="TIMESTAMP" datatype="java.sql.Timestamp"/>
+        <bm:field name="user_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="news_id"/>
+    </bm:primary-key>
+    <bm:features>
+        <o:sequence-pk/>
+        <f:standard-who/>
+    </bm:features>
+</bm:model>
