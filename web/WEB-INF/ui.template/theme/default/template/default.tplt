@@ -4,19 +4,17 @@
 <title>${page:title}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 ${page:html.head.css} 
+<link href="${/request/@context_path}/css/site.css" rel="stylesheet" type="text/css"/> 
 ${page:html.head.script}
 </head>
 <body>
-    <script language="javascript">
-        function init(){
-            if(window['Aurora']){
-                Aurora.Status.enable = false;
-                Aurora.SideBar.enable = false;
-            }
-        }
-        init();
-    </script>
-	${page:init}
-	${page:content}	
+    <div id="mainWrapper">
+        <div id="wrapper" >
+            ${screen:/WEB-INF/ui.template/include/header.screen}
+            ${page:init}
+            ${page:content}	
+        </div>
+        ${screen:/WEB-INF/ui.template/include/footer.screen}
+    </div>
 </body>
 </html>
