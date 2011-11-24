@@ -14,6 +14,13 @@
             }
         ]]></style>
         <script><![CDATA[
+            function initAurora(){
+                if(window['Aurora']){
+                    Aurora.Status.enable = false;
+                    Aurora.SideBar.enable = false;
+                }
+            }
+            initAurora();
             function login() {
                 new Aurora.Window({
                     url: '${/request/@context_path}/login.screen',
