@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>${page:title}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+${page:html.head.css} 
+        <link href="${/request/@context_path}/css/site.css" rel="stylesheet" type="text/css"/> 
+        <link href="${/request/@context_path}/css/ddsmoothmenu.css" rel="stylesheet" type="text/css"/>
+${page:html.head.script}
+    </head>
+    <body>
+        <div id="mainWrapper">
+            <div id="wrapper" >
+                ${screen:/WEB-INF/ui.template/include/header.screen}
+                ${page:init}
+                <div id="content">
+                        ${page:content}
+                </div>
+            </div>
+        ${screen:/WEB-INF/ui.template/include/footer.screen}
+        </div>
+    </body>
+</html>
