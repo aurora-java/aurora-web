@@ -7,7 +7,7 @@
 -->
 <a:screen xmlns:a="http://www.aurora-framework.org/application">
     <a:init-procedure/>
-    <a:view>
+    <a:view package="aurora.ui.std" template="default">
         <script><![CDATA[
             function passwordValidate(record, name, value) {
                 if (name == 'password' || name == 'password_new') {
@@ -33,9 +33,8 @@
                     Aurora.showMessage('提示', '此用户名已存在!!');
                     return;
                 }
-                $('register_screen').close();
-                var src = document.getElementById('mainFrame').contentWindow.location.href;
-                window.location.href = 'index.screen?src=' + src;
+                $('register_screen').close();                
+                window.location.reload();
             }
         ]]></script>
         <a:dataSets>

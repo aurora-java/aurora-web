@@ -1,75 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <a:screen xmlns:a="http://www.aurora-framework.org/application">
-    <a:view template="fragment" package="ui.template">
+    <a:view package="ui.template" template="fragment">
+        <script><![CDATA[
+            function login() {
+                new Aurora.Window({
+                    url: '${/request/@context_path}/sys_login.screen',
+                    title: '登录',
+                    id: 'login_screen',
+                    width: 280,
+                    height: 130
+                });
+            }
+            
+            function register() {
+                new Aurora.Window({
+                    url: '${/request/@context_path}/register.screen',
+                    title: '注册',
+                    id: 'register_screen',
+                    width: 280,
+                    height: 190
+                });
+            }
+        ]]></script>
         <div id="header">
-            <div class="ddsmoothmenu" id="mainMenu">
+            <div id="mainMenu" class="ddsmoothmenu">
                 <ul id="menu-top_menu" class="menu">
                     <li>
-                        <a href="${/request/@context_path}">首页</a>
+                        <a href="${/request/@context_path}"><![CDATA[首页]]></a>
                     </li>
                     <li>
-                        <a href="${/request/@context_path}">技术文章</a>
+                        <a href="${/request/@context_path}"><![CDATA[技术文章]]></a>
                     </li>
                     <li>
-                        <a href="${/request/@context_path}">相关项目</a>
+                        <a href="${/request/@context_path}"><![CDATA[相关项目]]></a>
                     </li>
                     <li>
-                        <a href="${/request/@context_path}">在线演示</a>
+                        <a href="${/request/@context_path}"><![CDATA[在线演示]]></a>
                     </li>
                     <li>
-                        <a href="${/request/@context_path}">讨论板</a>
+                        <a href="${/request/@context_path}"><![CDATA[讨论板]]></a>
                     </li>
-                    <li  class="menu-item menu-item-type-custom menu-item-object-custom">
-                        <a id="sysMenu" href="#">系统管理</a>
+                    <li id="adminMenu" class="menu-item menu-item-type-custom menu-item-object-custom" style="display:none;">
+                        <a id="sysMenu" href="#"><![CDATA[系统管理]]></a>
                         <ul id="sysSubMenu" class="sub-menu">
                             <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                                <a href="${/request/@context_path}/modules/admin/sys_user.screen">账号权限</a>
+                                <a href="${/request/@context_path}/modules/admin/sys_user.screen"><![CDATA[账号权限]]></a>
                             </li>
                             <li class="menu-item menu-item-type-post_type menu-item-object-page">
-                                <a href="${/request/@context_path}/modules/admin/doc_articles.screen">文章管理</a>
+                                <a href="${/request/@context_path}/modules/admin/doc_articles.screen"><![CDATA[文章管理]]></a>
                             </li>
                             <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
-                                <a href="${/request/@context_path}/modules/admin/doc_news.screen">新闻管理</a>
+                                <a href="${/request/@context_path}/modules/admin/doc_news.screen"><![CDATA[新闻管理]]></a>
                             </li>
                         </ul>
                     </li>
                 </ul>
             </div>
-            <div class="ddsmoothmenu" id="userMenu" style="float:right;right:0px;">
+            <div id="userMenu" class="ddsmoothmenu" style="float:right;right:0px;">
                 <ul id="menu-top_menu" class="menu">
                     <li>
-                        <a href="${/request/@context_path}">登陆</a>
+                        <a href="javascript:login();"><![CDATA[登录]]></a>
                     </li>
                     <li>
-                        <a href="${/request/@context_path}">注册</a>
+                        <a href="javascript:register();"><![CDATA[注册]]></a>
                     </li>
                 </ul>
             </div>
         </div>
         <script><![CDATA[
-                var doHide = false;
-                function hideMenu(){
-                    if(doHide){
-                        Ext.get('sysSubMenu').hide(true)
-                    }
+            var doHide = false;
+            
+            function hideMenu() {
+                if (doHide) {
+                    Ext.get('sysSubMenu').hide(true);
                 }
-                Ext.onReady(function(){
-                    Ext.get('sysMenu').on('mouseover',function(){
+            }
+            Ext.onReady(function() {
+                var login_success = '${/session/@login_success}';
+                var authority = '${/session/@authority}';
+                if (login_success == 1 && authority == 'Y') {
+                    Ext.get('adminMenu').setStyle('display', 'block');
+                    Ext.get('userMenu').setStyle('display', 'none');
+                    Ext.get('sysMenu').on('mouseover', function() {
                         doHide = false;
-                        Ext.get('sysSubMenu').show(true)
-                    },this)
-                    Ext.get('sysMenu').on('mouseout',function(e){
+                        Ext.get('sysSubMenu').show(true);
+                    }, this);
+                    Ext.get('sysMenu').on('mouseout', function(e) {
                         doHide = true;
-                        hideMenu.defer(50,this);
-                    },this)
-                    Ext.get('sysSubMenu').on('mouseover',function(e){
+                        hideMenu.defer(50, this);
+                    }, this);
+                    Ext.get('sysSubMenu').on('mouseover', function(e) {
                         doHide = false;
-                    },this)
-                     Ext.get('sysSubMenu').on('mouseout',function(e){
+                    }, this);
+                    Ext.get('sysSubMenu').on('mouseout', function(e) {
                         doHide = true;
-                        hideMenu.defer(50,this);
-                    },this)
-                })
+                        hideMenu.defer(50, this);
+                    }, this);
+                } else if (login_success == 1) {
+                    Ext.get('userMenu').setStyle('display', 'none');
+                }
+            });
         ]]></script>
     </a:view>
 </a:screen>
