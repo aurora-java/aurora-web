@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:o="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+               select count(1) as maxrow from DOC_NEWS_V
+            ]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+</bm:model>
