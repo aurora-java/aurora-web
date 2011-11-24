@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <a:screen xmlns:a="http://www.aurora-framework.org/application">
     <a:view package="ui.template" template="fragment">
+        <a:dataSets>
+            <a:dataSet />
+        </a:dataSets>
         <script><![CDATA[
             function login() {
                 new Aurora.Window({
