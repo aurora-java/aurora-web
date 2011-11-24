@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:view template="fragment" package="ui.template">
+        <div id="footer">
+            <div id="footerWidgets">
+                <div id="footerWidgetsInner">
+                    <div id="copyright">
+                        <img src="${/request/@context_path}/images/hand_logo.png"/>
+                        <p>Powered by Aurora</p>
+                        <p>Copyright © 2011 · HAND Enterprise Solutions Company All Rights Reserved</p>
+                    </div>                      
+                </div>
+                
+            </div>
+        </div>
+    </a:view>
+</a:screen>
