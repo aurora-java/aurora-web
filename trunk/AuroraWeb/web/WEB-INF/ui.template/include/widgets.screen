@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <a:screen xmlns:a="http://www.aurora-framework.org/application">
     <a:init-procedure>
-        <a:model-query defaultWhereClause="row_num &gt; 2*(to_number(nvl(${/parameter/@page},1))-1) and row_num &lt;= 2*to_number(nvl(${/parameter/@page},1))+1" model="doc.doc_news" rootPath="widgets"/>
+        <a:model-query defaultWhereClause="row_num &gt; 2*(to_number(nvl(${/parameter/@page},1))-1) and row_num &lt;= 2*to_number(nvl(${/parameter/@page},1))+1" model="doc.doc_news_list" rootPath="widgets"/>
     </a:init-procedure>
     <a:view template="fragment" package="ui.template">
             <div class="widget">
