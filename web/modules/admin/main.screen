@@ -7,7 +7,7 @@
 -->
 <a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
     <a:init-procedure/>
-    <a:view>
+    <a:view package="aurora.ui.std" template="default">
         <style><![CDATA[
             html,body {
                 overflow:hidden;
