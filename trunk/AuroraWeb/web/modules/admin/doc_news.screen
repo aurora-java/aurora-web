@@ -5,7 +5,7 @@
     </a:init-procedure>
     <a:view template="main" package="ui.template">
         <a:dataSets>
-            <a:dataSet id="news_result_ds" autoCount="true" autoQuery="true" fetchAll="false" model="doc.doc_news_list" pageSize="20" />
+            <a:dataSet id="news_result_ds" autoCount="true" autoQuery="true" fetchAll="false" model="doc.doc_news" pageSize="20" />
         </a:dataSets>
         <style><![CDATA[
             .link:hover {
@@ -25,7 +25,7 @@
             <a:columns>
                 <a:column name="title" prompt="题目" renderer="titleRenderer"/>
                 <a:column name="nick_name" align="center" prompt="发表人" width="100"/>
-                <a:column name="creation_date" align="center" prompt="发表时间" renderer="Aurora.formatDateTime" width="150"/>
+                <a:column name="createion_time" align="center" prompt="发表时间" renderer="Aurora.formatDateTime" width="150"/>
             </a:columns>
         </a:table>
     </a:view>
