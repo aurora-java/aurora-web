@@ -1,0 +1,4 @@
+${page:html.head.css} 
+${page:html.head.script}
+${page:init}
+${page:content}
