@@ -19,10 +19,10 @@
             }
         ]]></script>
         <a:dataSets>
-            <a:dataSet id="sys_user_ds" autoCreate="true" loadData="true" model="sys.sys_user" queryUrl="${/request/@context_path}/autocrud/sys.sys_user/query?user_id=${/parameter/@user_id}">
+            <a:dataSet id="sys_user_ds" loadData="true" model="sys.sys_user" queryUrl="${/request/@context_path}/autocrud/sys.sys_user/query?user_id=${/parameter/@user_id}">
                 <a:fields>
                     <a:field name="user_name" readOnly="true"/>
-                    <a:field name="authority" checkedValue="Y" uncheckedValue="N"/>
+                    <a:field name="is_admin" checkedValue="Y" uncheckedValue="N"/>
                 </a:fields>
                 <a:events>
                     <a:event name="submitsuccess" handler="submitSuccess"/>
@@ -35,7 +35,7 @@
                     <a:event name="enterdown" handler="sureFunction"/>
                 </a:events>
             </a:textField>
-            <a:checkBox name="authority" bindTarget="sys_user_ds" prompt="权限">
+            <a:checkBox name="is_admin" bindTarget="sys_user_ds" prompt="权限">
                 <a:events>
                     <a:event name="enterdown" handler="sureFunction"/>
                 </a:events>
