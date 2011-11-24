@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
     <a:init-procedure>
-
+        <a:model-query model="doc.doc_news_detail" rootPath="news"/>
     </a:init-procedure>
     <a:view>
-        <div>NEWS</div>
+        <a:link url="#"/>
+        <div class="post">
+            <h2 class="title">
+                ${/model/news/record/@title}
+            </h2>
+            <div class="post_info_t"> 
+                <span class="p_author">
+                    <a href="#" rel="author">${/model/news/record/@nick_name}</a>
+                </span> 
+                <span class="p_normal">
+                    <span>发表于 </span>
+                    <abbr class="timeago">${/model/news/record/@creation_date}</abbr> 
+                </span>
+            </div>
+            <div class="entry">
+                <p>
+                ${/model/news/record/@content}
+                </p>
+            </div>
+        </div>
+        <div style="margin:25px 0px 15px 0px;height:2px;"/>
+        <a:comment bindId="${/parameter/@id}" tableName="DOC_NEWS" width="650"/>
+
     </a:view>
 </a:screen>
