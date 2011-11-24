@@ -18,6 +18,12 @@
                 return '<a class="link" style="font-size:12px;" href="javascript:openWindow(' + record.get('user_id') + ');"><img src="../../images/page_edit.gif"></a>';
             }
             
+            function adminRenderer(value, record, name) {
+                if (value == 'Y') {
+                    return '√';
+                }
+            }
+            
             function openWindow(user_id) {
                 new Aurora.Window({
                     url: 'user_setting.screen?user_id=' + user_id,
@@ -56,7 +62,7 @@
                     <a:column align="center" renderer="userRenderer" width="60"/>
                     <a:column name="user_name" align="center" prompt="用户名"/>
                     <a:column name="nick_name" align="center" prompt="昵称"/>
-                    <a:column name="is_admin" align="center" prompt="权限"/>
+                    <a:column name="is_admin" align="center" prompt="系统管理权限" renderer="adminRenderer" width="80"/>
                 </a:columns>
             </a:table>
         </div>
