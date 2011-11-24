@@ -5,7 +5,7 @@
     </a:init-procedure>
     <a:view template="main" package="ui.template">
         <a:dataSets>
-            <a:dataSet id="news_result_ds" autoCount="true" autoQuery="true" fetchAll="false" model="doc.doc_news" pageSize="20" />
+            <a:dataSet id="news_result_ds" autoCount="true" autoQuery="true" fetchAll="false" model="doc.doc_news_query" pageSize="20" />
         </a:dataSets>
         <style><![CDATA[
             .link:hover {

@@ -13,7 +13,7 @@
                     allowPreviewEmoticons : false,
                     allowImageUpload : false,
                     items : [
-                        'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                        'fontname', 'fontsize', 'lineheight', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
                         'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
                         'insertunorderedlist']
                 });
@@ -27,7 +27,7 @@
                 var ds = $('doc_news');
                 var record = ds.getCurrentRecord();
                 record.set('summary',summaryEditor.html())
-                record.set('conent',contentEditor.html())
+                record.set('content',contentEditor.html())
                 ds.submit();
             }
             function onSubmitsuccess(){
@@ -51,11 +51,11 @@
             <div style="margin:5px 0px 5px 0px;height:2px;background-color:#333"></div>
             <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC" >
                 <tr>
-                    <td width="10%" height="25" align="right" bgcolor="#FFFFFF">
+                    <td width="10%" height="20" align="right" bgcolor="#FFFFFF">
                         <strong>标题：</strong>
                     </td>
-                    <td width="90%" height="25" align="left" style="line-height:25px;" bgcolor="#FFFFFF">
-                        <a:textField name="title" width="450" style="margin:3px;float:left;" bindTarget="doc_news" maxLength="100"/>
+                    <td width="90%" height="20" align="left" style="padding:5px;line-height:20px;" bgcolor="#FFFFFF">
+                        <a:textField name="title" width="450" style="float:left;" bindTarget="doc_news" maxLength="100"/>
                         <span style="float:left;margin-left:10px;">新闻标题不能为空，长度限制在100个字符以内</span>
                     </td>
                 </tr>
