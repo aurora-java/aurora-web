@@ -23,14 +23,23 @@
             }
             
             function submitSuccess(ds, res) {
-                var success = 0;
+                var success = 2;
+                var authority = 'N';
                 if (res.result.record) {
                     success = res.result.record.success;
-                }
+                    authority = res.result.record.authority;
+                }  
+                if (success == 2) {                    
+                    return;
+                }             
                 if (success == 0) {
                     Aurora.showMessage('提示', '用户名或密码有误,请重新输入!!', null, 320, 120);
                     return;
-                }
+                } 
+                if (authority == 'N') {
+                    Aurora.showMessage('提示', '您没有权限!!', null, 320, 120);
+                    return;
+                }               
                 saveUserNameLang();
                 window.location.href = 'main.screen';
             }

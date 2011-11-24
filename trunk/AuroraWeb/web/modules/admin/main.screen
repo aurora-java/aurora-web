@@ -171,7 +171,8 @@
             }, this);
             Aurora.onReady(function() {
                 var login_success = '${/session/@login_success}';
-                if (login_success != 1) {
+                var authority = '${/session/@authority}';
+                if (login_success != 1 || authority == 'N') {
                     window.location.href = 'error_session_expired.screen';
                 }
             });
