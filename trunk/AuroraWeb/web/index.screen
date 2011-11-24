@@ -2,7 +2,7 @@
 <a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
     <a:init-procedure>
         <a:model-query model="doc.doc_news_count" rootPath="count"/>
-        <a:model-query defaultWhereClause="row_num &gt; 2*(to_number(nvl(${/parameter/@page},1))-1) and row_num &lt;= 2*to_number(nvl(${/parameter/@page},1))+1" model="doc.doc_news_list" rootPath="news"/>
+        <a:model-query defaultWhereClause="row_num &gt; 10*(to_number(nvl(${/parameter/@page},1))-1) and row_num &lt;= 10*to_number(nvl(${/parameter/@page},1))+1" model="doc.doc_news_list" rootPath="news"/>
     </a:init-procedure>
     <a:view>
         <a:link url="#"/>
@@ -11,7 +11,7 @@
             var current_page, last_page;
              var max_row_id = '${/model/count/record/@maxrow}';               
             var length = parseInt(max_row_id);
-            last_page = Math.ceil(length/2);
+            last_page = Math.ceil(length/10);
             if (page != '') {
                 current_page = parseInt(page);
             } else {
@@ -35,7 +35,7 @@
         <a:repeater datamodel="/model/news">
             <div class="post">
                 <h2 class="title">
-                    <a href="#" target="_blank">${@title}</a>
+                    <a href="news.screen?id=${@news_id}" target="_blank">${@title}</a>
                 </h2>
                 <div class="post_info_t"> 
                     <span class="p_author">
