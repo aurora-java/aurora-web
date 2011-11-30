@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bm:model xmlns:o="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="DOC_ARTICLE_V">
     <bm:fields>
-        <bm:field name="article_id" databaseType="NUMBER" datatype="java.lang.Integer" />
+        <bm:field name="article_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
         <bm:field name="article_title" databaseType="VARCHAR2" datatype="java.lang.String"/>
-        <bm:field name="category_id" databaseType="NUMBER" datatype="java.lang.Integer" />
+        <bm:field name="category_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
         <bm:field name="nick_name" databaseType="VARCHAR2" datatype="java.lang.String"/>
         <bm:field name="creation_date" databaseType="TIMESTAMP" datatype="java.sql.Timestamp"/>
         <bm:field name="last_update_date" databaseType="TIMESTAMP" datatype="java.sql.Timestamp"/>
@@ -12,10 +12,11 @@
         <bm:pk-field name="article_id"/>
     </bm:primary-key>
     <bm:query-fields>
+        <bm:query-field name="article_title" queryExpression="article_title like &apos;%&apos; || ${@article_title} || &apos;%&apos;"/>
+        <bm:query-field name="nick_name" queryExpression="nick_name = ${@nick_name}"/>
+        <bm:query-field name="date_from" queryExpression="creation_date &gt;= to_date(${@date_from},&apos;yyyy-mm-dd&apos;)"/>
+        <bm:query-field name="date_to" queryExpression="creation_date &lt; to_date(${@date_to},&apos;yyyy-mm-dd&apos;)+1"/>
     </bm:query-fields>
-    <bm:data-filters>
-        <bm:data-filter enforceActions="query" expression="t1.category_id = nvl(${@category_id}, -1)"/>
-    </bm:data-filters>
     <bm:features>
         <o:sequence-pk/>
     </bm:features>

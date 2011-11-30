@@ -1,77 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <a:screen xmlns:a="http://www.aurora-framework.org/application">
-    <a:init-procedure><![CDATA[
-    ]]></a:init-procedure>
-    <a:view>
+    <a:init-procedure>
+        <a:model-query defaultWhereClause="category_id=${/parameter/@cid}" model="doc.doc_article_count" rootPath="count"/>
+        <a:model-query defaultWhereClause="category_id=${/parameter/@cid}" model="doc.doc_article_list" rootPath="article"/>
+    </a:init-procedure>
+    <a:view package="aurora.ui.std" template="default">
+        <link href="css/site.css" rel="stylesheet" type="text/css"/>
         <style><![CDATA[
-            .cateList {
-                border-bottom:none;
-            }
-            .cateList .table-navbar{
-                border:none;
-            }
-            .cateList .table-hc {
-                background:none;
-                background-color:#97aecc;
-                color:#fff;
-                font-size:13px;
-            }
-            .cateList .table-cell {
-                height:30px;
-                line-height:30px;
-            }
-            .cateList td {
-                background-color:#fff;
-            }
-            
-            .link:hover {
-                TEXT-DECORATION: underline
-            }
+            .textoverflow  {
+			  display:block;
+			  height:64px;		  			  
+			  overflow: hidden;			  
+			  -o-text-overflow: ellipsis;    /* for Opera */
+			  text-overflow: ellipsis;        /* for IE */
+			}
+			.textoverflow:after{ content: "..."; }/* for Firefox */
+			@media all and (min-width: 0px){ .textoverflow:after{ content:""; }/* for Opera */ }		
         ]]></style>
         <script><![CDATA[
-        
-            function articleRenderer(value,record,name){
-                return '<a class="link" style="font-size:12px;" href="article.screen?article_id='+record.get('article_id')+'">'+value+"</a>";
+            var page = '${/parameter/@page}';
+            var current_page, last_page;
+            var max_row_id = '${/model/count/record/@maxrow}';
+            var length = parseInt(max_row_id);
+            last_page = Math.ceil(length / 5);
+            if (page != '') {
+                current_page = parseInt(page);
+            } else {
+                current_page = 1;
             }
+            
+            function prePage() {
+                if (current_page > 1) {
+                    current_page--;
+                    window.parent.document.getElementById('mainFrame').src = 'category.screen?cid=${/parameter/@cid}&page=' + current_page;
+                }
+            }
+            
+            function nextPage() {
+                if (current_page < last_page) {
+                    current_page++;
+                    window.parent.document.getElementById('mainFrame').src = 'category.screen?cid=${/parameter/@cid}&page=' + current_page;
+                }
+            }            
+            
         ]]></script>
+        <a:link/>
         <a:switch test="/parameter/@cid">
             <a:case value="null">
                 <div><![CDATA[路径不正确!]]></div>
             </a:case>
             <a:case value="*">
-                <a:dataSets>
-                    <a:dataSet id="article_query_ds">
-                        <a:fields>
-                            <a:field name="category_id" defaultValue="${/parameter/@cid}"/>
-                        </a:fields>
-                    </a:dataSet>
-                    <a:dataSet id="article_result_ds" autoCount="true" autoQuery="true" fetchAll="false" model="doc.doc_article_v" pageSize="20" queryDataSet="article_query_ds"><![CDATA[
-                    ]]></a:dataSet>
-                </a:dataSets>
-                <div style="margin:5px;">
-                    <div id="login" style="float:right;display:none;">
-                        <a href="post_article.screen?cid=${/parameter/@cid}" style="float:right;margin:5px;font-size:15px;"><![CDATA[发表新帖]]></a>
+                <a:repeater datamodel="/model/article">
+                    <div class="post" style="width:90%;">
+                        <h2 class="title">
+                            <a href="article.screen?article_id=${@article_id}"><![CDATA[${@article_title}]]></a>
+                        </h2>
+                        <div class="post_info_t">
+                            <span class="p_author">
+                                <a href="#" rel="author"><![CDATA[${@nick_name}]]></a>
+                            </span>
+                            <span class="p_normal">
+                                <span><![CDATA[发表于 ]]></span>
+                                <abbr class="timeago"><![CDATA[${@creation_date}]]></abbr>
+                            </span>
+                        </div>
+                        <div class="entry textoverflow">
+                            <p><![CDATA[
+		                        ${@content}
+		                    ]]></p>
+                        </div>
+                        <p><![CDATA[
+		                       ...
+		                ]]></p>
                     </div>
-                    <a:table id="grid" bindTarget="article_result_ds" canWheel="false" className="cateList" navBar="true" navBarType="simple" style="width:100%;float:left;">
-                        <a:columns>
-                            <a:column name="article_title" prompt="题目" renderer="articleRenderer"/>
-                            <a:column name="nick_name" align="center" prompt="最后更新人" width="100"/>
-                            <a:column name="creation_date" align="center" prompt="发表时间" renderer="Aurora.formatDateTime" width="150"/>
-                            <a:column name="last_update_date" align="center" prompt="最后更新时间" renderer="Aurora.formatDateTime" width="150"/>
-                        </a:columns>
-                    </a:table>
+                </a:repeater>
+                <div class="nav" style="">
+                    <a href="javascript:prePage();" style="margin-right:5px;"><![CDATA[上一页]]></a>
+                    <span style="margin-right:5px;"><![CDATA[|]]></span>
+                    <a href="javascript:nextPage();" style="margin-right:5px;"><![CDATA[下一页]]></a>
                 </div>
             </a:case>
         </a:switch>
-        <script language="javascript"><![CDATA[            
-            Aurora.onReady(function() {                
-                var login_success = '${/session/@login_success}';
-                if (login_success == 1) {                    
-                    Ext.fly('login').setStyle('display', 'block');
-                } else {                    
-                    Ext.fly('login').setStyle('display', 'none');
-                }
-            });
-        ]]></script>
     </a:view>
 </a:screen>

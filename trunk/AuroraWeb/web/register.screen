@@ -34,6 +34,11 @@
                     return;
                 }
                 $('register_screen').close();                
+                if (document.getElementById('mainFrame')) {
+                    var src = document.getElementById('mainFrame').contentWindow.location.href;
+                    window.location.href = 'tech_article.screen?src=' + src;
+                    return;
+                }
                 window.location.reload();
             }
         ]]></script>

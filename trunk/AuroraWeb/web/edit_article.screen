@@ -3,18 +3,18 @@
     <a:init-procedure>
         <model-query fetchAll="true" model="doc.doc_article_detail" rootPath="article"/>
     </a:init-procedure>
-    <a:view>
+    <a:view package="ui.template" template="main">
         <a:switch test="/parameter/@article_id">
             <a:case value="null">
-                <div>路径不正确!</div>
+                <div><![CDATA[路径不正确!]]></div>
             </a:case>
             <a:case value="*">
-                <style>
+                <style><![CDATA[
             textarea {
                 font-family:Tahoma, Arial, Verdana !important;
                 font-size:12px !important;
             }
-                </style>
+                ]]></style>
                 <script><![CDATA[
 
                     function postArticle(){
@@ -24,7 +24,7 @@
                     }  
 
                     function onSubmitSuccess(ds,res){
-                        window.location.href='${/request/@context_path}/category.screen?cid=${/model/article/record/@category_id}';
+                        window.location.href='${/request/@context_path}/tech_article.screen?src=article.screen?article_id=' + article_id;
                     } 
 
                     function onSubmitFailed(){
@@ -33,7 +33,7 @@
 
                 ]]></script>
                 <a:dataSets>
-                    <a:dataSet id="article_update_ds"  submitUrl="${/request/@context_path}/update_article.svc" >
+                    <a:dataSet id="article_update_ds" submitUrl="${/request/@context_path}/update_article.svc">
                         <a:datas dataSource="/model/article"/>
                         <a:fields>
                             <a:field name="article_title" required="true"/>
@@ -44,33 +44,33 @@
                         </a:events>
                     </a:dataSet>
                 </a:dataSets>
-                <style>
+                <style><![CDATA[
             TH {
                 background-color:#EEEEEE;
                 text-align:right;
                 padding-right:15px;
                 font-size:13px;
             }
-                </style>
+                ]]></style>
                 <div style="margin:10px;">
-                    <div>当前分类 -- UI组件</div>
-                    <div style="margin:5px 0px 5px 0px;height:2px;background-color:#97aecc"></div>
-                    <TABLE cellSpacing="1" cellPadding="4" width="100%" align="center">
+                    <div><![CDATA[当前分类 -- UI组件]]></div>
+                    <div style="margin:5px 0px 5px 0px;height:2px;background-color:#97aecc"/>
+                    <TABLE align="center" cellPadding="4" cellSpacing="1" width="100%">
                         <TBODY>
                             <TR>
-                                <TH width="100" align="right">标题:</TH>
+                                <TH align="right" width="100"><![CDATA[标题:]]></TH>
                                 <TD>
                                     <a:textField name="article_title" bindTarget="article_update_ds" width="400"/>
                                 </TD>
                             </TR>
                             <TR>
-                                <TH align="right">内容:</TH>
+                                <TH align="right"><![CDATA[内容:]]></TH>
                                 <TD>
-                                    <a:textArea name="content" className="postConent" bindTarget="article_update_ds" width="600" marginWidth="250" marginHeight="200"/>
+                                    <a:textArea name="content" bindTarget="article_update_ds" className="postConent" marginHeight="200" marginWidth="250" width="600"/>
                                 </TD>
                             </TR>
                             <TR>
-                                <TH align="right">附件:</TH>
+                                <TH align="right"><![CDATA[附件:]]></TH>
                                 <TD>
                                     <div style="width:600px;">
                                         <a:upload buttonWidth="75" fileType="*.png;*.gif;*.jpg;*.screen;*.bm;*.xml;*.zip;*.rar" pkvalue="${/model/article/record/@article_id}" sourcetype="DOC_ARTICLE" text="上传附件"/>
@@ -79,7 +79,7 @@
                             </TR>
                         </TBODY>
                     </TABLE>
-                    <a:button id="postButton" style="margin-top:10px;" text="更 新 文 章" width="100" click="postArticle"/>
+                    <a:button id="postButton" click="postArticle" style="margin-top:10px;" text="更 新 文 章" width="100"/>
                 </div>
             </a:case>
         </a:switch>
