@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:init-procedure>
+        <model-query fetchAll="true" model="doc.doc_news" rootPath="news"/>
+    </a:init-procedure>
+    <a:view template="main" package="ui.template">
+        <a:switch test="/parameter/@news_id">
+            <a:case value="null">
+                <div>路径不正确!</div>
+            </a:case>
+            <a:case value="*">
+                <script charset="utf-8" src="${/request/@context_path}/kindeditor/kindeditor-min.js"> </script>
+                <script charset="utf-8" src="${/request/@context_path}/kindeditor/lang/zh_CN.js"> </script>
+                <script><![CDATA[
+                    var summaryEditor, contentEditor
+                    KindEditor.ready(function(K) {
+                        summaryEditor = K.create('textarea[id="news_summary"]', {
+                             width:'100%',
+                            resizeType : 1,
+                            allowPreviewEmoticons : false,
+                            allowImageUpload : false,
+                            items : [
+                                'fontname', 'fontsize', 'lineheight', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                                'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                                'insertunorderedlist']
+                        });
+                        contentEditor = K.create('textarea[id="news_content"]', {
+                            width:'100%',
+                            allowFileManager : true
+                        });
+                    });
+
+                    function postNew(){
+                        var ds = $('doc_news');
+                        var record = ds.getCurrentRecord();
+                        record.set('summary',summaryEditor.html())
+                        record.set('content',contentEditor.html())
+                        ds.submit();
+                    }
+                    function onSubmitsuccess(){
+                        Aurora.showInfoMessage('成功','发布成功',function(){
+                            window.location.href="doc_news.screen"
+                        })
+                    }
+                ]]></script>
+                <a:dataSets>
+                    <a:dataSet id="doc_news" model="doc.doc_news">
+                        <a:datas dataSource="/model/news"/>
+                        <a:fields>
+                            <a:field name="title" required="true"/>
+                        </a:fields>
+                        <a:events>
+                            <a:event name="submitsuccess" handler="onSubmitsuccess"/>
+                        </a:events>
+                    </a:dataSet>
+                </a:dataSets>
+                <div >
+                    <h1 style="font-size:16px;font-weight:bold;">发布新闻</h1>
+                    <div style="margin:5px 0px 5px 0px;height:2px;background-color:#333"></div>
+                    <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC" >
+                        <tr>
+                            <td width="10%" height="20" align="right" bgcolor="#FFFFFF">
+                                <strong>标题：</strong>
+                            </td>
+                            <td width="90%" height="20" align="left" style="padding:5px;line-height:20px;" bgcolor="#FFFFFF">
+                                <a:textField name="title" width="450" style="float:left;" bindTarget="doc_news" maxLength="100"/>
+                                <span style="float:left;margin-left:10px;">新闻标题不能为空，长度限制在100个字符以内</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="25" align="right" bgcolor="#FFFFFF" >
+                                <strong>摘要：</strong>
+                            </td>
+                            <td height="25" align="left" bgcolor="#FFFFFF" style="padding:5px;">
+                                <a:textArea id="news_summary" name="summary" bindTarget="doc_news" style="width:700px;height:300px;visibility:hidden;"></a:textArea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="25" align="right" bgcolor="#FFFFFF">
+                                <strong>内容：</strong>
+                            </td>
+                            <td height="25" align="left" bgcolor="#FFFFFF" style="padding:5px;">
+                                <a:textArea id="news_content" name="content" bindTarget="doc_news"  style="width:700px;height:500px;visibility:hidden;"></a:textArea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="25" align="right" bgcolor="#FFFFFF"> </td>
+                            <td height="25" align="left" bgcolor="#FFFFFF">
+                                <a:button text="更新" height="30" width="100" style="margin:5px;" click="postNew" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </a:case>
+        </a:switch>
+    </a:view>
+</a:screen>
