@@ -9,6 +9,9 @@
     <bm:primary-key>
         <bm:pk-field name="news_id"/>
     </bm:primary-key>
+     <bm:query-fields>
+        <bm:query-field field="news_id" queryOperator="="/>
+    </bm:query-fields>
     <bm:features>
         <o:sequence-pk/>
         <f:standard-who/>
