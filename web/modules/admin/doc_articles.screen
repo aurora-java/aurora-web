@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: andy  
+    $Date: 2011-11-30 下午01:15:21  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure/>
+    <a:view package="ui.template" template="main">
+        <style><![CDATA[
+            .link:hover {
+                TEXT-DECORATION: underline
+            }
+        ]]></style>
+        <script><![CDATA[
+            function userRenderer(value, record, name) {
+                return '<a class="link" style="font-size:12px;" href="javascript:openWindow(' + record.get('article_id') + ');"><img src="../../images/page_edit.gif"></a>';
+            }
+            
+            function articleRenderer(value, record, name) {
+                return '<a class="link" style="font-size:12px;" href="javascript:locationTo(' + record.get('article_id') + ');">' + value + '</a>';
+            }
+            
+            function openWindow(article_id) {
+                window.location.href = '${/request/@context_path}/edit_article.screen?article_id=' + article_id;
+            }
+            
+            function locationTo(article_id) {
+                window.location.href = '${/request/@context_path}/tech_article.screen?src=article.screen?article_id=' + article_id;
+            }
+            
+            function query() {
+                $('doc_article_result_ds').query();
+            }
+            
+            function reset() {
+                $('doc_article_query_ds').reset();
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="doc_article_query_ds" model="doc.doc_article_v"/>
+            <a:dataSet id="doc_article_result_ds" autoQuery="true" model="doc.doc_article_v" queryDataSet="doc_article_query_ds"/>
+        </a:dataSets>
+        <div style="margin:5px">
+            <a:fieldSet column="2" labelWidth="120" title="查询">
+                <a:textField name="article_title" bindTarget="doc_article_query_ds" prompt="文章"/>
+                <a:textField name="nick_name" bindTarget="doc_article_query_ds" prompt="作者"/>
+                <a:datePicker name="date_from" bindTarget="doc_article_query_ds" prompt="发表日期从"/>
+                <a:datePicker name="date_to" bindTarget="doc_article_query_ds" prompt="发表日期至"/>
+            </a:fieldSet>
+        </div>
+        <a:hBox style="margin:5px;">
+            <a:button click="query" text="查询"/>
+            <a:button click="reset" text="重置"/>
+        </a:hBox>
+        <div style="margin:5px">
+            <a:table bindTarget="doc_article_result_ds" canWheel="false" className="cateList" navBar="true" navBarType="simple" style="background-color:#fff;width:100%;float:left;">
+                <a:columns>
+                    <a:column align="center" renderer="userRenderer" width="60"/>
+                    <a:column name="article_title" align="center" prompt="文章" renderer="articleRenderer"/>
+                    <a:column name="nick_name" align="center" prompt="作者"/>
+                    <a:column name="creation_date" align="center" prompt="发表日期" renderer="Aurora.formatDate"/>
+                    <a:column name="creation_date" align="center" prompt="更新日期" renderer="Aurora.formatDate"/>
+                </a:columns>
+            </a:table>
+        </div>
+    </a:view>
+</a:screen>
