@@ -244,4 +244,7 @@ body {
 }
 
 
+.docbook span.hl-number {
+	color: 	rgb(42,0,255);
+}
     

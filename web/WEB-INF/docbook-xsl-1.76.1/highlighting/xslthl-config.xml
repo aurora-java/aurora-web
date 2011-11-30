@@ -43,5 +43,6 @@ Michiel Hendriks <elmuerte at users.sourceforge.net>
 	<highlighter id="perl" file="perl-hl.xml" />	
 	<highlighter id="javascript" file="javascript-hl.xml" />
     <highlighter id="screen" file="screen-hl.xml" />
+    <highlighter id="sql" file="sql-hl.xml" />
 	<namespace prefix="xslthl" uri="http://xslthl.sf.net" />
 </xslthl-config>
