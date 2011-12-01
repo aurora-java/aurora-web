@@ -5,18 +5,20 @@
         <model-query defaultWhereClause="fam.table_name = &apos;DOC_ARTICLE&apos;  and fam.table_pk_value = ${/parameter/@article_id}" fetchAll="true" model="fnd.fnd_atm_attachment" rootPath="atms"/>
     </a:init-procedure>
     <a:view package="ui.template" template="main">
-        <link href="css/site.css" rel="stylesheet" type="text/css"/>
-        <script><![CDATA[
-            function test() {
-                Aurora.showMessage('xxx', 'sdfsdfdsf');
+        <style>
+            #content {
+                background-color:#fff !important;
+                border:1px solid #ccc;
             }
+        </style>
+        <script><![CDATA[
             
             function loginHandler() {
-                top.login();
+                login();
             }
             
             function registerHandler() {
-                top.register();
+                register();
             }
         ]]></script>
         <div style="margin:15px;">
