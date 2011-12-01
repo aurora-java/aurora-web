@@ -13,7 +13,7 @@ import uncertain.ocm.IObjectRegistry;
 
 public class ArticleList {
 	private static final String DOC_CATEGORY_BM = "doc.doc_category";
-	private static final int parent_id = 1;
+	private static final int parent_id = -1;
 
 	public static CompositeMap createList(IObjectRegistry registry,
 			CompositeMap parameter) throws Exception {
@@ -28,6 +28,7 @@ public class ArticleList {
 		CompositeMap father = service.queryAsMap(map);
 		Iterator itm = father.getChildIterator();
 		try {
+			if(itm!=null)
 			while (itm.hasNext()) {
 				CompositeMap record = new CompositeMap("record");
 				CompositeMap fa = (CompositeMap) itm.next();
