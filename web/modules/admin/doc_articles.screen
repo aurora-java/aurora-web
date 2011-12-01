@@ -42,15 +42,16 @@
             <a:dataSet id="doc_article_query_ds" model="doc.doc_article_v"/>
             <a:dataSet id="doc_article_result_ds" autoQuery="true" model="doc.doc_article_v" queryDataSet="doc_article_query_ds"/>
         </a:dataSets>
-        <div style="margin:5px">
+        <a href="${/request/@context_path}/modules/admin/post_article.screen?cid=${/parameter/@cid}" style="font-size:12pt;float:right;margin-right:30px;"><![CDATA[发表文章]]></a>
+        <div style="margin:5px;float:left;width:99%;">
             <a:fieldSet column="2" labelWidth="120" title="查询">
-                <a:textField name="article_title" bindTarget="doc_article_query_ds" prompt="文章"/>
+                <a:textField name="article_title" bindTarget="doc_article_query_ds" prompt="主题" width="350"/>
                 <a:textField name="nick_name" bindTarget="doc_article_query_ds" prompt="作者"/>
                 <a:datePicker name="date_from" bindTarget="doc_article_query_ds" prompt="发表日期从"/>
                 <a:datePicker name="date_to" bindTarget="doc_article_query_ds" prompt="发表日期至"/>
             </a:fieldSet>
         </div>
-        <a:hBox style="margin:5px;">
+        <a:hBox style="margin:5px;float:left;">
             <a:button click="query" text="查询"/>
             <a:button click="reset" text="重置"/>
         </a:hBox>
@@ -58,10 +59,10 @@
             <a:table bindTarget="doc_article_result_ds" canWheel="false" className="cateList" navBar="true" navBarType="simple" style="background-color:#fff;width:100%;float:left;">
                 <a:columns>
                     <a:column align="center" renderer="userRenderer" width="60"/>
-                    <a:column name="article_title" align="center" prompt="文章" renderer="articleRenderer"/>
+                    <a:column name="article_title" prompt="主题" renderer="articleRenderer" width="450"/>
                     <a:column name="nick_name" align="center" prompt="作者"/>
-                    <a:column name="creation_date" align="center" prompt="发表日期" renderer="Aurora.formatDate"/>
-                    <a:column name="creation_date" align="center" prompt="更新日期" renderer="Aurora.formatDate"/>
+                    <a:column name="creation_date" align="center" prompt="发表日期" renderer="Aurora.formatDate" width="120"/>
+                    <a:column name="creation_date" align="center" prompt="更新日期" renderer="Aurora.formatDate" width="120"/>
                 </a:columns>
             </a:table>
         </div>
