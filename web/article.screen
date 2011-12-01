@@ -4,7 +4,7 @@
         <model-query fetchAll="true" model="doc.doc_article_detail" rootPath="article"/>
         <model-query defaultWhereClause="fam.table_name = &apos;DOC_ARTICLE&apos;  and fam.table_pk_value = ${/parameter/@article_id}" fetchAll="true" model="fnd.fnd_atm_attachment" rootPath="atms"/>
     </a:init-procedure>
-    <a:view package="aurora.ui.std" template="default">
+    <a:view package="ui.template" template="main">
         <link href="css/site.css" rel="stylesheet" type="text/css"/>
         <script><![CDATA[
             function test() {
@@ -27,7 +27,7 @@
                 <a:switch test="/session/@user_id">
                     <a:case value="${/model/article/record/@user_id}">
                         <span style="margin-left:15px;float:right">
-                            <a href="edit_article.screen?article_id=${/model/article/record/@article_id}" style="background-image:url(&apos;${/request/@context_path}/images/page_edit.gif&apos;);padding-left:19px;background-repeat:no-repeat;" target="_parent"><![CDATA[编辑]]></a>
+                            <a href="${/request/@context_path}/modules/admin/edit_article.screen?article_id=${/model/article/record/@article_id}" style="background-image:url(&apos;${/request/@context_path}/images/page_edit.gif&apos;);padding-left:19px;background-repeat:no-repeat;" target="_parent"><![CDATA[编辑]]></a>
                         </span>
                         <span style="float:right">
                             <a href="#" style="background-image:url(&apos;${/request/@context_path}/images/page_delete.gif&apos;);padding-left:19px;background-repeat:no-repeat;"><![CDATA[删除]]></a>

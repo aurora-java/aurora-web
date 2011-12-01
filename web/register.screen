@@ -33,12 +33,7 @@
                     Aurora.showMessage('提示', '此用户名已存在!!');
                     return;
                 }
-                $('register_screen').close();                
-                if (document.getElementById('mainFrame')) {
-                    var src = document.getElementById('mainFrame').contentWindow.location.href;
-                    window.location.href = 'tech_article.screen?src=' + src;
-                    return;
-                }
+                $('register_screen').close();                              
                 window.location.reload();
             }
         ]]></script>

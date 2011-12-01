@@ -2,13 +2,17 @@
 <bm:model xmlns:o="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" alias="f" baseTable="doc_category">
     <bm:fields>
         <bm:field name="category_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
-        <bm:field name="category_name" databaseType="VARCHAR" datatype="java.lang.String" />
+        <bm:field name="category_name" databaseType="VARCHAR" datatype="java.lang.String"/>
         <bm:field name="parent_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
         <bm:field name="sequence" databaseType="NUMBER" datatype="java.lang.Integer"/>
     </bm:fields>
     <bm:primary-key>
         <bm:pk-field name="category_id"/>
     </bm:primary-key>
+    <bm:query-fields>
+        <bm:query-field field="category_id" queryOperator="="/>
+        <bm:query-field field="parent_id" queryOperator="="/>
+    </bm:query-fields>
     <bm:features>
         <o:sequence-pk/>
     </bm:features>

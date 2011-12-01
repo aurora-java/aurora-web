@@ -47,12 +47,7 @@
                     Aurora.request({
                         url: '${/request/@context_path}/logout.svc',
                         para: {},
-                        success: function() {
-                            if (document.getElementById('mainFrame')) {
-                                var src = document.getElementById('mainFrame').contentWindow.location.href;
-                                window.location.href = 'tech_article.screen?src=' + src;
-                                return;
-                            }
+                        success: function() {                            
                             window.location.reload();
                         },
                         scope: this
@@ -67,7 +62,7 @@
                         <a href="${/request/@context_path}"><![CDATA[首页]]></a>
                     </li>
                     <li>
-                        <a href="${/request/@context_path}/tech_article.screen"><![CDATA[技术文章]]></a>
+                        <a href="${/request/@context_path}/category.screen"><![CDATA[技术文章]]></a>
                     </li>
                     <li>
                         <a href="${/request/@context_path}"><![CDATA[在线演示]]></a>

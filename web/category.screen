@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<a:screen xmlns:a="http://www.aurora-framework.org/application">
+<a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc">
     <a:init-procedure>
-        <a:model-query defaultWhereClause="category_id=${/parameter/@cid}" model="doc.doc_article_count" rootPath="count"/>
-        <a:model-query defaultWhereClause="category_id=${/parameter/@cid}" model="doc.doc_article_list" rootPath="article"/>
+        <p:method-invoke className="com.aurora.doc.actions.ArticleList" methodName="createList" resultPath="/model/category">
+            <p:arguments>
+                <p:argument path="instance" type="uncertain.ocm.IObjectRegistry"/>
+                <p:argument path="/parameter" type="uncertain.composite.CompositeMap"/>
+            </p:arguments>
+        </p:method-invoke>
+        <a:model-query defaultWhereClause="category_id=nvl(${/parameter/@cid},5)" model="doc.doc_article_count" rootPath="count"/>
+        <a:model-query defaultWhereClause="category_id=nvl(${/parameter/@cid},5)" model="doc.doc_article_list" rootPath="article"/>
     </a:init-procedure>
-    <a:view package="aurora.ui.std" template="default">
+    <a:view package="ui.template" template="main">
         <link href="css/site.css" rel="stylesheet" type="text/css"/>
         <style><![CDATA[
             .textoverflow  {
 			  display:block;
 			  height:64px;		  			  
-			  overflow: hidden;			  
-			  -o-text-overflow: ellipsis;    /* for Opera */
-			  text-overflow: ellipsis;        /* for IE */
+			  overflow: hidden;		  			  
 			}
-			.textoverflow:after{ content: "..."; }/* for Firefox */
-			@media all and (min-width: 0px){ .textoverflow:after{ content:""; }/* for Opera */ }		
+			#mycontent {
+			    padding-bottom:20px;
+			    overflow:auto;
+			    background:url(images/bk_vertline.jpg) 160px 0 repeat-y;
+			    margin-top:25px;
+			}					
         ]]></style>
         <script><![CDATA[
             var page = '${/parameter/@page}';
             var current_page, last_page;
             var max_row_id = '${/model/count/record/@maxrow}';
             var length = parseInt(max_row_id);
-            last_page = Math.ceil(length / 5);
+            last_page = Math.ceil(length / 10);
             if (page != '') {
                 current_page = parseInt(page);
             } else {
@@ -32,54 +40,97 @@
             function prePage() {
                 if (current_page > 1) {
                     current_page--;
-                    window.parent.document.getElementById('mainFrame').src = 'category.screen?cid=${/parameter/@cid}&page=' + current_page;
+                    if ('${/parameter/@cid}' == '') {
+                        window.location.href = 'category.screen?cid=5&page=' + current_page;
+                    } else {
+                        window.location.href = 'category.screen?cid=${/parameter/@cid}&page=' + current_page;
+                    }
                 }
             }
             
             function nextPage() {
                 if (current_page < last_page) {
                     current_page++;
-                    window.parent.document.getElementById('mainFrame').src = 'category.screen?cid=${/parameter/@cid}&page=' + current_page;
+                    if ('${/parameter/@cid}' == '') {
+                        window.location.href = 'category.screen?cid=5&page=' + current_page;
+                    } else {
+                        window.location.href = 'category.screen?cid=${/parameter/@cid}&page=' + current_page;
+                    }
                 }
-            }            
+            }
             
+            function openMain(id) {
+                window.location.href = 'category.screen?cid=' + id;
+            }
         ]]></script>
         <a:link/>
-        <a:switch test="/parameter/@cid">
-            <a:case value="null">
-                <div><![CDATA[路径不正确!]]></div>
-            </a:case>
-            <a:case value="*">
-                <a:repeater datamodel="/model/article">
-                    <div class="post" style="width:90%;">
-                        <h2 class="title">
-                            <a href="article.screen?article_id=${@article_id}"><![CDATA[${@article_title}]]></a>
-                        </h2>
-                        <div class="post_info_t">
-                            <span class="p_author">
-                                <a href="#" rel="author"><![CDATA[${@nick_name}]]></a>
-                            </span>
-                            <span class="p_normal">
-                                <span><![CDATA[发表于 ]]></span>
-                                <abbr class="timeago"><![CDATA[${@creation_date}]]></abbr>
-                            </span>
-                        </div>
-                        <div class="entry textoverflow">
-                            <p><![CDATA[
+        <div id="mycontent">
+            <table>
+                <tbody>
+                    <tr>
+                        <td id="menuArea" style="border-top:none;vertical-align:top;width:156px;">
+                            <ul>
+                                <a:repeater datamodel="/model/category">
+                                    <li style="margin-bottom:20px;">
+                                        <span style="font-size:12pt;font-weight:bold;"><![CDATA[${@category_name}]]></span>
+                                        <ul style="margin:5px 0 0 70px;">
+                                            <a:repeater datamodel="@children">
+                                                <li>
+                                                    <a href="javascript:openMain(${@category_id});" style="font-size:10pt;"><![CDATA[${@category_name}]]></a>
+                                                </li>
+                                            </a:repeater>
+                                        </ul>
+                                    </li>
+                                </a:repeater>
+                            </ul>
+                        </td>
+                        <td style="width:8%;"/>
+                        <td id="mainArea" style="width:100%;" valign="top">
+                            <a:switch test="/session/@authority">
+                                <a:case value="Y">
+                                    <a href="${/request/@context_path}/modules/admin/post_article.screen?cid=${/parameter/@cid}" style="font-size:12pt;float:right;margin-right:60px;margin-bottom:15px;"><![CDATA[发表文章]]></a>
+                                </a:case>
+                            </a:switch>
+                            <a:repeater datamodel="/model/article">
+                                <div class="post" style="width:90%;float:left;">
+                                    <h2 class="title">
+                                        <a href="article.screen?article_id=${@article_id}"><![CDATA[${@article_title}]]></a>
+                                    </h2>
+                                    <div class="post_info_t">
+                                        <span class="p_author">
+                                            <a href="#" rel="author"><![CDATA[${@nick_name}]]></a>
+                                        </span>
+                                        <span class="p_normal">
+                                            <span><![CDATA[发表于 ]]></span>
+                                            <abbr class="timeago"><![CDATA[${@creation_date}]]></abbr>
+                                        </span>
+                                    </div>
+                                    <div class="entry textoverflow">
+                                        <p><![CDATA[
 		                        ${@content}
 		                    ]]></p>
-                        </div>
-                        <p><![CDATA[
+                                    </div>
+                                    <p><![CDATA[
 		                       ...
 		                ]]></p>
-                    </div>
-                </a:repeater>
-                <div class="nav" style="">
-                    <a href="javascript:prePage();" style="margin-right:5px;"><![CDATA[上一页]]></a>
-                    <span style="margin-right:5px;"><![CDATA[|]]></span>
-                    <a href="javascript:nextPage();" style="margin-right:5px;"><![CDATA[下一页]]></a>
-                </div>
-            </a:case>
-        </a:switch>
+                                </div>
+                            </a:repeater>
+                            <a:switch test="/model/count/record/@maxrow">
+                                <a:case value="0"><![CDATA[
+                                    
+                                ]]></a:case>
+                                <a:case value="*">
+                                    <div class="nav" style="float:left;">
+                                        <a href="javascript:prePage();" style="margin-right:5px;"><![CDATA[上一页]]></a>
+                                        <span style="margin-right:5px;"><![CDATA[|]]></span>
+                                        <a href="javascript:nextPage();" style="margin-right:5px;"><![CDATA[下一页]]></a>
+                                    </div>
+                                </a:case>
+                            </a:switch>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </a:view>
 </a:screen>
