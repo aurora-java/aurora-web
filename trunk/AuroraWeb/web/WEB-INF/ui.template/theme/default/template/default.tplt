@@ -3,6 +3,8 @@
     <head>
         <title>${page:title}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <link href="${/request/@context_path}/images/ipad-icon.jpg" rel="apple-touch-icon"/>
 ${page:html.head.css} 
         <link href="${/request/@context_path}/css/site.css" rel="stylesheet" type="text/css"/> 
         <link href="${/request/@context_path}/css/ddsmoothmenu.css" rel="stylesheet" type="text/css"/>
