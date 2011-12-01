@@ -14,16 +14,19 @@
         <link href="css/site.css" rel="stylesheet" type="text/css"/>
         <style><![CDATA[
             .textoverflow  {
-			  display:block;
-			  height:64px;		  			  
-			  overflow: hidden;		  			  
-			}
-			#mycontent {
-			    padding-bottom:20px;
-			    overflow:auto;
-			    background:url(images/bk_vertline.jpg) 160px 0 repeat-y;
-			    margin-top:25px;
-			}					
+              display:block;
+              height:64px;                    
+              overflow: hidden;                   
+            }
+            #mycontent {
+                padding:10px;
+                background:#fff;
+                border:1px solid #c0c0c0;
+                box-shadow:0 2px 5px rgba(0, 0, 0, 0.2);
+                -moz-border-radius:6px;
+                -webkit-border-radius:6px;
+                border-radius:6px;
+            }                   
         ]]></style>
         <script><![CDATA[
             var page = '${/parameter/@page}';
@@ -39,80 +42,80 @@
             
             function prePage() {
                 if (current_page > 1) {
-                    current_page--;                    
-                    window.location.href = 'category.screen?cid=${/parameter/@cid}&page=' + current_page;                   
+                    current_page--;
+                    if ('${/parameter/@cid}' == '') {
+                    } else {
+                        window.location.href = 'category.screen?cid=${/parameter/@cid}&page=' + current_page;
+                    }
                 }
             }
             
             function nextPage() {
                 if (current_page < last_page) {
-                    current_page++;                   
-                    window.location.href = 'category.screen?cid=${/parameter/@cid}&page=' + current_page;                   
+                    current_page++;
+                    if ('${/parameter/@cid}' == '') {
+                        window.location.href = 'category.screen?cid=5&page=' + current_page;
+                    } else {
+                        window.location.href = 'category.screen?cid=${/parameter/@cid}&page=' + current_page;
+                    }
                 }
-            }
-            
-            function openMain(id) {
-                window.location.href = 'category.screen?cid=' + id;
             }
         ]]></script>
         <a:link/>
         <div id="mycontent">
-            <table>
+            <table width="100%">
                 <tbody>
                     <tr>
-                        <td id="menuArea" style="border-top:none;vertical-align:top;width:156px;">
-                            <ul>
+                        <td style="vertical-align:top;width:170px;border-right:1px solid #ccc">
+                            <ul style="margin-left:10px;">
                                 <a:repeater datamodel="/model/category">
-                                    <li style="margin-bottom:20px;">
-                                        <span style="font-size:12pt;font-weight:bold;"><![CDATA[${@category_name}]]></span>
-                                        <ul style="margin:5px 0 0 70px;">
+                                    <li style="margin-bottom:10px;">
+                                        <span style="font-size:14px;font-weight:bold;"><![CDATA[${@category_name}]]></span>
+                                        <ul style="padding-left:25px;padding-top:10px;">
                                             <a:repeater datamodel="@children">
-                                                <li>
-                                                    <a href="javascript:openMain(${@category_id});" style="font-size:10pt;"><![CDATA[${@category_name}]]></a>
-                                                </li>
+                                                <a:switch test="/parameter/@cid">
+                                                    <a:case value="@category_id">
+                                                        <li style="margin-bottom:5px;background-color:#ccc">
+                                                            <a href="category.screen?cid=${@category_id}" style="font-size:12px;"><![CDATA[${@category_name}]]></a>
+                                                        </li>
+                                                    </a:case>
+                                                    <a:case value="*">
+                                                        <li style="margin-bottom:5px;">
+                                                            <a href="category.screen?cid=${@category_id}" style="font-size:12px;"><![CDATA[${@category_name}]]></a>
+                                                        </li>
+                                                    </a:case>
+                                                </a:switch> 
                                             </a:repeater>
                                         </ul>
                                     </li>
                                 </a:repeater>
                             </ul>
                         </td>
-                        <td style="width:8%;"/>
-                        <td id="mainArea" style="width:100%;" valign="top">
+                        <td valign="top" style="padding:10px;">
                             <a:switch test="/parameter/@cid">
                                 <a:case value="null">
-                                    <div><![CDATA[请在左边菜单栏选择项目!]]></div>
+                                        <span style="font-size:14px;">点击左边分目录,查看详细文章列表.</span>
                                 </a:case>
-                                <a:case value="*">
+                                <a:case value="">
+                                        <span style="font-size:14px;">点击左边分目录,查看详细文章列表.</span>
+                                </a:case>
+                                <a:case value="*">    
                                     <a:repeater datamodel="/model/article">
-                                        <div class="post" style="width:90%;">
-                                            <h2 class="title">
+                                        <div style="width:100%;float:left;border-bottom:1px solid #ccc;padding:10px 0px 10px 10px;">
+                                            <h2 style="font-size:13px;font-weight:bold;color:#ccc">
                                                 <a href="article.screen?article_id=${@article_id}"><![CDATA[${@article_title}]]></a>
                                             </h2>
-                                            <div class="post_info_t">
-                                                <span class="p_author">
-                                                    <a href="#" rel="author"><![CDATA[${@nick_name}]]></a>
-                                                </span>
-                                                <span class="p_normal">
-                                                    <span><![CDATA[发表于 ]]></span>
-                                                    <abbr class="timeago"><![CDATA[${@creation_date}]]></abbr>
-                                                </span>
+                                            <div style="padding-top:5px;">
+                                                <abbr class="timeago">Learn how to launch and use iTunes, sync to your iPhone, back-up or move music and video, rebuild your library, and more.</abbr>
                                             </div>
-                                            <div class="entry textoverflow">
-                                                <p><![CDATA[
-		                        ${@content}
-		                    ]]></p>
-                                            </div>
-                                            <p><![CDATA[
-		                       ...
-		                ]]></p>
                                         </div>
                                     </a:repeater>
                                     <a:switch test="/model/count/record/@maxrow">
                                         <a:case value="0"><![CDATA[
-                                    
-                                ]]></a:case>
+                                            
+                                        ]]></a:case>
                                         <a:case value="*">
-                                            <div class="nav">
+                                            <div class="nav" style="float:left;margin-top:20px;">
                                                 <a href="javascript:prePage();" style="margin-right:5px;"><![CDATA[上一页]]></a>
                                                 <span style="margin-right:5px;"><![CDATA[|]]></span>
                                                 <a href="javascript:nextPage();" style="margin-right:5px;"><![CDATA[下一页]]></a>
