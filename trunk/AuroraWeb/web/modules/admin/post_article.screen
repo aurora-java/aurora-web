@@ -2,7 +2,6 @@
 <a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
     <a:init-procedure>
         <model-query model="doc.doc_article_s" rootPath="article"/>
-        <model-query fetchAll="true" model="doc.doc_category" rootPath="category"/>
     </a:init-procedure>
     <a:view package="ui.template" template="main">
         <style><![CDATA[
@@ -26,32 +25,10 @@
             
             function onSubmitFailed() {
                 $('postButton').enable();
-            }
+            }            
             
-            function init() {
-                var category_id = '${/parameter/@cid}';
-                if (category_id != '') {
-                    var record = $('article_create_ds').getAt(0);
-                    record.set('category_id', category_id);
-                    record.set('category_name', getNameById(category_id));
-                }
-            }
-            
-            function getNameById(id) {
-                var records = $('category_ds').getAll();
-                for (var i = 0,
-                    l = records.length;i < l;i++) {
-                    if (records[i].get('category_id') == id) {
-                        return records[i].get('category_name');
-                    }
-                }
-                return '';
-            }
         ]]></script>
         <a:dataSets>
-            <a:dataSet id="category_ds">
-                <a:datas dataSource="/model/category"/>
-            </a:dataSet>
             <a:dataSet id="article_create_ds" autoCreate="true" submitUrl="${/request/@context_path}/modules/admin/post_article.svc">
                 <a:fields>
                     <a:field name="article_id" defaultValue="${/model/article/record/@sequence}"/>
@@ -118,8 +95,5 @@
             </TABLE>
             <a:button id="postButton" click="postArticle" height="30" style="margin-top:10px;" text="发 表 文 章" width="100"/>
         </div>
-        <script><![CDATA[
-        	init();
-        ]]></script>
     </a:view>
 </a:screen>

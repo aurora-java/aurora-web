@@ -13,19 +13,21 @@
             }
         ]]></style>
         <script><![CDATA[
-             function userRenderer(value, record, name) {
-                 return '<a class="link" style="font-size:12px;margin-left:5px;" href="javascript:deleteRecord(' + record.get('news_id') + ');"><img src="../../images/page_delete.gif"></a>';
-             }
-             
-             function titleRenderer(value, record, name) {
-                 return '<a class="link" style="font-weight:bold;color:#333;height:35px;line-height:35px;font-size:14px;" href="${/request/@context_path}/modules/admin/edit_new.screen?news_id=' + record.get('news_id') + '">' + value + "</a>";
-             }
-             
-             function deleteRecord(id) {
-                 var record = $('news_result_ds').findById(id);
-                 $('news_result_ds').remove(record);
-             }
-         ]]></script>
+            function userRenderer(value, record, name) {
+                return '<a class="link" style="font-size:12px;margin-left:5px;" href="javascript:deleteRecord(' + record.get('news_id') + ');"><img src="../../images/page_delete.gif"></a>';
+            }
+            
+            function titleRenderer(value, record, name) {
+                return '<a class="link" style="font-weight:bold;color:#333;height:35px;line-height:35px;font-size:14px;" href="${/request/@context_path}/modules/admin/edit_new.screen?news_id=' + record.get('news_id') + '">' + value + "</a>";
+            }
+            
+            function deleteRecord(id) {
+                Aurora.showConfirm('提示', '确认删除', function(cmp) {
+                    var record = $('news_result_ds').findById(id);
+                    $('news_result_ds').remove(record);
+                }, null, null, 100);
+            }
+        ]]></script>
         <div style="float:right;">
             <a href="post_new.screen" style="float:right;margin:5px;font-size:15px;"><![CDATA[发布新闻]]></a>
         </div>
