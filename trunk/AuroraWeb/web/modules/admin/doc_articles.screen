@@ -5,7 +5,7 @@
     $Revision: 1.0  
     $Purpose: 
 -->
-<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+<a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc">
     <a:init-procedure/>
     <a:view package="ui.template" template="main">
         <style><![CDATA[
@@ -37,14 +37,34 @@
             function reset() {
                 $('doc_article_query_ds').reset();
             }
+            
+            function postArticle() {
+                var record = $('doc_article_query_ds').getAt(0);
+                var category_id = record.get('category_id');
+                if (typeof(category_id) == 'undefined') {
+                    Aurora.showMessage('提示', '请先选择文章类型!!');
+                    return;
+                }
+                window.location.href = '${/request/@context_path}/modules/admin/post_article.screen?cid=' + category_id;
+            }
         ]]></script>
         <a:dataSets>
-            <a:dataSet id="doc_article_query_ds" model="doc.doc_article_v"/>
+            <a:dataSet id="doc_article_query_ds" model="doc.doc_article_v">
+                <a:fields>
+                    <a:field name="category_display" lovHeight="420" lovUrl="${/request/@context_path}/modules/admin/category_lov.screen" lovWidth="320">
+                        <a:mapping>
+                            <a:map from="category_name" to="category_display"/>
+                            <a:map from="category_id" to="category_id"/>
+                        </a:mapping>
+                    </a:field>
+                </a:fields>
+            </a:dataSet>
             <a:dataSet id="doc_article_result_ds" autoQuery="true" model="doc.doc_article_v" queryDataSet="doc_article_query_ds"/>
         </a:dataSets>
-        <a href="${/request/@context_path}/modules/admin/post_article.screen?cid=${/parameter/@cid}" style="font-size:12pt;float:right;margin-right:30px;"><![CDATA[发表文章]]></a>
+        <a href="javascript:postArticle();" style="font-size:16px;float:right;margin-right:30px;"><![CDATA[发表文章]]></a>
         <div style="margin:5px;float:left;width:99%;">
-            <a:fieldSet column="2" labelWidth="120" title="查询">
+            <a:fieldSet column="3" labelWidth="120" title="查询">
+                <a:lov name="category_display" bindTarget="doc_article_query_ds" prompt="文章类型" title="文章类型"/>
                 <a:textField name="article_title" bindTarget="doc_article_query_ds" prompt="主题" width="350"/>
                 <a:textField name="nick_name" bindTarget="doc_article_query_ds" prompt="作者"/>
                 <a:datePicker name="date_from" bindTarget="doc_article_query_ds" prompt="发表日期从"/>
@@ -59,8 +79,9 @@
             <a:table bindTarget="doc_article_result_ds" canWheel="false" className="cateList" navBar="true" navBarType="simple" style="background-color:#fff;width:100%;float:left;">
                 <a:columns>
                     <a:column align="center" renderer="userRenderer" width="60"/>
-                    <a:column name="article_title" prompt="主题" renderer="articleRenderer" width="450"/>
-                    <a:column name="nick_name" align="center" prompt="作者"/>
+                    <a:column name="category_name" prompt="文章类型"/>
+                    <a:column name="article_title" prompt="主题" renderer="articleRenderer" width="420"/>
+                    <a:column name="nick_name" align="center" prompt="作者" width="100"/>
                     <a:column name="creation_date" align="center" prompt="发表日期" renderer="Aurora.formatDate" width="120"/>
                     <a:column name="creation_date" align="center" prompt="更新日期" renderer="Aurora.formatDate" width="120"/>
                 </a:columns>

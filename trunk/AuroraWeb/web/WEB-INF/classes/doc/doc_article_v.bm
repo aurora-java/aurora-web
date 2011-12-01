@@ -16,7 +16,16 @@
         <bm:query-field name="nick_name" queryExpression="nick_name = ${@nick_name}"/>
         <bm:query-field name="date_from" queryExpression="creation_date &gt;= to_date(${@date_from},&apos;yyyy-mm-dd&apos;)"/>
         <bm:query-field name="date_to" queryExpression="creation_date &lt; to_date(${@date_to},&apos;yyyy-mm-dd&apos;)+1"/>
+        <bm:query-field name="category_id" queryExpression="t1.category_id = ${@category_id}"/>
     </bm:query-fields>
+    <bm:ref-fields>
+        <bm:ref-field name="category_name" relationName="category" sourceField="category_name"/>
+    </bm:ref-fields>
+    <bm:relations>
+        <bm:relation name="category" joinType="INNER" refAlias="t2" refModel="doc.doc_category">
+            <bm:reference foreignField="category_id" localField="category_id"/>
+        </bm:relation>
+    </bm:relations>
     <bm:features>
         <o:sequence-pk/>
     </bm:features>
