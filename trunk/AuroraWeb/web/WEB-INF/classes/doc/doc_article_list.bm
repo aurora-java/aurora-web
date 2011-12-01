@@ -9,8 +9,8 @@
     <bm:operations>
         <bm:operation name="query">
             <bm:query-sql><![CDATA[SELECT t1.* from (select rownum as row_num, v.* FROM doc_article_v v
-            #WHERE_CLAUSE#)t1 where row_num > 5*(to_number(nvl(${/parameter/@page},1))-1) 
-            and row_num < 5*to_number(nvl(${/parameter/@page},1))+1]]></bm:query-sql>
+            #WHERE_CLAUSE#)t1 where row_num > 10*(to_number(nvl(${/parameter/@page},1))-1) 
+            and row_num < 10*to_number(nvl(${/parameter/@page},1))+1]]></bm:query-sql>
         </bm:operation>
     </bm:operations>
     <bm:fields>

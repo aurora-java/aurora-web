@@ -23,11 +23,11 @@
             }
             
             function openWindow(article_id) {
-                window.location.href = '${/request/@context_path}/edit_article.screen?article_id=' + article_id;
+                window.location.href = '${/request/@context_path}/modules/admin/edit_article.screen?article_id=' + article_id;
             }
             
             function locationTo(article_id) {
-                window.location.href = '${/request/@context_path}/tech_article.screen?src=article.screen?article_id=' + article_id;
+                window.location.href = '${/request/@context_path}/article.screen?article_id=' + article_id;
             }
             
             function query() {

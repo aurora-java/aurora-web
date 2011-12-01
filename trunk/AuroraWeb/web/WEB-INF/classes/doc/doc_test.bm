@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: andy  
+    $Date: 2011-11-22 上午10:39:07  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:o="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+    			select t2.* from (SELECT rownum as row_id,(select max(rownum) from DOC_ARTICLE_V) as max_row_id,
+    			t1.article_id,t1.article_title,t1.category_id,t1.nick_name,t1.creation_date,t1.last_update_date
+				FROM DOC_ARTICLE_V t1) t2
+				#WHERE_CLAUSE#
+    		]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+    <bm:fields>
+        <bm:field name="row_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
+        <bm:field name="max_row_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
+        <bm:field name="article_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
+        <bm:field name="article_title" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="category_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
+        <bm:field name="nick_name" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="creation_date" databaseType="TIMESTAMP" datatype="java.sql.Timestamp"/>
+        <bm:field name="last_update_date" databaseType="TIMESTAMP" datatype="java.sql.Timestamp"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="article_id"/>
+    </bm:primary-key>
+    <bm:features>
+        <o:sequence-pk/>
+    </bm:features>
+</bm:model>

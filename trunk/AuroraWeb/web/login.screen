@@ -22,12 +22,7 @@
                     Aurora.showMessage('提示', '用户名或密码有误,请重新输入!!');
                     return;
                 }
-                $('login_screen').close();                           
-                if (document.getElementById('mainFrame')) {
-                    var src = document.getElementById('mainFrame').contentWindow.location.href;
-                    window.location.href = 'tech_article.screen?src=' + src;
-                    return;
-                }
+                $('login_screen').close();                                         
                 window.location.reload();
             }
         ]]></script>
