@@ -73,18 +73,9 @@
                                         <span style="font-size:14px;font-weight:bold;"><![CDATA[${@category_name}]]></span>
                                         <ul style="padding-left:25px;padding-top:10px;">
                                             <a:repeater datamodel="@children">
-                                                <a:switch test="/parameter/@cid">
-                                                    <a:case value="@category_id">
-                                                        <li style="margin-bottom:5px;background-color:#ccc">
-                                                            <a href="category.screen?cid=${@category_id}" style="font-size:12px;"><![CDATA[${@category_name}]]></a>
-                                                        </li>
-                                                    </a:case>
-                                                    <a:case value="*">
-                                                        <li style="margin-bottom:5px;">
-                                                            <a href="category.screen?cid=${@category_id}" style="font-size:12px;"><![CDATA[${@category_name}]]></a>
-                                                        </li>
-                                                    </a:case>
-                                                </a:switch> 
+                                                <li style="margin-bottom:5px;">
+                                                    <a href="category.screen?cid=${@category_id}" style="font-size:12px;"><![CDATA[${@category_name}]]></a>
+                                                </li>
                                             </a:repeater>
                                         </ul>
                                     </li>
