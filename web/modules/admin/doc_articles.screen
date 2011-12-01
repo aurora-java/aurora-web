@@ -38,27 +38,19 @@
                 $('doc_article_query_ds').reset();
             }
             
-            function postArticle() {
-                var record = $('doc_article_query_ds').getAt(0);
-                var category_id = record.get('category_id');
-                if (typeof(category_id) == 'undefined') {
-                    Aurora.showMessage('提示', '请先选择文章目录!!');
-                    return;
-                }
-                window.location.href = '${/request/@context_path}/modules/admin/post_article.screen?cid=' + category_id;
-            }
-            
             function deleteRecord(id) {
-                Aurora.request({
-                    url: '${/request/@context_path}/modules/admin/article_delete.svc',
-                    para: {
-                        'article_id': id
-                    },
-                    success: function(res) {
-                        $('doc_article_result_ds').query();
-                    },
-                    scope: this
-                });
+                Aurora.showConfirm('提示', '确认删除', function(cmp) {
+                    Aurora.request({
+                        url: '${/request/@context_path}/modules/admin/article_delete.svc',
+                        para: {
+                            'article_id': id
+                        },
+                        success: function(res) {
+                            $('doc_article_result_ds').query();
+                        },
+                        scope: this
+                    });
+                }, null, null, 100);            
             }
         ]]></script>
         <a:dataSets>
@@ -74,7 +66,7 @@
             </a:dataSet>
             <a:dataSet id="doc_article_result_ds" autoQuery="true" model="doc.doc_article_v" queryDataSet="doc_article_query_ds"/>
         </a:dataSets>
-        <a href="javascript:postArticle();" style="font-size:16px;float:right;margin-right:30px;"><![CDATA[发表文章]]></a>
+        <a href="${/request/@context_path}/modules/admin/post_article.screen" style="font-size:16px;float:right;margin-right:30px;"><![CDATA[发表文章]]></a>
         <div style="margin:5px;float:left;width:99%;">
             <a:fieldSet column="3" labelWidth="120" title="查询">
                 <a:lov name="category_display" bindTarget="doc_article_query_ds" prompt="文章目录" title="文章目录"/>
