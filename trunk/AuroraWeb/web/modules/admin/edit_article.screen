@@ -24,7 +24,9 @@
                     }  
 
                     function onSubmitSuccess(ds,res){
-                        window.location.href='${/request/@context_path}/tech_article.screen?src=article.screen?article_id=' + article_id;
+                        Aurora.showInfoMessage('成功','保存成功',function(){
+                            window.location.href='doc_articles.screen';
+                        })
                     } 
 
                     function onSubmitFailed(){
@@ -53,9 +55,9 @@
             }
                 ]]></style>
                 <div style="margin:10px;">
-                    <div><![CDATA[当前分类 -- UI组件]]></div>
+                    <div style="font-size:14px;"><![CDATA[更新文章]]></div>
                     <div style="margin:5px 0px 5px 0px;height:2px;background-color:#97aecc"/>
-                    <TABLE align="center" cellPadding="4" cellSpacing="1" width="100%">
+                    <TABLE align="center" cellPadding="4" cellSpacing="1" width="100%" style="background-color:#fff">
                         <TBODY>
                             <TR>
                                 <TH align="right" width="100"><![CDATA[标题:]]></TH>
@@ -64,9 +66,21 @@
                                 </TD>
                             </TR>
                             <TR>
+                                <TH align="right" width="100"><![CDATA[目录:]]></TH>
+                                <TD>
+                                    <a:comboBox name="category_id" bindTarget="article_update_ds" width="200"/>
+                                </TD>
+                            </TR>
+                            <TR>
+                                <TH align="right"><![CDATA[摘要:]]></TH>
+                                <TD>
+                                    <a:textArea name="summary" bindTarget="article_update_ds" className="postConent" height="50" width="800"/>
+                                </TD>
+                            </TR>
+                            <TR>
                                 <TH align="right"><![CDATA[内容:]]></TH>
                                 <TD>
-                                    <a:textArea name="content" bindTarget="article_update_ds" className="postConent" marginHeight="200" marginWidth="250" width="600"/>
+                                    <a:textArea name="content" bindTarget="article_update_ds" className="postConent" height="520" width="800"/>
                                 </TD>
                             </TR>
                             <TR>
@@ -79,7 +93,7 @@
                             </TR>
                         </TBODY>
                     </TABLE>
-                    <a:button id="postButton" click="postArticle" style="margin-top:10px;" text="更 新 文 章" width="100"/>
+                    <a:button id="postButton" click="postArticle" style="margin-top:10px;" text="更 新 文 章" width="100" height="30"/>
                 </div>
             </a:case>
         </a:switch>
