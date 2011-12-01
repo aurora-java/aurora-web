@@ -7,8 +7,8 @@
                 <p:argument path="/parameter" type="uncertain.composite.CompositeMap"/>
             </p:arguments>
         </p:method-invoke>
-        <a:model-query defaultWhereClause="category_id=nvl(${/parameter/@cid},5)" model="doc.doc_article_count" rootPath="count"/>
-        <a:model-query defaultWhereClause="category_id=nvl(${/parameter/@cid},5)" model="doc.doc_article_list" rootPath="article"/>
+        <a:model-query defaultWhereClause="category_id=${/parameter/@cid}" model="doc.doc_article_count" rootPath="count"/>
+        <a:model-query defaultWhereClause="category_id=${/parameter/@cid}" model="doc.doc_article_list" rootPath="article"/>
     </a:init-procedure>
     <a:view package="ui.template" template="main">
         <link href="css/site.css" rel="stylesheet" type="text/css"/>
@@ -39,23 +39,15 @@
             
             function prePage() {
                 if (current_page > 1) {
-                    current_page--;
-                    if ('${/parameter/@cid}' == '') {
-                        window.location.href = 'category.screen?cid=5&page=' + current_page;
-                    } else {
-                        window.location.href = 'category.screen?cid=${/parameter/@cid}&page=' + current_page;
-                    }
+                    current_page--;                    
+                    window.location.href = 'category.screen?cid=${/parameter/@cid}&page=' + current_page;                   
                 }
             }
             
             function nextPage() {
                 if (current_page < last_page) {
-                    current_page++;
-                    if ('${/parameter/@cid}' == '') {
-                        window.location.href = 'category.screen?cid=5&page=' + current_page;
-                    } else {
-                        window.location.href = 'category.screen?cid=${/parameter/@cid}&page=' + current_page;
-                    }
+                    current_page++;                   
+                    window.location.href = 'category.screen?cid=${/parameter/@cid}&page=' + current_page;                   
                 }
             }
             
@@ -86,45 +78,47 @@
                         </td>
                         <td style="width:8%;"/>
                         <td id="mainArea" style="width:100%;" valign="top">
-                            <a:switch test="/session/@authority">
-                                <a:case value="Y">
-                                    <a href="${/request/@context_path}/modules/admin/post_article.screen?cid=${/parameter/@cid}" style="font-size:12pt;float:right;margin-right:60px;margin-bottom:15px;"><![CDATA[发表文章]]></a>
+                            <a:switch test="/parameter/@cid">
+                                <a:case value="null">
+                                    <div><![CDATA[请在左边菜单栏选择项目!]]></div>
                                 </a:case>
-                            </a:switch>
-                            <a:repeater datamodel="/model/article">
-                                <div class="post" style="width:90%;float:left;">
-                                    <h2 class="title">
-                                        <a href="article.screen?article_id=${@article_id}"><![CDATA[${@article_title}]]></a>
-                                    </h2>
-                                    <div class="post_info_t">
-                                        <span class="p_author">
-                                            <a href="#" rel="author"><![CDATA[${@nick_name}]]></a>
-                                        </span>
-                                        <span class="p_normal">
-                                            <span><![CDATA[发表于 ]]></span>
-                                            <abbr class="timeago"><![CDATA[${@creation_date}]]></abbr>
-                                        </span>
-                                    </div>
-                                    <div class="entry textoverflow">
-                                        <p><![CDATA[
+                                <a:case value="*">
+                                    <a:repeater datamodel="/model/article">
+                                        <div class="post" style="width:90%;">
+                                            <h2 class="title">
+                                                <a href="article.screen?article_id=${@article_id}"><![CDATA[${@article_title}]]></a>
+                                            </h2>
+                                            <div class="post_info_t">
+                                                <span class="p_author">
+                                                    <a href="#" rel="author"><![CDATA[${@nick_name}]]></a>
+                                                </span>
+                                                <span class="p_normal">
+                                                    <span><![CDATA[发表于 ]]></span>
+                                                    <abbr class="timeago"><![CDATA[${@creation_date}]]></abbr>
+                                                </span>
+                                            </div>
+                                            <div class="entry textoverflow">
+                                                <p><![CDATA[
 		                        ${@content}
 		                    ]]></p>
-                                    </div>
-                                    <p><![CDATA[
+                                            </div>
+                                            <p><![CDATA[
 		                       ...
 		                ]]></p>
-                                </div>
-                            </a:repeater>
-                            <a:switch test="/model/count/record/@maxrow">
-                                <a:case value="0"><![CDATA[
+                                        </div>
+                                    </a:repeater>
+                                    <a:switch test="/model/count/record/@maxrow">
+                                        <a:case value="0"><![CDATA[
                                     
                                 ]]></a:case>
-                                <a:case value="*">
-                                    <div class="nav" style="float:left;">
-                                        <a href="javascript:prePage();" style="margin-right:5px;"><![CDATA[上一页]]></a>
-                                        <span style="margin-right:5px;"><![CDATA[|]]></span>
-                                        <a href="javascript:nextPage();" style="margin-right:5px;"><![CDATA[下一页]]></a>
-                                    </div>
+                                        <a:case value="*">
+                                            <div class="nav">
+                                                <a href="javascript:prePage();" style="margin-right:5px;"><![CDATA[上一页]]></a>
+                                                <span style="margin-right:5px;"><![CDATA[|]]></span>
+                                                <a href="javascript:nextPage();" style="margin-right:5px;"><![CDATA[下一页]]></a>
+                                            </div>
+                                        </a:case>
+                                    </a:switch>
                                 </a:case>
                             </a:switch>
                         </td>
