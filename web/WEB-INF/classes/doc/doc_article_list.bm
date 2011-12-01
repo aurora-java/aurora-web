@@ -18,6 +18,7 @@
         <bm:field name="article_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="ARTICLE_ID" required="true"/>
         <bm:field name="article_title" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="ARTICLE_TITLE"/>
         <bm:field name="category_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="CATEGORY_ID"/>
+        <bm:field name="summary" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="SUMMARY"/>
         <bm:field name="content" databaseType="CLOB" datatype="java.sql.Clob" physicalName="CONTENT"/>
         <bm:field name="creation_date" databaseType="DATE" datatype="java.util.Date" physicalName="CREATION_DATE"/>
         <bm:field name="last_update_date" databaseType="DATE" datatype="java.util.Date" physicalName="LAST_UPDATE_DATE"/>
