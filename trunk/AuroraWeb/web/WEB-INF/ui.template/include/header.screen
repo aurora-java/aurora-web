@@ -65,9 +65,6 @@
                         <a href="${/request/@context_path}/category.screen"><![CDATA[技术文章]]></a>
                     </li>
                     <li>
-                        <a href="#"><![CDATA[在线演示]]></a>
-                    </li>
-                    <li>
                         <a href="#"><![CDATA[讨论板]]></a>
                     </li>
                     <a:switch test="/session/@authority">
