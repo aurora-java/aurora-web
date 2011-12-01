@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bm:model xmlns:o="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="DOC_ARTICLE">
     <bm:fields>
-        <bm:field name="article_id" databaseType="NUMBER" datatype="java.lang.Integer" />
+        <bm:field name="article_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
         <bm:field name="article_path" databaseType="VARCHAR2" datatype="java.lang.String" forUpdate="false"/>
         <bm:field name="article_title" databaseType="VARCHAR2" datatype="java.lang.String"/>
         <bm:field name="summary" databaseType="VARCHAR2" datatype="java.lang.String"/>
@@ -14,6 +14,15 @@
     <bm:query-fields>
         <bm:query-field field="article_id" queryOperator="="/>
     </bm:query-fields>
+    <bm:operations>
+        <bm:operation name="delete">
+            <bm:update-sql><![CDATA[
+            begin
+				article_pkg.delete_article(p_article_id => ${/parameter/@article_id});
+			end;
+			]]></bm:update-sql>
+        </bm:operation>
+    </bm:operations>
     <bm:features>
         <f:standard-who/>
     </bm:features>

@@ -12,18 +12,38 @@
     <a:view package="aurora.ui.std" template="default">
         <script><![CDATA[
             function doubleClick(tree, record, treeNode) {
+                if (treeNode.childNodes.length == 0) {
+                    $('${/parameter/@lovid}').commit(record);
+                }
+            }
+            
+            function clickFunction(tree, record, treeNode) {
+                if (treeNode.childNodes.length == 0) {
+                    $('result_ds').add(record); 
+                }
+            }
+            
+            function commit() {
+                var record = $('result_ds').getAt(0);
                 $('${/parameter/@lovid}').commit(record);
             }
         ]]></script>
         <a:dataSets>
+            <a:dataSet id="result_ds"/>
             <a:dataSet id="category_ds">
                 <a:datas dataSource="/model/category"/>
             </a:dataSet>
         </a:dataSets>
-        <a:tree id="categoryTree" bindTarget="category_ds" displayField="category_name" height="400" idField="category_id" parentField="parent_id" showCheckBox="false" style="margin:5px 5px 5px 25px;" width="300">
+        <a:tree id="categoryTree" bindTarget="category_ds" displayField="category_name" height="360" idField="category_id" parentField="parent_id" showCheckBox="false" style="margin:5px 5px 5px 25px;" width="300">
             <a:events>
                 <a:event name="dblclick" handler="doubleClick"/>
+                <a:event name="click" handler="clickFunction"/>
             </a:events>
         </a:tree>
+        <div class="win-toolbar" style="width:100%;height:40px;position:absolute; bottom:0px;">
+            <a:hBox style="float:right;margin-right:10px;margin-top:5px;">
+                <a:button click="commit" text="确认"/>
+            </a:hBox>
+        </div>
     </a:view>
 </a:screen>

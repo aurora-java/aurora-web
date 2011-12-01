@@ -39,6 +39,12 @@
                         <a:datas dataSource="/model/article"/>
                         <a:fields>
                             <a:field name="article_title" required="true"/>
+                            <a:field name="category_name" lovHeight="400" lovUrl="${/request/@context_path}/modules/admin/category_lov.screen" lovWidth="320" required="true">
+                                <a:mapping>
+                                    <a:map from="category_name" to="category_name"/>
+                                    <a:map from="category_id" to="category_id"/>
+                                </a:mapping>
+                            </a:field>
                         </a:fields>
                         <a:events>
                             <a:event name="submitsuccess" handler="onSubmitSuccess"/>
@@ -57,7 +63,7 @@
                 <div style="margin:10px;">
                     <div style="font-size:14px;"><![CDATA[更新文章]]></div>
                     <div style="margin:5px 0px 5px 0px;height:2px;background-color:#97aecc"/>
-                    <TABLE align="center" cellPadding="4" cellSpacing="1" width="100%" style="background-color:#fff">
+                    <TABLE align="center" cellPadding="4" cellSpacing="1" style="background-color:#fff" width="100%">
                         <TBODY>
                             <TR>
                                 <TH align="right" width="100"><![CDATA[标题:]]></TH>
@@ -68,7 +74,7 @@
                             <TR>
                                 <TH align="right" width="100"><![CDATA[目录:]]></TH>
                                 <TD>
-                                    <a:comboBox name="category_id" bindTarget="article_update_ds" width="200"/>
+                                    <a:lov name="category_name" bindTarget="article_update_ds" width="200"/>
                                 </TD>
                             </TR>
                             <TR>
@@ -93,7 +99,7 @@
                             </TR>
                         </TBODY>
                     </TABLE>
-                    <a:button id="postButton" click="postArticle" style="margin-top:10px;" text="更 新 文 章" width="100" height="30"/>
+                    <a:button id="postButton" click="postArticle" height="30" style="margin-top:10px;" text="更 新 文 章" width="100"/>
                 </div>
             </a:case>
         </a:switch>
