@@ -94,11 +94,9 @@
                                     <a:repeater datamodel="/model/article">
                                         <div style="width:100%;float:left;border-bottom:1px solid #ccc;padding:10px 0px 10px 10px;">
                                             <h2 style="font-size:13px;font-weight:bold;color:#ccc">
-                                                <a href="article.screen?article_id=${@article_id}"><![CDATA[${@article_title}]]></a>
+                                                <a href="article.screen?article_id=${@article_id}" style="padding-left:14px;background:url(${/request/@context_path}/images/article.gif) no-repeat 0% 50%"><![CDATA[${@article_title}]]></a>
                                             </h2>
-                                            <div style="padding-top:5px;">
-                                                <abbr class="timeago">Learn how to launch and use iTunes, sync to your iPhone, back-up or move music and video, rebuild your library, and more.</abbr>
-                                            </div>
+                                            <div style="padding-left:14px;line-height:18px;padding-top:5px;font-size:12px;color:#808080"><![CDATA[${@summary}]]></div>
                                         </div>
                                     </a:repeater>
                                     <a:switch test="/model/count/record/@maxrow">
@@ -106,7 +104,7 @@
                                             
                                         ]]></a:case>
                                         <a:case value="*">
-                                            <div class="nav" style="float:left;margin-top:20px;">
+                                            <div class="nav" style="float:right;margin-top:20px;">
                                                 <a href="javascript:prePage();" style="margin-right:5px;"><![CDATA[上一页]]></a>
                                                 <span style="margin-right:5px;"><![CDATA[|]]></span>
                                                 <a href="javascript:nextPage();" style="margin-right:5px;"><![CDATA[下一页]]></a>
