@@ -2,47 +2,74 @@
 <a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
     <a:init-procedure>
         <model-query model="doc.doc_article_s" rootPath="article"/>
+        <model-query fetchAll="true" model="doc.doc_category" rootPath="category"/>
     </a:init-procedure>
     <a:view package="ui.template" template="main">
-            <style><![CDATA[
+        <style><![CDATA[
                 textarea {
                     font-family:Tahoma, Arial, Verdana !important;
                     font-size:12px !important;
                 }
             ]]></style>
-            <script><![CDATA[
-        
-                function postArticle(){
-                    $('postButton').disable();
-                    $('article_create_ds').submit();
-                }  
-                
-                function onSubmitSuccess(ds,res){
-                    Aurora.showInfoMessage('成功','发布成功',function(){
-                        window.location.href='doc_articles.screen';
-                    })
-                    
-                } 
-                
-                function onSubmitFailed(){
-                    $('postButton').enable();
-                }        
-                
-            ]]></script>
-            <a:dataSets>
-                <a:dataSet id="article_create_ds" autoCreate="true" submitUrl="${/request/@context_path}/modules/admin/post_article.svc">
-                    <a:fields>
-                        <a:field name="article_id" defaultValue="${/model/article/record/@sequence}"/>
-                        <a:field name="category_id" defaultValue="7"/>
-                        <a:field name="article_title" required="true"/>
-                    </a:fields>
-                    <a:events>
-                        <a:event name="submitsuccess" handler="onSubmitSuccess"/>
-                        <a:event name="submitfailed" handler="onSubmitFailed"/>
-                    </a:events>
-                </a:dataSet>
-            </a:dataSets>
-            <style><![CDATA[
+        <script><![CDATA[
+            function postArticle() {
+                $('postButton').disable();
+                $('article_create_ds').submit();
+            }
+            
+            function onSubmitSuccess(ds, res) {
+                Aurora.showInfoMessage('成功', '发布成功', function() {
+                    window.location.href = 'doc_articles.screen';
+                });
+            
+            }
+            
+            function onSubmitFailed() {
+                $('postButton').enable();
+            }
+            
+            function init() {
+                var category_id = '${/parameter/@cid}';
+                if (category_id != '') {
+                    var record = $('article_create_ds').getAt(0);
+                    record.set('category_id', category_id);
+                    record.set('category_name', getNameById(category_id));
+                }
+            }
+            
+            function getNameById(id) {
+                var records = $('category_ds').getAll();
+                for (var i = 0,
+                    l = records.length;i < l;i++) {
+                    if (records[i].get('category_id') == id) {
+                        return records[i].get('category_name');
+                    }
+                }
+                return '';
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="category_ds">
+                <a:datas dataSource="/model/category"/>
+            </a:dataSet>
+            <a:dataSet id="article_create_ds" autoCreate="true" submitUrl="${/request/@context_path}/modules/admin/post_article.svc">
+                <a:fields>
+                    <a:field name="article_id" defaultValue="${/model/article/record/@sequence}"/>
+                    <a:field name="article_title" required="true"/>
+                    <a:field name="category_name" lovHeight="400" lovUrl="${/request/@context_path}/modules/admin/category_lov.screen" lovWidth="320" required="true">
+                        <a:mapping>
+                            <a:map from="category_name" to="category_name"/>
+                            <a:map from="category_id" to="category_id"/>
+                        </a:mapping>
+                    </a:field>
+                </a:fields>
+                <a:events>
+                    <a:event name="submitsuccess" handler="onSubmitSuccess"/>
+                    <a:event name="submitfailed" handler="onSubmitFailed"/>
+                </a:events>
+            </a:dataSet>
+        </a:dataSets>
+        <style><![CDATA[
                 TH {
                     background-color:#EEEEEE;
                     text-align:right;
@@ -50,46 +77,49 @@
                     font-size:13px;
                 }
             ]]></style>
-            <div style="margin:10px;">
-                <div style="font-size:14px;"><![CDATA[发表文章]]></div>
-                <div style="margin:5px 0px 5px 0px;height:2px;background-color:#97aecc"/>
-                <TABLE align="center" cellPadding="4" cellSpacing="1" width="100%" style="background-color:#fff">
-                    <TBODY>
-                        <TR>
-                            <TH align="right" width="100"><![CDATA[标题:]]></TH>
-                            <TD>
-                                <a:textField name="article_title" bindTarget="article_create_ds" width="400"/>
-                            </TD>
-                        </TR>
-                        <TR>
-                            <TH align="right" width="100"><![CDATA[目录:]]></TH>
-                            <TD>
-                                <a:comboBox name="category_id" bindTarget="article_create_ds" width="200"/>
-                            </TD>
-                        </TR>
-                        <TR>
-                            <TH align="right"><![CDATA[摘要:]]></TH>
-                            <TD>
-                                <a:textArea name="summary" bindTarget="article_create_ds" className="postConent" height="50" width="800"/>
-                            </TD>
-                        </TR>
-                        <TR>
-                            <TH align="right"><![CDATA[内容:]]></TH>
-                            <TD>
-                                <a:textArea name="content" bindTarget="article_create_ds" className="postConent" height="520" width="800"/>
-                            </TD>
-                        </TR>
-                        <TR>
-                            <TH align="right"><![CDATA[附件:]]></TH>
-                            <TD>
-                                <div style="width:600px;">
-                                    <a:upload buttonWidth="75" fileType="*.png;*.gif;*.jpg;*.screen;*.bm;*.xml;*.zip;*.rar" pkvalue="${/model/article/record/@sequence}" sourcetype="DOC_ARTICLE" text="上传附件"/>
-                                </div>
-                            </TD>
-                        </TR>
-                    </TBODY>
-                </TABLE>
-                <a:button id="postButton" click="postArticle" style="margin-top:10px;" text="发 表 文 章" width="100" height="30"/>
-            </div>
+        <div style="margin:10px;">
+            <div style="font-size:14px;"><![CDATA[发表文章]]></div>
+            <div style="margin:5px 0px 5px 0px;height:2px;background-color:#97aecc"/>
+            <TABLE align="center" cellPadding="4" cellSpacing="1" style="background-color:#fff" width="100%">
+                <TBODY>
+                    <TR>
+                        <TH align="right" width="100"><![CDATA[标题:]]></TH>
+                        <TD>
+                            <a:textField name="article_title" bindTarget="article_create_ds" width="400"/>
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TH align="right" width="100"><![CDATA[目录:]]></TH>
+                        <TD>
+                            <a:lov name="category_name" bindTarget="article_create_ds" width="200"/>
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TH align="right"><![CDATA[摘要:]]></TH>
+                        <TD>
+                            <a:textArea name="summary" bindTarget="article_create_ds" className="postConent" height="50" width="800"/>
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TH align="right"><![CDATA[内容:]]></TH>
+                        <TD>
+                            <a:textArea name="content" bindTarget="article_create_ds" className="postConent" height="520" width="800"/>
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TH align="right"><![CDATA[附件:]]></TH>
+                        <TD>
+                            <div style="width:600px;">
+                                <a:upload buttonWidth="75" fileType="*.png;*.gif;*.jpg;*.screen;*.bm;*.xml;*.zip;*.rar" pkvalue="${/model/article/record/@sequence}" sourcetype="DOC_ARTICLE" text="上传附件"/>
+                            </div>
+                        </TD>
+                    </TR>
+                </TBODY>
+            </TABLE>
+            <a:button id="postButton" click="postArticle" height="30" style="margin-top:10px;" text="发 表 文 章" width="100"/>
+        </div>
+        <script><![CDATA[
+        	init();
+        ]]></script>
     </a:view>
 </a:screen>

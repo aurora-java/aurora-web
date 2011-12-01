@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bm:model xmlns:o="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="DOC_ARTICLE_V">
     <bm:fields>
-        <bm:field name="article_id" databaseType="NUMBER" datatype="java.lang.Integer" />
+        <bm:field name="article_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
         <bm:field name="article_title" databaseType="VARCHAR2" datatype="java.lang.String"/>
-        <bm:field name="category_id" databaseType="NUMBER" datatype="java.lang.Integer" />
+        <bm:field name="category_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
         <bm:field name="nick_name" databaseType="VARCHAR2" datatype="java.lang.String"/>
-        <bm:field name="summary" databaseType="VARCHAR2" datatype="java.lang.String" />
-        <bm:field name="content" databaseType="VARCHAR2" datatype="java.lang.String" />
-        <bm:field name="user_id" databaseType="NUMBER" datatype="java.lang.Integer" />
-        <bm:field name="creation_date" databaseType="VARCHAR2" datatype="java.lang.String" expression="to_char(t1.creation_date,'yyyy-mm-dd HH24:MI:SS')"/>
+        <bm:field name="summary" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="content" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="user_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
+        <bm:field name="creation_date" databaseType="VARCHAR2" datatype="java.lang.String" expression="to_char(t1.creation_date,&apos;yyyy-mm-dd HH24:MI:SS&apos;)"/>
     </bm:fields>
     <bm:primary-key>
         <bm:pk-field name="article_id"/>
     </bm:primary-key>
-    <bm:query-fields>
-    </bm:query-fields>
+    <bm:query-fields><![CDATA[
+    ]]></bm:query-fields>
+    <bm:ref-fields>
+        <bm:ref-field name="category_name" relationName="category" sourceField="category_name"/>
+    </bm:ref-fields>
+    <bm:relations>
+        <bm:relation name="category" joinType="INNER" refAlias="t2" refModel="doc.doc_category">
+            <bm:reference foreignField="category_id" localField="category_id"/>
+        </bm:relation>
+    </bm:relations>
     <bm:data-filters>
         <bm:data-filter enforceOperations="query" expression="t1.article_id =${/parameter/@article_id}"/>
     </bm:data-filters>

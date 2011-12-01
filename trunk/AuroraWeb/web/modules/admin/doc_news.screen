@@ -1,28 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
-    <a:init-procedure>
+    <a:init-procedure><![CDATA[
                 
-    </a:init-procedure>
-    <a:view template="main" package="ui.template">
+    ]]></a:init-procedure>
+    <a:view package="ui.template" template="main">
         <a:dataSets>
-            <a:dataSet id="news_result_ds" autoCount="true" autoQuery="true" fetchAll="false" model="doc.doc_news_query" pageSize="20" />
+            <a:dataSet id="news_result_ds" autoCount="true" autoQuery="true" fetchAll="false" model="doc.doc_news_query" pageSize="20"/>
         </a:dataSets>
         <style><![CDATA[
             .link:hover {
                 TEXT-DECORATION: underline
             }
         ]]></style>
-         <script><![CDATA[
-        
-            function titleRenderer(value,record,name){
-                return '<a class="link" style="font-weight:bold;color:#333;height:35px;line-height:35px;font-size:14px;" href="${/request/@context_path}/modules/admin/edit_new.screen?news_id='+record.get('news_id')+'">'+value+"</a>";
-            }
-        ]]></script>
+        <script><![CDATA[
+             function userRenderer(value, record, name) {
+                 return '<a class="link" style="font-size:12px;margin-left:5px;" href="javascript:deleteRecord(' + record.get('news_id') + ');"><img src="../../images/page_delete.gif"></a>';
+             }
+             
+             function titleRenderer(value, record, name) {
+                 return '<a class="link" style="font-weight:bold;color:#333;height:35px;line-height:35px;font-size:14px;" href="${/request/@context_path}/modules/admin/edit_new.screen?news_id=' + record.get('news_id') + '">' + value + "</a>";
+             }
+             
+             function deleteRecord(id) {
+                 var record = $('news_result_ds').findById(id);
+                 $('news_result_ds').remove(record);
+             }
+         ]]></script>
         <div style="float:right;">
             <a href="post_new.screen" style="float:right;margin:5px;font-size:15px;"><![CDATA[发布新闻]]></a>
         </div>
-        <a:table  bindTarget="news_result_ds" canWheel="false" className="cateList" navBar="true" navBarType="simple" style="background-color:#fff;width:100%;float:left;">
+        <a:table bindTarget="news_result_ds" canWheel="false" className="cateList" navBar="true" navBarType="simple" style="background-color:#fff;width:100%;float:left;">
             <a:columns>
+                <a:column align="center" renderer="userRenderer" width="60"/>
                 <a:column name="title" prompt="题目" renderer="titleRenderer"/>
                 <a:column name="nick_name" align="center" prompt="发表人" width="100"/>
                 <a:column name="createion_time" align="center" prompt="发表时间" renderer="Aurora.formatDateTime" width="150"/>
