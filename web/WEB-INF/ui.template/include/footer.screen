@@ -8,10 +8,22 @@
                         <img src="${/request/@context_path}/images/hand_logo.png"/>
                         <p>Powered by Aurora</p>
                         <p>Copyright © 2011 · HAND Enterprise Solutions Company All Rights Reserved</p>
+                        <p><a style="font-size:12px;color:#eaeaea" href="http://www.miibeian.gov.cn/">沪ICP备 1101862 号</a></p>
                     </div>                      
                 </div>
                 
             </div>
         </div>
+        <script type="text/javascript">
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-22100635-2']);
+          _gaq.push(['_trackPageview']);
+        
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        </script>
     </a:view>
 </a:screen>

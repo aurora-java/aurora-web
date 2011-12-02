@@ -68,9 +68,6 @@
                         <a href="${/request/@context_path}/download.screen"><![CDATA[下载]]></a>
                     </li>
                     <li>
-                        <a href="http://aurora-project.googlecode.com/svn/trunk/uncertain_ide_release/" target="_blank"><![CDATA[IDE下载]]></a>
-                    </li>
-                    <li>
                         <a href="http://code.google.com/p/aurora-project/" target="_blank"><![CDATA[SVN]]></a>
                     </li>
                     <li>
