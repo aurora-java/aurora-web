@@ -1,0 +1,149 @@
+1.2.0
+=====
+* application.config 增加defaultLabelSeparator属性配置，默认为 “:”。
+
+2011-09-30 - 周凡
+-----------------------------------
+* 改进系统初始化组件的启动模式，通过特性包中的instance.xml来配置各种组件及其依赖的配置文件，通过组件依赖关系决定启动顺序
+
+2011-09-26 - 周凡
+-----------------------------------
+* 增加请求记录的特性
+* 改进异常信息记录
+
+2011-09-19 - 周凡
+-----------------------------------
+* 修正使用BM自定义错误信息配置时，事务没有正确提交的bug
+* 增加svc防重复提交特性
+
+
+2011-09-16 － 周凡
+-----------------------------------
+* 修正解析${}时的bug，原有模板、screen中的两个$写法需要修正
+* 修正配置文件解析时，view关联的feature被创建两次的问题
+
+
+2011-09-04 - 周凡
+-----------------------------------
+* UncertainEngine启动时自动注册为JMX MBean
+* 改进UncertainEngine所管理的对象注册为MBean的机制
+* 内建对象ClassRegistry和IObjectRegistry注册为MBean
+* UncertainEngine配置文件拆分为uncertain.xml和uncertain.local.xml，后者用于配置与本地信息有关的内容，如路径
+* 启动时通过package方式加载XML标记映射
+
+1.1.7
+=====
+
+2011-08-10 - 周凡
+-----------------------------------
+实现基于cache的权限验证机制
+
+
+2011-06-30 - 周凡
+-----------------------------------
+修正<model-query>调用BM时，自定义查询SQL没有应用defaultWhereClause属性的bug
+
+2011-06-23- 马超
+-----------------------------------
+* 多语言ref-table,ref-field改成大写
+-----------------------
+
+2011-06-21- 马超
+-----------------------------------
+* 行转列能够分页
+-----------------------
+
+
+2011-06-16- 马超
+-----------------------------------
+* AuroraCookie增加maxage标记
+-----------------------
+2011-06-10 - 周凡
+-----------------------------------
+* 修正autocrud servlet在并发访问时的bug
+* 为避免并发访问时日志输出冲突的问题，autocrud servlet缺省不启用trace，通过application.config中的enableBMTrace="true"来启用。临时措施。
+
+2011-06-07 - 周凡
+-----------------------------------
+screen文件输出增加cache特性，并可以自动根据源文件的修改刷新cache
+提供<cached-part>组件，实现页面内容的部分缓存
+
+
+
+1.1.6
+=====
+
+2011-06-03 - 马超
+-----------------------------------
+BatchConfig 中空指针错误
+bm options如果有insert 不去考虑bm:fields上mulilanguage标签
+screen include 增加参数解析功能
+
+2011-05-13 － 周凡
+------------------------------------
+* 增加BM自定义错误信息的功能
+* 修正原有自定义错误类对于多语言的处理，以适应新的多语言操作接口
+
+2011-05-12 － 周凡
+------------------------------------
+修正stardard who字段在update时不生效的bug
+
+2011-05-05
+------------------------------------
+bm文件上增加defaultOrderBy 用于bm查询时默认排序
+
+2011-4-25 - 邹磊
+------------------------------------
+增加httpForward，通过服务端转发客户端提交的birt请求
+
+2011-4-19 － 周凡
+------------------------------------
+* 增加ScreenInclude功能，可以通过<screen-include>标记在screen中包含另一个screen的内容，或在模板中通过${screen:<screen完整的相对路径>}来调用
+* UncertainEngine在初始化的时候注册MBean，以便通过jconsole来监控、管理
+
+
+2011-04-15
+--------------------------------------------
+修改了datasource pool参数配置方式，取消默认值，一切参数默认值均为c3p0默认值。    - 邹磊
+参数值需要符合java properties规范，可以直接添加c3p0 pool参数到下面，和架构无关。
+修改后的方式如下：
+<!--
+	pool parameter:    		
+	maxPoolSize;最大连接数
+	minPoolSize;最小连接数			
+	建议属性：
+	testConnectionOnCheckin如果为true在取得连接的同时将校验连接的有效性，为true			
+	checkoutTimeout获得连接的超时时间,如果超过这个时间,会抛出异常，单位毫秒，3000			
+	idleConnectionTestPeriod每隔多少时间检查一下pool中的空闲连接，单位秒，120			
+	preferredTestQuery=;定义所有连接测试都执行的测试语句,"select 1 from dual"
+	//最大空闲时间,180秒内未使用则连接被丢弃，单位秒
+	maxIdleTime=180;
+--> 
+<dc:database-connection driverClass="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@192.168.11.65:1521:masdev" userName="xxx" password="xxx" pool="true">
+	<dc:properties>
+		minPoolSize=1
+		maxPoolSize=2
+		testConnectionOnCheckin=true
+		checkoutTimeout=3000
+		idleConnectionTestPeriod=120
+		maxIdleTime=180
+		preferredTestQuery=select 1 from dual
+	</dc:properties>
+</dc:database-connection>	
+
+2011-04-14
+------------------------------------
+* 修改DatabaseBasedMessageProvider类中getModelService的调用方式 - 牛佳庆
+* 修改DefaultAccessCheckerFactory类中getModelService的调用方式 - 牛佳庆
+
+2011-04-13
+------------------------------------
+* 增加了导出JPG,PNG,PDF的导出类ExportChartServlet
+* 增加了Chart标签
+* 修正screen-include时，无法显示BM带来的prompt的bug － 周凡
+* Grid的Column上增加forExport属性，用于导出功能。 
+* Grid的Column上增加exportField属性，用于导出功能。
+
+2011-04-12
+------------------------------------
+* screen/svc源文件，BM，UI控件的缺省template现在支持缓存 － 周凡
