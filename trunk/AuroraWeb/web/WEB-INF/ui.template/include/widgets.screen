@@ -4,6 +4,38 @@
         <a:model-query defaultWhereClause="t1.is_recommend = &apos;Y&apos;" model="doc.doc_news_list" rootPath="widgets"/>
     </a:init-procedure>
     <a:view package="ui.template" template="fragment">
+        <style type="text/css"><![CDATA[
+        #AIRDownloadMessageTable {
+            width: 217px;
+            height: 180px;
+            border: 1px solid #999;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 14px;
+        }
+        #AIRDownloadMessageRuntime {
+            font-size: 12px;
+            color: #333;
+        }
+        
+        ]]>
+        </style>
+        
+        <script language="JavaScript" type="text/javascript"><![CDATA[
+        // -----------------------------------------------------------------------------
+        // Globals
+        // Major version of Flash required
+        var requiredMajorVersion = 9;
+        // Minor version of Flash required
+        var requiredMinorVersion = 0;
+        // Minor version of Flash required
+        var requiredRevision = 115;     // This is Flash Player 9 Update 3
+        // -----------------------------------------------------------------------------
+        ]]>
+        </script>
+        <script src="${/request/@context_path}/resources/AC_RunActiveContent.js" type="text/javascript"></script>
+        <script language="JavaScript" type="text/javascript">
+        var hasReqestedVersion = DetectFlashVer(requiredMajorVersion, requiredMinorVersion, requiredRevision);
+        </script>
         <div class="widget">
             <h3><![CDATA[推荐阅读]]></h3>
             <a:repeater datamodel="/model/widgets">
@@ -15,6 +47,71 @@
                     </li>
                 </ul>
             </a:repeater>
+        </div>        
+        <div class="widget">
+            <h3><![CDATA[在线安装开发手册]]></h3>
+            <ul>
+                <li style="margin-top:10px;">
+                    <span >
+                        <script language="JavaScript" type="text/javascript"><![CDATA[
+                            if (hasReqestedVersion) {
+                                AC_FL_RunContent(
+                                    'codebase','http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab',
+                                    'width','217',
+                                    'height','180',
+                                    'id','jsdoc',
+                                    'align','middle',
+                                    'src','badge',
+                                    'quality','high',
+                                    'bgcolor','#FFFFFF',
+                                    'name','jsdoc',
+                                    'allowscriptaccess','always',
+                                    'pluginspage','http://www.macromedia.com/go/getflashplayer',
+                                    'flashvars','appname=JavaScriptDocument&appurl=http://www.aurora-framework.org/doc/AuroraJsDoc.air&airversion=2.5&buttoncolor=FF0000&messagecolor=000000&imageurl=resources/JavaScriptDocument.jpg',
+                                    'movie','badge' ); //end AC code
+                    
+                            } else {
+                                document.write('Flash Player is too old');
+                            }
+                            ]]>
+                            </script>
+                    </span>
+                </li>
+                <li>
+                    <span>
+                        <script language="JavaScript" type="text/javascript"><![CDATA[
+                            if (hasReqestedVersion) {
+                                AC_FL_RunContent(
+                                    'codebase','http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab',
+                                    'width','217',
+                                    'height','180',
+                                    'id','tagdoc',
+                                    'align','middle',
+                                    'src','badge',
+                                    'quality','high',
+                                    'bgcolor','#FFFFFF',
+                                    'name','tagdoc',
+                                    'allowscriptaccess','always',
+                                    'pluginspage','http://www.macromedia.com/go/getflashplayer',
+                                    'flashvars','appname=TagDocument&appurl=http://www.aurora-framework.org/doc/AuroraTagDoc.air&airversion=2.5&buttoncolor=FF0000&messagecolor=000000&imageurl=resources/TagDocument.jpg',
+                                    'movie','badge' ); //end AC code
+                    
+                            } else {
+                                document.write('Flash Player is too old');
+                            }
+                            ]]>
+                            </script>
+                    </span>
+                </li>
+                <li>
+                    <span>
+                        <a href="${/request/@context_path}/doc/aurora_reference.pdf">
+                            <img src="${/request/@context_path}/resources/AuroraReference.jpg"/>
+                        </a>
+                    </span>
+                </li>
+                
+            </ul>
         </div>
         <div class="widget">
             <h3><![CDATA[友情链接]]></h3>
@@ -22,11 +119,6 @@
                 <li>
                     <span>
                         <a href="http://www.hand-china.com"><![CDATA[上海汉得信息技术有限公司]]></a>
-                    </span>
-                </li>
-                <li>
-                    <span>
-                        <a href="http://www.baidu.com"><![CDATA[Baidu]]></a>
                     </span>
                 </li>
             </ul>

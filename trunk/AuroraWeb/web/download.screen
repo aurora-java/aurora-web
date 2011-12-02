@@ -23,7 +23,7 @@
                 </tr>
                 <tr>
                     <td>
-                            <span>更新说明:</span>
+                            <span><b>框架更新说明:</b></span>
                         <hr/>
                     </td>
                 </tr>
@@ -80,6 +80,22 @@
                 <tr>
                     <td>
                         <a href="release/2011.11.22/changelog.txt">Jar changelog.txt</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <table style="font-size:13px;" align="center" width="944" height="100" border="0" cellpadding="0" cellspacing="0">
+            <tbody>
+                <tr height="25">
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                            <span><b>IDE下载地址:</b></span>
+                            <hr/>
+                            <a href="http://aurora-project.googlecode.com/svn/trunk/uncertain_ide_release/" target="_blank"><![CDATA[http://aurora-project.googlecode.com/svn/trunk/uncertain_ide_release]]></a>
+                        
                     </td>
                 </tr>
             </tbody>
