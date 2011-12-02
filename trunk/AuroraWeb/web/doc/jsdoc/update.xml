@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?> 
+    <update xmlns="http://ns.adobe.com/air/framework/update/description/1.0"> 
+      <version>1.25</version> 
+      <url>http://www.aurora-framework.org/doc/AuroraJsDoc.air</url>
+      <description> 
+          <text xml:lang="en_US">更新到最新版本的文档</text>
+          <text xml:lang="zh_CN">更新到最新版本的文档</text>
+      </description> 
+   </update>
