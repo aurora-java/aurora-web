@@ -72,12 +72,6 @@
                         </TD>
                     </TR>
                     <TR>
-                        <TH align="right"><![CDATA[摘要:]]></TH>
-                        <TD>
-                            <a:textArea name="summary" bindTarget="article_create_ds" className="postConent" height="50" width="800"/>
-                        </TD>
-                    </TR>
-                    <TR>
                         <TH align="right"><![CDATA[内容:]]></TH>
                         <TD>
                             <a:textArea name="content" bindTarget="article_create_ds" className="postConent" height="520" width="800"/>

@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bm:model xmlns:o="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="DOC_NEWS">
     <bm:fields>
-        <bm:field name="news_id" databaseType="NUMBER" datatype="java.lang.Integer" />
+        <bm:field name="news_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
         <bm:field name="title" databaseType="VARCHAR2" datatype="java.lang.String"/>
         <bm:field name="summary" databaseType="VARCHAR2" datatype="java.lang.String"/>
         <bm:field name="content" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="is_recommend" databaseType="VARCHAR2" datatype="java.lang.String"/>
     </bm:fields>
     <bm:primary-key>
         <bm:pk-field name="news_id"/>
     </bm:primary-key>
-     <bm:query-fields>
+    <bm:query-fields>
         <bm:query-field field="news_id" queryOperator="="/>
     </bm:query-fields>
     <bm:features>
         <o:sequence-pk/>
         <f:standard-who/>
-    </bm:features> 
+    </bm:features>
 </bm:model>
