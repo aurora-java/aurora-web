@@ -3,7 +3,7 @@
     <bm:operations>
         <bm:operation name="query">
             <bm:query-sql><![CDATA[
-                SELECT t1.* from (select rownum as row_num, v.news_id,v.title,v.summary,v.creation_date,v.user_id,v.nick_name FROM DOC_NEWS_V v)t1
+                SELECT t1.* from (select rownum as row_num, v.news_id,v.title,v.summary,v.creation_date,v.user_id,v.nick_name,v.is_recommend FROM DOC_NEWS_V v)t1
                 #WHERE_CLAUSE# order by t1.creation_date desc
             ]]></bm:query-sql>
         </bm:operation>

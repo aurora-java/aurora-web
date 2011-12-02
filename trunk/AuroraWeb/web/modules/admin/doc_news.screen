@@ -27,6 +27,12 @@
                     $('news_result_ds').remove(record);
                 }, null, null, 100);
             }
+            
+            function recommendRenderer(value, record, name) {
+                if (value == 'Y') {
+                    return '√';
+                }
+            }
         ]]></script>
         <div style="float:right;">
             <a href="post_new.screen" style="float:right;margin:5px;font-size:15px;"><![CDATA[发布新闻]]></a>
@@ -37,6 +43,7 @@
                 <a:column name="title" prompt="题目" renderer="titleRenderer"/>
                 <a:column name="nick_name" align="center" prompt="发表人" width="100"/>
                 <a:column name="createion_time" align="center" prompt="发表时间" renderer="Aurora.formatDateTime" width="150"/>
+                <a:column name="is_recommend" align="center" prompt="推荐阅读" renderer="recommendRenderer" width="60"/>
             </a:columns>
         </a:table>
     </a:view>

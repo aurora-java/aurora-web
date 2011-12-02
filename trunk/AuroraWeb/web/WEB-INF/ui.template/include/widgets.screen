@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <a:screen xmlns:a="http://www.aurora-framework.org/application">
     <a:init-procedure>
-        <a:model-query defaultWhereClause="row_num &gt; 2*(to_number(nvl(${/parameter/@page},1))-1) and row_num &lt;= 2*to_number(nvl(${/parameter/@page},1))+1" model="doc.doc_news_list" rootPath="widgets"/>
+        <a:model-query defaultWhereClause="t1.is_recommend = &apos;Y&apos;" model="doc.doc_news_list" rootPath="widgets"/>
     </a:init-procedure>
-    <a:view template="fragment" package="ui.template">
-            <div class="widget">
-                <h3>推荐阅读</h3>
-                <a:repeater datamodel="/model/widgets">
-                    <ul>
-                        <li>
-                            <span>
-                                <a href="#">${@title}</a>
-                            </span>
-                        </li>
-                    </ul>
-                </a:repeater>
-            </div>
-            <div class="widget">
-                <h3>友情链接</h3>
+    <a:view package="ui.template" template="fragment">
+        <div class="widget">
+            <h3><![CDATA[推荐阅读]]></h3>
+            <a:repeater datamodel="/model/widgets">
                 <ul>
                     <li>
                         <span>
-                            <a href="http://www.hand-china.com">上海汉得信息技术有限公司</a>
-                        </span>
-                    </li>
-                    <li>
-                        <span>
-                            <a href="#">Baidu</a>
+                            <a href="${/request/@context_path}/news.screen?id=${@news_id}"><![CDATA[${@title}]]></a>
                         </span>
                     </li>
                 </ul>
-            </div>
+            </a:repeater>
+        </div>
+        <div class="widget">
+            <h3><![CDATA[友情链接]]></h3>
+            <ul>
+                <li>
+                    <span>
+                        <a href="http://www.hand-china.com"><![CDATA[上海汉得信息技术有限公司]]></a>
+                    </span>
+                </li>
+                <li>
+                    <span>
+                        <a href="http://www.baidu.com"><![CDATA[Baidu]]></a>
+                    </span>
+                </li>
+            </ul>
+        </div>
     </a:view>
 </a:screen>

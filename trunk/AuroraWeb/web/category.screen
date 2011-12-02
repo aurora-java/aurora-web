@@ -49,25 +49,18 @@
             } else {
                 current_page = 1;
             }
-
+            
             function prePage() {
                 if (current_page > 1) {
                     current_page--;
-                    if ('${/parameter/@cid}' == '') {
-                    } else {
-                        window.location.href = 'category.screen?cid=${/parameter/@cid}&page=' + current_page;
-                    }
+                    window.location.href = 'category.screen?cid=${/parameter/@cid}&page=' + current_page;
                 }
             }
-
+            
             function nextPage() {
                 if (current_page < last_page) {
                     current_page++;
-                    if ('${/parameter/@cid}' == '') {
-                        window.location.href = 'category.screen?cid=5&page=' + current_page;
-                    } else {
-                        window.location.href = 'category.screen?cid=${/parameter/@cid}&page=' + current_page;
-                    }
+                    window.location.href = 'category.screen?cid=${/parameter/@cid}&page=' + current_page;
                 }
             }
         ]]></script>
@@ -92,41 +85,41 @@
                                 </a:repeater>
                             </ul>
                         </td>
-                        <td valign="top" style="padding:10px;">
+                        <td style="padding:10px;" valign="top">
                             <a:switch test="/parameter/@cid">
                                 <a:case value="null">
-                                    <span style="font-size:14px;">点击左边分目录,查看详细文章列表.</span>
+                                    <span style="font-size:14px;"><![CDATA[点击左边分目录,查看详细文章列表.]]></span>
                                 </a:case>
                                 <a:case value="">
-                                    <span style="font-size:14px;">点击左边分目录,查看详细文章列表.</span>
+                                    <span style="font-size:14px;"><![CDATA[点击左边分目录,查看详细文章列表.]]></span>
                                 </a:case>
                                 <a:case value="*">
-                                    <table class="article_table" cellspacing="1" cellpadding="0" border="0" width="100%">
+                                    <table border="0" cellpadding="0" cellspacing="1" class="article_table" width="100%">
                                         <thead style="background-color:#ccc">
                                             <tr>
                                                 <th>
-                                                    <span class="sortArrow">主题</span>
+                                                    <span class="sortArrow"><![CDATA[主题]]></span>
                                                 </th>
                                                 <th width="100">
-                                                    <span class="sortArrow">发表人</span>
+                                                    <span class="sortArrow"><![CDATA[发表人]]></span>
                                                 </th>
                                                 <th width="100">
-                                                    <span class="sortArrow">发表日期</span>
+                                                    <span class="sortArrow"><![CDATA[发表日期]]></span>
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <a:repeater datamodel="/model/article">
-                                            <tr>
-                                                <td>
-                                                    <h2 style="font-size:13px;font-weight:bold;color:#ccc">
-                                                        <a href="article.screen?article_id=${@article_id}" style="padding-left:14px;background:url(${/request/@context_path}/images/article.gif) no-repeat 0% 50%"><![CDATA[${@article_title}]]></a>
-                                                    </h2>
-                                                </td>
-                                                <td align="center">${@nick_name}</td>
-                                                <td align="center">${@creation_date}</td>
-                                            </tr>
-                                        </a:repeater>
+                                            <a:repeater datamodel="/model/article">
+                                                <tr>
+                                                    <td>
+                                                        <h2 style="font-size:13px;font-weight:bold;color:#ccc">
+                                                            <a href="article.screen?article_id=${@article_id}" style="padding-left:14px;background:url(${/request/@context_path}/images/article.gif) no-repeat 0% 50%"><![CDATA[${@article_title}]]></a>
+                                                        </h2>
+                                                    </td>
+                                                    <td align="center"><![CDATA[${@nick_name}]]></td>
+                                                    <td align="center"><![CDATA[${@creation_date}]]></td>
+                                                </tr>
+                                            </a:repeater>
                                         </tbody>
                                     </table>
                                     <a:switch test="/model/count/record/@maxrow">
