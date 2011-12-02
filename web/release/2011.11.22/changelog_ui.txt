@@ -1,0 +1,150 @@
+Release ()  
+------------------------------------
+* 修正了TextArea的字体以及聚焦时边框颜色显示不正确的问题。
+* 修正了没有值的输入控件在使用setValue方法输入0时，不会触发change事件的问题。
+* 修正了子DataSet在父DataSet查询结果为空时没清除之前的查询结果的问题。
+* 新增Table隐藏列功能。
+* 修正Lov的autoComplete功能在Grid上的BUG。
+* 修正了IE下 Grid有滚动条的情况下，删除行时，选择框错位的BUG。
+* 新增工作流图形化。
+* 修正TriggerField的popup框在页面有scrollTop和scrollLeft的时候定位问题。
+* 工作流图形增加shadow属性。
+* 改进Lov的autoComplete功能，能够通过autoCompleteRenderer来支持显示多列。
+* 改进checkbox显示居上的问题。
+* 将Window的可移动范围扩展至窗口外部
+* 改进了NavBar的每页显示数的ComboBox可手动输入。
+* 增加DataSet的maxPageSize属性，用于设置查询的分页大小的最大值，来限制navBar中的分页输入框的输入上限
+* 修正了Lov从mapping的from值为0时，to的值为空字符串的问题。
+* 修正Chart组件在属性inverted是true的情况下,隐藏图形再显示时的错误。
+* 修正Chart组件在IE8以下版本，点击饼图不会移动的问题。
+* 容器布局增加labelSeparator属性，用来显示prompt后面的符号，默认":"。
+* Grid和Table组件增加属性canWheel,用来设定能否通过滚轮进行换行。
+
+Release (2011-08-16)
+------------------------------------
+* 修正在Chrome和Safari下，导出功能使用后，再按导出按钮时无效果的问题。
+* 导出功能增加提示功能。
+
+Release (2011-08-01)
+------------------------------------
+* 修订DataSet 翻页的bug
+* 修订upload的销毁的bug
+* 修订tab的bug
+
+Release (2011-07-27)
+------------------------------------
+* 修正NumberField组件可以输入",."的bug
+* 解决了重复查询时，前者事务没有被停止而产生的错误。
+* 修正英文环境下的日期控件的显示问题。
+* 修订DataSet 多次弹出校验失败的问题
+
+Release (2011-07-19)
+------------------------------------
+* 修正record.set一个值是0的时候，控件不会显示0的问题
+* 修正Grid在新增的记录保存后，无法按下一页
+* 修正在搜狐浏览器下，Grid组件在有滚动条的情况下，清除最后一条记录后，第一列checkbox错位的问题
+* 增强checkbox在readonly状态下的显示效果
+* 修正日期控件输入后自动带出的值不对的BUG
+* 修正setCookie函数中path的错误
+
+Release (2011-07-08)
+------------------------------------
+* 修正了 设置了宽度的Table中的NavBar的宽度显示不正确的BUG
+* 修正了Tab组件在点击标签头右侧的空白处会报JS错的BUG
+* 修正Grid,Table中隐藏组件导致编辑却无法blur的错误
+* 修正Grid快捷定位，会定位到隐藏列 的BUG，以及换行定位时，如果原先行的第一例无编辑器，而新行第一列有编辑器的情况下，无法定位到新行第一列。
+* 增加CheckBox获取焦点时的虚线框显示提示，同时增加快捷键，当聚焦时，按回车键能改变CheckBox的值
+* 修正Grid快捷定位在列编辑器为CheckBox时的BUG，并完善了Table的快捷定位功能
+* 修正了Table中类型为checkbox的column的editorfunction返回为空字符串时，该column不能显示只读状态的checkbox的问题。
+* 增加DataSet的Field的 lovAutoQuery属性，用来控制lov弹出框是否自动查询，默认为true
+* 修正了IE8和IE9下的Grid组件，首先将滚动条 移动中间部位；输入查询条件，点击查询，使滚动条消失；点击重置按钮，再次查询，出现的错位现象。
+* 修正了NumberField小数截取，显示正常，后台的值没有被截取的BUG
+* 修正了Chrome下Window在页面滚动条处在非页面顶部时居中偏差的问题
+* 修正了IE7下，Window窗口下如果有Tab组件，关闭窗口会报错的问题
+* 修正了Chrome下Window移动时的BUG
+* 修正了在Window组件下取了id属性的DatePicker和DateTimePicker组件，在第二次打开同一Window后，点击该组件报的错误
+* 增加Aurora.formatMoney方法
+* 修正Window组件的load事件下调用focus方法不能聚焦组件的问题
+* 修正了遨游3和Safari下的Window组件居中问题
+* 增加Lov的lovLabelWidth属性
+* 修正TreeGrid选择行时会聚焦错误的问题
+* 修正除IE6,IE7,IE8外其他浏览器下TreeGrid组件中的选中的editor无法显示的问题
+
+Release (2011-06-17)
+------------------------------------
+* lov增加 beforetriggerclick事件
+* table增加navbar分页导航栏
+* 修改各种弹出式消息框组件的按钮为自动关闭，只有当回调函数的返回值为false时，窗口才不会被关闭。
+* 修改grid为单选的时候,自动locate到对应的record
+* 修订combox下拉框内容太长,在firefox下无法拖动滚动条的bug
+* 修正Grid中新增行时，行首的单选按钮无法被选择的bug
+* 修正readonly情况下，DatePicker、DateTimePicker、ComboBox用快捷键[下]会打开下拉列表的BUG
+* 修订readonly情况下,combobox会触发update的bug
+
+Release (2011-06-02)
+------------------------------------
+* 增加DateField,DatePicker及DateTimePicker的年份和月份选择弹出框
+* 增加Grid的navBarType属性和maxPageCount属性，用来显示simple类型的navBar以及navBar最大显示页数。
+* 修正了Grid中类型为checkbox的column的editorfunction返回为空字符串时，该column不能显示只读状态的checkbox的问题。
+
+
+Release (2011-05-25)
+------------------------------------
+* 修正Grid在点击不可编辑的行列后，无法滚动的问题
+* 增加Aurora.go方法，用于页面重定向
+* 增加Lov的autoComplete功能
+* 修正各种弹出式消息框之间嵌套时的BUG，另外弹出式消息框如果定义了回调函数，点击按钮后不会关闭窗口，需要在回调函数中手动处理窗口关闭
+* 增加了grid,table的快速导航键
+* 修正了grid导出功能中 当没有querydataset或querydataset没有autoCreate时引发的错误
+* 增加DateField,DatePicker及DateTimePicker的快捷导航功能
+
+
+Release (2011-05-17)
+------------------------------------
+* Window组件新增beforeclose事件
+* Table添加checkbox编辑器
+* Table添加单选框和多选框
+* 修正Grid复合表头为lock的情况下单选框和多选框显示错位
+* 修正IE7下Grid表头错位
+* 修正IE7下Grid在autoPageSize的情况下pagesize计算不正确
+* 修正TreeGrid在滚动时，子节点自动展开的问题
+* 修正Table及Grid的footerRenderer在remove和clear的情况下没有触发效果的问题
+* 修正Grid在编辑状态下 滚动鼠标造成数据错位的问题
+* 修正在弹出的Window下的Tab组件执行关闭标签后再关闭Window组件时发生的问题
+* 增加了DataSet的beforeselect事件
+* 修订DataSet新增函数的一个bug
+
+Release (2011-04-27)
+------------------------------------
+* 修正了Table的editorFunction的一个BUG
+* 修正了Grid编辑时滚动滑轮导致的数据错误
+* 修改了Lov组件,当输入值为空的时候不在fetch
+
+Release (2011-04-25)
+------------------------------------
+* Tree增加dblclick事件
+* 修正了Tab在IE8下显示不正确
+* 修正导出功能遗漏了查询条件
+* 增加了DataSet的beforesubmit事件的判断
+* 修改chart组件
+
+Release (2011-04-15)
+------------------------------------
+* 增加remove函数中对beforeremove事件结果的判断
+* 修改breforeCreate事件的触发参数
+
+Release (2011-04-14)
+------------------------------------
+* Grid的Column上增加forExport属性，用于导出功能。
+* 修改radio的图片
+* 修正numbeField的maxLength错误
+* Grid的Column上增加exportField属性，用于导出功能。
+* 修订grid新增数据无法选中的问题
+* 修改DataSet中create函数的breforeCreate事件
+* DataSet增加beforeLoadData函数,用于预处理数据
+* DataSet增加了validateSelf函数,用于校验dataset本身,不包含子dataset
+
+Release (2011-04-13)
+------------------------------------
+* 将组件的加载js修改为xxx-min.js
+* 增加了导出的客户端脚本
