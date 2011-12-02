@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
     <a:init-procedure>
         <model-query fetchAll="true" model="doc.doc_article_detail" rootPath="article"/>
         <model-query defaultWhereClause="fam.table_name = &apos;DOC_ARTICLE&apos;  and fam.table_pk_value = ${/parameter/@article_id}" fetchAll="true" model="fnd.fnd_atm_attachment" rootPath="atms"/>
     </a:init-procedure>
-    <a:view package="ui.template" template="main">
+    <a:view package="ui.template" template="main" title="${/model/article/record/@article_title}">
         <style>
             #content {
                 background-color:#fff !important;
