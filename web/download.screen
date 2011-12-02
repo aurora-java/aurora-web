@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc">
+    <a:init-procedure></a:init-procedure>
+    <a:view package="ui.template" template="main">
+        <a:link ui="#"/>
+        <style>
+            .box {
+                background-color:#ccc;
+                font-size:12px;
+            }
+            .box th {
+                background-color:#d4dde5;
+                font-weight:bold;
+            }
+            .box td {
+                background-color:#fff;
+            }
+        </style>
+        <table style="font-size:13px;" align="center" width="944" height="100" border="0" cellpadding="0" cellspacing="0">
+            <tbody>
+                <tr height="25">
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                            <span>更新说明:</span>
+                        <hr/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <P class="P1">(1) 更新aurora.jar和aurora-plugin.jar</P>
+                        <P class="P1">(2) 备份原有aurora-ui-std模板目录,解压aurora-ui-std.zip进行更新</P>
+                        <P class="P1">(2) 备份原有resource目录,解压resource.zip进行更新</P>
+                    </td>
+                </tr>
+                <tr height="25">
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="box" align="center"  width="944" border="0" cellpadding="5" cellspacing="1">
+            <thead>
+                <tr>
+                    <th align="left" class="h5">2011.11.22</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="release/2011.11.22/aurora.jar">aurora.jar</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="release/2011.11.22/aurora-plugin.jar">aurora-plugin.jar</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="release/dependency.rar">dependency.rar(依赖的jar包)</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="release/2011.11.22/aurora.ui.std.zip">aurora.ui.std.zip</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="release/2011.11.22/resource.zip">resource.zip</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="release/2011.11.22/changelog_ui.txt">UI changelog.txt</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="release/2011.11.22/changelog.txt">Jar changelog.txt</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </a:view>
+</a:screen>

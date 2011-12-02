@@ -11,7 +11,6 @@
         <a:model-query defaultWhereClause="category_id=${/parameter/@cid}" model="doc.doc_article_list" rootPath="article"/>
     </a:init-procedure>
     <a:view package="ui.template" template="main">
-        <link href="css/site.css" rel="stylesheet" type="text/css"/>
         <style><![CDATA[
             .article_table  {
                 background-color:#ccc;             
