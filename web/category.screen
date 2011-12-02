@@ -10,7 +10,7 @@
         <a:model-query defaultWhereClause="category_id=${/parameter/@cid}" model="doc.doc_article_count" rootPath="count"/>
         <a:model-query defaultWhereClause="category_id=${/parameter/@cid}" model="doc.doc_article_list" rootPath="article"/>
     </a:init-procedure>
-    <a:view package="ui.template" template="main">
+    <a:view package="ui.template" template="main" title="技术文章">
         <style><![CDATA[
             .article_table  {
                 background-color:#ccc;             
