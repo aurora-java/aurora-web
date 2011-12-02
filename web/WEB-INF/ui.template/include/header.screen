@@ -47,12 +47,22 @@
                     Aurora.request({
                         url: '${/request/@context_path}/logout.svc',
                         para: {},
-                        success: function() {                            
+                        success: function() {
                             window.location.reload();
                         },
                         scope: this
                     });
-                }, null, null, 85);
+                }, null, null, 100);
+            }
+            
+            function changePassword() {
+                new Aurora.Window({
+                    url: '${/request/@context_path}/password_change.screen',
+                    title: '注册',
+                    id: 'password_change_screen',
+                    width: 280,
+                    height: 160
+                });
             }
         ]]></script>
         <div id="header">
@@ -71,7 +81,7 @@
                         <a href="http://code.google.com/p/aurora-project/" target="_blank"><![CDATA[SVN]]></a>
                     </li>
                     <li>
-                        <a href="javascript:alert('敬请期待!')"><![CDATA[讨论板]]></a>
+                        <a href="javascript:alert(&apos;敬请期待!&apos;)"><![CDATA[讨论板]]></a>
                     </li>
                     <li>
                         <a href="${/request/@context_path}/team.screen"><![CDATA[开发团队]]></a>
@@ -112,6 +122,8 @@
                 <a:case value="1">
                     <div id="userMenu" class="userMenu" style="float:right;right:0px;">
                         <span style="margin-left:5px;"><![CDATA[${/session/@nick_name} 欢迎您回来]]></span>
+                        <span style="margin-left:5px;"><![CDATA[|]]></span>
+                        <a href="javascript:changePassword();" style="margin-left:5px;"><![CDATA[修改密码]]></a>
                         <span style="margin-left:5px;"><![CDATA[|]]></span>
                         <a href="javascript:exit();" style="margin-left:5px;"><![CDATA[退出]]></a>
                     </div>

@@ -22,6 +22,12 @@ create or replace package sys_login_pkg is
                   p_authority out varchar,
                   p_success   out number);
 
+  --修改密码
+  procedure changePassword(p_password_old varchar,
+                           p_password_new varchar,
+                           p_user_id      number,
+                           p_success      out number);
+
 end sys_login_pkg;
 /
 create or replace package body sys_login_pkg is
@@ -109,6 +115,38 @@ create or replace package body sys_login_pkg is
       from sys_user u
      where u.user_name = p_user_name
        and u.password = md5(p_password => p_password);
+    p_success := 1;
+  exception
+    when no_data_found then
+      p_success := 0;
+  end;
+
+  --************************************************************
+  -- 修改密码
+  -- parameter :
+  -- p_password_old  原密码
+  -- p_password_new  新密码
+  -- p_user_id    用户编号  
+  -- p_success    是否成功
+  --************************************************************
+  procedure changePassword(p_password_old varchar,
+                           p_password_new varchar,
+                           p_user_id      number,
+                           p_success      out number) is
+    v_count number;
+  begin
+    select count(*)
+      into v_count
+      from sys_user u
+     where u.user_id = p_user_id
+       and u.password = md5(p_password => p_password_old);
+    if (v_count = 0) then
+      p_success := 0;
+      return;
+    end if;
+    update sys_user u
+       set u.password = md5(p_password => p_password_new)
+     where u.user_id = p_user_id;
     p_success := 1;
   exception
     when no_data_found then
