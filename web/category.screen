@@ -79,9 +79,9 @@
                         <td style="vertical-align:top;width:170px;border-right:1px solid #ccc">
                             <ul style="margin-left:10px;font-family:Helvetica,Arial,sans-serif">
                                 <a:repeater datamodel="/model/category">
-                                    <li style="margin-bottom:10px;">
+                                    <li style="margin-bottom:15px;">
                                         <span style="font-size:13px;font-weight:bold;"><![CDATA[${@category_name}]]></span>
-                                        <ul style="padding-left:25px;padding-top:10px;">
+                                        <ul style="padding-left:25px;margin-top:5px;">
                                             <a:repeater datamodel="@children">
                                                 <li style="margin-bottom:5px;">
                                                     <a href="category.screen?cid=${@category_id}" style="font-size:12px;"><![CDATA[${@category_name}]]></a>
