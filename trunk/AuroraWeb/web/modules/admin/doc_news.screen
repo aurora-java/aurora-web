@@ -13,12 +13,16 @@
             }
         ]]></style>
         <script><![CDATA[
-            function userRenderer(value, record, name) {
+            function editRenderer(value, record, name) {
+                return '<a class="link" style="font-weight:bold;color:#333;height:35px;line-height:35px;font-size:14px;" href="${/request/@context_path}/modules/admin/edit_new.screen?news_id=' + record.get('news_id') + '"><img src="../../images/page_edit.gif"></a>';
+            }
+            
+            function deleteRenderer(value, record, name) {
                 return '<a class="link" style="font-size:12px;margin-left:5px;" href="javascript:deleteRecord(' + record.get('news_id') + ');"><img src="../../images/page_delete.gif"></a>';
             }
             
             function titleRenderer(value, record, name) {
-                return '<a class="link" style="font-weight:bold;color:#333;height:35px;line-height:35px;font-size:14px;" href="${/request/@context_path}/modules/admin/edit_new.screen?news_id=' + record.get('news_id') + '">' + value + "</a>";
+                return '<a class="link" style="font-weight:bold;color:#333;height:35px;line-height:35px;font-size:14px;" href="${/request/@context_path}/news.screen?id=' + record.get('news_id') + '">' + value + "</a>";
             }
             
             function deleteRecord(id) {
@@ -39,7 +43,8 @@
         </div>
         <a:table bindTarget="news_result_ds" canWheel="false" className="cateList" navBar="true" navBarType="simple" style="background-color:#fff;width:100%;float:left;">
             <a:columns>
-                <a:column align="center" renderer="userRenderer" width="60"/>
+                <a:column align="center" prompt="编辑" renderer="editRenderer" width="40"/>
+                <a:column align="center" prompt="删除" renderer="deleteRenderer" width="40"/>
                 <a:column name="title" prompt="题目" renderer="titleRenderer"/>
                 <a:column name="nick_name" align="center" prompt="发表人" width="100"/>
                 <a:column name="createion_time" align="center" prompt="发表时间" renderer="Aurora.formatDateTime" width="150"/>
