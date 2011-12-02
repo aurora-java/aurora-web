@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc">
+    <a:init-procedure></a:init-procedure>
+    <a:view package="ui.template" template="main" title="开发团队">
+        <style><![CDATA[
+            #mycontent {
+                padding:10px;
+                background:#fff;
+                border:1px solid #c0c0c0;
+                box-shadow:0 2px 5px rgba(0, 0, 0, 0.2);
+                -moz-border-radius:6px;
+                -webkit-border-radius:6px;
+                border-radius:6px;
+            }  
+            .avatar{
+                width:100px;
+                height:100px;
+                padding:1px;
+                border: 1px solid #d2d2d2 !important;             
+            } 
+            li {
+                margin-bottom:25px;
+            }  
+            li span{
+                font-size:14px;
+            }        
+        ]]></style>
+        <a:link/>
+        <div id="mycontent" style="padding:45px 0px 0px 40px">
+            <ul>
+                <li >
+                    <img class="avatar" src="${/request/@context_path}/images/seacat.jpg"/><span> seacat</span>
+                </li>
+                <li style="margin-top:10px;">
+                    <img class="avatar" src="${/request/@context_path}/images/vincent.jpg"/><span> vincnet</span>
+                </li>
+                <li style="margin-top:10px;">
+                    <img class="avatar" src="${/request/@context_path}/images/nopic.gif"/><span> lei.zou</span>
+                </li>
+                <li style="margin-top:10px;">
+                    <img class="avatar" src="${/request/@context_path}/images/linjinxiao.png"/><span> jinxiao.lin</span>
+                </li>
+                <li style="margin-top:10px;">
+                    <img class="avatar" src="${/request/@context_path}/images/zhangying.png"/><span> ying.zhang</span>
+                </li>
+                <li style="margin-top:10px;">
+                    <img class="avatar" src="${/request/@context_path}/images/nopic.gif"/><span> liyan.shi</span>
+                </li>
+                <li style="margin-top:10px;">
+                    <img class="avatar" src="${/request/@context_path}/images/wuhuazhen.jpg"/><span> huazhen.wu</span>
+                </li>
+                <li style="margin-top:10px;">
+                    <img class="avatar" src="${/request/@context_path}/images/huangshengbo.png"/><span> shengbo.huang</span>
+                </li>
+                <li style="margin-top:10px;">
+                    <span> 此处省略100字 ...</span>
+                </li>
+            </ul>
+        </div>
+    </a:view>
+</a:screen>
