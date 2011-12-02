@@ -4,28 +4,36 @@
         <a:model-query model="doc.doc_news_detail" rootPath="news"/>
     </a:init-procedure>
     <a:view title="${/model/news/record/@title}">
+        <script><![CDATA[
+            function loginHandler() {
+                login();
+            }
+            
+            function registerHandler() {
+                register();
+            }
+        ]]></script>
         <a:link url="#"/>
         <div class="post">
-            <h2 class="title">
+            <h2 class="title"><![CDATA[
                 ${/model/news/record/@title}
-            </h2>
-            <div class="post_info_t"> 
+            ]]></h2>
+            <div class="post_info_t">
                 <span class="p_author">
-                    <a href="#" rel="author">${/model/news/record/@nick_name}</a>
-                </span> 
+                    <a href="#" rel="author"><![CDATA[${/model/news/record/@nick_name}]]></a>
+                </span>
                 <span class="p_normal">
-                    <span>发表于 </span>
-                    <abbr class="timeago">${/model/news/record/@creation_date}</abbr> 
+                    <span><![CDATA[发表于 ]]></span>
+                    <abbr class="timeago"><![CDATA[${/model/news/record/@creation_date}]]></abbr>
                 </span>
             </div>
             <div class="entry">
-                <p>
+                <p><![CDATA[
                 ${/model/news/record/@content}
-                </p>
+                ]]></p>
             </div>
         </div>
         <div style="margin:25px 0px 15px 0px;height:2px;"/>
-        <a:comment bindId="${/parameter/@id}" tableName="DOC_NEWS" width="650"/>
-
+        <a:comment bindId="${/parameter/@id}" loginhandler="loginHandler" registerhandler="registerHandler" tableName="DOC_NEWS" width="650"/>
     </a:view>
 </a:screen>
