@@ -14,8 +14,12 @@
             }
         ]]></style>
         <script><![CDATA[
-            function userRenderer(value, record, name) {
-                return '<a class="link" style="font-size:12px;" href="javascript:openWindow(' + record.get('article_id') + ');"><img src="../../images/page_edit.gif"></a><a class="link" style="font-size:12px;margin-left:5px;" href="javascript:deleteRecord(' + record.get('article_id') + ');"><img src="../../images/page_delete.gif"></a>';
+            function editRenderer(value, record, name) {
+                return '<a class="link" style="font-size:12px;" href="javascript:openWindow(' + record.get('article_id') + ');"><img src="../../images/page_edit.gif"></a>';
+            }
+            
+            function deleteRenderer(value, record, name) {
+                return '<a class="link" style="font-size:12px;margin-left:5px;" href="javascript:deleteRecord(' + record.get('article_id') + ');"><img src="../../images/page_delete.gif"></a>';
             }
             
             function articleRenderer(value, record, name) {
@@ -83,7 +87,8 @@
         <div style="margin:5px">
             <a:table bindTarget="doc_article_result_ds" canWheel="false" className="cateList" navBar="true" navBarType="simple" style="background-color:#fff;width:100%;float:left;">
                 <a:columns>
-                    <a:column align="center" renderer="userRenderer" width="60"/>
+                    <a:column align="center" prompt="编辑" renderer="editRenderer" width="40"/>
+                    <a:column align="center" prompt="删除" renderer="deleteRenderer" width="40"/>
                     <a:column name="category_name" prompt="文章目录"/>
                     <a:column name="article_title" prompt="主题" renderer="articleRenderer" width="420"/>
                     <a:column name="nick_name" align="center" prompt="作者" width="100"/>
