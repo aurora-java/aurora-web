@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:procedure xmlns:a="http://www.aurora-framework.org/application" xmlns:ns1="uncertain.cache.action" xmlns:rs="aurora.database.rsconsumer" xmlns:p="uncertain.proc">
+    <ns1:cache-clear cacheName="SystemResourceConfig"/>
+    <a:model-query fetchAll="true" model="sys.sys_service_for_init">
+        <a:consumer>
+            <rs:cache-writer cacheName="SystemResourceConfig" recordKey="${@service_name}"/>
+        </a:consumer>
+    </a:model-query>
+    <p:echo message="Services loaded"/>
+</p:procedure>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: zhoufan  
+    $Date: 2011-7-14 上午11:50:57  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+            select  f.role_id ||'.'|| a.bm_name as role_bm, 
+                    a.insert_option as "insert", 
+                    a.update_option as "update", 
+                    a.query_option  as "query", 
+                    a.delete_option as "delete", 
+                    a.execute_option as "execute"
+from    sys_role_function f, sys_function_bm_access a
+where f.function_id = a.function_id]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+    <bm:fields>
+        <bm:field name="role_bm" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="ROLE_BM"/>
+        <bm:field name="insert" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="INSERT_OPTION"/>
+        <bm:field name="update" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="UPDATE_OPTION"/>
+        <bm:field name="query" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="QUERY_OPTION"/>
+        <bm:field name="delete" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="DELETE_OPTION"/>
+        <bm:field name="execute" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="EXECUTE_OPTION"/>
+    </bm:fields>
+</bm:model>
