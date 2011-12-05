@@ -86,8 +86,8 @@
                     <li>
                         <a href="${/request/@context_path}/team.screen"><![CDATA[开发团队]]></a>
                     </li>
-                    <a:switch test="/session/@authority">
-                        <a:case value="Y">
+                    <a:switch test="/session/@role_code">
+                        <a:case value="ADMIN">
                             <li id="adminMenu" class="menu-item menu-item-type-custom menu-item-object-custom">
                                 <a id="sysMenu" href="#"><![CDATA[系统管理]]></a>
                                 <ul id="sysSubMenu" class="sub-menu">
@@ -130,8 +130,8 @@
                 </a:case>
             </a:switch>
         </div>
-        <a:switch test="/session/@authority">
-            <a:case value="Y">
+        <a:switch test="/session/@role_code">
+            <a:case value="ADMIN">
                 <script><![CDATA[
                     var doHide = false;
                     
