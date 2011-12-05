@@ -2,8 +2,8 @@ body {
     background-color: white;
 }
 .docbook {
-    font-family: sans-serif;
-    font-size: 10pt;
+    line-height:18px;
+    font-size: 13px;
     color: black;
     background-color: white;
 }
@@ -32,12 +32,12 @@ body {
 }
 
 .docbook h5,.docbook h6 {
-    font-size: 1em;
+    font-size: 12px;
 }
 
 .docbook table {
     border-spacing: 0;
-    font-size: 1em;
+    font-size: 12px;
 }
 
 .docbook thead,.docbook tfoot {
@@ -53,7 +53,7 @@ body {
 }
 
 .docbook p,.docbook th,.docbook td,.docbook li,.docbook dt,.docbook dd {
-    font-size: 1em;
+    
 }
 
 .docbook p,.docbook pre,.docbook ol,.docbook dl,.docbook ul,.docbook table {
@@ -64,7 +64,6 @@ body {
 .docbook code,.docbook kbd,.docbook tt,.docbook pre {
     /*font-family: monospace;*/
     font-family: Courier New, Courier, monospace;
-    font-size: 90%;
 }
 
 .docbook pre {
