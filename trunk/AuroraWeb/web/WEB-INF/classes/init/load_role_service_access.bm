@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    $Author: zhoufan  
+    $Date: 2011-7-14 下午12:15:32  
+    $Revision: 1.0  
+    $Purpose: 
+--><bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[select f.role_id ||'.'||s.service_name as role_service, s.service_name
+from   sys_role_function f, sys_function_service fs, sys_service s
+where f.function_id = fs.function_id and fs.service_id = s.service_id]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+    <bm:fields>
+        <bm:field name="role_service" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="ROLE_SERVICE"/>
+        <bm:field name="service_name" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="SERVICE_NAME" required="true"/>
+    </bm:fields>
+</bm:model>
