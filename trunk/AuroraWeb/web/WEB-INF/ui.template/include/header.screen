@@ -140,23 +140,21 @@
                             Ext.get('sysSubMenu').hide(true);
                         }
                     }
-                    Ext.onReady(function() {
-                        Ext.get('sysMenu').on('mouseover', function() {
-                            doHide = false;
-                            Ext.get('sysSubMenu').show(true);
-                        }, this);
-                        Ext.get('sysMenu').on('mouseout', function(e) {
-                            doHide = true;
-                            hideMenu.defer(50, this);
-                        }, this);
-                        Ext.get('sysSubMenu').on('mouseover', function(e) {
-                            doHide = false;
-                        }, this);
-                        Ext.get('sysSubMenu').on('mouseout', function(e) {
-                            doHide = true;
-                            hideMenu.defer(50, this);
-                        }, this);
-                    });
+                    Ext.get('sysMenu').on('mouseover', function() {
+                        doHide = false;
+                        Ext.get('sysSubMenu').show(true);
+                    }, this);
+                    Ext.get('sysMenu').on('mouseout', function(e) {
+                        doHide = true;
+                        hideMenu.defer(50, this);
+                    }, this);
+                    Ext.get('sysSubMenu').on('mouseover', function(e) {
+                        doHide = false;
+                    }, this);
+                    Ext.get('sysSubMenu').on('mouseout', function(e) {
+                        doHide = true;
+                        hideMenu.defer(50, this);
+                    }, this);
                 ]]></script>
             </a:case>
         </a:switch>
