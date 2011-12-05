@@ -15,8 +15,7 @@ create table SYS_USER
   last_updated_by  NUMBER not null,
   creation_date    DATE not null,
   created_by       NUMBER not null,
-  nick_name        VARCHAR2(100),
-  is_admin         CHAR(1) not null
+  nick_name        VARCHAR2(100)  
 )
 tablespace AURORA
   pctfree 10
@@ -29,9 +28,6 @@ tablespace AURORA
     minextents 1
     maxextents unlimited
   );
--- Add comments to the columns 
-comment on column SYS_USER.is_admin
-  is '权限';
 -- Create/Recreate indexes 
 create unique index SYS_USER_U1 on SYS_USER (USER_NAME)
   tablespace AURORA

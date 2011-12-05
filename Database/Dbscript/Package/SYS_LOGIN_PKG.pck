@@ -29,6 +29,11 @@ create or replace package sys_login_pkg is
                            p_user_id      number,
                            p_success      out number);
 
+  --修改权限
+  procedure changeAuthority(p_role_code varchar,
+                            p_user_id   number,
+                            p_success   out number);
+
 end sys_login_pkg;
 /
 create or replace package body sys_login_pkg is
@@ -110,17 +115,17 @@ create or replace package body sys_login_pkg is
                   p_role_code out varchar,
                   p_success   out number) is
   begin
-    p_success := -1; 
+    p_success := -1;
     p_role_id := -1;
     select u.user_id, u.nick_name
       into p_user_id, p_nick_name
       from sys_user u
      where u.user_name = p_user_name
        and u.password = md5(p_password => p_password);
-     p_success := 1;
-    select g.role_id,r.role_code 
-      into p_role_id,p_role_code
-      from sys_user_role_groups g,sys_role r      
+    p_success := 1;
+    select g.role_id, r.role_code
+      into p_role_id, p_role_code
+      from sys_user_role_groups g, sys_role r
      where g.role_id = r.role_id
        and g.user_id = p_user_id
        and rownum = 1;
@@ -155,6 +160,54 @@ create or replace package body sys_login_pkg is
     update sys_user u
        set u.password = md5(p_password => p_password_new)
      where u.user_id = p_user_id;
+    p_success := 1;
+  exception
+    when no_data_found then
+      p_success := 0;
+  end;
+
+  --************************************************************
+  -- 修改权限
+  -- parameter :
+  -- p_role_code  角色 
+  -- p_user_id    用户编号  
+  -- p_success    是否成功
+  --************************************************************
+  procedure changeAuthority(p_role_code varchar,
+                            p_user_id   number,
+                            p_success   out number) is
+    v_role_id number;
+  begin
+    select r.role_id
+      into v_role_id
+      from sys_role r
+     where r.role_code = 'ADMIN';
+    if (p_role_code = 'Y') then
+      insert into sys_user_role_groups
+        (user_role_group_id,
+         user_id,
+         role_id,
+         company_id,
+         start_date,
+         end_date,
+         created_by,
+         creation_date,
+         last_updated_by,
+         last_update_date)
+      values
+        (sys_user_role_groups_s.nextval,
+         p_user_id,
+         v_role_id,
+         1,
+         sysdate,
+         null,
+         p_user_id,
+         sysdate,
+         p_user_id,
+         sysdate);
+    else
+      delete from sys_user_role_groups g where g.user_id = p_user_id;
+    end if;
     p_success := 1;
   exception
     when no_data_found then
