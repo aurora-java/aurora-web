@@ -80,8 +80,7 @@ create or replace package body sys_login_pkg is
        last_updated_by,
        creation_date,
        created_by,
-       nick_name,
-       is_admin)
+       nick_name)
     values
       (p_user_id,
        p_user_name,
@@ -90,8 +89,7 @@ create or replace package body sys_login_pkg is
        p_user_id,
        sysdate,
        p_user_id,
-       p_nick_name,
-       'N');
+       p_nick_name);
     p_success := 1;
   end;
 
