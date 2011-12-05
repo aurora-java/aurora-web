@@ -35,7 +35,7 @@
 
                 ]]></script>
                 <a:dataSets>
-                    <a:dataSet id="article_update_ds" submitUrl="${/request/@context_path}/update_article.svc">
+                    <a:dataSet id="article_update_ds" submitUrl="${/request/@context_path}/modules/admin/update_article.svc">
                         <a:datas dataSource="/model/article"/>
                         <a:fields>
                             <a:field name="article_title" required="true"/>
