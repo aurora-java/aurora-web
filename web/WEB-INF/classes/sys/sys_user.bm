@@ -5,7 +5,6 @@
         <ns1:field name="user_name" databaseType="VARCHAR" datatype="java.lang.String"/>
         <ns1:field name="password" databaseType="VARCHAR" datatype="java.lang.String"/>
         <ns1:field name="nick_name" databaseType="VARCHAR" datatype="java.lang.String"/>
-        <ns1:field name="is_admin" databaseType="VARCHAR" datatype="java.lang.String"/>
     </ns1:fields>
     <ns1:primary-key>
         <ns1:pk-field name="user_id"/>
