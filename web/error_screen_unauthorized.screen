@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+	<a:init-procedure/>
+	<a:view package="aurora.ui.std" template="default">
+		<a:form className="mytable" id="tipForm" style="position:absolute;left:-2000px;top:-2000px;" title="提示" width="320" height="100">
+			<table>
+				<tr>
+					<td>
+						<img style="margin:10px;" src="images/alert.png" width="64" height="64"/>
+					</td>
+					<td>
+						<span style="font-size:20px;">${/access-check/@message} 您没有访问权限!</span>
+					</td>
+				</tr>
+			</table>
+		</a:form>
+		<script><![CDATA[
+			Aurora.onReady(function(){
+				Aurora.center('tipForm');
+				Aurora.get('tipForm').show();
+			})
+
+		]]></script>
+	</a:view>
+</a:screen>
