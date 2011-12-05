@@ -43,8 +43,8 @@
             }
         ]]></script>
         <a:dataSets>
-            <a:dataSet id="sys_user_query_ds" model="sys.sys_user"/>
-            <a:dataSet id="sys_user_result_ds" autoQuery="true" model="sys.sys_user" queryDataSet="sys_user_query_ds"/>
+            <a:dataSet id="sys_user_query_ds" model="sys.sys_user_v"/>
+            <a:dataSet id="sys_user_result_ds" autoQuery="true" model="sys.sys_user_v" queryDataSet="sys_user_query_ds"/>
         </a:dataSets>
         <div style="margin:5px">
             <a:fieldSet column="3" title="查询">
@@ -62,7 +62,7 @@
                     <a:column align="center" prompt="编辑" renderer="userRenderer" width="60"/>
                     <a:column name="user_name" align="center" prompt="用户名"/>
                     <a:column name="nick_name" align="center" prompt="昵称"/>
-                    <a:column name="is_admin" align="center" prompt="系统管理权限" renderer="adminRenderer" width="80"/>
+                    <a:column name="role_code" align="center" prompt="系统管理权限" renderer="adminRenderer" width="80"/>
                 </a:columns>
             </a:table>
         </div>

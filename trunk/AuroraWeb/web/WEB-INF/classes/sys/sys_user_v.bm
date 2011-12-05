@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: andy  
+    $Date: 2011-12-5 下午4:31:36  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="SYS_USER_V">
+    <bm:fields>
+        <bm:field name="user_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="USER_ID" prompt="SYS_USER_V.USER_ID"/>
+        <bm:field name="user_name" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="USER_NAME" prompt="SYS_USER_V.USER_NAME"/>
+        <bm:field name="nick_name" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="NICK_NAME" prompt="SYS_USER_V.NICK_NAME"/>
+        <bm:field name="role_code" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="ROLE_CODE" prompt="SYS_USER_V.ROLE_CODE"/>
+    </bm:fields>
+    <bm:query-fields>
+        <bm:query-field field="user_id" queryOperator="="/>
+        <bm:query-field field="user_name" queryOperator="="/>
+        <bm:query-field field="nick_name" queryOperator="="/>
+    </bm:query-fields>
+    <bm:features>
+        <f:standard-who/>
+    </bm:features>
+</bm:model>
