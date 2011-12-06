@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<a:service xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc">
+<a:service xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
     <a:init-procedure>
         <batch-apply sourcepath="/parameter">
             <a:model-execute model="sys.sys_register"/>
         </batch-apply>
         <a:session-write source="/parameter/record/@user_id" target="user_id"/>
-        <a:session-write source="/parameter/record/@nick_name" target="nick_name"/>
+        <a:session-write source="/parameter/record/@nick_name_out" target="nick_name"/>
         <a:session-write source="/parameter/record/@success" target="login_success"/>
     </a:init-procedure>
     <a:service-output output="/parameter"/>
