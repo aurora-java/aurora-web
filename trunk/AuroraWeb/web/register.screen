@@ -60,22 +60,22 @@
             </a:dataSet>
         </a:dataSets>
         <a:vBox labelWidth="75" style="margin-top:20px">
-            <a:textField name="user_name" bindTarget="sys_user_ds" prompt="email">
+            <a:textField name="user_name" bindTarget="sys_user_ds" prompt="email" width="220">
                 <a:events>
                     <a:event name="enterdown" handler="sureFunction"/>
                 </a:events>
             </a:textField>
-            <a:passWord name="password" bindTarget="sys_user_ds" prompt="密码">
+            <a:passWord name="password" bindTarget="sys_user_ds" prompt="密码" width="220">
                 <a:events>
                     <a:event name="enterdown" handler="sureFunction"/>
                 </a:events>
             </a:passWord>
-            <a:passWord name="password_new" bindTarget="sys_user_ds" prompt="确认密码">
+            <a:passWord name="password_new" bindTarget="sys_user_ds" prompt="确认密码" width="220">
                 <a:events>
                     <a:event name="enterdown" handler="sureFunction"/>
                 </a:events>
             </a:passWord>
-            <a:textField name="nick_name" bindTarget="sys_user_ds" prompt="昵称">
+            <a:textField name="nick_name" bindTarget="sys_user_ds" prompt="昵称" width="220">
                 <a:events>
                     <a:event name="enterdown" handler="sureFunction"/>
                 </a:events>
