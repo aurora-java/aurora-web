@@ -22,6 +22,9 @@
                 Aurora.center('tipForm');
                 Aurora.get('tipForm').show();
             })
+            setTimeout(function(){
+                window.location.href= "${/request/@context_path}/";
+            },1500)
         ]]></script>
     </a:view>
 </a:screen>
