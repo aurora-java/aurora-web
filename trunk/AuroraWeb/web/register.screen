@@ -35,11 +35,11 @@
             }
             
             function submitSuccess(ds, res) {
-                var success = 0;
+                var success = -1;
                 if (res.result.record) {
                     success = res.result.record.success;
                 }
-                if (success == 0) {
+                if (success == -1) {
                     Aurora.showMessage('提示', '此用户名已存在!!');
                     return;
                 }
@@ -60,22 +60,22 @@
             </a:dataSet>
         </a:dataSets>
         <a:vBox labelWidth="75" style="margin-top:20px">
-            <a:textField name="user_name" bindTarget="sys_user_ds" prompt="email" width="220">
+            <a:textField name="user_name" bindTarget="sys_user_ds" prompt="email" width="180">
                 <a:events>
                     <a:event name="enterdown" handler="sureFunction"/>
                 </a:events>
             </a:textField>
-            <a:passWord name="password" bindTarget="sys_user_ds" prompt="密码" width="220">
+            <a:passWord name="password" bindTarget="sys_user_ds" prompt="密码" width="180">
                 <a:events>
                     <a:event name="enterdown" handler="sureFunction"/>
                 </a:events>
             </a:passWord>
-            <a:passWord name="password_new" bindTarget="sys_user_ds" prompt="确认密码" width="220">
+            <a:passWord name="password_new" bindTarget="sys_user_ds" prompt="确认密码" width="180">
                 <a:events>
                     <a:event name="enterdown" handler="sureFunction"/>
                 </a:events>
             </a:passWord>
-            <a:textField name="nick_name" bindTarget="sys_user_ds" prompt="昵称" width="220">
+            <a:textField name="nick_name" bindTarget="sys_user_ds" prompt="昵称" width="180">
                 <a:events>
                     <a:event name="enterdown" handler="sureFunction"/>
                 </a:events>

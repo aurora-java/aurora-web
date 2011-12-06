@@ -27,7 +27,7 @@
                     url: '${/request/@context_path}/login.screen',
                     title: '登录',
                     id: 'login_screen',
-                    width: 340,
+                    width: 300,
                     height: 130
                 });
             }
@@ -37,7 +37,7 @@
                     url: '${/request/@context_path}/register.screen',
                     title: '注册',
                     id: 'register_screen',
-                    width: 340,
+                    width: 300,
                     height: 190
                 });
             }
