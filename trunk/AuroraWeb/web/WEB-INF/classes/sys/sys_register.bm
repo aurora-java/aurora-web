@@ -11,6 +11,7 @@
             <bm:parameters>
                 <bm:parameter name="success" dataType="java.lang.Integer" input="false" inputPath="@success" output="true" outputPath="@success"/>
                 <bm:parameter name="user_id" dataType="java.lang.Integer" input="false" inputPath="@user_id" output="true" outputPath="@user_id"/>
+                <bm:parameter name="nick_name_out" dataType="java.lang.String" input="false" inputPath="@nick_name_out" output="true" outputPath="@nick_name_out"/>
             </bm:parameters>
             <bm:update-sql><![CDATA[
                 begin
@@ -19,6 +20,7 @@
                         p_user_name=>${@user_name},
                         p_password=>${@password},
                         p_nick_name=>${@nick_name},
+                        p_nick_name_out=>${@nick_name_out},
                         p_user_id=>${@user_id},
                         p_success=>${@success}
                     );

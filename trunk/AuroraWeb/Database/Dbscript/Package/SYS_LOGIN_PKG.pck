@@ -8,11 +8,12 @@ create or replace package sys_login_pkg is
   function md5(p_password in varchar2) return varchar2;
 
   --用户注册
-  procedure register(p_user_name varchar,
-                     p_password  varchar,
-                     p_nick_name varchar,
-                     p_user_id   out number,
-                     p_success   out number);
+  procedure register(p_user_name     varchar,
+                     p_password      varchar,
+                     p_nick_name     varchar,
+                     p_nick_name_out out varchar,
+                     p_user_id       out number,
+                     p_success       out number);
 
   --用户登录
   procedure login(p_user_name varchar,
@@ -61,11 +62,12 @@ create or replace package body sys_login_pkg is
   -- p_nick_name  昵称
   -- p_success    是否成功
   --************************************************************
-  procedure register(p_user_name varchar,
-                     p_password  varchar,
-                     p_nick_name varchar,
-                     p_user_id   out number,
-                     p_success   out number) is
+  procedure register(p_user_name     varchar,
+                     p_password      varchar,
+                     p_nick_name     varchar,
+                     p_nick_name_out out varchar,
+                     p_user_id       out number,
+                     p_success       out number) is
     v_count number;
   begin
     select count(*)
@@ -77,6 +79,11 @@ create or replace package body sys_login_pkg is
       return;
     end if;
     p_user_id := sys_user_s.nextval;
+    if p_nick_name is null then
+      p_nick_name_out := p_user_name;
+    else
+      p_nick_name_out := p_nick_name;
+    end if;
     insert into sys_user
       (user_id,
        user_name,
@@ -94,7 +101,7 @@ create or replace package body sys_login_pkg is
        p_user_id,
        sysdate,
        p_user_id,
-       p_nick_name);
+       p_nick_name_out);
     p_success := 1;
   end;
 

@@ -38,7 +38,7 @@
             </a:dataSet>
         </a:dataSets>
         <a:vBox labelWidth="75" style="margin-top:15px">
-            <a:textField name="user_name" bindTarget="sys_user_ds" prompt="用户名">
+            <a:textField name="user_name" bindTarget="sys_user_ds" prompt="邮箱">
                 <a:events>
                     <a:event name="enterdown" handler="sureFunction"/>
                 </a:events>

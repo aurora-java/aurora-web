@@ -20,6 +20,16 @@
                 }
             }
             
+            function mailValidate(record, name, value) {
+                if (name == 'user_name') {
+                    var patrn = /^\+?[a-z0-9](([-+.]|[_]+)?[a-z0-9]+)*@([a-z0-9]+(\.|\-))+[a-z]{2,6}$$/;
+                    if (!patrn.exec(value)) {
+                        return '邮箱格式不正确!!';
+                    }
+                    return true;
+                }
+            }
+            
             function sureFunction() {
                 $('sys_user_ds').submit();
             }
@@ -28,22 +38,21 @@
                 var success = 0;
                 if (res.result.record) {
                     success = res.result.record.success;
-                }                            
+                }
                 if (success == 0) {
                     Aurora.showMessage('提示', '此用户名已存在!!');
                     return;
                 }
-                $('register_screen').close();                              
+                $('register_screen').close();
                 window.location.reload();
             }
         ]]></script>
         <a:dataSets>
             <a:dataSet id="sys_user_ds" autoCreate="true" model="sys.sys_register" submitUrl="${/request/@context_path}/register.svc">
                 <a:fields>
-                    <a:field name="user_name" required="true"/>
+                    <a:field name="user_name" required="true" validator="mailValidate"/>
                     <a:field name="password" required="true"/>
                     <a:field name="password_new" required="true" validator="passwordValidate"/>
-                    <a:field name="nick_name" required="true"/>
                 </a:fields>
                 <a:events>
                     <a:event name="submitsuccess" handler="submitSuccess"/>
@@ -51,7 +60,7 @@
             </a:dataSet>
         </a:dataSets>
         <a:vBox labelWidth="75" style="margin-top:20px">
-            <a:textField name="user_name" bindTarget="sys_user_ds" prompt="用户名">
+            <a:textField name="user_name" bindTarget="sys_user_ds" prompt="email">
                 <a:events>
                     <a:event name="enterdown" handler="sureFunction"/>
                 </a:events>
