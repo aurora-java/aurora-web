@@ -107,7 +107,16 @@
                 </ul>
             </div>
             <a:switch test="/session/@login_success">
-                <a:case value="null">
+                <a:case value="1">
+                    <div id="userMenu" class="userMenu" style="float:right;right:0px;">
+                        <span style="margin-left:5px;"><![CDATA[${/session/@nick_name} 欢迎您回来]]></span>
+                        <span style="margin-left:5px;"><![CDATA[|]]></span>
+                        <a href="javascript:changePassword();" style="margin-left:5px;"><![CDATA[修改密码]]></a>
+                        <span style="margin-left:5px;"><![CDATA[|]]></span>
+                        <a href="javascript:exit();" style="margin-left:5px;"><![CDATA[退出]]></a>
+                    </div>
+                </a:case>
+                <a:case value="*">
                     <div id="userMenu" class="ddsmoothmenu" style="float:right;right:0px;">
                         <ul id="menu-top_menu" class="menu">
                             <li>
@@ -117,15 +126,6 @@
                                 <a href="javascript:register();"><![CDATA[注册]]></a>
                             </li>
                         </ul>
-                    </div>
-                </a:case>
-                <a:case value="1">
-                    <div id="userMenu" class="userMenu" style="float:right;right:0px;">
-                        <span style="margin-left:5px;"><![CDATA[${/session/@nick_name} 欢迎您回来]]></span>
-                        <span style="margin-left:5px;"><![CDATA[|]]></span>
-                        <a href="javascript:changePassword();" style="margin-left:5px;"><![CDATA[修改密码]]></a>
-                        <span style="margin-left:5px;"><![CDATA[|]]></span>
-                        <a href="javascript:exit();" style="margin-left:5px;"><![CDATA[退出]]></a>
                     </div>
                 </a:case>
             </a:switch>
