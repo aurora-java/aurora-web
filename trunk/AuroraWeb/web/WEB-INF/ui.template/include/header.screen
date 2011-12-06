@@ -58,9 +58,9 @@
             function changePassword() {
                 new Aurora.Window({
                     url: '${/request/@context_path}/password_change.screen',
-                    title: '注册',
+                    title: '修改密码',
                     id: 'password_change_screen',
-                    width: 280,
+                    width: 300,
                     height: 160
                 });
             }
@@ -69,7 +69,7 @@
             <div id="mainMenu" class="ddsmoothmenu">
                 <ul id="menu-top_menu" class="menu">
                     <li>
-                        <a href="${/request/@context_path}/"><![CDATA[首页${/session/@login_success}]]></a>
+                        <a href="${/request/@context_path}/"><![CDATA[首页]]></a>
                     </li>
                     <li>
                         <a href="${/request/@context_path}/category.screen"><![CDATA[技术文章]]></a>
