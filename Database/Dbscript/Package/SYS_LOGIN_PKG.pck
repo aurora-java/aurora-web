@@ -69,6 +69,7 @@ create or replace package body sys_login_pkg is
                      p_user_id       out number,
                      p_success       out number) is
     v_count number;
+    v_index number;
   begin
     select count(*)
       into v_count
@@ -80,7 +81,8 @@ create or replace package body sys_login_pkg is
     end if;
     p_user_id := sys_user_s.nextval;
     if p_nick_name is null then
-      p_nick_name_out := p_user_name;
+      select instr(p_user_name, '@', -1, 1) into v_index from dual;
+      p_nick_name_out := substr(p_user_name, 0, v_index - 1);
     else
       p_nick_name_out := p_nick_name;
     end if;
