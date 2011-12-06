@@ -48,8 +48,8 @@
         </a:dataSets>
         <div style="margin:5px">
             <a:fieldSet column="3" title="查询">
-                <a:textField name="user_name" bindTarget="sys_user_query_ds" prompt="用户名"/>
-                <a:textField name="nick_name" bindTarget="sys_user_query_ds" prompt="昵称"/>
+                <a:textField name="user_name" bindTarget="sys_user_query_ds" prompt="Email" width="200"/>
+                <a:textField name="nick_name" bindTarget="sys_user_query_ds" prompt="昵称" width="200"/>
             </a:fieldSet>
         </div>
         <a:hBox style="margin:5px;">
@@ -60,8 +60,8 @@
             <a:table bindTarget="sys_user_result_ds" canWheel="false" className="cateList" navBar="true" navBarType="simple" style="background-color:#fff;width:100%;float:left;">
                 <a:columns>
                     <a:column align="center" prompt="编辑" renderer="userRenderer" width="60"/>
-                    <a:column name="user_name" align="center" prompt="用户名"/>
-                    <a:column name="nick_name" align="center" prompt="昵称"/>
+                    <a:column name="user_name" align="left" prompt="用户名" />
+                    <a:column name="nick_name" align="left" prompt="昵称" />
                     <a:column name="role_code" align="center" prompt="系统管理权限" renderer="adminRenderer" width="80"/>
                 </a:columns>
             </a:table>
