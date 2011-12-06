@@ -75,7 +75,7 @@ create or replace package body sys_login_pkg is
       from sys_user u
      where u.user_name = p_user_name;
     if (v_count > 0) then
-      p_success := 0;
+      p_success := -1;
       return;
     end if;
     p_user_id := sys_user_s.nextval;
