@@ -44,6 +44,13 @@
                     return;
                 }
                 $('register_screen').close();
+                if (success == 2) {
+                    Aurora.showMessage('提示', '请前往邮箱进行激活获得管理员权限!!', function(cmp) {
+                        window.location.reload();
+                        cmp.close();
+                    });
+                    return;
+                }
                 window.location.reload();
             }
         ]]></script>

@@ -24,6 +24,14 @@ create or replace package sys_login_pkg is
                   p_role_code out varchar,
                   p_success   out number);
 
+  --激活
+  procedure active(p_key_code  varchar,
+                   p_user_id   out number,
+                   p_nick_name out varchar2,
+                   p_role_id   out number,
+                   p_role_code out varchar2,
+                   p_success   out number);
+
   --修改密码
   procedure changePassword(p_password_old varchar,
                            p_password_new varchar,
@@ -68,8 +76,10 @@ create or replace package body sys_login_pkg is
                      p_nick_name_out out varchar,
                      p_user_id       out number,
                      p_success       out number) is
-    v_count number;
-    v_index number;
+    v_count    number;
+    v_index    number;
+    v_key_code varchar2(100);
+    v_check    varchar2(30);
   begin
     select count(*)
       into v_count
@@ -80,8 +90,9 @@ create or replace package body sys_login_pkg is
       return;
     end if;
     p_user_id := sys_user_s.nextval;
+    select instr(p_user_name, '@', -1, 1) into v_index from dual;
+    v_check := substr(p_user_name, v_index + 1);
     if p_nick_name is null then
-      select instr(p_user_name, '@', -1, 1) into v_index from dual;
       p_nick_name_out := substr(p_user_name, 0, v_index - 1);
     else
       p_nick_name_out := p_nick_name;
@@ -105,6 +116,15 @@ create or replace package body sys_login_pkg is
        p_user_id,
        p_nick_name_out);
     p_success := 1;
+    if (v_check = 'hand-china.com') then
+      v_key_code := md5(p_password => to_char(sysdate, 'HH24MISSYYYYMMDD') || '-' ||
+                                      p_user_id);
+      insert into sys_active
+        (key_code, user_id)
+      values
+        (v_key_code, p_user_id);
+      p_success := 2;
+    end if;
   end;
 
   --************************************************************
@@ -114,6 +134,8 @@ create or replace package body sys_login_pkg is
   -- p_password   密码
   -- p_user_id    用户编号
   -- p_nick_name  昵称
+  -- p_role_id    角色id
+  -- p_role_code  角色code
   -- p_success    是否成功
   --************************************************************
   procedure login(p_user_name varchar,
@@ -141,6 +163,46 @@ create or replace package body sys_login_pkg is
   exception
     when no_data_found then
       null;
+  end;
+
+  --************************************************************
+  -- 激活
+  -- parameter :
+  -- p_key_code    key  
+  -- p_user_id    用户编号
+  -- p_nick_name  昵称
+  -- p_role_id    角色id
+  -- p_role_code  角色code
+  -- p_success    是否激活成功
+  --************************************************************
+  procedure active(p_key_code  varchar,
+                   p_user_id   out number,
+                   p_nick_name out varchar2,
+                   p_role_id   out number,
+                   p_role_code out varchar2,
+                   p_success   out number) is
+  begin
+    select a.user_id
+      into p_user_id
+      from sys_active a
+     where a.key_code = p_key_code;
+    select u.nick_name
+      into p_nick_name
+      from sys_user u
+     where u.user_id = p_user_id;
+    delete from sys_active a where a.key_code = p_key_code;
+    changeAuthority(p_role_code => 'Y',
+                    p_user_id   => p_user_id,
+                    p_success   => p_success);
+    select g.role_id, r.role_code
+      into p_role_id, p_role_code
+      from sys_user_role_groups g, sys_role r
+     where g.role_id = r.role_id
+       and g.user_id = p_user_id
+       and rownum = 1;
+  exception
+    when no_data_found then
+      p_success := -1;
   end;
 
   --************************************************************

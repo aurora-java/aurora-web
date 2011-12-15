@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: andy  
+    $Date: 2011-12-15 上午9:37:36  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view package="aurora.ui.std" template="default">
+        <script><![CDATA[
+        	function init() {
+        	    Aurora.request({
+        	        url: '${/request/@context_path}/active.svc',
+        	        para: {
+        	            'key_code': '${/parameter/@key_code}'
+        	        },
+        	        success: successFunction,
+        	        scope: this
+        	    });
+        	}
+        	
+        	function successFunction(res) {
+        	    var success = -1;
+        	    if (res.result) {
+        	        success = res.result.success;
+        	    }
+        	    if (success == -1) {
+        	        Aurora.showConfirm('提示', '此key已经失效，请重新注册或联系管理员!!', function(cmp) {
+        	            window.location.href = '${/request/@context_path}/';
+        	            cmp.close();
+        	        }, function() {
+        	            var opened = window.open('about:blank', '_self');
+        	            opened.opener = null;
+        	            opened.close();
+        	        });
+        	    } else if (success == 0) {
+        	        Aurora.showConfirm('提示', '激活失败，请重新注册或联系管理员!!', function(cmp) {
+        	            window.location.href = '${/request/@context_path}/';
+        	            cmp.close();
+        	        }, function() {
+        	            var opened = window.open('about:blank', '_self');
+        	            opened.opener = null;
+        	            opened.close();
+        	        });
+        	    } else {
+        	        Aurora.showMessage('提示', '激活成功!!', function(cmp) {
+        	            window.location.href = '${/request/@context_path}/';
+        	            cmp.close();
+        	        });
+        	    }
+        	}
+    	]]></script>
+        <a:screenBody><![CDATA[
+        ]]></a:screenBody>
+        <script><![CDATA[
+            init();
+        ]]></script>
+    </a:view>
+</a:screen>
