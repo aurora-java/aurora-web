@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: andy  
+    $Date: 2011-12-15 上午11:14:32  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="execute">
+            <bm:parameters>
+                <bm:parameter name="key_code" dataType="java.lang.String" input="true" inputPath="@key_code" output="false" outputPath="@key_code"/>
+                <bm:parameter name="user_id" dataType="java.lang.Long" input="false" inputPath="@user_id" output="true" outputPath="@user_id"/>
+                <bm:parameter name="nick_name" dataType="java.lang.String" input="false" inputPath="@nick_name" output="true" outputPath="@nick_name"/>
+                <bm:parameter name="role_id" dataType="java.lang.Long" input="false" inputPath="@role_id" output="true" outputPath="@role_id"/>
+                <bm:parameter name="role_code" dataType="java.lang.String" input="false" inputPath="@role_code" output="true" outputPath="@role_code"/>
+                <bm:parameter name="success" dataType="java.lang.Long" input="false" inputPath="@success" output="true" outputPath="@success"/>
+            </bm:parameters>
+            <bm:update-sql><![CDATA[
+                begin
+                    SYS_LOGIN_PKG.ACTIVE
+                    (
+                        p_key_code=>${@key_code},
+                        p_user_id=>${@user_id},
+                        p_nick_name=>${@nick_name},
+                        p_role_id=>${@role_id},
+                        p_role_code=>${@role_code},
+                        p_success=>${@success}
+                    );
+                end;]]></bm:update-sql>
+        </bm:operation>
+    </bm:operations>
+</bm:model>
