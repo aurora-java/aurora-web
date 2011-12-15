@@ -17,9 +17,8 @@
             color: #333;
         }
         
-        ]]>
-        </style>
         
+        ]]></style>
         <script language="JavaScript" type="text/javascript"><![CDATA[
         // -----------------------------------------------------------------------------
         // Globals
@@ -30,12 +29,12 @@
         // Minor version of Flash required
         var requiredRevision = 115;     // This is Flash Player 9 Update 3
         // -----------------------------------------------------------------------------
-        ]]>
-        </script>
-        <script src="${/request/@context_path}/resources/AC_RunActiveContent.js" type="text/javascript"></script>
-        <script language="JavaScript" type="text/javascript">
+        
+        ]]></script>
+        <script src="${/request/@context_path}/resources/AC_RunActiveContent.js" type="text/javascript"/>
+        <script language="JavaScript" type="text/javascript"><![CDATA[
         var hasReqestedVersion = DetectFlashVer(requiredMajorVersion, requiredMinorVersion, requiredRevision);
-        </script>
+        ]]></script>
         <div class="widget">
             <h3><![CDATA[推荐阅读]]></h3>
             <a:repeater datamodel="/model/widgets">
@@ -47,12 +46,12 @@
                     </li>
                 </ul>
             </a:repeater>
-        </div>        
+        </div>
         <div class="widget">
             <h3><![CDATA[在线安装开发手册]]></h3>
             <ul>
                 <li style="margin-top:10px;">
-                    <span >
+                    <span>
                         <script language="JavaScript" type="text/javascript"><![CDATA[
                             if (hasReqestedVersion) {
                                 AC_FL_RunContent(
@@ -68,13 +67,14 @@
                                     'allowscriptaccess','always',
                                     'pluginspage','http://www.macromedia.com/go/getflashplayer',
                                     'flashvars','appname=JavaScriptDocument&appurl=http://www.aurora-framework.org/doc/AuroraJsDoc.air&airversion=2.5&buttoncolor=FF0000&messagecolor=000000&imageurl=resources/JavaScriptDocument.jpg',
-                                    'movie','badge' ); //end AC code
+                                    'movie','badge',
+                                    'wmode','transparent' ); //end AC code
                     
                             } else {
                                 document.write('Flash Player is too old');
                             }
-                            ]]>
-                            </script>
+                            
+                            ]]></script>
                     </span>
                 </li>
                 <li>
@@ -94,13 +94,14 @@
                                     'allowscriptaccess','always',
                                     'pluginspage','http://www.macromedia.com/go/getflashplayer',
                                     'flashvars','appname=TagDocument&appurl=http://www.aurora-framework.org/doc/AuroraTagDoc.air&airversion=2.5&buttoncolor=FF0000&messagecolor=000000&imageurl=resources/TagDocument.jpg',
-                                    'movie','badge' ); //end AC code
+                                    'movie','badge',
+                                    'wmode','transparent' ); //end AC code
                     
                             } else {
                                 document.write('Flash Player is too old');
                             }
-                            ]]>
-                            </script>
+                            
+                            ]]></script>
                     </span>
                 </li>
                 <li>
@@ -110,7 +111,6 @@
                         </a>
                     </span>
                 </li>
-                
             </ul>
         </div>
         <div class="widget">
