@@ -12,6 +12,10 @@
             .userMenu a{
                 color:#EAEAEA;
             }
+            .userMenu a:hover,
+			.userMenu a:visited:hover {			    
+			    color: #EAEAEA;
+			}
         ]]></style>
         <script><![CDATA[
             function initAurora() {
@@ -63,7 +67,8 @@
                     width: 300,
                     height: 160
                 });
-            }
+            }            
+            
         ]]></script>
         <div id="header">
             <div id="mainMenu" class="ddsmoothmenu">
@@ -90,7 +95,7 @@
                         <a:case value="ADMIN">
                             <li id="adminMenu" class="menu-item menu-item-type-custom menu-item-object-custom">
                                 <a id="sysMenu" href="#"><![CDATA[系统管理]]></a>
-                                <ul id="sysSubMenu" class="sub-menu">
+                                <ul id="sysSubMenu" class="sub-menu" style="padding-bottom:0;">
                                     <li class="menu-item menu-item-type-post_type menu-item-object-page">
                                         <a href="${/request/@context_path}/modules/admin/sys_user.screen"><![CDATA[账号权限]]></a>
                                     </li>
@@ -108,7 +113,7 @@
             </div>
             <a:switch test="/session/@login_success">
                 <a:case value="1">
-                    <div id="userMenu" class="userMenu" style="float:right;right:0px;">
+                    <div id="userMenu" class="userMenu" style="float:right;right:0px;width:280px;">
                         <span style="margin-left:5px;"><![CDATA[${/session/@nick_name} 欢迎您回来]]></span>
                         <span style="margin-left:5px;"><![CDATA[|]]></span>
                         <a href="javascript:changePassword();" style="margin-left:5px;"><![CDATA[修改密码]]></a>
@@ -117,15 +122,9 @@
                     </div>
                 </a:case>
                 <a:case value="*">
-                    <div id="userMenu" class="ddsmoothmenu" style="float:right;right:0px;">
-                        <ul id="menu-top_menu" class="menu">
-                            <li>
-                                <a href="javascript:login();"><![CDATA[登录]]></a>
-                            </li>
-                            <li>
-                                <a href="javascript:register();"><![CDATA[注册]]></a>
-                            </li>
-                        </ul>
+                    <div id="userMenu" class="userMenu" style="float:right;right:0px;width:120px;">
+                        <a href="javascript:login();" style="color:#EAEAEA;"><![CDATA[登录]]></a>
+                        <a href="javascript:register();" style="margin-left:10px;"><![CDATA[注册]]></a>
                     </div>
                 </a:case>
             </a:switch>
@@ -155,6 +154,12 @@
                         doHide = true;
                         hideMenu.defer(50, this);
                     }, this);
+                    
+                    if (Ext.isIE6) {
+                        if (Ext.get('sysSubMenu')) {
+                            Ext.get('sysSubMenu').setStyle('margin-top', '85px');
+                        }
+                    }
                 ]]></script>
             </a:case>
         </a:switch>

@@ -9,54 +9,82 @@
         <script><![CDATA[
             var page = '${/parameter/@page}';
             var current_page, last_page;
-             var max_row_id = '${/model/count/record/@maxrow}';               
+            var max_row_id = '${/model/count/record/@maxrow}';
             var length = parseInt(max_row_id);
-            last_page = Math.ceil(length/10);
+            last_page = Math.ceil(length / 10);
             if (page != '') {
                 current_page = parseInt(page);
             } else {
                 current_page = 1;
-            } 
-
+            }
+            
             function prePage() {
                 if (current_page > 1) {
                     current_page--;
                     window.location.href = 'index.screen?page=' + current_page;
                 }
             }
-
+            
             function nextPage() {
-                if (current_page < last_page ) {
+                if (current_page < last_page) {
                     current_page++;
                     window.location.href = 'index.screen?page=' + current_page;
+                }
+            }
+            
+            function correctPNG() {
+                if (!Ext.isIE6) {
+                    return;
+                }
+                for (var i = 0;i < document.images.length;i++) {
+                    var img = document.images[i];
+                    var imgName = img.src.toUpperCase();
+                    if (imgName.substring(imgName.length - 3, imgName.length) == "PNG") {
+                        var imgID = (img.id) ? "id='" + img.id + "' " : "";
+                        var imgClass = (img.className) ? "class='" + img.className + "' " : "";
+                        var imgTitle = (img.title) ? "title='" + img.title + "' " : "title='" + img.alt + "' ";
+                        var imgStyle = "display:inline-block;" + img.style.cssText;
+                        if (img.align == "left") {
+                            imgStyle = "float:left;" + imgStyle;
+                        }
+                        if (img.align == "right") {
+                            imgStyle = "float:right;" + imgStyle;
+                        }
+                        if (img.parentElement.href) {
+                            imgStyle = "cursor:hand;" + imgStyle;
+                        }
+                        var strNewHTML = "<span " + imgID + imgClass + imgTitle + "style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";" + "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader" + "(src='" + img.src + "', sizingMethod='scale');\"></span>";
+                        img.outerHTML = strNewHTML;
+                        i = i - 1;
+                    }
                 }
             }
         ]]></script>
         <a:repeater datamodel="/model/news">
             <div class="post">
                 <h2 class="title">
-                    <a href="news.screen?id=${@news_id}" target="_blank">${@title}</a>
+                    <a href="news.screen?id=${@news_id}" target="_blank"><![CDATA[${@title}]]></a>
                 </h2>
-                <div class="post_info_t"> 
+                <div class="post_info_t">
                     <span class="p_author">
-                        <a href="#" rel="author">${@nick_name}</a>
-                    </span> 
+                        <a href="#" rel="author"><![CDATA[${@nick_name}]]></a>
+                    </span>
                     <span class="p_normal">
-                        <span>发表于 </span>
-                        <abbr class="timeago">${@creation_date}</abbr> 
+                        <span><![CDATA[发表于 ]]></span>
+                        <abbr class="timeago"><![CDATA[${@creation_date}]]></abbr>
                     </span>
                 </div>
                 <div class="entry">
                     <div class="post_thumbnail">
                         <div class="post_thumbnail_img">
                             <a href="#">
-                                <img src="${/request/@context_path}/images/news.png" width="128" height="128"/>
+                                <img id="image" height="128" src="${/request/@context_path}/images/news.png" width="128"/>
                             </a>
                         </div>
                     </div>
-                    <p>
+                    <p><![CDATA[
                         ${@summary}
-                    </p>
+                    ]]></p>
                 </div>
             </div>
         </a:repeater>
@@ -65,5 +93,8 @@
             <span style="margin-left:5px;"><![CDATA[|]]></span>
             <a href="javascript:nextPage();" style="margin-left:5px;"><![CDATA[下一页]]></a>
         </div>
+        <script><![CDATA[
+           correctPNG();
+        ]]></script>
     </a:view>
 </a:screen>
