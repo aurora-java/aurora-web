@@ -71,13 +71,13 @@ body,html {
 
 #content #colLeft {
     float:left;
-    width:680px;
-    margin-right:30px;
+    width:670px;
+    margin-right:20px;
 }
 
 #content #colRight {
-    float:left;
-    width:250px;
+    float:right;
+    width:252px;
 }
 #footer {
     background:url(../images/bk_horiz_line.jpg) 0 0 repeat-x;
@@ -109,7 +109,6 @@ body,html {
 }
 
 .post{
-    position:relative;
     width:648px;
     margin:0 0 15px !important;
     padding:15px 15px 0;
