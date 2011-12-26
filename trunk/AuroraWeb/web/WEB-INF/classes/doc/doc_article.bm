@@ -5,7 +5,7 @@
         <bm:field name="article_path" databaseType="VARCHAR2" datatype="java.lang.String" forUpdate="false"/>
         <bm:field name="article_title" databaseType="VARCHAR2" datatype="java.lang.String"/>
         <bm:field name="content" databaseType="VARCHAR2" datatype="java.lang.String"/>
-        <bm:field name="category_id" databaseType="NUMBER" datatype="java.lang.Integer" forUpdate="false"/>
+        <bm:field name="category_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
     </bm:fields>
     <bm:primary-key>
         <bm:pk-field name="article_id"/>
