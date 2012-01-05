@@ -3,7 +3,7 @@
     <a:init-procedure>
         <model-query fetchAll="true" model="doc.doc_article_detail" rootPath="article"/>
     </a:init-procedure>
-    <a:view package="ui.template" template="main">
+    <a:view package="aurora.ui.std" template="default">
         <a:switch test="/parameter/@article_id">
             <a:case value="null">
                 <div><![CDATA[路径不正确!]]></div>
@@ -16,23 +16,26 @@
             }
                 ]]></style>
                 <script><![CDATA[
-
-                    function postArticle(){
+                    function postArticle() {
                         $('postButton').disable();
-                        $('article_update_ds').getCurrentRecord().set('_r',new Date());
+                        $('article_update_ds').getCurrentRecord().set('_r', new Date());
                         $('article_update_ds').submit();
-                    }  
-
-                    function onSubmitSuccess(ds,res){
-                        Aurora.showInfoMessage('成功','保存成功',function(){
-                            window.location.href='doc_articles.screen';
-                        })
-                    } 
-
-                    function onSubmitFailed(){
+                    }
+                    
+                    function onSubmitSuccess(ds, res) {
+                        Aurora.showInfoMessage('成功', '保存成功', function() {
+                            if ('${/parameter/@aid}' == '1') {
+                                window.location.reload();
+                            } else {
+                                $('doc_article_result_ds').query();
+                            }
+                            $('edit_article_screen').close();
+                        });
+                    }
+                    
+                    function onSubmitFailed() {
                         $('postButton').enable();
-                    }        
-
+                    }
                 ]]></script>
                 <a:dataSets>
                     <a:dataSet id="article_update_ds" submitUrl="${/request/@context_path}/modules/admin/update_article.svc">
@@ -80,7 +83,7 @@
                             <TR>
                                 <TH align="right"><![CDATA[内容:]]></TH>
                                 <TD>
-                                    <a:textArea name="content" bindTarget="article_update_ds" className="postConent" height="520" width="800"/>
+                                    <a:textArea name="content" bindTarget="article_update_ds" className="postConent" height="420" width="800"/>
                                 </TD>
                             </TR>
                             <TR>
