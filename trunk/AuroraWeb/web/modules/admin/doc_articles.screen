@@ -26,8 +26,14 @@
                 return '<a class="link" style="font-size:12px;" href="javascript:locationTo(' + record.get('article_id') + ');">' + value + '</a>';
             }
             
-            function openWindow(article_id) {
-                window.location.href = '${/request/@context_path}/modules/admin/edit_article.screen?article_id=' + article_id;
+            function openWindow(article_id) {                
+                new Aurora.Window({
+                    url: '${/request/@context_path}/modules/admin/edit_article.screen?article_id=' + article_id,
+                    title: '编辑文章',
+                    id: 'edit_article_screen',
+                    width: 1000,
+                    height: 650
+                });
             }
             
             function locationTo(article_id) {
@@ -54,7 +60,7 @@
                         },
                         scope: this
                     });
-                }, null, null, 100);            
+                }, null, null, 100);
             }
         ]]></script>
         <a:dataSets>
