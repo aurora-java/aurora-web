@@ -85,6 +85,12 @@
                             </div>
                         </TD>
                     </TR>
+                    <TR>
+                        <TH align="right" width="100"><![CDATA[标签:]]></TH>
+                        <TD>
+                            <a:textField name="tags" bindTarget="article_create_ds" emptyText="多个标签之间以空格间隔" width="400"/>
+                        </TD>
+                    </TR>
                 </TBODY>
             </TABLE>
             <a:button id="postButton" click="postArticle" height="30" style="margin-top:10px;" text="发 表 文 章" width="100"/>

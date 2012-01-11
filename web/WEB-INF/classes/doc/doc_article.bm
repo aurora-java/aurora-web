@@ -6,6 +6,7 @@
         <bm:field name="article_title" databaseType="VARCHAR2" datatype="java.lang.String"/>
         <bm:field name="content" databaseType="VARCHAR2" datatype="java.lang.String"/>
         <bm:field name="category_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
+        <bm:field name="tags" databaseType="VARCHAR2" datatype="java.lang.String"/>
     </bm:fields>
     <bm:primary-key>
         <bm:pk-field name="article_id"/>
