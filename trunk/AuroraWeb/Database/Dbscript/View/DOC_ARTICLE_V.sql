@@ -13,6 +13,8 @@ create or replace view doc_article_v as
 select a.article_id,
        a.article_title,
        a.category_id,
+       a.content,
+       a.tags,
        a.creation_date,
        a.last_update_date,
        u.user_id,

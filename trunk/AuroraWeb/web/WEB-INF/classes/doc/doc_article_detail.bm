@@ -8,6 +8,7 @@
         <bm:field name="content" databaseType="VARCHAR2" datatype="java.lang.String"/>
         <bm:field name="user_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
         <bm:field name="creation_date" databaseType="VARCHAR2" datatype="java.lang.String" expression="to_char(t1.creation_date,&apos;yyyy-mm-dd HH24:MI:SS&apos;)"/>
+        <bm:field name="tags" databaseType="VARCHAR2" datatype="java.lang.String"/>
     </bm:fields>
     <bm:primary-key>
         <bm:pk-field name="article_id"/>

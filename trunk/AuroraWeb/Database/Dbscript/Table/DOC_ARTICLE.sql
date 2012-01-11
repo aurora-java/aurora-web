@@ -9,42 +9,62 @@ prompt
 prompt Creating table DOC_ARTICLE
 prompt ==========================
 prompt
+-- Create table
 create table DOC_ARTICLE
 (
-  ARTICLE_ID       NUMBER not null,
-  ARTICLE_PATH     VARCHAR2(100) not null,
-  CREATED_BY       NUMBER,
-  CREATION_DATE    DATE,
-  LAST_UPDATED_BY  NUMBER,
-  LAST_UPDATE_DATE DATE,
-  ARTICLE_TITLE    VARCHAR2(100),
-  CATEGORY_ID      NUMBER,
-  CONTENT          CLOB
+  article_id       NUMBER not null,
+  article_path     VARCHAR2(100) not null,
+  created_by       NUMBER,
+  creation_date    DATE,
+  last_updated_by  NUMBER,
+  last_update_date DATE,
+  article_title    VARCHAR2(100),
+  category_id      NUMBER,
+  content          CLOB,
+  tags             VARCHAR2(100)
 )
-;
+tablespace AURORA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
 comment on table DOC_ARTICLE
   is '文章表';
-comment on column DOC_ARTICLE.ARTICLE_ID
+-- Add comments to the columns 
+comment on column DOC_ARTICLE.article_id
   is '文章ID';
-comment on column DOC_ARTICLE.ARTICLE_PATH
+comment on column DOC_ARTICLE.article_path
   is '文章路径';
-comment on column DOC_ARTICLE.CREATED_BY
+comment on column DOC_ARTICLE.created_by
   is '创建者ID';
-comment on column DOC_ARTICLE.CREATION_DATE
+comment on column DOC_ARTICLE.creation_date
   is '创建日期';
-comment on column DOC_ARTICLE.LAST_UPDATED_BY
+comment on column DOC_ARTICLE.last_updated_by
   is '最近更新者ID';
-comment on column DOC_ARTICLE.LAST_UPDATE_DATE
+comment on column DOC_ARTICLE.last_update_date
   is '最近更新日期';
-comment on column DOC_ARTICLE.ARTICLE_TITLE
+comment on column DOC_ARTICLE.article_title
   is '文章标题';
-comment on column DOC_ARTICLE.CATEGORY_ID
+comment on column DOC_ARTICLE.category_id
   is '分类ID';
-comment on column DOC_ARTICLE.CONTENT
+comment on column DOC_ARTICLE.content
   is '内容';
-alter table DOC_ARTICLE
-  add constraint DOC_ARTICAL_PK primary key (ARTICLE_ID);
+comment on column DOC_ARTICLE.tags
+  is '标签';
+-- Create/Recreate indexes 
 create index DOC_ARTICAL_N1 on DOC_ARTICLE (LAST_UPDATE_DATE);
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table DOC_ARTICLE
+  add constraint DOC_ARTICAL_PK primary key (ARTICLE_ID)
+  using index ;
+
 
 
 spool off

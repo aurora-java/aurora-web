@@ -83,7 +83,7 @@
                             <TR>
                                 <TH align="right"><![CDATA[内容:]]></TH>
                                 <TD>
-                                    <a:textArea name="content" bindTarget="article_update_ds" className="postConent" height="420" width="800"/>
+                                    <a:textArea name="content" bindTarget="article_update_ds" className="postConent" height="390" width="800"/>
                                 </TD>
                             </TR>
                             <TR>
@@ -92,6 +92,12 @@
                                     <div style="width:600px;">
                                         <a:upload buttonWidth="75" fileType="*.png;*.gif;*.jpg;*.screen;*.bm;*.xml;*.zip;*.rar" pkvalue="${/model/article/record/@article_id}" sourcetype="DOC_ARTICLE" text="上传附件"/>
                                     </div>
+                                </TD>
+                            </TR>
+                            <TR>
+                                <TH align="right" width="100"><![CDATA[标签:]]></TH>
+                                <TD>
+                                    <a:textField name="tags" bindTarget="article_update_ds" emptyText="多个标签之间以空格间隔" width="400"/>
                                 </TD>
                             </TR>
                         </TBODY>
