@@ -48,6 +48,25 @@
             </a:repeater>
         </div>
         <div class="widget">
+            <h3><![CDATA[在线阅读开发手册]]></h3>
+            <ul>
+                <li>
+                    <span>
+                        <a href="${/request/@context_path}/doc/jsdoc">
+                            <img src="${/request/@context_path}/resources/JavaScriptDocument.jpg"/>
+                        </a>
+                    </span>
+                </li>
+                <li>
+                    <span>
+                        <a href="${/request/@context_path}/doc/tagdoc">
+                            <img src="${/request/@context_path}/resources/TagDocument.jpg"/>
+                        </a>
+                    </span>
+                </li>
+            </ul>
+        </div>
+        <div class="widget">
             <h3><![CDATA[在线安装开发手册]]></h3>
             <ul>
                 <li style="margin-top:10px;">
