@@ -36,6 +36,16 @@
                     function onSubmitFailed() {
                         $('postButton').enable();
                     }
+                    
+                    function onBeforeSubmit(ds) {
+                        var record = ds.getAt(0);
+                        var tags = parseTags(record.get('tags'));
+                        record.set('tag_name', tags);
+                    }
+                    
+                    function parseTags(tags) {
+                        return (tags + ',').replace(/\s+/g, "");
+                    }
                 ]]></script>
                 <a:dataSets>
                     <a:dataSet id="article_update_ds" submitUrl="${/request/@context_path}/modules/admin/update_article.svc">
@@ -52,6 +62,7 @@
                         <a:events>
                             <a:event name="submitsuccess" handler="onSubmitSuccess"/>
                             <a:event name="submitfailed" handler="onSubmitFailed"/>
+                            <a:event name="beforesubmit" handler="onBeforeSubmit"/>
                         </a:events>
                     </a:dataSet>
                 </a:dataSets>
@@ -97,7 +108,7 @@
                             <TR>
                                 <TH align="right" width="100"><![CDATA[标签:]]></TH>
                                 <TD>
-                                    <a:textField name="tags" bindTarget="article_update_ds" emptyText="多个标签之间以空格间隔" width="400"/>
+                                    <a:textField name="tags" bindTarget="article_update_ds" emptyText="多个标签之间以逗号隔开" width="400"/>
                                 </TD>
                             </TR>
                         </TBODY>

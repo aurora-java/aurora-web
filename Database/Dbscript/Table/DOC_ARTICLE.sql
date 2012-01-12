@@ -20,8 +20,7 @@ create table DOC_ARTICLE
   last_update_date DATE,
   article_title    VARCHAR2(100),
   category_id      NUMBER,
-  content          CLOB,
-  tags             VARCHAR2(100)
+  content          CLOB  
 )
 tablespace AURORA
   pctfree 10
@@ -56,8 +55,6 @@ comment on column DOC_ARTICLE.category_id
   is '分类ID';
 comment on column DOC_ARTICLE.content
   is '内容';
-comment on column DOC_ARTICLE.tags
-  is '标签';
 -- Create/Recreate indexes 
 create index DOC_ARTICAL_N1 on DOC_ARTICLE (LAST_UPDATE_DATE);
 -- Create/Recreate primary, unique and foreign key constraints 
