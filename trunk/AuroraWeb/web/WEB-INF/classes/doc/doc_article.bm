@@ -6,7 +6,6 @@
         <bm:field name="article_title" databaseType="VARCHAR2" datatype="java.lang.String"/>
         <bm:field name="content" databaseType="VARCHAR2" datatype="java.lang.String"/>
         <bm:field name="category_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
-        <bm:field name="tags" databaseType="VARCHAR2" datatype="java.lang.String"/>
     </bm:fields>
     <bm:primary-key>
         <bm:pk-field name="article_id"/>
@@ -19,6 +18,36 @@
             <bm:update-sql><![CDATA[
             begin
 				article_pkg.delete_article(p_article_id => ${/parameter/@article_id});
+			end;
+			]]></bm:update-sql>
+        </bm:operation>
+        <bm:operation name="insert">
+            <bm:update-sql><![CDATA[
+            begin
+				ARTICLE_PKG.CREATE_ARTICLE
+                (
+                    p_article_path=>${@article_path},
+                    p_article_title=>${@article_title},
+                    p_category_id=>${@category_id},
+                    p_content=>${@content},
+                    p_user_id=>${/session/@user_id},
+                    p_tag_name=>${@tag_name}
+                );
+			end;
+			]]></bm:update-sql>
+        </bm:operation>
+        <bm:operation name="update">
+            <bm:update-sql><![CDATA[
+            begin
+				ARTICLE_PKG.UPDATE_ARTICLE
+                (
+                    p_article_id=>${@article_id},
+                    p_article_title=>${@article_title},
+                    p_category_id=>${@category_id},
+                    p_content=>${@content},
+                    p_user_id=>${/session/@user_id},
+                    p_tag_name=>${@tag_name}
+                );
 			end;
 			]]></bm:update-sql>
         </bm:operation>
