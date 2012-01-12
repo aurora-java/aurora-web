@@ -44,7 +44,7 @@
                     }
                     
                     function parseTags(tags) {
-                        return (tags + ',').replace(/\s+/g, "");
+                        return (tags + ',').replace(/\s+/g, ",").replace(/\,+/g, ",");
                     }
                 ]]></script>
                 <a:dataSets>
@@ -108,7 +108,7 @@
                             <TR>
                                 <TH align="right" width="100"><![CDATA[标签:]]></TH>
                                 <TD>
-                                    <a:textField name="tags" bindTarget="article_update_ds" emptyText="多个标签之间以逗号隔开" width="400"/>
+                                    <a:textField name="tags" bindTarget="article_update_ds" emptyText="多个标签之间以逗号或者空格隔开" width="400"/>
                                 </TD>
                             </TR>
                         </TBODY>
