@@ -78,14 +78,14 @@ create or replace package body article_pkg is
         select t.tag_id
           into v_tag_id
           from doc_tags t
-         where t.tag_name = v_tag_name;
+         where t.tag_name = LOWER(v_tag_name);
       exception
         when no_data_found then
           v_tag_id := doc_tags_s.nextval;
           insert into doc_tags
             (tag_id, tag_name)
           values
-            (v_tag_id, v_tag_name);
+            (v_tag_id, LOWER(v_tag_name));
       end;
       insert into doc_tags_relations
         (relation_id, article_id, tag_id)
@@ -134,14 +134,14 @@ create or replace package body article_pkg is
         select t.tag_id
           into v_tag_id
           from doc_tags t
-         where t.tag_name = v_tag_name;
+         where t.tag_name = LOWER(v_tag_name);
       exception
         when no_data_found then
           v_tag_id := doc_tags_s.nextval;
           insert into doc_tags
             (tag_id, tag_name)
           values
-            (v_tag_id, v_tag_name);
+            (v_tag_id, LOWER(v_tag_name));
       end;
       insert into doc_tags_relations
         (relation_id, article_id, tag_id)
