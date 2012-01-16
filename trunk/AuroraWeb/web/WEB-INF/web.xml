@@ -28,7 +28,10 @@
 		<servlet-name>viewlog</servlet-name>
 		<servlet-class>aurora.service.http.ViewLogServlet</servlet-class>
 	</servlet>
-
+	<servlet>
+		<servlet-name>sendbox</servlet-name>
+		<servlet-class>aurora.service.http.SendBoxServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>service</servlet-name>
 		<url-pattern>*.screen</url-pattern>
@@ -48,6 +51,10 @@
 	<servlet-mapping>
 		<servlet-name>viewlog</servlet-name>
 		<url-pattern>/viewlog</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>sendbox</servlet-name>
+		<url-pattern>/sendbox</url-pattern>
 	</servlet-mapping>
 	<session-config>
 		<session-timeout>30</session-timeout>
