@@ -36,7 +36,6 @@ public class ComponentList {
 		for (int i = 0; i < vcs.size(); i++) {
 			ViewComponent vc = (ViewComponent) vcs.get(i);
 			CompositeMap vcmap = new CompositeMap();
-			vcmap.put("icon", vc.getIcon());
 			vcmap.put("name", vc.getElementName());
 			Map childMap = (HashMap) nameSpaces.get(vc.getNameSpace());
 			if (null == childMap) {
