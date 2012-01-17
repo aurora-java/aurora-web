@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: andy  
+    $Date: 2012-1-13 下午12:43:23  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc">
+    <a:init-procedure>
+        <p:method-invoke className="com.aurora.doc.actions.ComponentList" methodName="getComponentList" resultPath="/model/category">
+            <p:arguments>
+                <p:argument path="instance" type="uncertain.ocm.IObjectRegistry"/>
+                <p:argument path="/parameter" type="uncertain.composite.CompositeMap"/>
+            </p:arguments>
+        </p:method-invoke>
+    </a:init-procedure>
+    <a:view package="ui.template" template="tag">
+        <a:link/>
+        <a:switch test="/parameter/@category">
+            <a:case value="null">
+                <div style="font-size:14px;margin-top:10px"><![CDATA[点击左边选项卡,查看详细列表.]]></div>
+            </a:case>
+            <a:case value="">
+                <div style="font-size:14px;margin-top:10px"><![CDATA[点击左边选项卡,查看详细列表.]]></div>
+            </a:case>
+            <a:case value="*">
+                <a:repeater datamodel="/model/category">
+                    <a href="${/request/@context_path}/tag_detail.screen?category=${@category_name}&amp;tag_name=${@name}">
+                        <div style="float:left; margin-left:50px;margin-top:50px;height:220px;width:200px">
+                            <img src="images/component.png"/>
+                            <br/>
+                            <span><![CDATA[${@name}]]></span>
+                        </div>
+                    </a>
+                </a:repeater>
+            </a:case>
+        </a:switch>
+    </a:view>
+</a:screen>

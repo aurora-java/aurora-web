@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html style="background:none;">
+    <head>
+        <title>${page:title}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="google-site-verification" content="ya_NqQxId0qgdy-YoyNfYta4crTzI7bHGa26TBBMBk0" />
+        <link href="${/request/@context_path}/images/ipad-icon.jpg" rel="apple-touch-icon"/>
+${page:html.head.css} 
+        <link href="${/request/@context_path}/css/site.css" rel="stylesheet" type="text/css"/> 
+        <link href="${/request/@context_path}/css/ddsmoothmenu.css" rel="stylesheet" type="text/css"/>
+        <link href="${/request/@context_path}/css/tag.css" rel="stylesheet" type="text/css"/>
+        <link href="${/request/@context_path}/css/wp-admin.css" rel="stylesheet" type="text/css"/>
+        <script type='text/javascript' src='${/request/@context_path}/javascripts/jquery.js'></script>       
+${page:html.head.script}
+    </head>
+    <body style="background:none;" class="no-js">
+        <div id="mainWrapper">            
+            <div id="wrapper">
+	            ${screen:/WEB-INF/ui.template/include/header.screen}
+	        </div> 
+            ${page:init}
+            <div id="tagContent">
+                <div id="tagLeft" >
+                    ${screen:/WEB-INF/ui.template/include/tag_left.screen}
+                </div>
+                <div id="tagRight">                    
+                    ${page:content}	
+                </div>
+            </div>                         	
+        </div>
+    </body>
+</html>

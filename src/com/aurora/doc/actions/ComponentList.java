@@ -35,6 +35,7 @@ public class ComponentList {
 			ViewComponent vc = (ViewComponent) vcs.get(i);
 			CompositeMap vcmap = new CompositeMap();
 			vcmap.put("name", vc.getElementName());
+			vcmap.put("category_name", vc.getCategory());
 			Map childMap = (HashMap) nameSpaces.get(vc.getNameSpace());
 			if (null == childMap) {
 				childMap = new HashMap();
@@ -55,13 +56,21 @@ public class ComponentList {
 			CompositeMap parent = new CompositeMap();
 			parentList.add(parent);
 			parent.putString(PKG, ns);
-			Iterator childIt = ((HashMap) nameSpaces.get(ns)).keySet().iterator();
+			Iterator childIt = ((HashMap) nameSpaces.get(ns)).keySet()
+					.iterator();
 			List childList = new ArrayList();
 			while (childIt.hasNext()) {
 				CompositeMap child = new CompositeMap();
-				child.putString(CATEGORY_NAME, (String) childIt.next());
-				child.putString(NS, ns);
-				childList.add(child);
+				CompositeMap grandchild = new CompositeMap();
+				String category = (String) childIt.next();
+				if (null != category && null != ns && !category.isEmpty()) {
+					child.putString(CATEGORY_NAME, category);
+					child.putString(NS, ns);
+					grandchild.addChilds((ArrayList) ((HashMap) nameSpaces
+							.get(ns)).get(category));					
+					child.put("grandchildren", grandchild);
+					childList.add(child);
+				}				
 			}
 			CompositeMap children = new CompositeMap();
 			children.addChilds(childList);

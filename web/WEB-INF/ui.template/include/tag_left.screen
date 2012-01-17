@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc">
+    <a:init-procedure>
+        <p:method-invoke className="com.aurora.doc.actions.ComponentList" methodName="getCategoryList" resultPath="/model/pkg">
+            <p:arguments>
+                <p:argument path="instance" type="uncertain.ocm.IObjectRegistry"/>
+                <p:argument path="/parameter" type="uncertain.composite.CompositeMap"/>
+            </p:arguments>
+        </p:method-invoke>
+    </a:init-procedure>
+    <a:view package="ui.template" template="fragment">
+        <script><![CDATA[
+            jQuery(document).ready(function() {
+                if ('' != '${/parameter/@category}') {
+                    jQuery('#menu-${/parameter/@category}').addClass('wp-has-current-submenu').removeClass('wp-not-current-submenu');
+                }
+                if ('' != '${/parameter/@tag_name}') {
+                    jQuery('#submenu-${/parameter/@tag_name}').addClass('current');
+                }
+            });
+        ]]></script>
+        <div id="adminmenuback"/>
+        <div id="adminmenuwrap">
+            <div id="adminmenushadow"/>
+            <a:repeater datamodel="/model/pkg">
+                <ul id="adminmenu" role="navigation">
+                    <a:repeater datamodel="@children">
+                        <li id="menu-${@category_name}" class="wp-first-item wp-not-current-submenu wp-has-submenu wp-menu-open menu-top menu-top-first menu-icon-dashboard menu-top-last">
+                            <div class="wp-menu-image">
+                                <a href="index.php">
+                                    <br/>
+                                </a>
+                            </div>
+                            <div class="wp-menu-arrow">
+                                <div/>
+                            </div>
+                            <a class="wp-first-item wp-has-submenu wp-has-current-submenu wp-menu-open menu-top menu-top-first menu-icon-dashboard menu-top-last" href="${/request/@context_path}/tag_category.screen?ns=${@ns}&amp;category=${@category_name}" tabindex="1"><![CDATA[${@category_name}]]></a>
+                            <div class="wp-submenu">
+                                <div class="wp-submenu-wrap">
+                                    <ul>
+                                        <a:repeater datamodel="@grandchildren">
+                                            <li id="submenu-${@name}">
+                                                <a href="${/request/@context_path}/tag_detail.screen?category=${@category_name}&amp;tag_name=${@name}" tabindex="1"><![CDATA[${@name}]]></a>
+                                            </li>
+                                        </a:repeater>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </a:repeater>
+                </ul>
+            </a:repeater>
+        </div>
+    </a:view>
+</a:screen>
