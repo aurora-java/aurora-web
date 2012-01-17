@@ -80,6 +80,9 @@
                         <a href="${/request/@context_path}/category.screen"><![CDATA[技术文章]]></a>
                     </li>
                     <li>
+                        <a href="${/request/@context_path}/tag_category.screen"><![CDATA[ADN]]></a>
+                    </li>
+                    <li>
                         <a href="${/request/@context_path}/download.screen"><![CDATA[下载]]></a>
                     </li>
                     <li>
@@ -113,7 +116,7 @@
             </div>
             <a:switch test="/session/@login_success">
                 <a:case value="1">
-                    <div id="userMenu" class="userMenu" style="float:right;right:0px;width:280px;">
+                    <div id="userMenu" class="userMenu" style="float:right;right:0px;width:240px;">
                         <span style="margin-left:5px;"><![CDATA[${/session/@nick_name} 欢迎您回来]]></span>
                         <span style="margin-left:5px;"><![CDATA[|]]></span>
                         <a href="javascript:changePassword();" style="margin-left:5px;"><![CDATA[修改密码]]></a>
