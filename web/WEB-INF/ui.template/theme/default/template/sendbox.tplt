@@ -1,0 +1,14 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>${page:title}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <link href="${/request/@context_path}/images/ipad-icon.jpg" rel="apple-touch-icon"/>
+${page:html.head.css} 
+${page:html.head.script}
+    </head>
+    <body>
+        ${page:content}	
+    </body>
+</html>
