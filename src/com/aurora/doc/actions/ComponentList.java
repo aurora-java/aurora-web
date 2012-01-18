@@ -12,8 +12,12 @@ import java.util.TreeMap;
 
 import uncertain.composite.CompositeMap;
 import uncertain.core.UncertainEngine;
+import uncertain.exception.BuiltinExceptionFactory;
+import uncertain.exception.GeneralException;
 import uncertain.ocm.IObjectRegistry;
 import uncertain.pkg.PackageManager;
+import uncertain.schema.ISchemaManager;
+import aurora.application.features.cstm.CustomSourceCode;
 import aurora.presentation.ViewComponent;
 import aurora.presentation.ViewComponentPackage;
 
@@ -26,8 +30,16 @@ public class ComponentList {
 	private static Map nameSpaces;
 
 	private static void initMap(IObjectRegistry registry) {
+		if (null == registry)
+			throw new RuntimeException(
+					"paramter error. 'registry' can not be null.");
 		UncertainEngine engine = (UncertainEngine) registry
 				.getInstanceOfType(UncertainEngine.class);
+		if (null == engine)
+			throw new GeneralException(
+					"uncertain.exception.instance_not_found", new Object[] {
+							UncertainEngine.class.getName(), null },
+					(Throwable) null, (CompositeMap) null);
 		PackageManager mPackageManager = engine.getPackageManager();
 		ViewComponentPackage p = (ViewComponentPackage) mPackageManager
 				.getPackage(mDefaultPackage);
@@ -37,7 +49,8 @@ public class ComponentList {
 		for (int i = 0; i < vcs.size(); i++) {
 			ViewComponent vc = (ViewComponent) vcs.get(i);
 			CompositeMap vcmap = new CompositeMap();
-			vcmap.put("name", capitalize(vc.getElementName()));
+			vcmap.put("name", vc.getElementName());
+			vcmap.put("classname", capitalize(vc.getElementName()));
 			vcmap.put("category_name", vc.getCategory());
 			Map childMap = (HashMap) nameSpaces.get(vc.getNameSpace());
 			if (null == childMap) {
@@ -47,8 +60,8 @@ public class ComponentList {
 			List components = (ArrayList) childMap.get(vc.getCategory());
 			if (null == components) {
 				components = new ArrayList();
-				if(null!=vc.getCategory())
-				childMap.put(vc.getCategory(), components);
+				if (null != vc.getCategory())
+					childMap.put(vc.getCategory(), components);
 			}
 			components.add(vcmap);
 		}
