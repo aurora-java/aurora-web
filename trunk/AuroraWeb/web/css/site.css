@@ -80,7 +80,13 @@ body,html {
     width:252px;
 }
 
-
+#tagContent{
+	height: auto;
+	min-height: 622px;
+	width: 100%;
+	position: relative;
+	overflow:auto;
+}
 
 #tagContent #tagLeft {
     float:left;
