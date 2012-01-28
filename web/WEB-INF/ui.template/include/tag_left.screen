@@ -19,7 +19,7 @@
                 }
             });
         ]]></script>
-        <div id="adminmenuback"/>
+        <div id="adminmenuback" style="left:0px;"/>
         <div id="adminmenuwrap">
             <div id="adminmenushadow"/>
             <a:repeater datamodel="/model/pkg">
@@ -27,9 +27,7 @@
                     <a:repeater datamodel="@children">
                         <li id="menu-${@category_name}" class="wp-first-item wp-not-current-submenu wp-has-submenu wp-menu-open menu-top menu-top-first menu-icon-dashboard menu-top-last">
                             <div class="wp-menu-image">
-                                <a href="index.php">
-                                    <br/>
-                                </a>
+                                <div/>
                             </div>
                             <div class="wp-menu-arrow">
                                 <div/>
