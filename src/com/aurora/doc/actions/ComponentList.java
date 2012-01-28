@@ -89,28 +89,30 @@ public class ComponentList {
 		List parentList = new ArrayList();
 		while (nsIt.hasNext()) {
 			String ns = (String) nsIt.next();
-			CompositeMap parent = new CompositeMap();
-			parentList.add(parent);
-			parent.putString(PKG, ns);
-			Iterator childIt = ((TreeMap) nameSpaces.get(ns)).keySet()
-					.iterator();
-			List childList = new ArrayList();
-			while (childIt.hasNext()) {
-				CompositeMap child = new CompositeMap();
-				CompositeMap grandchild = new CompositeMap();
-				String category = (String) childIt.next();
-				if (null != category && null != ns && !category.isEmpty()) {
-					child.putString(CATEGORY_NAME, category);
-					child.putString(NS, ns);
-					grandchild.addChilds((ArrayList) ((TreeMap) nameSpaces
-							.get(ns)).get(category));
-					child.put("grandchildren", grandchild);
-					childList.add(child);
+			if (null !=ns && !ns.isEmpty()) {
+				CompositeMap parent = new CompositeMap();
+				parentList.add(parent);
+				parent.putString(PKG, ns);
+				Iterator childIt = ((TreeMap) nameSpaces.get(ns)).keySet()
+						.iterator();
+				List childList = new ArrayList();
+				while (childIt.hasNext()) {
+					CompositeMap child = new CompositeMap();
+					CompositeMap grandchild = new CompositeMap();
+					String category = (String) childIt.next();
+					if (null != category && null != ns && !category.isEmpty()) {
+						child.putString(CATEGORY_NAME, category);
+						child.putString(NS, ns);
+						grandchild.addChilds((ArrayList) ((TreeMap) nameSpaces
+								.get(ns)).get(category));
+						child.put("grandchildren", grandchild);
+						childList.add(child);
+					}
 				}
+				CompositeMap children = new CompositeMap();
+				children.addChilds(childList);
+				parent.put("children", children);
 			}
-			CompositeMap children = new CompositeMap();
-			children.addChilds(childList);
-			parent.put("children", children);
 		}
 
 		CompositeMap result = new CompositeMap();
@@ -138,8 +140,8 @@ public class ComponentList {
 		if (null == word || "".equals(word))
 			return word;
 		StringBuffer sb = new StringBuffer(word);
-		sb.replace(0, 1, new String(new char[] { Character.toUpperCase(sb
-				.charAt(0)) }));
+		sb.replace(0, 1,
+				new String(new char[] { Character.toUpperCase(sb.charAt(0)) }));
 		return sb.toString();
 	}
 
