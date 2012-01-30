@@ -11,15 +11,19 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import uncertain.composite.CompositeMap;
+import uncertain.composite.QualifiedName;
 import uncertain.core.UncertainEngine;
 import uncertain.exception.BuiltinExceptionFactory;
 import uncertain.exception.GeneralException;
 import uncertain.ocm.IObjectRegistry;
 import uncertain.pkg.PackageManager;
+import uncertain.schema.Element;
 import uncertain.schema.ISchemaManager;
+
 import aurora.application.features.cstm.CustomSourceCode;
 import aurora.presentation.ViewComponent;
 import aurora.presentation.ViewComponentPackage;
+
 
 public class ComponentList {
 
@@ -52,6 +56,7 @@ public class ComponentList {
 			vcmap.put("name", vc.getElementName());
 			vcmap.put("classname", capitalize(vc.getElementName()));
 			vcmap.put("category_name", vc.getCategory());
+			vcmap.put("ns", vc.getNameSpace());
 			Map childMap = (HashMap) nameSpaces.get(vc.getNameSpace());
 			if (null == childMap) {
 				childMap = new HashMap();
@@ -85,6 +90,7 @@ public class ComponentList {
 		if (null == nameSpaces) {
 			initMap(registry);
 		}
+
 		Iterator nsIt = nameSpaces.keySet().iterator();
 		List parentList = new ArrayList();
 		while (nsIt.hasNext()) {
@@ -126,6 +132,7 @@ public class ComponentList {
 		if (null == nameSpaces) {
 			initMap(registry);
 		}
+
 		String category = parameter.getString("category");
 		String nameSpace = parameter.getString("ns");
 		CompositeMap result = new CompositeMap();
@@ -136,12 +143,28 @@ public class ComponentList {
 		return result;
 	}
 
+	public static CompositeMap getSchema(IObjectRegistry registry,
+			CompositeMap parameter){
+		ISchemaManager schemaManager = (ISchemaManager) registry.getInstanceOfType(ISchemaManager.class);
+		if (schemaManager == null)
+			throw BuiltinExceptionFactory.createInstanceNotFoundException((new CompositeMap()).asLocatable(),
+					ISchemaManager.class, CustomSourceCode.class.getCanonicalName());
+		String nameSpace = parameter.getString("ns");
+		String tagName = parameter.getString("tag_name");
+		Element ele = schemaManager.getElement(new QualifiedName(nameSpace,tagName));
+		CompositeMap result = new CompositeMap("result");
+		
+		return null;
+	}
+	
 	private static String capitalize(String word) {
 		if (null == word || "".equals(word))
 			return word;
 		StringBuffer sb = new StringBuffer(word);
 		sb.replace(0, 1,
 				new String(new char[] { Character.toUpperCase(sb.charAt(0)) }));
+
+
 		return sb.toString();
 	}
 
