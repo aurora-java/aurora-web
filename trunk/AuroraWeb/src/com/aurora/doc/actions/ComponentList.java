@@ -17,13 +17,14 @@ import uncertain.exception.BuiltinExceptionFactory;
 import uncertain.exception.GeneralException;
 import uncertain.ocm.IObjectRegistry;
 import uncertain.pkg.PackageManager;
+import uncertain.schema.Array;
+import uncertain.schema.Attribute;
 import uncertain.schema.Element;
 import uncertain.schema.ISchemaManager;
 
 import aurora.application.features.cstm.CustomSourceCode;
 import aurora.presentation.ViewComponent;
 import aurora.presentation.ViewComponentPackage;
-
 
 public class ComponentList {
 
@@ -95,7 +96,7 @@ public class ComponentList {
 		List parentList = new ArrayList();
 		while (nsIt.hasNext()) {
 			String ns = (String) nsIt.next();
-			if (null !=ns && !ns.isEmpty()) {
+			if (null != ns && !ns.isEmpty()) {
 				CompositeMap parent = new CompositeMap();
 				parentList.add(parent);
 				parent.putString(PKG, ns);
@@ -144,26 +145,77 @@ public class ComponentList {
 	}
 
 	public static CompositeMap getSchema(IObjectRegistry registry,
-			CompositeMap parameter){
-		ISchemaManager schemaManager = (ISchemaManager) registry.getInstanceOfType(ISchemaManager.class);
+			CompositeMap parameter) {
+		ISchemaManager schemaManager = (ISchemaManager) registry
+				.getInstanceOfType(ISchemaManager.class);
 		if (schemaManager == null)
-			throw BuiltinExceptionFactory.createInstanceNotFoundException((new CompositeMap()).asLocatable(),
-					ISchemaManager.class, CustomSourceCode.class.getCanonicalName());
+			throw BuiltinExceptionFactory.createInstanceNotFoundException(
+					(new CompositeMap()).asLocatable(), ISchemaManager.class,
+					CustomSourceCode.class.getCanonicalName());
 		String nameSpace = parameter.getString("ns");
 		String tagName = parameter.getString("tag_name");
-		Element ele = schemaManager.getElement(new QualifiedName(nameSpace,tagName));
+		Element ele = schemaManager.getElement(new QualifiedName(nameSpace,
+				tagName));
 		CompositeMap result = new CompositeMap("result");
-		
-		return null;
+		if (ele == null)
+			return result;
+		List arrays = ele.getAllArrays();
+		if (arrays != null && !arrays.isEmpty()) {
+			Iterator it = arrays.iterator();
+			List arrayList = new ArrayList();
+			while (it.hasNext()) {
+				Array array = (Array) it.next();
+				CompositeMap record = new CompositeMap("record");
+				record.put("name", array.getLocalName());
+				record.put("type", array.getType());
+				record.put("document", array.getDocument());
+				arrayList.add(record);
+			}
+			CompositeMap arrayMap = new CompositeMap();
+			arrayMap.addChilds(arrayList);
+			result.put("arrays", arrayMap);
+		}
+		List attributes = ele.getAllAttributes();
+		if (attributes != null && !attributes.isEmpty()) {
+			Iterator it = attributes.iterator();
+			List attributeList = new ArrayList();
+			while (it.hasNext()) {
+				Attribute attribute = (Attribute) it.next();
+				CompositeMap record = new CompositeMap("record");
+				record.put("name", attribute.getLocalName());
+				record.put("type", attribute.getType());
+				record.put("document", attribute.getDocument());
+				attributeList.add(record);
+			}
+			CompositeMap attributeMap = new CompositeMap();
+			attributeMap.addChilds(attributeList);
+			result.put("attributes", attributeMap);
+		}
+		List elements = ele.getAllElements();
+		if (elements != null && !elements.isEmpty()) {
+			Iterator it = elements.iterator();
+			List elementList = new ArrayList();
+			while (it.hasNext()) {
+				Element element = (Element) it.next();
+				CompositeMap record = new CompositeMap("record");
+				record.put("name", element.getLocalName());
+				record.put("type", element.getType());
+				record.put("document", element.getDocument());
+				elementList.add(record);
+			}
+			CompositeMap elementMap = new CompositeMap();
+			elementMap.addChilds(elementList);
+			result.put("elements", elementMap);
+		}
+		return result;
 	}
-	
+
 	private static String capitalize(String word) {
 		if (null == word || "".equals(word))
 			return word;
 		StringBuffer sb = new StringBuffer(word);
 		sb.replace(0, 1,
 				new String(new char[] { Character.toUpperCase(sb.charAt(0)) }));
-
 
 		return sb.toString();
 	}

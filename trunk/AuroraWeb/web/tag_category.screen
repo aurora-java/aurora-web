@@ -25,7 +25,7 @@
             </a:case>
             <a:case value="*">
                 <a:repeater datamodel="/model/category">
-                    <a href="${/request/@context_path}/tag_detail.screen?category=${@category_name}&amp;tag_name=${@name}">
+                    <a href="${/request/@context_path}/tag_detail.screen?category=${@category_name}&amp;tag_name=${@name}&amp;ns=${@ns}">
                         <div style="float:left; margin-left:50px;margin-top:50px;height:220px;width:200px">
                             <img height="150px" src="images/${@name}.png" width="150px"/>
                             <br/>
