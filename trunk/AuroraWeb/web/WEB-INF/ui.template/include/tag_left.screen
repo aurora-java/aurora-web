@@ -9,7 +9,14 @@
         </p:method-invoke>
     </a:init-procedure>
     <a:view package="ui.template" template="fragment">
-        <script><![CDATA[
+        <style><![CDATA[            
+			.menu-ie6{			    
+			    MARGIN-TOP: -18px;
+			    width:110px;
+			    height:20px;
+			}			
+        ]]></style>
+        <script><![CDATA[                      
             jQuery(document).ready(function() {
                 if ('' != '${/parameter/@category}') {
                     jQuery('#menu-${/parameter/@category}').addClass('wp-has-current-submenu').removeClass('wp-not-current-submenu');
@@ -17,11 +24,29 @@
                 if ('' != '${/parameter/@tag_name}') {
                     jQuery('#submenu-${/parameter/@tag_name}').addClass('current');
                 }
+                if (Ext.isIE7 || Ext.isIE8) {
+                    jQuery('.wp-menu-arrow').removeClass('wp-menu-arrow');
+                    jQuery('.adminmenushadow').removeClass('adminmenushadow');
+                }
+                if (Ext.isIE6) {                    
+                    jQuery('.mymenu').addClass('menu-ie6');
+                    jQuery('.wp-menu-arrow').removeClass('wp-menu-arrow');
+                    jQuery('.adminmenushadow').removeClass('adminmenushadow');
+                    jQuery('#adminmenuwrap').css('height', '564px');
+                    if (jQuery('#adminmenuwrap').height() < jQuery('#tagRight').height()) {
+                        jQuery('#adminmenuwrap').css('height', jQuery('#tagRight').height());
+                    }
+                    jQuery('#adminmenu > li.wp-not-current-submenu').bind('mouseover', function() {
+                        jQuery('#wp-sub' + jQuery(this)[0].id).css('display', 'block').css('margin-left', '-28px');
+                    }).bind('mouseout', function() {
+                        jQuery('#wp-sub' + jQuery(this)[0].id).css('display', 'none');
+                    });
+                }
             });
         ]]></script>
         <div id="adminmenuback" style="left:0px;"/>
         <div id="adminmenuwrap">
-            <div id="adminmenushadow"/>
+            <div id="adminmenushadow" class="adminmenushadow"/>
             <a:repeater datamodel="/model/pkg">
                 <ul id="adminmenu" role="navigation">
                     <a:repeater datamodel="@children">
@@ -32,8 +57,8 @@
                             <div class="wp-menu-arrow">
                                 <div/>
                             </div>
-                            <a class="wp-first-item wp-has-submenu wp-has-current-submenu wp-menu-open menu-top menu-top-first menu-icon-dashboard menu-top-last" href="${/request/@context_path}/tag_category.screen?ns=${@ns}&amp;category=${@category_name}" tabindex="1"><![CDATA[${@category_name}]]></a>
-                            <div class="wp-submenu">
+                            <a class="mymenu menu-top wp-has-current-submenu" href="${/request/@context_path}/tag_category.screen?ns=${@ns}&amp;category=${@category_name}" tabindex="1"><![CDATA[${@category_name}]]></a>
+                            <div id="wp-submenu-${@category_name}" class="wp-submenu">
                                 <div class="wp-submenu-wrap">
                                     <ul>
                                         <a:repeater datamodel="@grandchildren">
