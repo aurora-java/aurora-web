@@ -18,10 +18,10 @@
         <a:link/>
         <a:switch test="/parameter/@category">
             <a:case value="null">
-                <div style="font-size:14px;margin-top:10px"><![CDATA[点击左边选项卡,查看详细列表.]]></div>
+                <div style="font-size:14px;margin-top:20px"><![CDATA[点击左边选项卡,查看详细列表.]]></div>
             </a:case>
             <a:case value="">
-                <div style="font-size:14px;margin-top:10px"><![CDATA[点击左边选项卡,查看详细列表.]]></div>
+                <div style="font-size:14px;margin-top:20px"><![CDATA[点击左边选项卡,查看详细列表.]]></div>
             </a:case>
             <a:case value="*">
                 <a:repeater datamodel="/model/category">
