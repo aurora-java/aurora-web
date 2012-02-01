@@ -196,12 +196,15 @@ public class ComponentList {
 			Iterator it = elements.iterator();
 			List elementList = new ArrayList();
 			while (it.hasNext()) {
-				Element element = (Element) it.next();
-				CompositeMap record = new CompositeMap("record");
-				record.put("name", element.getLocalName());
-				record.put("type", element.getType());
-				record.put("document", element.getDocument());
-				elementList.add(record);
+				Object para = it.next();
+				if (para instanceof Element) {
+					Element element = (Element) para;
+					CompositeMap record = new CompositeMap("record");
+					record.put("name", element.getLocalName());
+					record.put("type", element.getType());
+					record.put("document", element.getDocument());
+					elementList.add(record);
+				}
 			}
 			CompositeMap elementMap = new CompositeMap();
 			elementMap.addChilds(elementList);
