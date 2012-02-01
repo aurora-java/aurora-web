@@ -15,6 +15,21 @@
         </p:method-invoke>
     </a:init-procedure>
     <a:view package="ui.template" template="tag">
+        <style><![CDATA[            			
+			.item a{			    
+			    float:left;
+			    width:160px;
+			    height:180px;
+			    margin-left:20px;
+			    margin-top:50px;
+			    border:solid 1px white;
+			    padding:30px;
+			}
+			.item a:hover{			    
+			    border:solid 1px #6593cf;
+			    background:#dfefff;
+			}					
+        ]]></style>
         <a:link/>
         <a:switch test="/parameter/@category">
             <a:case value="null">
@@ -24,15 +39,15 @@
                 <div style="font-size:14px;margin-top:20px"><![CDATA[点击左边选项卡,查看详细列表.]]></div>
             </a:case>
             <a:case value="*">
-                <a:repeater datamodel="/model/category">
-                    <a href="${/request/@context_path}/tag_detail.screen?category=${@category_name}&amp;tag_name=${@name}&amp;ns=${@ns}">
-                        <div style="float:left; margin-left:50px;margin-top:50px;height:220px;width:200px">
+                <div class="item">
+                    <a:repeater datamodel="/model/category">
+                        <a href="${/request/@context_path}/tag_detail.screen?category=${@category_name}&amp;tag_name=${@name}&amp;ns=${@ns}">
                             <img height="150px" src="images/${@name}.png" width="150px"/>
                             <br/>
                             <span style="margin-left:50px;"><![CDATA[${@name}]]></span>
-                        </div>
-                    </a>
-                </a:repeater>
+                        </a>
+                    </a:repeater>
+                </div>
             </a:case>
         </a:switch>
     </a:view>
