@@ -30,33 +30,38 @@
         <a:tabPanel height="500" width="900">
             <a:tabs>
                 <a:tab prompt="Tag Reference" width="100">
-                    <div style="margin:10px;"><![CDATA[a:${/parameter/@tag_name}]]></div>
-                    <div style="margin:10px;"><![CDATA[Attributes]]></div>
-                    <a:table bindTarget="attribute_ds" canWheel="false" className="cateList" navBarType="simple" style="background-color:#fff;width:100%;float:left;margin-bottom:20px;">
-                        <a:columns>
-                            <a:column name="name" align="center" prompt="Attribute name" width="150"/>
-                            <a:column name="type" align="center" prompt="Data type" width="150"/>
-                            <a:column name="document" align="center" prompt="Description"/>
-                        </a:columns>
-                    </a:table>
-                    <div style="margin:10px;"><![CDATA[Arrays]]></div>
-                    <a:table bindTarget="array_ds" canWheel="false" className="cateList" navBarType="simple" style="background-color:#fff;width:100%;float:left;margin-bottom:20px;">
-                        <a:columns>
-                            <a:column name="name" align="center" prompt="Array name" width="150"/>
-                            <a:column name="type" align="center" prompt="Element type" width="150"/>
-                            <a:column name="document" align="center" prompt="Description"/>
-                        </a:columns>
-                    </a:table>
-                    <div style="margin:10px;"><![CDATA[Sub elements]]></div>
-                    <a:table bindTarget="element_ds" canWheel="false" className="cateList" navBarType="simple" style="background-color:#fff;width:100%;float:left;">
-                        <a:columns>
-                            <a:column name="name" align="center" prompt="Element name" width="150"/>
-                            <a:column name="type" align="center" prompt="Use" width="150"/>
-                            <a:column name="document" align="center" prompt="Description"/>
-                        </a:columns>
-                    </a:table>
+                    <a:screenBody>
+                        <h2><![CDATA[&lt;a:${/parameter/@tag_name}&gt;]]></h2>
+                        <p><![CDATA[Namespace: ${/parameter/@ns}]]></p>
+                        <h3><![CDATA[Attributes]]></h3>
+                        <a:table bindTarget="attribute_ds" canWheel="false" className="cateList" percentWidth="80" style="margin-bottom:20px;">
+                            <a:columns>
+                                <a:column name="name" align="center" prompt="Attribute name" width="150"/>
+                                <a:column name="type" align="center" prompt="Data type" width="150"/>
+                                <a:column name="document" align="center" prompt="Description"/>
+                            </a:columns>
+                        </a:table>
+                        <h3><![CDATA[Arrays]]></h3>
+                        <a:table bindTarget="array_ds" canWheel="false" percentWidth="80" style="margin-bottom:20px;">
+                            <a:columns>
+                                <a:column name="name" align="center" prompt="Array name" width="150"/>
+                                <a:column name="type" align="center" prompt="Element type" width="150"/>
+                                <a:column name="document" align="center" prompt="Description"/>
+                            </a:columns>
+                        </a:table>
+                        <h3><![CDATA[Sub elements]]></h3>
+                        <a:table bindTarget="element_ds" canWheel="false" className="cateList" percentWidth="80">
+                            <a:columns>
+                                <a:column name="name" align="center" prompt="Element name" width="150"/>
+                                <a:column name="type" align="center" prompt="Use" width="150"/>
+                                <a:column name="document" align="center" prompt="Description"/>
+                            </a:columns>
+                        </a:table>
+                    </a:screenBody>
                 </a:tab>
                 <a:tab prompt="JS Reference" width="100"/>
+                <a:tab prompt="Related Links" width="100"><![CDATA[
+                ]]></a:tab>
                 <a:tab prompt="Try it!" width="100">
                     <a:sendBox width="676"/>
                 </a:tab>
