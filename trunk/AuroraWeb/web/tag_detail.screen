@@ -7,6 +7,12 @@
 -->
 <a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc">
     <a:init-procedure>
+        <p:method-invoke className="com.aurora.doc.actions.ComponentList" methodName="validateParameter" resultPath="/model/valid">
+            <p:arguments>
+                <p:argument path="instance" type="uncertain.ocm.IObjectRegistry"/>
+                <p:argument path="/parameter" type="uncertain.composite.CompositeMap"/>
+            </p:arguments>
+        </p:method-invoke>
         <p:method-invoke className="com.aurora.doc.actions.ComponentList" methodName="getSchema" resultPath="/model/schema">
             <p:arguments>
                 <p:argument path="instance" type="uncertain.ocm.IObjectRegistry"/>
@@ -18,11 +24,8 @@
     <a:view package="ui.template" template="tag">
         <script><![CDATA[
             function articleRenderer(value, record, name) {
-                return '<a class="link" style="font-size:12px;" href="javascript:locationTo(' + record.get('article_id') + ');">' + value + '</a>';
+                return '<a target="_blank" href="${/request/@context_path}/article.screen?article_id=' + record.get('article_id') + '" class="link" style="font-size:12px;">' + value + '</a>';
             }                       
-            function locationTo(article_id) {
-                window.location.href = '${/request/@context_path}/article.screen?article_id=' + article_id;
-            }
         ]]></script>
         <a:dataSets>
             <a:dataSet id="attribute_ds">
@@ -38,68 +41,102 @@
                 <a:datas dataSource="/model/doc_tag"/>
             </a:dataSet>
         </a:dataSets>
-        <H1><![CDATA[${/parameter/@tag_name}]]></H1>
-        <a:tabPanel height="500" width="900">
-            <a:tabs>
-                <a:tab prompt="Tag Reference" width="100">
-                    <a:screenBody>
-                        <h2><![CDATA[&lt;a:${/parameter/@tag_name}&gt;]]></h2>
-                        <p><![CDATA[Namespace: ${/parameter/@ns}]]></p>
-                        <h3><![CDATA[Attributes]]></h3>
-                        <a:table bindTarget="attribute_ds" canWheel="false" className="cateList" percentWidth="80" style="margin-bottom:20px;">
-                            <a:columns>
-                                <a:column name="name" align="center" prompt="Attribute name" width="150"/>
-                                <a:column name="type" align="center" prompt="Data type" width="150"/>
-                                <a:column name="document" align="center" prompt="Description"/>
-                            </a:columns>
-                        </a:table>
-                        <h3><![CDATA[Arrays]]></h3>
-                        <a:table bindTarget="array_ds" canWheel="false" percentWidth="80" style="margin-bottom:20px;">
-                            <a:columns>
-                                <a:column name="name" align="center" prompt="Array name" width="150"/>
-                                <a:column name="type" align="center" prompt="Element type" width="150"/>
-                                <a:column name="document" align="center" prompt="Description"/>
-                            </a:columns>
-                        </a:table>
-                        <h3><![CDATA[Sub elements]]></h3>
-                        <a:table bindTarget="element_ds" canWheel="false" className="cateList" percentWidth="80">
-                            <a:columns>
-                                <a:column name="name" align="center" prompt="Element name" width="150"/>
-                                <a:column name="type" align="center" prompt="Use" width="150"/>
-                                <a:column name="document" align="center" prompt="Description"/>
-                            </a:columns>
-                        </a:table>
-                    </a:screenBody>
-                </a:tab>
-                <a:tab prompt="JS Reference" width="100"/>
-                <a:tab prompt="Related Links" width="100">
-                    <a:screenBody>
-                        <a:switch test="/model/doc_tag/record/@tags">
-                            <a:case value="null">
-                                <h3><![CDATA[没有与此标签相关的主题]]></h3>
-                            </a:case>
-                            <a:case value="">
-                                <h3><![CDATA[没有与此标签相关的主题]]></h3>
-                            </a:case>
-                            <a:case value="*">
-                                <h3><![CDATA[与此标签相关的主题]]></h3>
-                                <a:table bindTarget="doc_tag_ds" canWheel="false">
+        <a:switch test="/model/valid/@vaild">
+            <a:case value="true">
+                <H1><![CDATA[${/parameter/@class_name}]]></H1>
+                <a:tabPanel height="500" width="900">
+                    <a:tabs>
+                        <a:tab prompt="Tag Reference" width="100">
+                            <a:screenBody>
+                                <h2><![CDATA[&lt;a:${/parameter/@tag_name}&gt;]]></h2>
+                                <p><![CDATA[Namespace: ${/parameter/@ns}]]></p>
+                                <h3><![CDATA[Tag Reference:]]></h3>
+                                <p>
+                                    <a id="tagRef" target="_blank"/>
+                                </p>
+                                <script><![CDATA[
+			                	(function(){
+			                		var a = Ext.get('tagRef'),
+			                		link = 'http://'+location.host+'${/request/@context_path}/doc/tagdoc/index.html#!/output/${/parameter/@class_name}.html';
+			                		a.update(link);
+			                		a.dom.href = link;
+			                	})();
+			                	]]></script>
+                                <h3><![CDATA[Attributes]]></h3>
+                                <a:table bindTarget="attribute_ds" canWheel="false" className="cateList" percentWidth="80" style="margin-bottom:20px;">
                                     <a:columns>
-                                        <a:column name="tags" align="center" prompt="标签" width="150"/>
-                                        <a:column name="article_title" prompt="主题" renderer="articleRenderer" width="350"/>
-                                        <a:column name="nick_name" align="center" prompt="作者" width="80"/>
-                                        <a:column name="creation_date" align="center" prompt="发表时间" renderer="Aurora.formatDate" width="130"/>
-                                        <a:column name="last_update_date" align="center" prompt="更新时间" renderer="Aurora.formatDate" width="130"/>
+                                        <a:column name="name" align="center" prompt="Attribute name" width="150"/>
+                                        <a:column name="type" align="center" prompt="Data type" width="150"/>
+                                        <a:column name="document" align="center" prompt="Description"/>
                                     </a:columns>
                                 </a:table>
-                            </a:case>
-                        </a:switch>
-                    </a:screenBody>
-                </a:tab>
-                <a:tab prompt="Try it!" width="100">
-                    <a:sendBox width="676"/>
-                </a:tab>
-            </a:tabs>
-        </a:tabPanel>
+                                <h3><![CDATA[Arrays]]></h3>
+                                <a:table bindTarget="array_ds" canWheel="false" percentWidth="80" style="margin-bottom:20px;">
+                                    <a:columns>
+                                        <a:column name="name" align="center" prompt="Array name" width="150"/>
+                                        <a:column name="type" align="center" prompt="Element type" width="150"/>
+                                        <a:column name="document" align="center" prompt="Description"/>
+                                    </a:columns>
+                                </a:table>
+                                <h3><![CDATA[Sub elements]]></h3>
+                                <a:table bindTarget="element_ds" canWheel="false" className="cateList" percentWidth="80">
+                                    <a:columns>
+                                        <a:column name="name" align="center" prompt="Element name" width="150"/>
+                                        <a:column name="type" align="center" prompt="Use" width="150"/>
+                                        <a:column name="document" align="center" prompt="Description"/>
+                                    </a:columns>
+                                </a:table>
+                            </a:screenBody>
+                        </a:tab>
+                        <a:tab prompt="JS Reference" width="100">
+                            <a:screenBody>
+                                <h3><![CDATA[Javascript Reference:]]></h3>
+                                <p>
+                                    <a id="jsRef" target="_blank"/>
+                                </p>
+                                <script><![CDATA[
+			                	(function(){
+			                		var a = Ext.get('jsRef'),
+			                		link = 'http://'+location.host+'${/request/@context_path}/doc/jsdoc/index.html#!/output/Aurora.${/parameter/@class_name}.html';
+			                		a.update(link);
+			                		a.dom.href = link;
+			                	})();
+			                	]]></script>
+                            </a:screenBody>
+                        </a:tab>
+                        <a:tab prompt="Related Links" width="100">
+                            <a:screenBody>
+                                <a:switch test="/model/doc_tag/record/@tags">
+                                    <a:case value="null">
+                                        <h3><![CDATA[没有与此标签相关的主题]]></h3>
+                                    </a:case>
+                                    <a:case value="">
+                                        <h3><![CDATA[没有与此标签相关的主题]]></h3>
+                                    </a:case>
+                                    <a:case value="*">
+                                        <h3><![CDATA[与此标签相关的主题]]></h3>
+                                        <a:table bindTarget="doc_tag_ds" canWheel="false">
+                                            <a:columns>
+                                                <a:column name="tags" align="center" prompt="标签" width="150"/>
+                                                <a:column name="article_title" prompt="主题" renderer="articleRenderer" width="350"/>
+                                                <a:column name="nick_name" align="center" prompt="作者" width="80"/>
+                                                <a:column name="creation_date" align="center" prompt="发表时间" renderer="Aurora.formatDate" width="130"/>
+                                                <a:column name="last_update_date" align="center" prompt="更新时间" renderer="Aurora.formatDate" width="130"/>
+                                            </a:columns>
+                                        </a:table>
+                                    </a:case>
+                                </a:switch>
+                            </a:screenBody>
+                        </a:tab>
+                        <a:tab prompt="Try it!" width="100">
+                            <a:sendBox width="676"/>
+                        </a:tab>
+                    </a:tabs>
+                </a:tabPanel>
+            </a:case>
+            <a:case value="false">
+                <div style="font-size:14px;margin-top:20px"><![CDATA[404 Not Found.]]></div>
+            </a:case>
+        </a:switch>
     </a:view>
 </a:screen>
