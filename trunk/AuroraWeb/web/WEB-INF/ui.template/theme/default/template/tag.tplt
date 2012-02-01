@@ -9,8 +9,7 @@
 ${page:html.head.css} 
         <link href="${/request/@context_path}/css/site.css" rel="stylesheet" type="text/css"/> 
         <link href="${/request/@context_path}/css/ddsmoothmenu.css" rel="stylesheet" type="text/css"/>
-        <link href="${/request/@context_path}/css/tag.css" rel="stylesheet" type="text/css"/>
-        <link href="${/request/@context_path}/css/wp-admin.css" rel="stylesheet" type="text/css"/>
+        <link href="${/request/@context_path}/css/tag.css" rel="stylesheet" type="text/css"/>        
         <script type='text/javascript' src='${/request/@context_path}/javascripts/jquery.js'></script>       
 ${page:html.head.script}
     </head>
