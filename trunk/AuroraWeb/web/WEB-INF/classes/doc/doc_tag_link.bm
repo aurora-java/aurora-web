@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: andy  
+    $Date: 2012-2-1 下午2:39:02  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[select a.article_id,
+       a.article_title,       
+       (select WMSYS.WM_CONCAT(t.tag_name) tags
+          from doc_tags t, doc_tags_relations r
+         where t.tag_id = r.tag_id
+           and r.article_id = a.article_id
+         group by r.article_id) tags,
+       a.creation_date,
+       a.last_update_date,
+       nvl(u.nick_name, u.user_name) nick_name
+  from doc_article a, sys_user u, doc_tags_relations r, doc_tags t
+ where a.created_by = u.user_id
+   and a.article_id = r.article_id
+   and t.tag_id = r.tag_id
+   and upper(t.tag_name) = upper(${/parameter/@tag_name})]]></bm:query-sql>
+            <bm:parameters>
+                <bm:parameter inputPath="/parameter/@tag_name"/>
+            </bm:parameters>
+        </bm:operation>
+    </bm:operations>
+    <bm:fields>
+        <bm:field name="article_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
+        <bm:field name="article_title" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="tags" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="nick_name" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="creation_date" databaseType="TIMESTAMP" datatype="java.sql.Timestamp"/>
+        <bm:field name="last_update_date" databaseType="TIMESTAMP" datatype="java.sql.Timestamp"/>
+    </bm:fields>
+</bm:model>
