@@ -13,8 +13,17 @@
                 <p:argument path="/parameter" type="uncertain.composite.CompositeMap"/>
             </p:arguments>
         </p:method-invoke>
+        <a:model-query model="doc.doc_tag_link" rootPath="doc_tag"/>
     </a:init-procedure>
     <a:view package="ui.template" template="tag">
+        <script><![CDATA[
+            function articleRenderer(value, record, name) {
+                return '<a class="link" style="font-size:12px;" href="javascript:locationTo(' + record.get('article_id') + ');">' + value + '</a>';
+            }                       
+            function locationTo(article_id) {
+                window.location.href = '${/request/@context_path}/article.screen?article_id=' + article_id;
+            }
+        ]]></script>
         <a:dataSets>
             <a:dataSet id="attribute_ds">
                 <a:datas dataSource="/model/schema/@attributes"/>
@@ -24,6 +33,9 @@
             </a:dataSet>
             <a:dataSet id="element_ds">
                 <a:datas dataSource="/model/schema/@elements"/>
+            </a:dataSet>
+            <a:dataSet id="doc_tag_ds">
+                <a:datas dataSource="/model/doc_tag"/>
             </a:dataSet>
         </a:dataSets>
         <H1><![CDATA[${/parameter/@tag_name}]]></H1>
@@ -60,15 +72,34 @@
                     </a:screenBody>
                 </a:tab>
                 <a:tab prompt="JS Reference" width="100"/>
-                <a:tab prompt="Related Links" width="100"><![CDATA[
-                ]]></a:tab>
+                <a:tab prompt="Related Links" width="100">
+                    <a:screenBody>
+                        <a:switch test="/model/doc_tag/record/@tags">
+                            <a:case value="null">
+                                <h3><![CDATA[没有与此标签相关的主题]]></h3>
+                            </a:case>
+                            <a:case value="">
+                                <h3><![CDATA[没有与此标签相关的主题]]></h3>
+                            </a:case>
+                            <a:case value="*">
+                                <h3><![CDATA[与此标签相关的主题]]></h3>
+                                <a:table bindTarget="doc_tag_ds" canWheel="false">
+                                    <a:columns>
+                                        <a:column name="tags" align="center" prompt="标签" width="150"/>
+                                        <a:column name="article_title" prompt="主题" renderer="articleRenderer" width="350"/>
+                                        <a:column name="nick_name" align="center" prompt="作者" width="80"/>
+                                        <a:column name="creation_date" align="center" prompt="发表时间" renderer="Aurora.formatDate" width="130"/>
+                                        <a:column name="last_update_date" align="center" prompt="更新时间" renderer="Aurora.formatDate" width="130"/>
+                                    </a:columns>
+                                </a:table>
+                            </a:case>
+                        </a:switch>
+                    </a:screenBody>
+                </a:tab>
                 <a:tab prompt="Try it!" width="100">
                     <a:sendBox width="676"/>
                 </a:tab>
             </a:tabs>
         </a:tabPanel>
-        <script><![CDATA[
-        	
-        ]]></script>
     </a:view>
 </a:screen>
