@@ -138,9 +138,38 @@ public class ComponentList {
 		String nameSpace = parameter.getString("ns");
 		CompositeMap result = new CompositeMap();
 		if (null != category && null != nameSpace) {
-			result.addChilds((ArrayList) ((TreeMap) nameSpaces.get(nameSpace))
-					.get(category));
+			Map nsMap = (TreeMap) nameSpaces.get(nameSpace);
+			if (null != nsMap) {
+				result.addChilds((ArrayList) nsMap.get(category));
+			}
 		}
+		return result;
+	}
+
+	public static CompositeMap validateParameter(IObjectRegistry registry,
+			CompositeMap parameter) {
+		String category = parameter.getString("category");
+		String nameSpace = parameter.getString("ns");
+		String tagName = parameter.getString("tag_name");
+		String className = parameter.getString("class_name");
+		CompositeMap result = new CompositeMap("result");
+		if (null != category && null != nameSpace && null != tagName && null != className) {
+			Map nsMap = (TreeMap) nameSpaces.get(nameSpace);
+			if (null != nsMap) {
+				List cl = (ArrayList) nsMap.get(category);
+				if (null != cl) {
+					Iterator it = cl.iterator();
+					while (it.hasNext()) {
+						CompositeMap vcmap = (CompositeMap) it.next();
+						if(tagName.equals(vcmap.get("name")) && className.equals(vcmap.get("classname"))){
+							result.putString("vaild", "true");
+							return result;
+						}
+					}
+				}
+			}
+		}
+		result.putString("vaild", "false");
 		return result;
 	}
 
@@ -217,8 +246,8 @@ public class ComponentList {
 		if (null == word || "".equals(word))
 			return word;
 		StringBuffer sb = new StringBuffer(word);
-		sb.replace(0, 1,
-				new String(new char[] { Character.toUpperCase(sb.charAt(0)) }));
+		sb.replace(0, 1, new String(new char[] { Character.toUpperCase(sb
+				.charAt(0)) }));
 
 		return sb.toString();
 	}
