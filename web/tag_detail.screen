@@ -50,6 +50,18 @@
                             <a:screenBody>
                                 <h2><![CDATA[&lt;a:${/parameter/@tag_name}&gt;]]></h2>
                                 <p><![CDATA[Namespace: ${/parameter/@ns}]]></p>
+                                <h3><![CDATA[Tag Reference:]]></h3>
+                                <p>
+                                    <a id="tagRef" target="_blank"/>
+                                </p>
+                                <script><![CDATA[
+			                	(function(){
+			                		var a = Ext.get('tagRef'),
+			                		link = 'http://'+location.host+'${/request/@context_path}/doc/tagdoc/index.html#!/output/${/parameter/@class_name}.html';
+			                		a.update(link);
+			                		a.dom.href = link;
+			                	})();
+			                	]]></script>
                                 <h3><![CDATA[Attributes]]></h3>
                                 <a:table bindTarget="attribute_ds" canWheel="false" className="cateList" percentWidth="80" style="margin-bottom:20px;">
                                     <a:columns>
