@@ -70,28 +70,30 @@ create or replace package body article_pkg is
        sysdate,
        p_user_id,
        sysdate);
-    while instr(v_str, ',', 1, 1) > 0 loop
-      v_index    := instr(v_str, ',', 1, 1);
-      v_tag_name := substr(v_str, 1, v_index - 1);
-      v_str      := substr(v_str, v_index + 1, length(v_str) - v_index);
-      begin
-        select t.tag_id
-          into v_tag_id
-          from doc_tags t
-         where t.tag_name = LOWER(v_tag_name);
-      exception
-        when no_data_found then
-          v_tag_id := doc_tags_s.nextval;
-          insert into doc_tags
-            (tag_id, tag_name)
-          values
-            (v_tag_id, LOWER(v_tag_name));
-      end;
-      insert into doc_tags_relations
-        (relation_id, article_id, tag_id)
-      values
-        (doc_tags_relations_s.nextval, v_article_id, v_tag_id);
-    end loop;
+    if (v_str is not null) and ('' <> v_str) then
+      while instr(v_str, ',', 1, 1) > 0 loop
+        v_index    := instr(v_str, ',', 1, 1);
+        v_tag_name := substr(v_str, 1, v_index - 1);
+        v_str      := substr(v_str, v_index + 1, length(v_str) - v_index);
+        begin
+          select t.tag_id
+            into v_tag_id
+            from doc_tags t
+           where t.tag_name = LOWER(v_tag_name);
+        exception
+          when no_data_found then
+            v_tag_id := doc_tags_s.nextval;
+            insert into doc_tags
+              (tag_id, tag_name)
+            values
+              (v_tag_id, LOWER(v_tag_name));
+        end;
+        insert into doc_tags_relations
+          (relation_id, article_id, tag_id)
+        values
+          (doc_tags_relations_s.nextval, v_article_id, v_tag_id);
+      end loop;
+    end if;
   exception
     when others then
       rollback;
@@ -126,28 +128,30 @@ create or replace package body article_pkg is
            t.last_update_date = sysdate
      where t.article_id = p_article_id;
     delete from doc_tags_relations t where t.article_id = p_article_id;
-    while instr(v_str, ',', 1, 1) > 0 loop
-      v_index    := instr(v_str, ',', 1, 1);
-      v_tag_name := substr(v_str, 1, v_index - 1);
-      v_str      := substr(v_str, v_index + 1, length(v_str) - v_index);
-      begin
-        select t.tag_id
-          into v_tag_id
-          from doc_tags t
-         where t.tag_name = LOWER(v_tag_name);
-      exception
-        when no_data_found then
-          v_tag_id := doc_tags_s.nextval;
-          insert into doc_tags
-            (tag_id, tag_name)
-          values
-            (v_tag_id, LOWER(v_tag_name));
-      end;
-      insert into doc_tags_relations
-        (relation_id, article_id, tag_id)
-      values
-        (doc_tags_relations_s.nextval, p_article_id, v_tag_id);
-    end loop;
+    if (v_str is not null) and ('' <> v_str) then
+      while instr(v_str, ',', 1, 1) > 0 loop
+        v_index    := instr(v_str, ',', 1, 1);
+        v_tag_name := substr(v_str, 1, v_index - 1);
+        v_str      := substr(v_str, v_index + 1, length(v_str) - v_index);
+        begin
+          select t.tag_id
+            into v_tag_id
+            from doc_tags t
+           where t.tag_name = LOWER(v_tag_name);
+        exception
+          when no_data_found then
+            v_tag_id := doc_tags_s.nextval;
+            insert into doc_tags
+              (tag_id, tag_name)
+            values
+              (v_tag_id, LOWER(v_tag_name));
+        end;
+        insert into doc_tags_relations
+          (relation_id, article_id, tag_id)
+        values
+          (doc_tags_relations_s.nextval, p_article_id, v_tag_id);
+      end loop;
+    end if;
   exception
     when others then
       rollback;
@@ -174,6 +178,4 @@ create or replace package body article_pkg is
   end;
 
 end article_pkg;
-/
-
 /
