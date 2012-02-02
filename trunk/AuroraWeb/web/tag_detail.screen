@@ -43,7 +43,7 @@
         </a:dataSets>
         <a:switch test="/model/valid/@vaild">
             <a:case value="true">
-                <H1><![CDATA[${/parameter/@tag_name}]]></H1>
+                <H1><![CDATA[${/parameter/@class_name}]]></H1>
                 <a:tabPanel height="500" width="900">
                     <a:tabs>
                         <a:tab prompt="Tag Reference" width="100">
@@ -57,7 +57,7 @@
                                 <script><![CDATA[
 			                	(function(){
 			                		var a = Ext.get('tagRef'),
-			                		link = 'http://'+location.host+'${/request/@context_path}/doc/tagdoc/index.html#!/output/${/parameter/@class_name}.html';
+			                		link = 'http://'+location.host+'${/request/@context_path}/doc/tagdoc/index.html?class=${/parameter/@class_name}';
 			                		a.update(link);
 			                		a.dom.href = link;
 			                	})();
@@ -97,7 +97,7 @@
                                 <script><![CDATA[
 			                	(function(){
 			                		var a = Ext.get('jsRef'),
-			                		link = 'http://'+location.host+'${/request/@context_path}/doc/jsdoc/index.html#!/output/Aurora.${/parameter/@class_name}.html';
+			                		link = 'http://'+location.host+'${/request/@context_path}/doc/jsdoc/index.html?class=Aurora.${/parameter/@class_name}';
 			                		a.update(link);
 			                		a.dom.href = link;
 			                	})();
