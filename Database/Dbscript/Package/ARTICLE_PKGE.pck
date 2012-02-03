@@ -70,7 +70,7 @@ create or replace package body article_pkg is
        sysdate,
        p_user_id,
        sysdate);
-    if (v_str is not null) and ('' <> v_str) then
+    if v_str is not null then
       while instr(v_str, ',', 1, 1) > 0 loop
         v_index    := instr(v_str, ',', 1, 1);
         v_tag_name := substr(v_str, 1, v_index - 1);
@@ -128,7 +128,7 @@ create or replace package body article_pkg is
            t.last_update_date = sysdate
      where t.article_id = p_article_id;
     delete from doc_tags_relations t where t.article_id = p_article_id;
-    if (v_str is not null) and ('' <> v_str) then
+    if v_str is not null then
       while instr(v_str, ',', 1, 1) > 0 loop
         v_index    := instr(v_str, ',', 1, 1);
         v_tag_name := substr(v_str, 1, v_index - 1);
