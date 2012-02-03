@@ -152,19 +152,20 @@
                     }, this);
                     Ext.get('sysMenu').on('mouseout', function(e) {
                         doHide = true;
-                        hideMenu.defer(50, this);
+                        hideMenu.defer(500, this);
                     }, this);
                     Ext.get('sysSubMenu').on('mouseover', function(e) {
                         doHide = false;
                     }, this);
                     Ext.get('sysSubMenu').on('mouseout', function(e) {
                         doHide = true;
-                        hideMenu.defer(50, this);
+                        hideMenu.defer(500, this);
                     }, this);
                     
                     if (Ext.isIE6) {
                         if (Ext.get('sysSubMenu')) {
-                            Ext.get('sysSubMenu').setStyle('margin-top', '85px');                            
+                            var xy = Ext.get('sysMenu').getXY();
+                            Ext.get('sysSubMenu').setStyle({'margin-top':'85px','left':xy[0]+'px'});                            
                         }
                     }
                 ]]></script>

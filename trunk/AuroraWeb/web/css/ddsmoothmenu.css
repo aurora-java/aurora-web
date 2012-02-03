@@ -8,7 +8,6 @@ list-style-type: none;
 
 /*Top level list items*/
 #mainMenu.ddsmoothmenu ul li{
-position: relative;
 display: inline;
 float: left;
 }
@@ -23,7 +22,6 @@ display: inline-block;
 /*1st sub level menu*/
 #mainMenu.ddsmoothmenu ul li ul{
 position: absolute;
-left: 0;
 display: none; /*collapse all sub menus to begin with*/
 visibility: hidden;
 background:url(/images/bk_submenu.png) 0 9px no-repeat;
