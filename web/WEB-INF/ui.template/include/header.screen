@@ -139,35 +139,36 @@
         <a:switch test="/session/@role_code">
             <a:case value="ADMIN">
                 <script><![CDATA[
-                    var doHide = false;
+                (function(){
+                    var doHide = false,
+                    	sysSubMenu = Ext.get('sysSubMenu'),
+                    	sysMenu = Ext.get('sysMenu');
                     
                     function hideMenu() {
                         if (doHide) {
-                            Ext.get('sysSubMenu').hide(true);
+                            sysSubMenu.hide(true);
                         }
                     }
-                    Ext.get('sysMenu').on('mouseover', function() {
+                    sysMenu.on('mouseover', function() {
                         doHide = false;
-                        Ext.get('sysSubMenu').show(true);
+                        sysSubMenu.show(true);
                     }, this);
-                    Ext.get('sysMenu').on('mouseout', function(e) {
+                    sysMenu.on('mouseout', function(e) {
                         doHide = true;
                         hideMenu.defer(500, this);
                     }, this);
-                    Ext.get('sysSubMenu').on('mouseover', function(e) {
+                    sysSubMenu.on('mouseover', function(e) {
                         doHide = false;
                     }, this);
-                    Ext.get('sysSubMenu').on('mouseout', function(e) {
+                    sysSubMenu.on('mouseout', function(e) {
                         doHide = true;
                         hideMenu.defer(500, this);
                     }, this);
                     
                     if (Ext.isIE6) {
-                        if (Ext.get('sysSubMenu')) {
-                            var xy = Ext.get('sysMenu').getXY();
-                            Ext.get('sysSubMenu').setStyle({'margin-top':'85px','left':xy[0]+'px'});                            
-                        }
+                        sysSubMenu.setStyle({'margin-top':'85px','left':sysMenu.getXY()[0]+'px'});                            
                     }
+                })();
                 ]]></script>
             </a:case>
         </a:switch>
