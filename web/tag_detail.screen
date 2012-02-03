@@ -106,7 +106,7 @@
                         </a:tab>
                         <a:tab prompt="Related Links" width="100">
                             <a:screenBody>
-                                <a:switch test="/model/doc_tag/record/@tags">
+                                <a:switch test="/model/doc_tag/record/@article_id">
                                     <a:case value="null">
                                         <h3><![CDATA[没有与此标签相关的主题]]></h3>
                                     </a:case>
@@ -117,8 +117,7 @@
                                         <h3><![CDATA[与此标签相关的主题]]></h3>
                                         <a:table bindTarget="doc_tag_ds" canWheel="false">
                                             <a:columns>
-                                                <a:column name="tags" align="center" prompt="标签" width="150"/>
-                                                <a:column name="article_title" prompt="主题" renderer="articleRenderer" width="350"/>
+                                                <a:column name="article_title" prompt="主题" renderer="articleRenderer" width="450"/>
                                                 <a:column name="nick_name" align="center" prompt="作者" width="80"/>
                                                 <a:column name="creation_date" align="center" prompt="发表时间" renderer="Aurora.formatDate" width="130"/>
                                                 <a:column name="last_update_date" align="center" prompt="更新时间" renderer="Aurora.formatDate" width="130"/>

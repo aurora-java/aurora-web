@@ -9,12 +9,7 @@
     <bm:operations>
         <bm:operation name="query">
             <bm:query-sql><![CDATA[select a.article_id,
-       a.article_title,       
-       (select WMSYS.WM_CONCAT(t.tag_name) tags
-          from doc_tags t, doc_tags_relations r
-         where t.tag_id = r.tag_id
-           and r.article_id = a.article_id
-         group by r.article_id) tags,
+       a.article_title,             
        a.creation_date,
        a.last_update_date,
        nvl(u.nick_name, u.user_name) nick_name
@@ -31,7 +26,6 @@
     <bm:fields>
         <bm:field name="article_id" databaseType="NUMBER" datatype="java.lang.Integer"/>
         <bm:field name="article_title" databaseType="VARCHAR2" datatype="java.lang.String"/>
-        <bm:field name="tags" databaseType="VARCHAR2" datatype="java.lang.String"/>
         <bm:field name="nick_name" databaseType="VARCHAR2" datatype="java.lang.String"/>
         <bm:field name="creation_date" databaseType="TIMESTAMP" datatype="java.sql.Timestamp"/>
         <bm:field name="last_update_date" databaseType="TIMESTAMP" datatype="java.sql.Timestamp"/>
