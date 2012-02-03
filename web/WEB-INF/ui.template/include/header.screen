@@ -7,7 +7,7 @@
 			    height:49px;
 			    color:#EAEAEA;
 			    padding:36px 10px 0;
-			    font-size:15px;
+			    font-size:13px;
             }
             .userMenu a{
                 color:#EAEAEA;
@@ -116,7 +116,7 @@
             </div>
             <a:switch test="/session/@login_success">
                 <a:case value="1">
-                    <div id="userMenu" class="userMenu" style="float:right;right:0px;width:240px;">
+                    <div id="userMenu" class="userMenu" style="float:right;right:0px;">
                         <span style="margin-left:5px;"><![CDATA[${/session/@nick_name} 欢迎您回来]]></span>
                         <span style="margin-left:5px;"><![CDATA[|]]></span>
                         <a href="javascript:changePassword();" style="margin-left:5px;"><![CDATA[修改密码]]></a>
@@ -160,7 +160,7 @@
                     
                     if (Ext.isIE6) {
                         if (Ext.get('sysSubMenu')) {
-                            Ext.get('sysSubMenu').setStyle('margin-top', '85px');
+                            Ext.get('sysSubMenu').setStyle('margin-top', '85px');                            
                         }
                     }
                 ]]></script>
