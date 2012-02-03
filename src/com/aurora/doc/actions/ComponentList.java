@@ -148,6 +148,9 @@ public class ComponentList {
 
 	public static CompositeMap validateParameter(IObjectRegistry registry,
 			CompositeMap parameter) {
+		if(null == nameSpaces){
+			initMap(registry);
+		}
 		String category = parameter.getString("category");
 		String nameSpace = parameter.getString("ns");
 		String tagName = parameter.getString("tag_name");
