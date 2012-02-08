@@ -74,24 +74,6 @@ body,html {
     width:252px;
 }
 
-#tagContent{
-	height: auto;
-	min-height: 622px;
-	width: 100%;
-	position: relative;
-	overflow:auto;
-}
-
-#tagContent #tagLeft {
-    float:left;
-    width:15%;    
-}
-
-#tagContent #tagRight {
-    float:right; 
-    width:85%;   
-}
-
 #footer {
     background:url(../images/bk_horiz_line.jpg) 0 0 repeat-x;
     margin:10px 0 0;
