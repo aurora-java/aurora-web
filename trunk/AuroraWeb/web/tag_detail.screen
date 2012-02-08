@@ -50,7 +50,7 @@
         </a:dataSets>
         <a:switch test="/model/schema/element/@valid">
             <a:case value="true">
-                <style type="text/css">
+                <style type="text/css"><![CDATA[
                     ul#tabnav {
                         text-align: left;
                         margin: 1em 0 1em 0;
@@ -106,26 +106,33 @@
                         font-size:13px;
                         color:#000;
                     }
-                </style>
+                ]]></style>
                 <H1><![CDATA[${/model/schema/element/@classname}]]></H1>
                 <H3><![CDATA[${/model/schema/element/@description}]]></H3>
-                <TABLE width="100%" align="center" cellpadding="0" cellspacing="0" >
-                      <TR>
+                <TABLE align="center" cellpadding="0" cellspacing="0" width="100%">
+                    <TR>
                         <TD>
                             <ul id="tabnav">
-                                <li id="tab1" class="tab1 current"><a href="javascript:tab(1)">Tag Reference</a></li>
-                                <li id="tab2" class="tab2"><a href="javascript:tab(2)">JS Reference</a></li>
-                                <li id="tab3" class="tab3"><a href="javascript:tab(3)">Related Links</a></li>
-                                <li id="tab4" class="tab4"><a href="javascript:tab(4)">Try it!</a></li>
+                                <li id="tab1" class="tab1 current">
+                                    <a href="javascript:tab(1)"><![CDATA[Tag Reference]]></a>
+                                </li>
+                                <li id="tab2" class="tab2">
+                                    <a href="javascript:tab(2)"><![CDATA[JS Reference]]></a>
+                                </li>
+                                <li id="tab3" class="tab3">
+                                    <a href="javascript:tab(3)"><![CDATA[Related Links]]></a>
+                                </li>
+                                <li id="tab4" class="tab4">
+                                    <a href="javascript:tab(4)"><![CDATA[Try it!]]></a>
+                                </li>
                             </ul>
                         </TD>
-                      </TR>
-                      <TR>
+                    </TR>
+                    <TR>
                         <TD>
                             <div id="tab1content">
                                 <h2><![CDATA[&lt;a:${/parameter/@tag_name}&gt;]]></h2>
                                 <p><![CDATA[Namespace: ${/parameter/@ns}]]></p>
-                                
                                 <h3><![CDATA[Attributes]]></h3>
                                 <a:table id="progrid" bindTarget="attribute_ds" canWheel="false" className="cateList" percentWidth="100" style="margin-bottom:20px;">
                                     <a:columns>
@@ -185,11 +192,11 @@
                                 </a:switch>
                             </div>
                             <div id="tab4content" style="display:none">
-                               <h3><![CDATA[Have a try!]]></h3>
-                               <a:sendBox style="width:90%;" height="300"/>
+                                <h3><![CDATA[Have a try!]]></h3>
+                                <a:sandBox height="300" style="width:90%;"/>
                             </div>
                         </TD>
-                      </TR>
+                    </TR>
                 </TABLE>
             </a:case>
             <a:case value="false">
