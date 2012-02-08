@@ -99,7 +99,7 @@
                     <a:column name="article_title" prompt="主题" renderer="articleRenderer" width="420"/>
                     <a:column name="nick_name" align="center" prompt="作者" width="100"/>
                     <a:column name="creation_date" align="center" prompt="发表日期" renderer="Aurora.formatDate" width="120"/>
-                    <a:column name="creation_date" align="center" prompt="更新日期" renderer="Aurora.formatDate" width="120"/>
+                    <a:column name="last_update_date" align="center" prompt="更新日期" renderer="Aurora.formatDate" width="120"/>
                 </a:columns>
             </a:table>
         </div>
