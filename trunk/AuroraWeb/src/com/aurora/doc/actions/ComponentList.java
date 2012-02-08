@@ -199,7 +199,7 @@ public class ComponentList {
 				Array array = (Array) it.next();
 				CompositeMap record = new CompositeMap("record");
 				record.put("name", array.getLocalName());
-				record.put("type", array.getType());
+				record.put("type", splitType(array.getType()));
 				record.put("document", array.getDocument());
 				arrayList.add(record);
 			}
@@ -215,7 +215,7 @@ public class ComponentList {
 				Attribute attribute = (Attribute) it.next();
 				CompositeMap record = new CompositeMap("record");
 				record.put("name", attribute.getLocalName());
-				record.put("type", attribute.getType());
+				record.put("type", splitType(attribute.getType()));
 				record.put("document", attribute.getDocument());
 				attributeList.add(record);
 			}
@@ -233,7 +233,7 @@ public class ComponentList {
 					Element element = (Element) para;
 					CompositeMap record = new CompositeMap("record");
 					record.put("name", element.getLocalName());
-					record.put("type", element.getType());
+					record.put("type", splitType(element.getType()));
 					record.put("document", element.getDocument());
 					elementList.add(record);
 				}
@@ -244,7 +244,12 @@ public class ComponentList {
 		}
 		return result;
 	}
-
+	
+	private static String splitType(String type){
+		if(null == type || !type.matches(".*:.*"))return type;
+		return type.split(":")[1];
+	}
+	
 	private static String capitalize(String word) {
 		if (null == word || "".equals(word))
 			return word;
