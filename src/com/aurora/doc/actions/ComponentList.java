@@ -41,13 +41,11 @@ public class ComponentList {
 		UncertainEngine engine = (UncertainEngine) registry
 				.getInstanceOfType(UncertainEngine.class);
 		if (null == engine)
-			throw new GeneralException(
-					"uncertain.exception.instance_not_found", new Object[] {
+			throw new GeneralException("uncertain.exception.instance_not_found", new Object[] {
 							UncertainEngine.class.getName(), null },
 					(Throwable) null, (CompositeMap) null);
 		PackageManager mPackageManager = engine.getPackageManager();
-		ViewComponentPackage p = (ViewComponentPackage) mPackageManager
-				.getPackage(mDefaultPackage);
+		ViewComponentPackage p = (ViewComponentPackage) mPackageManager.getPackage(mDefaultPackage);
 		List vcs = new ArrayList(p.getAllComponents());
 		Collections.sort(vcs, new NameComparator());
 		nameSpaces = new HashMap();
@@ -55,6 +53,7 @@ public class ComponentList {
 			ViewComponent vc = (ViewComponent) vcs.get(i);
 			CompositeMap vcmap = new CompositeMap();
 			vcmap.put("name", vc.getElementName());
+			vcmap.put("description", vc.getDescription());
 			vcmap.put("classname", capitalize(vc.getElementName()));
 			vcmap.put("category_name", vc.getCategory());
 			vcmap.put("ns", vc.getNameSpace());
@@ -176,14 +175,10 @@ public class ComponentList {
 		return result;
 	}
 
-	public static CompositeMap getSchema(IObjectRegistry registry,
-			CompositeMap parameter) {
-		ISchemaManager schemaManager = (ISchemaManager) registry
-				.getInstanceOfType(ISchemaManager.class);
+	public static CompositeMap getSchema(IObjectRegistry registry,CompositeMap parameter) {
+		ISchemaManager schemaManager = (ISchemaManager) registry.getInstanceOfType(ISchemaManager.class);
 		if (schemaManager == null)
-			throw BuiltinExceptionFactory.createInstanceNotFoundException(
-					(new CompositeMap()).asLocatable(), ISchemaManager.class,
-					CustomSourceCode.class.getCanonicalName());
+			throw BuiltinExceptionFactory.createInstanceNotFoundException((new CompositeMap()).asLocatable(), ISchemaManager.class,CustomSourceCode.class.getCanonicalName());
 		String nameSpace = parameter.getString("ns");
 		String tagName = parameter.getString("tag_name");
 		Element ele = schemaManager.getElement(new QualifiedName(nameSpace,
