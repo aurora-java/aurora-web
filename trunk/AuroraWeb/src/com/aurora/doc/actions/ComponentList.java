@@ -145,36 +145,6 @@ public class ComponentList {
 		return result;
 	}
 
-	public static CompositeMap validateParameter(IObjectRegistry registry,
-			CompositeMap parameter) {
-		if(null == nameSpaces){
-			initMap(registry);
-		}
-		String category = parameter.getString("category");
-		String nameSpace = parameter.getString("ns");
-		String tagName = parameter.getString("tag_name");
-		String className = parameter.getString("class_name");
-		CompositeMap result = new CompositeMap("result");
-		if (null != category && null != nameSpace && null != tagName && null != className) {
-			Map nsMap = (TreeMap) nameSpaces.get(nameSpace);
-			if (null != nsMap) {
-				List cl = (ArrayList) nsMap.get(category);
-				if (null != cl) {
-					Iterator it = cl.iterator();
-					while (it.hasNext()) {
-						CompositeMap vcmap = (CompositeMap) it.next();
-						if(tagName.equals(vcmap.get("name")) && className.equals(vcmap.get("classname"))){
-							result.putString("vaild", "true");
-							return result;
-						}
-					}
-				}
-			}
-		}
-		result.putString("vaild", "false");
-		return result;
-	}
-
 	public static CompositeMap getSchema(IObjectRegistry registry,CompositeMap parameter) {
 		ISchemaManager schemaManager = (ISchemaManager) registry.getInstanceOfType(ISchemaManager.class);
 		if (schemaManager == null)
@@ -186,6 +156,29 @@ public class ComponentList {
 		CompositeMap result = new CompositeMap("result");
 		if (ele == null)
 			return result;
+		
+		if(null == nameSpaces){
+			initMap(registry);
+		}
+		String category = parameter.getString("category");
+		if (null != category && null != nameSpace && null != tagName) {
+			Map nsMap = (TreeMap) nameSpaces.get(nameSpace);
+			if (null != nsMap) {
+				List cl = (ArrayList) nsMap.get(category);
+				if (null != cl) {
+					Iterator it = cl.iterator();
+					while (it.hasNext()) {
+						CompositeMap vcmap = (CompositeMap) it.next();
+						if(tagName.equals(vcmap.get("name"))){
+							vcmap.setName("element");
+							vcmap.putString("valid", "true");
+							result.addChild(vcmap);
+						}
+					}
+				}
+			}
+		}
+		
 		List arrays = ele.getAllArrays();
 		if (arrays != null && !arrays.isEmpty()) {
 			Iterator it = arrays.iterator();

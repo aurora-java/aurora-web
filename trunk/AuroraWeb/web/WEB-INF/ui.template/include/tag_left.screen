@@ -63,7 +63,7 @@
                                     <ul>
                                         <a:repeater datamodel="@grandchildren">
                                             <li id="submenu-${@name}">
-                                                <a href="${/request/@context_path}/tag_detail.screen?category=${@category_name}&amp;tag_name=${@name}&amp;class_name=${@classname}&amp;ns=${@ns}" tabindex="1"><![CDATA[${@name}]]></a>
+                                                <a href="${/request/@context_path}/tag_detail.screen?category=${@category_name}&amp;tag_name=${@name}&amp;ns=${@ns}" tabindex="1"><![CDATA[${@name}]]></a>
                                             </li>
                                         </a:repeater>
                                     </ul>
