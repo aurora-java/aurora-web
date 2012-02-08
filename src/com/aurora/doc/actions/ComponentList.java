@@ -266,7 +266,7 @@ public class ComponentList {
 				for (int i = 0, len = e.length; i < len; i++) {
 					sb.append(e[i].getValue());
 					if (i != len - 1) {
-						sb.append("|");
+						sb.append(" | ");
 					}
 				}
 				type = sb.toString();
