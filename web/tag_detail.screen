@@ -26,6 +26,10 @@
             function articleRenderer(value, record, name) {
                 return '<a target="_blank" href="${/request/@context_path}/article.screen?article_id=' + record.get('article_id') + '" class="link" style="font-size:12px;">' + value + '</a>';
             } 
+            
+            function propertityRenderer(value,record, name){
+                return '<B>'+value+'</B> : '+(record.get('type')||'')+'<DIV class="mdesc">'+record.get('document')+'</DIV>'
+            }
         ]]></script>
         <a:dataSets>
             <a:dataSet id="attribute_ds">
@@ -43,7 +47,108 @@
         </a:dataSets>
         <a:switch test="/model/valid/@vaild">
             <a:case value="true">
+                <style type="text/css">
+                    ul#tabnav {
+                        text-align: left;
+                        margin: 1em 0 1em 0;
+                        font: bold 11px verdana, arial, sans-serif;
+                        border-bottom: 1px solid #6c6;
+                        list-style-type: none;
+                        padding: 3px 10px 3px 10px;
+                    }
+                    
+                    ul#tabnav li {
+                        display: inline;
+                        margin-right:2px;
+                    }
+                    
+                    ul#tabnav li.current{
+                        border-bottom: 1px solid #fff;
+                        background-color: #fff;
+                    }
+                    
+                    ul#tabnav li.current a{
+                        background-color: #fff;
+                        color: #000;
+                        position: relative;
+                        top: 1px;
+                        padding-top: 4px;
+                    }
+                    
+                    ul#tabnav li a {
+                        padding: 3px 7px;
+                        border: 1px solid #6c6;
+                        background-color: #e9f1f7;
+                        color: #666;
+                        margin-right: 0px;
+                        text-decoration: none;
+                        border-bottom: none;
+                    }
+                    
+                    ul#tabnav a:hover {
+                        background: #fff;
+                    }
+                    
+                    .table-row-alt {
+                        background-color:#fff;
+                    }
+                    #progrid .table-cell {
+                        height:45px;
+                        padding-left:7px;
+                        font-size:12px;
+                    }
+                    #progrid .table-hc {
+                        text-align:left;
+                        padding-left:5px;
+                        font-size:13px;
+                        color:#000;
+                    }
+                </style>
                 <H1><![CDATA[${/parameter/@class_name}]]></H1>
+                <TABLE width="100%" align="center" cellpadding="0" cellspacing="0" >
+                      <TR>
+                        <TD>
+                            <ul id="tabnav">
+                                <li class="tab1 current"><a href="javascript:alert(1)">Tag Reference</a></li>
+                                <li class="tab2"><a href="index2.html">JS Reference</a></li>
+                                <li class="tab3"><a href="javascript:alert(1)">Related Links</a></li>
+                                <li class="tab4"><a href="javascript:alert(1)">Try it!</a></li>
+                            </ul>
+                        </TD>
+                      </TR>
+                      <TR>
+                        <TD>
+                            <div id="tab1content">
+                                <h2><![CDATA[&lt;a:${/parameter/@tag_name}&gt;]]></h2>
+                                <p><![CDATA[Namespace: ${/parameter/@ns}]]></p>
+                                
+                                <h3><![CDATA[Attributes]]></h3>
+                                <a:table id="progrid" bindTarget="attribute_ds" canWheel="false" className="cateList" percentWidth="100" style="margin-bottom:20px;">
+                                    <a:columns>
+                                        <a:column name="name" align="left" prompt="Attribute name" renderer="propertityRenderer"/>
+                                    </a:columns>
+                                </a:table>
+                                <h3><![CDATA[Arrays]]></h3>
+                                <a:table bindTarget="array_ds" canWheel="false" percentWidth="80" style="margin-bottom:20px;">
+                                    <a:columns>
+                                        <a:column name="name" align="center" prompt="Array name" width="150"/>
+                                        <a:column name="type" align="center" prompt="Element type" width="150"/>
+                                        <a:column name="document" align="center" prompt="Description" width="500"/>
+                                    </a:columns>
+                                </a:table>
+                                <h3><![CDATA[Sub elements]]></h3>
+                                <a:table bindTarget="element_ds" canWheel="false" className="cateList" percentWidth="80">
+                                    <a:columns>
+                                        <a:column name="name" align="center" prompt="Element name" width="150"/>
+                                        <a:column name="type" align="center" prompt="Use" width="150"/>
+                                        <a:column name="document" align="center" prompt="Description" width="500"/>
+                                    </a:columns>
+                                </a:table>
+                            </div>
+                        </TD>
+                      </TR>
+                </TABLE>
+                <!--
                 <a:tabPanel height="500" width="900">
                     <a:tabs>
                         <a:tab prompt="Tag Reference" width="100">
@@ -135,6 +240,7 @@
                         </a:tab>
                     </a:tabs>
                 </a:tabPanel>
+                -->
             </a:case>
             <a:case value="false">
                 <div style="font-size:14px;margin-top:20px"><![CDATA[404 Not Found.]]></div>
