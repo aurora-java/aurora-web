@@ -20,7 +20,10 @@ import uncertain.pkg.PackageManager;
 import uncertain.schema.Array;
 import uncertain.schema.Attribute;
 import uncertain.schema.Element;
+import uncertain.schema.Enumeration;
 import uncertain.schema.ISchemaManager;
+import uncertain.schema.Restriction;
+import uncertain.schema.SimpleType;
 
 import aurora.application.features.cstm.CustomSourceCode;
 import aurora.presentation.ViewComponent;
@@ -41,11 +44,13 @@ public class ComponentList {
 		UncertainEngine engine = (UncertainEngine) registry
 				.getInstanceOfType(UncertainEngine.class);
 		if (null == engine)
-			throw new GeneralException("uncertain.exception.instance_not_found", new Object[] {
+			throw new GeneralException(
+					"uncertain.exception.instance_not_found", new Object[] {
 							UncertainEngine.class.getName(), null },
 					(Throwable) null, (CompositeMap) null);
 		PackageManager mPackageManager = engine.getPackageManager();
-		ViewComponentPackage p = (ViewComponentPackage) mPackageManager.getPackage(mDefaultPackage);
+		ViewComponentPackage p = (ViewComponentPackage) mPackageManager
+				.getPackage(mDefaultPackage);
 		List vcs = new ArrayList(p.getAllComponents());
 		Collections.sort(vcs, new NameComparator());
 		nameSpaces = new HashMap();
@@ -147,10 +152,14 @@ public class ComponentList {
 		return result;
 	}
 
-	public static CompositeMap getSchema(IObjectRegistry registry,CompositeMap parameter) {
-		ISchemaManager schemaManager = (ISchemaManager) registry.getInstanceOfType(ISchemaManager.class);
+	public static CompositeMap getSchema(IObjectRegistry registry,
+			CompositeMap parameter) {
+		ISchemaManager schemaManager = (ISchemaManager) registry
+				.getInstanceOfType(ISchemaManager.class);
 		if (schemaManager == null)
-			throw BuiltinExceptionFactory.createInstanceNotFoundException((new CompositeMap()).asLocatable(), ISchemaManager.class,CustomSourceCode.class.getCanonicalName());
+			throw BuiltinExceptionFactory.createInstanceNotFoundException(
+					(new CompositeMap()).asLocatable(), ISchemaManager.class,
+					CustomSourceCode.class.getCanonicalName());
 		String nameSpace = parameter.getString("ns");
 		String tagName = parameter.getString("tag_name");
 		Element ele = schemaManager.getElement(new QualifiedName(nameSpace,
@@ -158,8 +167,8 @@ public class ComponentList {
 		CompositeMap result = new CompositeMap("result");
 		if (ele == null)
 			return result;
-		
-		if(null == nameSpaces){
+
+		if (null == nameSpaces) {
 			initMap(registry);
 		}
 		String category = parameter.getString("category");
@@ -171,7 +180,7 @@ public class ComponentList {
 					Iterator it = cl.iterator();
 					while (it.hasNext()) {
 						CompositeMap vcmap = (CompositeMap) it.next();
-						if(tagName.equals(vcmap.get("name"))){
+						if (tagName.equals(vcmap.get("name"))) {
 							vcmap.setName("element");
 							vcmap.putString("valid", "true");
 							result.addChild(vcmap);
@@ -180,7 +189,7 @@ public class ComponentList {
 				}
 			}
 		}
-		
+
 		List arrays = ele.getAllArrays();
 		if (arrays != null && !arrays.isEmpty()) {
 			Iterator it = arrays.iterator();
@@ -189,7 +198,8 @@ public class ComponentList {
 				Array array = (Array) it.next();
 				CompositeMap record = new CompositeMap("record");
 				record.put("name", array.getLocalName());
-				record.put("type", splitType(array.getType()));
+				record.put("type", splitType(array.getType(), schemaManager,
+						nameSpace));
 				record.put("document", array.getDocument());
 				arrayList.add(record);
 			}
@@ -205,7 +215,8 @@ public class ComponentList {
 				Attribute attribute = (Attribute) it.next();
 				CompositeMap record = new CompositeMap("record");
 				record.put("name", attribute.getLocalName());
-				record.put("type", splitType(attribute.getType()));
+				record.put("type", splitType(attribute.getType(),
+						schemaManager, nameSpace));
 				record.put("document", attribute.getDocument());
 				attributeList.add(record);
 			}
@@ -223,7 +234,8 @@ public class ComponentList {
 					Element element = (Element) para;
 					CompositeMap record = new CompositeMap("record");
 					record.put("name", element.getLocalName());
-					record.put("type", splitType(element.getType()));
+					record.put("type", splitType(element.getType(),
+							schemaManager, nameSpace));
 					record.put("document", element.getDocument());
 					elementList.add(record);
 				}
@@ -234,12 +246,35 @@ public class ComponentList {
 		}
 		return result;
 	}
-	
-	private static String splitType(String type){
-		if(null == type || !type.matches(".*:.*"))return type;
-		return type.split(":")[1];
+
+	private static String splitType(String type, ISchemaManager schemaManager,
+			String nameSpace) {
+		if (null == type || !type.matches(".*:.*"))
+			return type;
+		type = type.split(":")[1];
+		SimpleType st = null;
+		try {
+			st = schemaManager
+					.getSimpleType(new QualifiedName(nameSpace, type));
+		} catch (IllegalArgumentException e) {
+		}
+		if (null != st) {
+			StringBuffer sb = new StringBuffer();
+			Restriction r = st.getRestriction();
+			if (null != r) {
+				Enumeration[] e = r.getEnumerations();
+				for (int i = 0, len = e.length; i < len; i++) {
+					sb.append(e[i].getValue());
+					if (i != len - 1) {
+						sb.append("|");
+					}
+				}
+				type = sb.toString();
+			}
+		}
+		return type;
 	}
-	
+
 	private static String capitalize(String word) {
 		if (null == word || "".equals(word))
 			return word;
