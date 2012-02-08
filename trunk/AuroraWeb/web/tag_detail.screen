@@ -30,6 +30,15 @@
             function propertityRenderer(value,record, name){
                 return '<B>'+value+'</B> : '+(record.get('type')||'')+'<DIV class="mdesc">'+record.get('document')+'</DIV>'
             }
+            
+            function tab(id){
+                for(var i=1;i<=4;i++){
+                    Ext.get('tab'+i).removeClass('current');
+                    Ext.get('tab'+i+'content').setStyle('display','none')               
+                }
+                Ext.get('tab'+id).addClass('current');
+                Ext.get('tab'+id+'content').setStyle('display','') 
+            }
         ]]></script>
         <a:dataSets>
             <a:dataSet id="attribute_ds">
@@ -109,10 +118,10 @@
                       <TR>
                         <TD>
                             <ul id="tabnav">
-                                <li class="tab1 current"><a href="javascript:alert(1)">Tag Reference</a></li>
-                                <li class="tab2"><a href="index2.html">JS Reference</a></li>
-                                <li class="tab3"><a href="javascript:alert(1)">Related Links</a></li>
-                                <li class="tab4"><a href="javascript:alert(1)">Try it!</a></li>
+                                <li id="tab1" class="tab1 current"><a href="javascript:tab(1)">Tag Reference</a></li>
+                                <li id="tab2" class="tab2"><a href="javascript:tab(2)">JS Reference</a></li>
+                                <li id="tab3" class="tab3"><a href="javascript:tab(3)">Related Links</a></li>
+                                <li id="tab4" class="tab4"><a href="javascript:tab(4)">Try it!</a></li>
                             </ul>
                         </TD>
                       </TR>
@@ -144,6 +153,45 @@
                                         <a:column name="document" align="center" prompt="Description" width="500"/>
                                     </a:columns>
                                 </a:table>
+                            </div>
+                            <div id="tab2content" style="display:none">
+                                <h3><![CDATA[Javascript Reference:]]></h3>
+                                <p>
+                                    <a id="jsRef" target="_blank"/>
+                                </p>
+                                <script><![CDATA[
+                                (function(){
+                                    var a = Ext.get('jsRef'),
+                                    link = 'http://'+location.host+'${/request/@context_path}/doc/jsdoc/index.html?class=Aurora.${/parameter/@class_name}';
+                                    a.update(link);
+                                    a.dom.href = link;
+                                })();
+                                ]]></script>
+                            </div>
+                            <div id="tab3content" style="display:none">
+                                <a:switch test="/model/doc_tag/record/@article_id">
+                                    <a:case value="null">
+                                        <h3><![CDATA[没有与此标签相关的主题]]></h3>
+                                    </a:case>
+                                    <a:case value="">
+                                        <h3><![CDATA[没有与此标签相关的主题]]></h3>
+                                    </a:case>
+                                    <a:case value="*">
+                                        <h3><![CDATA[与此标签相关的主题]]></h3>
+                                        <a:table bindTarget="doc_tag_ds" canWheel="false">
+                                            <a:columns>
+                                                <a:column name="article_title" prompt="主题" renderer="articleRenderer" width="450"/>
+                                                <a:column name="nick_name" align="center" prompt="作者" width="80"/>
+                                                <a:column name="creation_date" align="center" prompt="发表时间" renderer="Aurora.formatDate" width="130"/>
+                                                <a:column name="last_update_date" align="center" prompt="更新时间" renderer="Aurora.formatDate" width="130"/>
+                                            </a:columns>
+                                        </a:table>
+                                    </a:case>
+                                </a:switch>
+                            </div>
+                            <div id="tab4content" style="display:none">
+                               <h3><![CDATA[Have a try!]]></h3>
+                               <a:sendBox style="width:90%;" height="300"/>
                             </div>
                         </TD>
                       </TR>
