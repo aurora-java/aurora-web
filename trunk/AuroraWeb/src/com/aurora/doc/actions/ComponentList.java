@@ -90,7 +90,7 @@ public class ComponentList {
 		if (null == nameSpaces) {
 			initMap(registry);
 		}
-
+		int total = 0;
 		Iterator nsIt = nameSpaces.keySet().iterator();
 		List parentList = new ArrayList();
 		while (nsIt.hasNext()) {
@@ -111,6 +111,7 @@ public class ComponentList {
 						child.putString(NS, ns);
 						grandchild.addChilds((ArrayList) ((TreeMap) nameSpaces
 								.get(ns)).get(category));
+						total += grandchild.getChilds().size();
 						child.put("grandchildren", grandchild);
 						childList.add(child);
 					}
@@ -123,6 +124,7 @@ public class ComponentList {
 
 		CompositeMap result = new CompositeMap();
 		result.addChilds(parentList);
+		result.put("total", new Integer(total));
 		return result;
 	}
 
