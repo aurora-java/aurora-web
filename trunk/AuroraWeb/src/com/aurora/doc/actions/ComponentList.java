@@ -269,8 +269,7 @@ public class ComponentList {
 
 	private static String splitType(String type, ISchemaManager schemaManager,
 			String nameSpace) {
-		if (null == type || !type.matches(".*:.*"))
-			return type;
+		if (null == type || !type.matches(".*:.*")) return "string";
 		type = type.split(":")[1];
 		SimpleType st = null;
 		try {
