@@ -73,6 +73,7 @@
                     </a:repeater>
                 </ul>
             </a:repeater>
+            <div style="margin:10px;">当前标签数量: <![CDATA[${/model/pkg/@total}]]></div>
         </div>
     </a:view>
 </a:screen>
