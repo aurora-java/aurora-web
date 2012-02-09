@@ -191,7 +191,7 @@ public class ComponentList {
 			}
 		}
 		putArrays(ele, schemaManager, nameSpace, result);
-		putAttributes(ele, schemaManager, nameSpace, result);
+		putAttributes(ele, schemaManager, nameSpace, result, false);
 		putElements(ele, schemaManager, nameSpace, result);
 		return result;
 	}
@@ -220,21 +220,22 @@ public class ComponentList {
 		}
 	}
 
-	private static void putAttributes(ComplexType ele,
-			ISchemaManager schemaManager, String nameSpace, CompositeMap result) {
+	private static void putAttributes(ComplexType ele,ISchemaManager schemaManager, String nameSpace, CompositeMap result, boolean putList) {
 		List attributes = ele.getAllAttributes();
-		if (attributes != null && !attributes.isEmpty()) {
-			Iterator it = attributes.iterator();
-			List attributeList = new ArrayList();
-			while (it.hasNext()) {
-				Attribute attribute = (Attribute) it.next();
-				CompositeMap record = new CompositeMap("record");
-				record.put("name", attribute.getLocalName());
-				record.put("type", splitType(attribute.getType(),
-						schemaManager, nameSpace));
-				record.put("document", attribute.getDocument());
-				attributeList.add(record);
-			}
+		Iterator it = attributes.iterator();
+		List attributeList = new ArrayList();
+		while (it.hasNext()) {
+			Attribute attribute = (Attribute) it.next();
+			CompositeMap record = new CompositeMap("record");
+			record.put("name", attribute.getLocalName());
+			record.put("type", splitType(attribute.getType(),
+					schemaManager, nameSpace));
+			record.put("document", attribute.getDocument());
+			attributeList.add(record);
+		}
+		if(putList){
+			result.put("attributes", attributeList);
+		}else{
 			CompositeMap attributeMap = new CompositeMap();
 			attributeMap.addChilds(attributeList);
 			result.put("attributes", attributeMap);
@@ -257,7 +258,7 @@ public class ComponentList {
 				record.put("document", array.getDocument());
 				ComplexType child = schemaManager.getComplexType(new QualifiedName(
 						nameSpace, type));
-				putAttributes(child, schemaManager, nameSpace, record);
+				putAttributes(child, schemaManager, nameSpace, record,true);
 				arrayList.add(record);
 			}
 			CompositeMap arrayMap = new CompositeMap();
