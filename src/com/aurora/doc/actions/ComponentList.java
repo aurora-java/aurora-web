@@ -19,6 +19,7 @@ import uncertain.ocm.IObjectRegistry;
 import uncertain.pkg.PackageManager;
 import uncertain.schema.Array;
 import uncertain.schema.Attribute;
+import uncertain.schema.ComplexType;
 import uncertain.schema.Element;
 import uncertain.schema.Enumeration;
 import uncertain.schema.ISchemaManager;
@@ -189,41 +190,14 @@ public class ComponentList {
 				}
 			}
 		}
+		putArrays(ele, schemaManager, nameSpace, result);
+		putAttributes(ele, schemaManager, nameSpace, result);
+		putElements(ele, schemaManager, nameSpace, result);
+		return result;
+	}
 
-		List arrays = ele.getAllArrays();
-		if (arrays != null && !arrays.isEmpty()) {
-			Iterator it = arrays.iterator();
-			List arrayList = new ArrayList();
-			while (it.hasNext()) {
-				Array array = (Array) it.next();
-				CompositeMap record = new CompositeMap("record");
-				record.put("name", array.getLocalName());
-				record.put("type", splitType(array.getType(), schemaManager,
-						nameSpace));
-				record.put("document", array.getDocument());
-				arrayList.add(record);
-			}
-			CompositeMap arrayMap = new CompositeMap();
-			arrayMap.addChilds(arrayList);
-			result.put("arrays", arrayMap);
-		}
-		List attributes = ele.getAllAttributes();
-		if (attributes != null && !attributes.isEmpty()) {
-			Iterator it = attributes.iterator();
-			List attributeList = new ArrayList();
-			while (it.hasNext()) {
-				Attribute attribute = (Attribute) it.next();
-				CompositeMap record = new CompositeMap("record");
-				record.put("name", attribute.getLocalName());
-				record.put("type", splitType(attribute.getType(),
-						schemaManager, nameSpace));
-				record.put("document", attribute.getDocument());
-				attributeList.add(record);
-			}
-			CompositeMap attributeMap = new CompositeMap();
-			attributeMap.addChilds(attributeList);
-			result.put("attributes", attributeMap);
-		}
+	private static void putElements(ComplexType ele, ISchemaManager schemaManager,
+			String nameSpace, CompositeMap result) {
 		List elements = ele.getAllElements();
 		if (elements != null && !elements.isEmpty()) {
 			Iterator it = elements.iterator();
@@ -244,7 +218,52 @@ public class ComponentList {
 			elementMap.addChilds(elementList);
 			result.put("elements", elementMap);
 		}
-		return result;
+	}
+
+	private static void putAttributes(ComplexType ele,
+			ISchemaManager schemaManager, String nameSpace, CompositeMap result) {
+		List attributes = ele.getAllAttributes();
+		if (attributes != null && !attributes.isEmpty()) {
+			Iterator it = attributes.iterator();
+			List attributeList = new ArrayList();
+			while (it.hasNext()) {
+				Attribute attribute = (Attribute) it.next();
+				CompositeMap record = new CompositeMap("record");
+				record.put("name", attribute.getLocalName());
+				record.put("type", splitType(attribute.getType(),
+						schemaManager, nameSpace));
+				record.put("document", attribute.getDocument());
+				attributeList.add(record);
+			}
+			CompositeMap attributeMap = new CompositeMap();
+			attributeMap.addChilds(attributeList);
+			result.put("attributes", attributeMap);
+		}
+	}
+
+	private static void putArrays(ComplexType ele, ISchemaManager schemaManager,
+			String nameSpace, CompositeMap result) {
+		List arrays = ele.getAllArrays();
+		if (arrays != null && !arrays.isEmpty()) {
+			Iterator it = arrays.iterator();
+			List arrayList = new ArrayList();
+			while (it.hasNext()) {
+				Array array = (Array) it.next();
+				CompositeMap record = new CompositeMap("record");
+				record.put("name", array.getLocalName());
+				String type = splitType(array.getType(), schemaManager,
+						nameSpace);
+				record.put("type", type);
+				record.put("document", array.getDocument());
+				ComplexType child = schemaManager.getComplexType(new QualifiedName(
+						nameSpace, type));
+				putAttributes(child, schemaManager, nameSpace, record);
+				arrayList.add(record);
+			}
+			CompositeMap arrayMap = new CompositeMap();
+			arrayMap.addChilds(arrayList);
+			result.put("arrays", arrayMap);
+		}
 	}
 
 	private static String splitType(String type, ISchemaManager schemaManager,
