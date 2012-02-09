@@ -22,7 +22,7 @@
             } 
             
             function propertityRenderer(value,record, name){
-                return '<B>'+value+'</B> : '+(record.get('type')||'')+'<DIV class="mdesc">'+record.get('document')+'</DIV>'
+                return '<B>'+value+' : </B><span>'+(record.get('type')||'')+'</span><DIV class="mdesc">'+record.get('document')+'</DIV>'
             }
             
             function tab(id){
@@ -92,12 +92,12 @@
                     .table-row-alt {
                         background-color:#fff;
                     }
-                    .table-cell {
+                    #progrid .table-cell, #attgrid .table-cell{
                         height:45px;
                         padding-left:7px;
                         font-size:12px;
                     }
-                    .table-hc {
+                    #progrid .table-hc, #attgrid .table-hc {
                         text-align:left;
                         padding-left:5px;
                         font-size:13px;
@@ -140,8 +140,8 @@
                                 <a:freeMarker>
                                     <![CDATA[
                                     <#list model.getObject("/model/schema/@arrays").getChilds() as item>
-                                        <div style="font-size:13px;height:25px;border-bottom:2px solid #ccc">${item.getString("name")} ${item.getString("document")}</div>
-                                        <table style="width: 100%; margin-bottom: 20px;" class="item-table cateList" border="0" cellSpacing="0" cellPadding="0">
+                                        <div style="font-size:13px;height:25px;border-bottom:2px solid #ccc">${item.getString("name")} ${item.getString("document")?default("")}</div>
+                                        <table id="attgrid" style="width: 100%; margin-bottom: 20px;" class="item-table cateList" border="0" cellSpacing="0" cellPadding="0">
                                         <thead>                                            
                                             <tr height="25"><td class="table-hc" rowSpan="1" width="" colSpan="1" dataindex="name">Attribute name</td></tr>
                                         </thead>
@@ -150,7 +150,7 @@
                                             <tr >
                                                 <td style="text-align: left;" atype="table-cell">
                                                     <div class="table-cell ">
-                                                    <b>${att.getString("name")}</b> : ${att.getString("type")?default("")}<div class="mdesc">${att.getString("document")}</div>
+                                                    <b>${att.getString("name")} : </b><span>${att.getString("type")}</span><div class="mdesc">${att.getString("document")?default("")}</div>
                                                     </div>
                                                 </td>
                                             </tr>
