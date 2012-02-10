@@ -63,8 +63,10 @@
                                     <ul>
                                         <a:repeater datamodel="@grandchildren">
                                             <li id="submenu-${@name}">
-                                                <img src="${/request/@context_path}/images/component.gif" style="float:left;margin-left:15px;"/>
-                                                <a href="${/request/@context_path}/tag_detail.screen?category=${@category_name}&amp;tag_name=${@name}&amp;ns=${@ns}" style="margin-left:22px;" tabindex="1"><![CDATA[${@name}]]></a>
+                                                <a href="${/request/@context_path}/tag_detail.screen?category=${@category_name}&amp;tag_name=${@name}&amp;ns=${@ns}" tabindex="1">
+                                                    <img src="${/request/@context_path}/images/component.gif" style="float:left;"/>
+                                                    <span style="margin-left:5px;"><![CDATA[${@name}]]></span>
+                                                </a>
                                             </li>
                                         </a:repeater>
                                     </ul>
