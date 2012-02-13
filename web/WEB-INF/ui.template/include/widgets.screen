@@ -52,14 +52,14 @@
             <ul>
                 <li>
                     <span>
-                        <a href="${/request/@context_path}/doc/jsdoc">
+                        <a href="${/request/@context_path}/doc/jsdoc/index.html">
                             <img src="${/request/@context_path}/resources/JavaScriptDocument.jpg"/>
                         </a>
                     </span>
                 </li>
                 <li>
                     <span>
-                        <a href="${/request/@context_path}/doc/tagdoc">
+                        <a href="${/request/@context_path}/doc/tagdoc/index.html">
                             <img src="${/request/@context_path}/resources/TagDocument.jpg"/>
                         </a>
                     </span>
