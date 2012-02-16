@@ -23,10 +23,10 @@
                 <a:datas dataSource="/model/pkg"/>
             </a:dataSet>
         </a:dataSets>
-        <a:navigationBar bindTarget="category_ds" displayField="category_name" icon="${/request/@context_path}/images/article.gif" idField="category_id" information="当前标签数量: ${/model/pkg/@total}" minHeight="622" parentField="parent_id">
+        <a:accordionMenu bindTarget="category_ds" displayField="category_name" icon="${/request/@context_path}/images/article.gif" idField="category_id" information="当前标签数量: ${/model/pkg/@total}" minHeight="622" parentField="parent_id">
             <a:events>
                 <a:event name="click" handler="onClick"/>
             </a:events>
-        </a:navigationBar>
+        </a:accordionMenu>
     </a:view>
 </a:screen>
