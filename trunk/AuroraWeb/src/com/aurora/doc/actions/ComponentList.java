@@ -135,6 +135,82 @@ public class ComponentList {
 	}
 
 	@SuppressWarnings("unchecked")
+	public static CompositeMap initCategory(IObjectRegistry registry)
+			throws Exception {
+		if (null == nameSpaces) {
+			initMap(registry);
+		}
+		int total = 0;
+		Iterator nsIt = nameSpaces.keySet().iterator();
+		List parentList = new ArrayList();
+		while (nsIt.hasNext()) {
+			String ns = (String) nsIt.next();
+			if (null != ns && !ns.isEmpty()) {
+				Iterator parentIt = ((TreeMap) nameSpaces.get(ns)).keySet()
+						.iterator();
+				int category_id = 0;
+				while (parentIt.hasNext()) {
+					CompositeMap parent = new CompositeMap();
+					String category = (String) parentIt.next();
+					if (null != category && null != ns && !category.isEmpty()) {
+						parent.putString(CATEGORY_NAME, category);
+						parent.putString(NS, ns);
+						parent.putInt("parent_id", -1);
+						int parent_id = new Integer(category_id);
+						parent.putInt("category_id", parent_id);
+						category_id++;
+						List childList = (ArrayList) ((TreeMap) nameSpaces
+								.get(ns)).get(category);
+						Iterator childIt = childList.iterator();
+						List chidrenList = new ArrayList();
+						while (childIt.hasNext()) {
+							CompositeMap record = (CompositeMap) childIt.next();
+							CompositeMap child = new CompositeMap();
+							child.put(CATEGORY_NAME, record.getString("name"));
+							child.put("category", category);
+							child.put(NS, ns);
+							child.put("parent_id", parent_id);
+							child.put("category_id", new Integer(category_id));
+							category_id++;
+							chidrenList.add(child);
+						}
+						CompositeMap children = new CompositeMap();
+						children.addChilds(chidrenList);
+						parent.put("children", children);
+						parentList.add(parent);
+					}
+				}
+			}
+		}
+		CompositeMap result = new CompositeMap();
+		result.addChilds(parentList);
+		// result.put("total", new Integer(total));
+		return result;
+	}
+
+	public static CompositeMap getCategory(IObjectRegistry registry,
+			CompositeMap parameter) throws Exception {
+		CompositeMap father = initCategory(registry);
+		Iterator itm = father.getChildIterator();
+		List fatherList = (List) father.getChilds();
+		List childrenList = null;
+		List resultList = new ArrayList();
+		int total = 0;
+		while (itm.hasNext()) {
+			CompositeMap child = (CompositeMap) itm.next();
+			CompositeMap children = (CompositeMap) child.get("children");
+			childrenList = (List) children.getChilds();
+			resultList.addAll(childrenList);
+			total += childrenList.size();
+		}
+		resultList.addAll(fatherList);
+		CompositeMap result = new CompositeMap();
+		result.addChilds(resultList);
+		result.put("total", total);
+		return result;
+	}
+
+	@SuppressWarnings("unchecked")
 	public static CompositeMap getComponentList(IObjectRegistry registry,
 			CompositeMap parameter) throws Exception {
 		if (null == nameSpaces) {
@@ -196,8 +272,8 @@ public class ComponentList {
 		return result;
 	}
 
-	private static void putElements(ComplexType ele, ISchemaManager schemaManager,
-			String nameSpace, CompositeMap result) {
+	private static void putElements(ComplexType ele,
+			ISchemaManager schemaManager, String nameSpace, CompositeMap result) {
 		List elements = ele.getAllElements();
 		if (elements != null && !elements.isEmpty()) {
 			Iterator it = elements.iterator();
@@ -208,8 +284,10 @@ public class ComponentList {
 					Element element = (Element) para;
 					CompositeMap record = new CompositeMap("record");
 					record.put("name", element.getLocalName());
-					record.put("type", splitType(element.getType(),
-							schemaManager, nameSpace));
+					record.put(
+							"type",
+							splitType(element.getType(), schemaManager,
+									nameSpace));
 					record.put("document", element.getDocument());
 					elementList.add(record);
 				}
@@ -220,7 +298,9 @@ public class ComponentList {
 		}
 	}
 
-	private static void putAttributes(ComplexType ele,ISchemaManager schemaManager, String nameSpace, CompositeMap result, boolean putList) {
+	private static void putAttributes(ComplexType ele,
+			ISchemaManager schemaManager, String nameSpace,
+			CompositeMap result, boolean putList) {
 		List attributes = ele.getAllAttributes();
 		Iterator it = attributes.iterator();
 		List attributeList = new ArrayList();
@@ -228,22 +308,22 @@ public class ComponentList {
 			Attribute attribute = (Attribute) it.next();
 			CompositeMap record = new CompositeMap("record");
 			record.put("name", attribute.getLocalName());
-			record.put("type", splitType(attribute.getType(),
-					schemaManager, nameSpace));
+			record.put("type",
+					splitType(attribute.getType(), schemaManager, nameSpace));
 			record.put("document", attribute.getDocument());
 			attributeList.add(record);
 		}
-		if(putList){
+		if (putList) {
 			result.put("attributes", attributeList);
-		}else{
+		} else {
 			CompositeMap attributeMap = new CompositeMap();
 			attributeMap.addChilds(attributeList);
 			result.put("attributes", attributeMap);
 		}
 	}
 
-	private static void putArrays(ComplexType ele, ISchemaManager schemaManager,
-			String nameSpace, CompositeMap result) {
+	private static void putArrays(ComplexType ele,
+			ISchemaManager schemaManager, String nameSpace, CompositeMap result) {
 		List arrays = ele.getAllArrays();
 		if (arrays != null && !arrays.isEmpty()) {
 			Iterator it = arrays.iterator();
@@ -256,9 +336,9 @@ public class ComponentList {
 						nameSpace);
 				record.put("type", type);
 				record.put("document", array.getDocument());
-				ComplexType child = schemaManager.getComplexType(new QualifiedName(
-						nameSpace, type));
-				putAttributes(child, schemaManager, nameSpace, record,true);
+				ComplexType child = schemaManager
+						.getComplexType(new QualifiedName(nameSpace, type));
+				putAttributes(child, schemaManager, nameSpace, record, true);
 				arrayList.add(record);
 			}
 			CompositeMap arrayMap = new CompositeMap();
@@ -269,7 +349,8 @@ public class ComponentList {
 
 	private static String splitType(String type, ISchemaManager schemaManager,
 			String nameSpace) {
-		if (null == type || !type.matches(".*:.*")) return "string";
+		if (null == type || !type.matches(".*:.*"))
+			return "string";
 		type = type.split(":")[1];
 		SimpleType st = null;
 		try {
@@ -298,8 +379,8 @@ public class ComponentList {
 		if (null == word || "".equals(word))
 			return word;
 		StringBuffer sb = new StringBuffer(word);
-		sb.replace(0, 1, new String(new char[] { Character.toUpperCase(sb
-				.charAt(0)) }));
+		sb.replace(0, 1,
+				new String(new char[] { Character.toUpperCase(sb.charAt(0)) }));
 
 		return sb.toString();
 	}
