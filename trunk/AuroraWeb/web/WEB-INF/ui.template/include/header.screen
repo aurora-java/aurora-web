@@ -102,7 +102,7 @@
                                 <a href="${/request/@context_path}/tag_category.screen"><![CDATA[ADN]]></a>
                             </li>
                             <li>
-                                <a href="${/request/@context_path}/download.screen"><![CDATA[下载]]></a>
+                                <a href="${/request/@context_path}/release/"><![CDATA[下载]]></a>
                             </li>
                             <li>
                                 <a href="http://code.google.com/p/aurora-project/" target="_blank"><![CDATA[SVN]]></a>
