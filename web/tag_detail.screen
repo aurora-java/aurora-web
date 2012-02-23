@@ -141,26 +141,27 @@
                                 </a:table>
                                 <h2><![CDATA[Arrays]]></h2>
                                 <a:freeMarker><![CDATA[
-                                    
-                                    <#list model.getObject("/model/schema/@arrays").getChilds() as item>
-                                        <div style="font-size:13px;height:25px;border-bottom:2px solid #ccc">${item.getString("name")} ${item.getString("document")?default("")}</div>
-                                        <table id="attgrid" style="width: 100%; margin-bottom: 20px;" class="item-table cateList" border="0" cellSpacing="0" cellPadding="0">
-                                        <thead>                                            
-                                            <tr height="25"><td class="table-hc" rowSpan="1" width="" colSpan="1" dataindex="name">Attribute name</td></tr>
-                                        </thead>
-                                        <tbody>
-                                        <#list item.get("attributes") as att>                                        
-                                            <tr >
-                                                <td style="text-align: left;" atype="table-cell">
-                                                    <div class="table-cell ">
-                                                    <b>${att.getString("name")} : </b><span>${att.getString("type")}</span><div class="mdesc">${att.getString("document")?default("")}</div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </#list>
-                                        </tbody>
-                                        </table>
-                                    </#list>
+                                    <#if model.getObject("/model/schema/@arrays")??>
+	                                    <#list model.getObject("/model/schema/@arrays").getChilds() as item>
+	                                        <div style="font-size:13px;height:25px;border-bottom:2px solid #ccc">${item.getString("name")} ${item.getString("document")?default("")}</div>
+	                                        <table id="attgrid" style="width: 100%; margin-bottom: 20px;" class="item-table cateList" border="0" cellSpacing="0" cellPadding="0">
+	                                        <thead>                                            
+	                                            <tr height="25"><td class="table-hc" rowSpan="1" width="" colSpan="1" dataindex="name">Attribute name</td></tr>
+	                                        </thead>
+	                                        <tbody>
+	                                        <#list item.get("attributes") as att>                                        
+	                                            <tr >
+	                                                <td style="text-align: left;" atype="table-cell">
+	                                                    <div class="table-cell ">
+	                                                    <b>${att.getString("name")} : </b><span>${att.getString("type")}</span><div class="mdesc">${att.getString("document")?default("")}</div>
+	                                                    </div>
+	                                                </td>
+	                                            </tr>
+	                                        </#list>
+	                                        </tbody>
+	                                        </table>
+	                                    </#list>
+                                    </#if>
                                 ]]></a:freeMarker>
                                 <h2><![CDATA[Sub elements]]></h2>
                                 <a:table bindTarget="element_ds" canWheel="false" className="cateList" percentWidth="80">
