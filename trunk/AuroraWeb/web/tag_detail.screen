@@ -19,19 +19,19 @@
         <script><![CDATA[
             function articleRenderer(value, record, name) {
                 return '<a target="_blank" href="${/request/@context_path}/article.screen?article_id=' + record.get('article_id') + '" class="link" style="font-size:12px;">' + value + '</a>';
-            } 
-            
-            function propertityRenderer(value,record, name){
-                return '<B>'+value+' : </B><span>'+(record.get('type')||'')+'</span><DIV class="mdesc">'+record.get('document')+'</DIV>'
             }
             
-            function tab(id){
-                for(var i=1;i<=4;i++){
-                    Ext.get('tab'+i).removeClass('current');
-                    Ext.get('tab'+i+'content').setStyle('display','none')               
+            function propertityRenderer(value, record, name) {
+                return '<B>' + value + ' : </B><span>' + (record.get('type') || '') + '</span><DIV class="mdesc">' + record.get('document') + '</DIV>';
+            }
+            
+            function tab(id) {
+                for (var i = 1;i <= 5;i++) {
+                    Ext.get('tab' + i).removeClass('current');
+                    Ext.get('tab' + i + 'content').setStyle('display', 'none');
                 }
-                Ext.get('tab'+id).addClass('current');
-                Ext.get('tab'+id+'content').setStyle('display','') 
+                Ext.get('tab' + id).addClass('current');
+                Ext.get('tab' + id + 'content').setStyle('display', '');
             }
         ]]></script>
         <a:dataSets>
@@ -114,13 +114,16 @@
                                     <a href="javascript:tab(1)"><![CDATA[Tag Reference]]></a>
                                 </li>
                                 <li id="tab2" class="tab2">
-                                    <a href="javascript:tab(2)"><![CDATA[JS Reference]]></a>
+                                    <a href="javascript:tab(2)"><![CDATA[Article Reference]]></a>
                                 </li>
                                 <li id="tab3" class="tab3">
-                                    <a href="javascript:tab(3)"><![CDATA[Related Links]]></a>
+                                    <a href="javascript:tab(3)"><![CDATA[JS Reference]]></a>
                                 </li>
                                 <li id="tab4" class="tab4">
-                                    <a href="javascript:tab(4)"><![CDATA[Try it!]]></a>
+                                    <a href="javascript:tab(4)"><![CDATA[Related Links]]></a>
+                                </li>
+                                <li id="tab5" class="tab5">
+                                    <a href="javascript:tab(5)"><![CDATA[Try it!]]></a>
                                 </li>
                             </ul>
                         </TD>
@@ -137,8 +140,8 @@
                                     </a:columns>
                                 </a:table>
                                 <h2><![CDATA[Arrays]]></h2>
-                                <a:freeMarker>
-                                    <![CDATA[
+                                <a:freeMarker><![CDATA[
+                                    
                                     <#list model.getObject("/model/schema/@arrays").getChilds() as item>
                                         <div style="font-size:13px;height:25px;border-bottom:2px solid #ccc">${item.getString("name")} ${item.getString("document")?default("")}</div>
                                         <table id="attgrid" style="width: 100%; margin-bottom: 20px;" class="item-table cateList" border="0" cellSpacing="0" cellPadding="0">
@@ -171,6 +174,11 @@
                                 <br/>
                             </div>
                             <div id="tab2content" style="display:none">
+                                <div class="docbook" style="margin-top:25px;">
+                                    <a:htmlInclude path="${/request/@context_path}/release/${/parameter/@version}/html/${/parameter/@tag_name}.html" version="${/parameter/@version}"/>
+                                </div>
+                            </div>
+                            <div id="tab3content" style="display:none">
                                 <h3><![CDATA[Javascript Reference:]]></h3>
                                 <p>
                                     <a id="jsRef" target="_blank"/>
@@ -184,7 +192,7 @@
                                 })();
                                 ]]></script>
                             </div>
-                            <div id="tab3content" style="display:none">
+                            <div id="tab4content" style="display:none">
                                 <a:switch test="/model/doc_tag/record/@article_id">
                                     <a:case value="null">
                                         <h3><![CDATA[没有与此标签相关的主题]]></h3>
@@ -205,7 +213,7 @@
                                     </a:case>
                                 </a:switch>
                             </div>
-                            <div id="tab4content" style="display:none">
+                            <div id="tab5content" style="display:none">
                                 <h3><![CDATA[Have a try!]]></h3>
                                 <a:sandBox height="300" style="width:90%;"/>
                             </div>

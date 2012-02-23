@@ -12,9 +12,9 @@
         <script><![CDATA[
             function onClick(nav, record, menu_id, submenu_id) {
                 if (submenu_id) {
-                    location.href = '${/request/@context_path}/tag_detail.screen?menu_id=' + menu_id + '&submenu_id=' + submenu_id + '&ns=' + record.get('ns') + '&category=' + record.get('category') + '&tag_name=' + record.get('category_name');
+                    location.href = '${/request/@context_path}/tag_detail.screen?menu_id=' + menu_id + '&submenu_id=' + submenu_id + '&ns=' + record.get('ns') + '&category=' + record.get('category') + '&tag_name=' + record.get('category_name') + '&version=1.2.1';
                 } else {
-                    location.href = '${/request/@context_path}/tag_category.screen?menu_id=' + menu_id + '&ns=' + record.get('ns') + '&category=' + record.get('category_name');
+                    location.href = '${/request/@context_path}/tag_category.screen?menu_id=' + menu_id + '&ns=' + record.get('ns') + '&category=' + record.get('category_name') + '&version=1.2.1';
                 }
             }
         ]]></script>
