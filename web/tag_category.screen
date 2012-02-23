@@ -40,7 +40,7 @@
             <a:case value="*">
                 <div class="item">
                     <a:repeater datamodel="/model/category">
-                        <a href="${/request/@context_path}/tag_detail.screen?category=${@category_name}&amp;tag_name=${@name}&amp;ns=${@ns}&amp;menu_id=${/parameter/@menu_id}" style="text-align:center">
+                        <a href="${/request/@context_path}/tag_detail.screen?category=${@category_name}&amp;tag_name=${@name}&amp;ns=${@ns}&amp;menu_id=${/parameter/@menu_id}&amp;version=${/parameter/@version}" style="text-align:center">
                             <img height="90px" src="images/${@name}.png" style="margin-top:5px;" width="120px"/>
                             <div style="margin-top:5px;"><![CDATA[${@description}]]></div>
                         </a>
