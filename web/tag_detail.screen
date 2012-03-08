@@ -13,6 +13,12 @@
                 <p:argument path="/parameter" type="uncertain.composite.CompositeMap"/>
             </p:arguments>
         </p:method-invoke>
+        <p:method-invoke className="com.aurora.doc.actions.ScreenReader" methodName="getContent" resultPath="/model/content">
+            <p:arguments>
+                <p:argument path="instance" type="uncertain.ocm.IObjectRegistry"/>
+                <p:argument path="/parameter" type="uncertain.composite.CompositeMap"/>
+            </p:arguments>
+        </p:method-invoke>
         <a:model-query model="doc.doc_tag_link" rootPath="doc_tag"/>
     </a:init-procedure>
     <a:view package="ui.template" template="tag">
@@ -43,6 +49,9 @@
             </a:dataSet>
             <a:dataSet id="doc_tag_ds">
                 <a:datas dataSource="/model/doc_tag"/>
+            </a:dataSet>
+            <a:dataSet id="test">
+                <a:datas dataSource="/model/content"/>
             </a:dataSet>
         </a:dataSets>
         <a:switch test="/model/schema/element/@valid">
@@ -216,7 +225,7 @@
                             </div>
                             <div id="tab5content" style="display:none">
                                 <h3><![CDATA[Have a try!]]></h3>
-                                <a:sandBox height="300" style="width:90%;"/>
+                                <a:sandBox content="${/model/content/@content}" height="300" style="width:90%;"/>
                             </div>
                         </TD>
                     </TR>
@@ -226,5 +235,8 @@
                 <div style="font-size:14px;margin-top:20px"><![CDATA[404 Not Found.]]></div>
             </a:case>
         </a:switch>
+        <script><![CDATA[
+        	var ds = $('test');
+        ]]></script>
     </a:view>
 </a:screen>
