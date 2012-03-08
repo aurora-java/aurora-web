@@ -16,7 +16,7 @@ public class ScreenReader {
 	private static final String FILE_PATH = "release/";
 	private static String xmlPattern = ".*<\\?xml[^>]*\\?>";
 	private static String notePattern = "<!--[^>]*-->";
-	private static String screenPattern = ".*<a:screen[^>]*>(.*)</a:screen>.*";
+	private static String screenPattern = ".*<a:screen\\s[^>]*>(.*)</a:screen>.*";
 	private static String procedurePattern = ".*<a:init-procedure(/>)|(.*/a:init-procedure>)";
 	private static String viewPattern = ".*<a:view[^>]*>(.*)</a:view>.*";
 
