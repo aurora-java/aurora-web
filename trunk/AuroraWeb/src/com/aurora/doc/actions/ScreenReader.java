@@ -31,7 +31,7 @@ public class ScreenReader {
 		File file = new File(webHome, file_path);
 		if (!file.exists())
 			// throw new IOException("Can't get resource from " + file_path);
-			result.put("content", "");
+			result.put("content", null);
 		else
 			result.put("content", parseContent(getContent(file)));
 		return result;
