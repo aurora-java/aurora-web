@@ -39,6 +39,38 @@
                 Ext.get('tab' + id).addClass('current');
                 Ext.get('tab' + id + 'content').setStyle('display', '');
             }
+            
+            function link(value, record, name) {
+                return '<a style="font-size:12px;" href="javascript:locationTo(\'' + value + '\');">' + value + '</a>';
+            }
+            
+            function locationTo(tag_name) {
+                var record = getRecord(tag_name);
+                var menu_id = getMenuId(record);
+                var submenu_id = record.id;
+                var category = record.get('category');
+                window.location.href = '${/request/@context_path}/tag_detail.screen?ns=${/parameter/@ns}&version=${/parameter/@version}&tag_name=' + tag_name + '&category=' + category + '&menu_id=' + menu_id + '&submenu_id=' + submenu_id;
+            }
+            
+            function getRecord(tag_name) {
+                var records = $('category_ds').getAll();
+                var length = records.length;
+                for (var i = 0;i < length;i++) {
+                    if (records[i].get('category_name') == tag_name) {
+                        return records[i];
+                    }
+                }
+            }
+            
+            function getMenuId(record) {
+                var records = $('category_ds').getAll();
+                var length = records.length;
+                for (var i = 0;i < length;i++) {
+                    if (records[i].get('category_id') == record.get('parent_id')) {
+                        return records[i].id;
+                    }
+                }
+            }
         ]]></script>
         <a:dataSets>
             <a:dataSet id="attribute_ds">
@@ -120,10 +152,10 @@
                         <TD>
                             <ul id="tabnav">
                                 <li id="tab1" class="tab1 current">
-                                    <a href="javascript:tab(1)"><![CDATA[Tag Reference]]></a>
+                                    <a href="javascript:tab(1)"><![CDATA[Description]]></a>
                                 </li>
                                 <li id="tab2" class="tab2">
-                                    <a href="javascript:tab(2)"><![CDATA[Article Reference]]></a>
+                                    <a href="javascript:tab(2)"><![CDATA[Tag Reference]]></a>
                                 </li>
                                 <li id="tab3" class="tab3">
                                     <a href="javascript:tab(3)"><![CDATA[JS Reference]]></a>
@@ -131,15 +163,27 @@
                                 <li id="tab4" class="tab4">
                                     <a href="javascript:tab(4)"><![CDATA[Related Links]]></a>
                                 </li>
-                                <li id="tab5" class="tab5">
-                                    <a href="javascript:tab(5)"><![CDATA[Try it!]]></a>
-                                </li>
+                                <a:switch test="/model/content/@content">
+                                    <a:case value="null">
+                                        <div id="tab5"/>
+                                    </a:case>
+                                    <a:case value="*">
+                                        <li id="tab5" class="tab5">
+                                            <a href="javascript:tab(5)"><![CDATA[Try it!]]></a>
+                                        </li>
+                                    </a:case>
+                                </a:switch>
                             </ul>
                         </TD>
                     </TR>
                     <TR>
                         <TD>
                             <div id="tab1content">
+                                <div class="docbook" style="margin-top:25px;">
+                                    <a:htmlInclude path="${/request/@context_path}/release/${/parameter/@version}/html/${/parameter/@tag_name}.html" version="${/parameter/@version}"/>
+                                </div>
+                            </div>
+                            <div id="tab2content" style="display:none">
                                 <h2><![CDATA[&lt;a:${/parameter/@tag_name}&gt;]]></h2>
                                 <p><![CDATA[Namespace: ${/parameter/@ns}]]></p>
                                 <h2><![CDATA[Attributes]]></h2>
@@ -152,7 +196,8 @@
                                 <a:freeMarker><![CDATA[
                                     <#if model.getObject("/model/schema/@arrays")??>
 	                                    <#list model.getObject("/model/schema/@arrays").getChilds() as item>
-	                                        <div style="font-size:13px;height:25px;border-bottom:2px solid #ccc">${item.getString("name")} ${item.getString("document")?default("")}</div>
+	                                        <div style="font-size:13px;height:20px;"><b>&lt; a:${item.getString("name")} &gt;</b></div>
+	                                        <div style="font-size:13px;height:20px;border-bottom:2px solid #ccc"><b>&lt; a:${item.getString("type")} &gt;</b></div>
 	                                        <table id="attgrid" style="width: 100%; margin-bottom: 20px;" class="item-table cateList" border="0" cellSpacing="0" cellPadding="0">
 	                                        <thead>                                            
 	                                            <tr height="25"><td class="table-hc" rowSpan="1" width="" colSpan="1" dataindex="name">Attribute name</td></tr>
@@ -175,18 +220,13 @@
                                 <h2><![CDATA[Sub elements]]></h2>
                                 <a:table bindTarget="element_ds" canWheel="false" className="cateList" percentWidth="80">
                                     <a:columns>
-                                        <a:column name="name" align="left" prompt="Element name" width="150"/>
+                                        <a:column name="name" align="left" prompt="Element name" renderer="link" width="150"/>
                                         <a:column name="type" align="center" prompt="Use" width="150"/>
                                         <a:column name="document" align="center" prompt="Description" width="500"/>
                                     </a:columns>
                                 </a:table>
                                 <br/>
                                 <br/>
-                            </div>
-                            <div id="tab2content" style="display:none">
-                                <div class="docbook" style="margin-top:25px;">
-                                    <a:htmlInclude path="${/request/@context_path}/release/${/parameter/@version}/html/${/parameter/@tag_name}.html" version="${/parameter/@version}"/>
-                                </div>
                             </div>
                             <div id="tab3content" style="display:none">
                                 <h3><![CDATA[Javascript Reference:]]></h3>
