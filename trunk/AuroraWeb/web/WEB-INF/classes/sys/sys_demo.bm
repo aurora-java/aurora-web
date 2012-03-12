@@ -7,12 +7,12 @@
 -->
 <bm:model xmlns:o="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="SYS_DEMO" needAccessControl="false">
     <bm:fields>
-        <bm:field name="demo_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="DEMO_ID" prompt="SYS_DEMO.DEMO_ID"/>
-        <bm:field name="account_name" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="ACCOUNT_NAME" prompt="SYS_DEMO.ACCOUNT_NAME"/>
-        <bm:field name="description" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="DESCRIPTION" prompt="SYS_DEMO.DESCRIPTION"/>
-        <bm:field name="start_date" databaseType="DATE" datatype="java.util.Date" physicalName="START_DATE" prompt="SYS_DEMO.START_DATE"/>
-        <bm:field name="end_date" databaseType="DATE" datatype="java.util.Date" physicalName="END_DATE" prompt="SYS_DEMO.END_DATE"/>
-        <bm:field name="is_frozen" databaseType="CHAR" datatype="java.lang.String" physicalName="IS_FROZEN" prompt="SYS_DEMO.IS_FROZEN"/>
+        <bm:field name="demo_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="DEMO_ID"/>
+        <bm:field name="account_name" databaseType="VARCHAR2" datatype="java.lang.String" forDisplay="true" forQuery="true" physicalName="ACCOUNT_NAME" prompt="账号"/>
+        <bm:field name="description" databaseType="VARCHAR2" datatype="java.lang.String" forDisplay="true" forQuery="true" physicalName="DESCRIPTION" prompt="描述"/>
+        <bm:field name="start_date" databaseType="DATE" datatype="java.util.Date" physicalName="START_DATE" prompt="有效日期从"/>
+        <bm:field name="end_date" databaseType="DATE" datatype="java.util.Date" physicalName="END_DATE" prompt="有效日期至"/>
+        <bm:field name="is_frozen" databaseType="CHAR" datatype="java.lang.String" physicalName="IS_FROZEN" prompt="是否冻结"/>
     </bm:fields>
     <bm:features>
         <f:standard-who/>
@@ -21,4 +21,8 @@
     <bm:primary-key>
         <bm:pk-field name="demo_id"/>
     </bm:primary-key>
+    <bm:query-fields>
+        <bm:query-field name="account_name" queryExpression="account_name like &apos;%&apos; || ${@account_name} || &apos;%&apos;"/>
+        <bm:query-field name="description" queryExpression="description like &apos;%&apos; || ${@description} || &apos;%&apos;"/>
+    </bm:query-fields>
 </bm:model>
