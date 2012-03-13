@@ -38,6 +38,9 @@
                 }
                 Ext.get('tab' + id).addClass('current');
                 Ext.get('tab' + id + 'content').setStyle('display', '');
+                if (id == 5) {
+                    $('sandBox').initScroll();
+                }
             }
             
             function link(value, record, name) {
@@ -265,7 +268,7 @@
                             </div>
                             <div id="tab5content" style="display:none">
                                 <h3><![CDATA[Have a try!]]></h3>
-                                <a:sandBox content="${/model/content/@content}" height="300" style="width:90%;"/>
+                                <a:sandBox id="sandBox" content="${/model/content/@content}" height="300" style="width:90%;" tag="${/parameter/@tag_name}"/>
                             </div>
                         </TD>
                     </TR>
@@ -275,8 +278,5 @@
                 <div style="font-size:14px;margin-top:20px"><![CDATA[404 Not Found.]]></div>
             </a:case>
         </a:switch>
-        <script><![CDATA[
-        	var ds = $('test');
-        ]]></script>
     </a:view>
 </a:screen>
