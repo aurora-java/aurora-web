@@ -18,7 +18,8 @@ create table SYS_DEMO
   created_by       NUMBER not null,
   creation_date    DATE not null,
   last_updated_by  NUMBER not null,
-  last_update_date DATE not null
+  last_update_date DATE not null,
+  parent_id        NUMBER
 )
 tablespace AURORA
   pctfree 10

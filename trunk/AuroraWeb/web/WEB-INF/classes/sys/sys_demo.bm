@@ -13,6 +13,7 @@
         <bm:field name="start_date" databaseType="DATE" datatype="java.util.Date" physicalName="START_DATE" prompt="有效日期从"/>
         <bm:field name="end_date" databaseType="DATE" datatype="java.util.Date" physicalName="END_DATE" prompt="有效日期至"/>
         <bm:field name="is_frozen" databaseType="CHAR" datatype="java.lang.String" physicalName="IS_FROZEN" prompt="是否冻结"/>
+        <bm:field name="parent_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="PARENT_ID"/>
     </bm:fields>
     <bm:features>
         <f:standard-who/>
