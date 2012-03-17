@@ -22,14 +22,13 @@ public class ScreenReader {
 		File webHome = SourceCodeUtil.getWebHome(registry);
 		String version = parameter.getString("version");
 		String tag = parameter.getString("tag_name");
-		String file_path = FILE_PATH + version + "/screen/" + tag.toLowerCase()
-				+ ".screen";
+		String file_path = FILE_PATH + version + "/screen/" + tag + ".screen";
 		CompositeMap result = new CompositeMap();
 		File file = new File(webHome, file_path);
 		if (!file.exists())
 			// throw new IOException("Can't get resource from " + file_path);
 			result.put("home_path", null);
-		else{
+		else {
 			result.put("home_path", webHome.getPath());
 		}
 		return result;
