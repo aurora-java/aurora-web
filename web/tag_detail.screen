@@ -13,7 +13,7 @@
                 <p:argument path="/parameter" type="uncertain.composite.CompositeMap"/>
             </p:arguments>
         </p:method-invoke>
-        <p:method-invoke className="com.aurora.doc.actions.ScreenReader" methodName="getContent" resultPath="/model/content">
+        <p:method-invoke className="com.aurora.doc.actions.ScreenReader" methodName="getScreenHomePath" resultPath="/model/screen">
             <p:arguments>
                 <p:argument path="instance" type="uncertain.ocm.IObjectRegistry"/>
                 <p:argument path="/parameter" type="uncertain.composite.CompositeMap"/>
@@ -39,7 +39,7 @@
                 Ext.get('tab' + id).addClass('current');
                 Ext.get('tab' + id + 'content').setStyle('display', '');
                 if (id == 5) {
-                    $('sandBox').initScroll();
+                    $('sandBox').initScroll();                    
                 }
             }
             
@@ -166,7 +166,7 @@
                                 <li id="tab4" class="tab4">
                                     <a href="javascript:tab(4)"><![CDATA[Related Links]]></a>
                                 </li>
-                                <a:switch test="/model/content/@content">
+                                <a:switch test="/model/screen/@home_path">
                                     <a:case value="null">
                                         <div id="tab5"/>
                                     </a:case>
@@ -268,7 +268,7 @@
                             </div>
                             <div id="tab5content" style="display:none">
                                 <h3><![CDATA[Have a try!]]></h3>
-                                <a:sandBox id="sandBox" content="${/model/content/@content}" height="300" style="width:90%;" tag="${/parameter/@tag_name}"/>
+                                <a:sandBox id="sandBox" fileName="${/model/screen/@home_path}/release/${/parameter/@version}/screen/${/parameter/@tag_name}.screen" height="300" style="width:90%;" tag="${/parameter/@tag_name}"/>
                             </div>
                         </TD>
                     </TR>
