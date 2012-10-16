@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: Guoxuezhao  
+    $Date: 2011-12-27 下午1:45:30  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure><![CDATA[
+    ]]></a:init-procedure>
+    <a:view template="login_ipad">
+        <style><![CDATA[
+            .login{margin:auto; margin-top:10%; width:400px}
+            #foot{position: absolute;bottom: 0;}
+            td{width:10%}
+        ]]></style>
+        <script><![CDATA[
+            function checkData(){
+	            if(document.getElementById('username').value.length == 0){
+	                alert('用户名不能为空！');
+	                return false;
+	            }
+	            if(document.getElementById('password').value.length == 0){
+	                alert('密码不能为空！');
+	                return false;
+	            }
+	            if(document.getElementById('language').value.length == 0){
+	                alert('请选择语言！');
+	                return false;
+	            }
+	            return true;
+	        }
+	        function setCookie(name,value,days){
+	            var pathname = location.pathname;
+			    pathname = pathname.substring(0, pathname.lastIndexOf('/') + 1);
+			    var exp = null;
+			    if(days){
+			        exp  = new Date();
+			        exp.setTime(exp.getTime() + days*24*60*60*1000);
+			    }
+			    document.cookie = name + "="+ escape (value) +';path = ' + pathname + ((exp) ? (';expires=' + exp.toGMTString()) : '');
+	        }
+	        function login(){
+	            if(!checkData()) return;
+	            var data = {
+	                user_name : document.getElementById('username').value,
+	                user_password : document.getElementById('password').value,
+	                user_language : document.getElementById('language').value
+	            };
+	            //alert({_request_data:JSON.stringify({parameter:data})});
+	            jQuery.ajax({
+	                url:'${/request/@context_path}/login.svc',
+	                type: 'POST',
+	                data: {_request_data:JSON.stringify({parameter:data})},
+	                success: function(data,textStatus){
+	                    setCookie('USERNAME',$('#username').val(),30);
+	                    setCookie('LANG',$('#language').val(),30);
+	                    window.location.href = '${/request/@context_path}/role_select_ipad.screen' + location.search;
+	                },
+	                error: function(){
+	                    alert('用户名或密码输入错误！');
+	                },
+	                dataType: 'json'
+	            });
+	        }
+        ]]></script>
+        <div data-role="page">
+            <div data-role="header">
+                <h1><![CDATA[HEC]]></h1>
+            </div>
+            <!-- /header -->
+            <div data-role="content">
+                <div class="login">
+                    <h2><![CDATA[用户登录]]></h2>
+                    <table>
+                        <tr>
+                            <td>
+                                <label for="name-c"><![CDATA[用户名 :]]></label>
+                            </td>
+                            <td>
+                                <input name="user_name" id="username" placeholder="Username" type="text"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="name-c"><![CDATA[密码 :]]></label>
+                            </td>
+                            <td>
+                                <input name="user_password" id="password" placeholder="Password" type="password"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="select" for="select-choice-c"><![CDATA[语言选择 :]]></label>
+                            </td>
+                            <td>
+                                <select name="language" id="language">
+                                    <option value="ZHS"><![CDATA[中文]]></option>
+                                    <option value="US"><![CDATA[English]]></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button onClick="login();" type="submit"><![CDATA[登录]]></button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- /body-c -->
+            </div>
+            <!-- /content -->
+            <div id="foot" data-role="footer">
+                <p><![CDATA[© Copyright Hand China Co.,Ltd.]]></p>
+            </div>
+            <!-- footer -->
+        </div>
+        <!-- /page -->
+    </a:view>
+</a:screen>

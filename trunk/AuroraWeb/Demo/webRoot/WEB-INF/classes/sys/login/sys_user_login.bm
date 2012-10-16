@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: shishiliyan  
+    $Date: 2012-6-15 上午11:11:26  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<ns1:model xmlns:e="aurora.service.exception" xmlns:o="aurora.database.local.oracle" xmlns:ns1="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="fc" baseTable="sys_user" trace="true">
+    <!-- select *
+        into r_sys_user
+        from sys_user
+       where user_name = upper(p_user_name);
+    exception
+      when no_data_found then
+        raise e_user_null;
+    end; -->
+    <ns1:fields>
+        <ns1:field name="user_id" databaseType="BIGINT" datatype="java.lang.Long"/>
+        <ns1:field name="user_name" databaseType="VARCHAR" datatype="java.lang.String" forUpdate="false" prompt="SYS_USER.ACCOUNT"/>
+        <ns1:field name="encrypted_foundation_password" databaseType="VARCHAR" datatype="java.lang.String" forUpdate="false"/>
+        <ns1:field name="encrypted_user_password" databaseType="VARCHAR" datatype="java.lang.String" forUpdate="false"/>
+        <ns1:field name="start_date" databaseType="DATE" datatype="java.sql.Date" forInsert="true" forUpdate="false" prompt="HAP_START_DATE"/>
+        <ns1:field name="end_date" databaseType="DATE" datatype="java.sql.Date" forInsert="true" forUpdate="false" prompt="HAP_END_DATE"/>
+        <ns1:field name="last_logon_date" databaseType="DATE" datatype="java.sql.Date" forInsert="true" forUpdate="true" updateExpression="now()"/>
+        <ns1:field name="description" databaseType="VARCHAR" datatype="java.lang.String" forUpdate="false" prompt="SYS_USER.DESCRIPTION"/>
+        <ns1:field name="password_lifespan_days" databaseType="BIGINT" datatype="java.lang.Long" forUpdate="false"/>
+        <ns1:field name="password_lifespan_access" databaseType="BIGINT" datatype="java.lang.Long" forUpdate="false"/>
+        <ns1:field name="employee_id" databaseType="BIGINT" datatype="java.lang.Long" forUpdate="false"/>
+        <ns1:field name="frozen_flag" databaseType="VARCHAR" datatype="java.lang.String" forUpdate="false" prompt="SYS_USER.FROZEN_FLAG"/>
+        <ns1:field name="frozen_flag_display" databaseType="VARCHAR" datatype="java.lang.String" expression="(case fc.frozen_flag when &apos;Y&apos; then &apos;已冻结&apos; when &apos;N&apos; then &apos;未冻结&apos; end)" forInsert="false" forUpdate="false" prompt="SYS_USER.IS_FROZEN"/>
+        <ns1:field name="frozen_date" databaseType="DATE" datatype="java.sql.Date" forInsert="true" forUpdate="false" prompt="SYS_USER.FROZEN_DATE"/>
+        <ns1:field name="password_start_date" databaseType="DATE" datatype="java.sql.Date" forInsert="true" forUpdate="false"/>
+        <ns1:field name="menu_type" databaseType="VARCHAR" datatype="java.lang.String" forUpdate="false"/>
+    </ns1:fields>
+    <ns1:primary-key>
+        <ns1:pk-field name="user_id"/>
+    </ns1:primary-key>
+    <ns1:query-fields>
+        <ns1:query-field field="user_name" queryExpression="fc.user_name = upper(${@user_name}) "/>
+    </ns1:query-fields>
+    <ns1:features>
+        <f:standard-who/>
+    </ns1:features>
+    <e:exception-descriptor-config>
+        <e:exception-descriptor exception="java.sql.SQLException" handleClass="aurora.database.SQLExceptionDescriptor">
+            <e:error-message code="1" message="SYS_USER.ACCOUNT_DISTICNT"/>
+        </e:exception-descriptor>
+    </e:exception-descriptor-config>
+</ns1:model>

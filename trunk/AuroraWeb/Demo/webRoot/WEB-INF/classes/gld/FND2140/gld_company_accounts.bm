@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:e="aurora.service.exception" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="ga" baseTable="gld_company_accounts">
+    <bm:fields>
+        <bm:field name="set_of_books_id" databaseType="NUMBER" datatype="java.lang.Long"/>
+        <bm:field name="company_id" databaseType="NUMBER" datatype="java.lang.Long"/>
+        <bm:field name="account_id" databaseType="NUMBER" datatype="java.lang.Long"/>
+        <bm:field name="functional_currency_code" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="enabled_flag" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="subsystem_flag" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="rowid" forInsert="false"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="rowid"/>
+    </bm:primary-key>
+    <bm:query-fields>
+        <!--
+        <bm:query-field field="account_code" queryOperator="like"/>
+        <bm:query-field field="account_type" queryOperator="="/>
+        <bm:query-field field="account_set_id" queryExpression="ga.account_set_id=${/parameter/@account_set_id}"/>
+        <bm:query-field field="account_description" queryExpression="exists (select 1 from fnd_descriptions fd where gs.description_id=fd.description_id and fd.description_text like ${@account_description} and fd.language = ${/session/@lang})"/>
+        -->
+    </bm:query-fields>
+    <bm:features>
+        <f:standard-who/>
+        <f:multi-language-storage/>
+    </bm:features>
+    <bm:ref-fields/>
+    <e:exception-descriptor-config>
+        <e:exception-descriptor exception="java.sql.SQLException" handleClass="aurora.database.SQLExceptionDescriptor">
+            <e:error-message code="1" message="GLD_COMPANY_ACCOUNTS.COMPANY_DISTINCT"/>
+        </e:exception-descriptor>
+    </e:exception-descriptor-config>
+</bm:model>

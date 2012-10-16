@@ -1,0 +1,103 @@
+.money{
+    color:red;
+    font-weight:bold;
+}
+
+.jumper_frame{
+    width:100%;
+    border:#999999 solid 1px;
+       -webkit-border-radius: 5px 5px 5px 5px; 
+ 			-moz-border-radius: 5px 5px 5px 5px; 
+ 			font-size:14px;
+ 			font-family:黑体;
+}
+
+.line_title{
+	font-size: 14px;
+	font-weight: bold;
+	padding-bottom: 3px;	
+	padding-top: 3px;		    
+}
+
+
+/** 跳转的CSS  **/
+.jumper_line{
+    border-bottom:#CCCCCC solid 1px;
+    min-height:35px;
+    line-height:35px;
+}
+
+.jumper_line_bottom{
+    min-height:35px;
+    line-height:35px;
+}
+
+.jumper_line_title{
+    width:70%;
+    float:left;
+    text-align:left;
+}
+
+.jumper_line_guide{
+    width:30%;
+    float:left;
+    text-align:right;
+    font-size:18px;
+}
+
+/** 内容行的CSS **/
+.line_frame{
+    -webkit-border-radius: 5px 5px 5px 5px; 
+	-moz-border-radius: 5px 5px 5px 5px; 
+}
+
+.line_frame .title{
+    font-size: 14px;
+	font-weight: bold;
+	padding-bottom: 3px;
+}
+				
+.line_content{
+    margin-top:5px;
+    border:#999999 solid 1px;
+    -webkit-border-radius: 5px 5px 5px 5px; 
+	-moz-border-radius: 5px 5px 5px 5px; 
+	font-size:12px;
+	width:100%;
+	border-spacing:0;
+	padding:0px;
+}
+
+.line_content_line{
+    line-height:20px;
+    margin:0;
+}
+
+.line_content_title{
+    width:30%;
+    border-bottom:#cccccc solid 1px;
+}
+
+.line_content_value{
+    width:70%;
+    border-bottom:#cccccc solid 1px;
+}
+
+.clean_float{
+    clear:both;
+}
+
+.jump_btn{
+    font-size: 14px;
+	font-weight: bold;
+	border:#3079ED solid 1px;
+	background-color:#4C8FFB;
+	color:#FFFFFF;
+	text-align:center;
+	line-height:20px;
+	margin-top:5px;
+	margin-bottom:5px;
+	width:25%;
+	float:left;
+	margin-right:5px;
+}

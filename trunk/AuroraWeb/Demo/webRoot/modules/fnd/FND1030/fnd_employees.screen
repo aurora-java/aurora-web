@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: lqr 
+    $Date: 2012-9-19 下午06:09:23  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view>
+        <script><![CDATA[
+      
+         function fnd_1030_queryFndEmployee(){
+            $('fnd_employee_result_ds').query();
+         }
+                  
+         function fnd_1030_indexChangeFunction(ds, record){
+             $('btn_rst_add').enable();
+             $('btn_rst_del').enable();               
+         }
+         
+         function fnd_1030_deptEditer(record,name){
+             if(record.get('employee_code')){
+                return 'dept_name_cmb';
+             }
+             else {
+                return '';
+             }
+         }
+         
+         function fnd_1030_codeEditer(record,name){
+                return 'employee_grid_tf';                
+         }
+
+         function fnd_1030_nameEditer(record,name){
+                return 'employee_grid_tf';                
+         }
+
+         function fnd_1030_excel_import(){
+             new Aurora.Window({id:'employee_import_window',
+                                url:'fnd_employee_import_window.screen',
+                                title:'${l:FND1030.EMPLOYEE_IMPORT}',width:800,height:600});
+		     //window.open('bgt_item_import_upload.screen?batch_id=${/model/batch_id/record/@batch_id}');			           
+         }
+      ]]></script>
+        <a:dataSets>
+            <a:dataSet id="fnd_employee_query_ds" autoCreate="true" model="fnd.FND1030.fnd_employees"/>
+            <a:dataSet id="fnd_department_ds" loadData="true" model="fnd.FND1030.fnd_departments"/>
+            <a:dataSet id="fnd_employee_result_ds" autoCount="true" autoQuery="true" fetchAll="false" model="fnd.FND1030.fnd_employees" pageSize="10" queryDataSet="fnd_employee_query_ds" queryUrl="${/request/@context_path}/autocrud/fnd.FND1030.fnd_employees/query" selectable="true" submitUrl="fnd_employees_update.svc">
+                <a:fields>
+                    <a:field name="department_description" displayField="department_description" options="fnd_department_ds" returnField="department_id" valueField="department_id"/>
+                    <a:field name="enabled_flag" checkedValue="Y" defaultValue="Y" uncheckedValue="N"/>
+                </a:fields>
+                <a:events>
+                    <a:event name="indexchange" handler="fnd_1030_indexChangeFunction"/>
+                </a:events>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:form column="2" labelWidth="80" title="FND1030.EMPLOYEE_QUERY" width="600">
+                <a:textField name="employee_code" bindTarget="fnd_employee_query_ds" prompt="FND1030.EMPLOYEE_CODE" typeCase="upper" width="200">
+                    <a:events>
+                        <a:event name="enterdown" handler="fnd_1030_queryFndEmployee"/>
+                    </a:events>
+                </a:textField>
+            </a:form>
+            <a:hBox>
+                <a:button click="fnd_1030_queryFndEmployee" text="HAP_QUERY"/>
+            </a:hBox>
+            <a:grid id="sysGrid" bindTarget="fnd_employee_result_ds" height="400" navBar="true" width="800">
+                <a:toolBar>
+                    <a:button id="btn_rst_add" type="add"/>
+                    <a:button id="btn_rst_del" type="delete"/>
+                    <a:button id="btn_rst_save" type="save"/>
+                    <a:button id="excel_import" click="fnd_1030_excel_import" icon="${/request/@context_path}/images/addbm.png" text="FND1030.IMPORT"/>
+                    <a:button id="excel_export" type="excel"/>
+                </a:toolBar>
+                <a:columns>
+                    <a:column name="employee_code" editorFunction="fnd_1030_codeEditer" sortable="true" width="150"/>
+                    <a:column name="employee_name" editorFunction="fnd_1030_nameEditer" sortable="true" width="200"/>
+                    <a:column name="department_description" editorFunction="fnd_1030_deptEditer" prompt="FND_EMPLOYEES.DEPARTMENT_DESCRIPTION" sortable="true" width="200"/>
+                    <a:column name="enabled_flag" align="center" editor="enabled_flag_ckb" sortable="true" width="200"/>
+                </a:columns>
+                <a:editors>
+                    <a:comboBox id="dept_name_cmb"/>
+                    <a:checkBox id="enabled_flag_ckb"/>
+                    <a:textField id="employee_grid_tf"/>
+                </a:editors>
+            </a:grid>
+        </a:screenBody>
+    </a:view>
+</a:screen>

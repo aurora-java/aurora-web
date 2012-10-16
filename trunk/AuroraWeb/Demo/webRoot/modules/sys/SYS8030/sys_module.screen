@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: ouyangzhaochang2663 $
+    $Date: 2010/11/15 07:47:58 $
+    $Revision: 1.5 $
+    $Purpose: 模块定义
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure><![CDATA[     
+    ]]></a:init-procedure>
+    <a:view>
+        <script><![CDATA[
+    	
+            function queryModule(){
+                $('sys_module_result_ds').query();
+            }
+            function resetModule(){
+            	$('sys_module_query_ds').reset();
+            }
+            
+            function moduleCodeEdit(record,name){
+                if(record.get('module_id')){
+                    return '';
+                }else{
+                    return 'sys_module_code_grid_tf';
+                }
+            }
+                        
+            function validateModuleCode(record, name, value){
+                if(value && value.length > 6){
+                    Aurora.showMessage('${l:PROMPT_MESSAGE}','${l:MODULE_CODE_LENGTH_LIMIT}');
+                    return '${l:MODULE_CODE_LENGTH_LIMIT}';
+                }
+                return true;
+            }
+            
+        
+    	]]></script>
+        <a:dataSets>
+            <a:dataSet id="sys_module_query_ds" model="sys.sys_module"/>
+            <a:dataSet id="sys_module_result_ds" autoQuery="true" fetchAll="false" model="sys.sys_module" queryDataSet="sys_module_query_ds" selectable="true">
+                <a:fields>
+                    <a:field name="module_code" required="true" validator="validateModuleCode"/>
+                    <a:field name="module_name" required="true"/>
+                    <a:field name="installed_flag" checkedValue="Y" defaultValue="Y" uncheckedValue="N"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:form column="2" title="SYS_MODULE.MODULE_QUERY" width="500">
+                <a:textField name="module_code" bindTarget="sys_module_query_ds" typeCase="upper">
+                    <a:events>
+                        <a:event name="enterdown" handler="queryModule"/>
+                    </a:events>
+                </a:textField>
+                <a:textField name="module_name" bindTarget="sys_module_query_ds">
+                    <a:events>
+                        <a:event name="enterdown" handler="queryModule"/>
+                    </a:events>
+                </a:textField>
+            </a:form>
+            <a:hBox>
+                <a:button click="queryModule" text="HAP_QUERY"/>
+                <a:button click="resetModule" text="HAP_RESET"/>
+            </a:hBox>
+            <a:grid id="sys_module_grid" bindTarget="sys_module_result_ds" height="330" navBar="true" width="500">
+                <a:toolBar>
+                    <a:button type="add"/>
+                    <a:button type="clear"/>
+                    <a:button type="save"/>
+                </a:toolBar>
+                <a:columns>
+                    <a:column name="module_code" editorFunction="moduleCodeEdit" sortable="true" width="180"/>
+                    <a:column name="module_name" editor="sys_module_name_grid_tf" sortable="true" width="200"/>
+                    <a:column name="installed_flag" align="center" editor="sys_module_installed_cb" sortable="true" width="85"/>
+                </a:columns>
+                <a:editors>
+                    <a:textField id="sys_module_code_grid_tf" typeCase="upper"/>
+                    <a:textField id="sys_module_name_grid_tf"/>
+                    <a:checkBox id="sys_module_installed_cb"/>
+                </a:editors>
+            </a:grid>
+        </a:screenBody>
+    </a:view>
+</a:screen>

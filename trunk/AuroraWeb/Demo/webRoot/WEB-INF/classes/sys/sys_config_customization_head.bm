@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:o="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" baseTable="sys_config_customization_head">
+    <bm:fields>
+        <bm:field name="head_id" databaseType="NUMBER" datatype="java.lang.String" prompt="SYS_CUSTOMIZATION_HEAD.NAME"/>
+        <bm:field name="enable_flag" databaseType="VARCHAR" datatype="java.lang.String" prompt="SYS_CUSTOMIZATION_HEAD.ENABLE_FALG"/>
+        <bm:field name="comments" databaseType="VARCHAR" datatype="java.lang.String" displayWidth="300" forDisplay="true" forQuery="true" prompt="SYS_CUSTOMIZATION_HEAD.COMMENT"/>
+    </bm:fields>
+    <bm:query-fields>
+        <bm:query-field field="comments" queryOperator="like"/>
+    </bm:query-fields>
+    <bm:ref-fields/>
+    <bm:features>
+        <o:sequence-pk sequenceName="sys_config_cust_head_s"/>
+        <f:standard-who/>
+    </bm:features>
+    <bm:primary-key>
+        <bm:pk-field name="head_id"/>
+    </bm:primary-key>
+</bm:model>

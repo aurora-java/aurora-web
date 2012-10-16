@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: Guoxuezhao  
+    $Date: 2011-12-28 上午9:48:41  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure>
+        <a:model-query model="sys.sys_user_role_groups_ipad" rootPath="role_list"/>
+    </a:init-procedure>
+    <a:view template="login_ipad">
+        <style><![CDATA[
+            .login{margin:auto; margin-top:10%; width:400px}
+            #foot{position: absolute;bottom: 0;}
+            td{width:10%}
+        ]]></style>
+        <script><![CDATA[
+            var data = {};
+            function back(){
+                window.history.go(-1);
+            }
+            function setValue(event){
+                var id = event.target.parentNode.parentNode.id;
+                event.target.checked = true;
+                var jid = '#'+id;
+                var elems = jid + ' input[type=hidden]'
+                var cr = $(elems);
+                var arr = new Array();
+                for(var i=0; i<cr.length; i++){
+                    var t = '"' + cr[i].name + '":' + cr[i].value + '';
+                    arr.push(t);
+                }
+                var string = '{' + arr.join(',') + '}';
+                data = JSON.parse(string);
+                return data;
+            }
+            function confirm(){
+                jQuery.ajax({
+                    url: 'role_select.svc',
+                    type: 'POST',
+                    data: {_request_data:JSON.stringify({parameter:data})},
+                    success: function(data,textStatus){
+                        window.location.href = '${/request/@context_path}/modules/wfl/PAD1001/wfl_my_workflow_view_for_pad.screen';
+                    }
+                });
+            }
+        ]]></script>
+        <a:dataSets><![CDATA[
+        ]]></a:dataSets>
+        <div data-role="page">
+            <div data-role="header">
+                <h1><![CDATA[HEC]]></h1>
+            </div>
+            <!--content-->
+            <div data-role="content">
+                <div class="login">
+                    <h2><![CDATA[请选择公司:]]></h2>
+                    <div data-role="fieldcontain">
+                        <a:fieldset data-role="controlgroup">
+                            <a:repeater datamodel="/model/role_list">
+                                <div id="${@role_company}">
+                                    <input name="radio-choice-1" id="radio-choice-${@rownum}" type="radio"/>
+                                    <label for="radio-choice-${@rownum}"><![CDATA[${@role_description}_${@company_short_name}]]></label>
+                                    <input name="company_id" type="hidden" value="${@company_id}"/>
+                                    <input name="role_id" type="hidden" value="${@role_id}"/>
+                                </div>
+                            </a:repeater>
+                        </a:fieldset>
+                        <div class="ui-block-a">
+                            <button data-theme="d" onClick="back();" type="submit"><![CDATA[返回]]></button>
+                        </div>
+                        <div class="ui-block-b">
+                            <button data-theme="a" onClick="confirm();" type="submit"><![CDATA[确定]]></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--content-->
+            <div id="foot" data-role="footer">
+                <p><![CDATA[© Copyright Hand China Co.,Ltd.]]></p>
+            </div>
+        </div>
+        <!--page-->
+        <script><![CDATA[
+		    $(document).ready(function(){
+		        $('input[type=radio]').bind('click',function(event){setValue(event)});
+		        $('#radio-choice-1').click();
+	        });
+		]]></script>
+    </a:view>
+</a:screen>

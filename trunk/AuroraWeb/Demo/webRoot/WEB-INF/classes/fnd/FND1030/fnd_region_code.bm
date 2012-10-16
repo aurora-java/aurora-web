@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="fc" baseTable="fnd_region_code" defaultorderby="region_code">
+    <bm:fields>
+        <bm:field name="country_code" databaseType="VARCHAR" datatype="java.lang.String" prompt="FND_COUNTRY_CODE.COUNTRY_CODE"/>
+        <bm:field name="region_code" databaseType="VARCHAR" datatype="java.lang.String" prompt="FND_REGION_CODE.REGION_CODE"/>
+        <bm:field name="description_id" databaseType="BIGINT" datatype="java.lang.Long" multiLanguage="true" multiLanguageDescField="region_name"/>
+        <bm:field name="region_name" databaseType="VARCHAR" datatype="java.lang.String" forInsert="false" forUpdate="false" prompt="FND_REGION_CODE.DESCRIPTION"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="region_code"/>
+    </bm:primary-key>
+    <bm:relations>
+        <bm:relation name="c" joinType="INNER" refModel="fnd.FND1020.fnd_country_code">
+            <bm:reference foreignField="country_code" localField="country_code"/>
+        </bm:relation>
+    </bm:relations>
+    <bm:query-fields>
+        <bm:query-field field="region_code" queryOperator="like"/>
+        <bm:query-field field="region_name" queryExpression="exists (select 1 from fnd_descriptions fd where fc.description_id=fd.description_id and fd.description_text like ${@region_name} and fd.language = ${/session/@lang})"/>
+        <bm:query-field name="country_name" queryExpression="exists (select 1 from fnd_descriptions fd where c.description_id=fd.description_id and fd.description_text like ${@country_name} and fd.language = ${/session/@lang})"/>
+    </bm:query-fields>
+    <bm:features>
+        <f:standard-who/>
+        <f:multi-language-storage/>
+    </bm:features>
+    <bm:ref-fields>
+        <bm:ref-field name="c_description_id" relationName="c" sourceField="description_id"/>
+    </bm:ref-fields>
+</bm:model>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:service xmlns:t="aurora.application.action" xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:init-procedure>
+        <p:method-invoke className="aurora.application.util.DesEncrypt" methodName="desDecrypt" resultPath="/parameter/@session_id">
+            <p:arguments>
+                <p:argument path="/cookie/@JSID/@value" type="java.lang.String"/>
+            </p:arguments>
+        </p:method-invoke>
+        <p:set field="/parameter/@client_ip_address" sourceField="/request/@address"/>
+        <a:model-update model="sys.login.sys_session" updatePassedFieldOnly="true"/>
+        <p:set field="/parameter/@encrypted_session_id" sourceField="/cookie/@JSID/@value"/>
+        <a:model-insert model="sys.login.sys_user_logins"/>
+        <t:session-write source="/parameter/@company_id" target="company_id"/>
+        <t:session-write source="/parameter/@role_id" target="role_id"/>
+    </a:init-procedure>
+</a:service>

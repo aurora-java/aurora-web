@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: niujiaqing1265 $
+    $Date: 2010/09/08 08:48:05 $
+    $Revision: 1.1 $
+    $Purpose: 系统级描述
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view>
+        <script><![CDATA[
+        
+            function queryPrompt(){
+                $('sys_prompt_result_ds').query();
+            }
+            function resetPrompt(){
+            	$('sys_prompt_query_ds').reset();
+            }
+
+            function promptCodeEditFunction(record,name){
+                if (record.get('prompt_id')){
+                    return '';
+                }else{
+                    return 'sys_prompt_result_grid_upper_tf';
+                }
+            }
+            
+            function languageEditFunction(record,name){
+                if (record.get('prompt_id')){
+                    return '';
+                }else{
+                    return 'sys_prompt_result_grid_comboBox';
+                }
+            }
+        
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="sys_prompt_languagesComboBox_ds" loadData="true" lookupCode="SYS_PROMPT_LANGUAGES"><![CDATA[
+            ]]></a:dataSet>
+            <a:dataSet id="sys_prompt_query_ds" model="sys.SYS1004.sys_prompts"/>
+            <a:dataSet id="sys_prompt_result_ds" autoCount="true" autoQuery="true" fetchAll="false" model="sys.SYS1004.sys_prompts" queryDataSet="sys_prompt_query_ds" selectable="true">
+                <a:fields>
+                    <a:field name="prompt_code" prompt="SYS_PROMPT.PROMPT_CODE" required="true"/>
+                    <a:field name="language_display" displayField="code_value_name" options="sys_prompt_languagesComboBox_ds" required="true" returnField="language" valueField="code_value"/>
+                    <a:field name="description" required="true"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:form column="2" style="margin-left:10px;margin-top:10px;" title="SYS_PROMPT.QUERY_TITLE" width="600">
+            <a:textField name="prompt_code" bindTarget="sys_prompt_query_ds" typeCase="upper" width="200">
+                <a:events>
+                    <a:event name="enterdown" handler="queryPrompt"/>
+                </a:events>
+            </a:textField>
+            <a:textField name="description" bindTarget="sys_prompt_query_ds" width="200">
+                <a:events>
+                    <a:event name="enterdown" handler="queryPrompt"/>
+                </a:events>
+            </a:textField>
+        </a:form>
+        <a:hBox style="margin-left:7px;">
+            <a:button click="queryPrompt" text="HAP_QUERY"/>
+            <a:button click="resetPrompt" text="HAP_RESET"/>
+        </a:hBox>
+        <a:grid id="grid" bindTarget="sys_prompt_result_ds" height="330" navBar="true" style="margin-left:10px;margin-top:10px;" width="780">
+            <a:toolBar>
+                <a:button type="add"/>
+                <a:button type="delete"/>
+                <a:button type="clear"/>
+                <a:button type="save"/>
+            </a:toolBar>
+            <a:columns>
+                <a:column name="prompt_code" editorFunction="promptCodeEditFunction" sortable="true" width="350"/>
+                <a:column name="language_display" editorFunction="languageEditFunction" width="100"/>
+                <a:column name="description" editor="sys_prompt_result_grid_tf" width="300"/>
+            </a:columns>
+            <a:editors>
+                <a:textField id="sys_prompt_result_grid_tf"/>
+                <a:textField id="sys_prompt_result_grid_upper_tf" typeCase="upper"/>
+                <a:comboBox id="sys_prompt_result_grid_comboBox"/>
+            </a:editors>
+        </a:grid>
+    </a:view>
+</a:screen>

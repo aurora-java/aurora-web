@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="fc" baseTable="fnd_language_code">
+    <bm:fields>
+        <bm:field name="language_code" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="installed_flag" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="locale_code" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="description_id" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="description" expression="(select description_text from fnd_descriptions fd where fd.description_id=fc.description_id         and fd.language=${/session/@lang})"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="language_code"/>
+    </bm:primary-key>
+    <bm:query-fields>
+        <bm:query-field field="language_code" queryOperator="like"/>
+        <bm:query-field field="locale_code" queryOperator="like"/>
+        <bm:query-field name="description" queryExpression="(select description_text from fnd_descriptions fd where fd.description_id=fc.description_id         and fd.language=${/session/@lang} )like ${@description})"/>
+    </bm:query-fields>
+    <bm:features>
+        <f:standard-who/>
+        <f:multi-language-storage/>
+    </bm:features>
+    <bm:ref-fields/>
+</bm:model>

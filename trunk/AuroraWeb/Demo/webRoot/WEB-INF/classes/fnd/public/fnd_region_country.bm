@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: tony  
+    $Date: 2012-9-24 上午9:58:55  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+                select *
+                from (
+                      select t.province,t.city,t.district
+                      from sys_region_codes t
+                      group by t.province,t.city,t.district
+                      order by t.province,t.city,t.district
+                    ) t1 
+                    #WHERE_CLAUSE#
+            ]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+    <bm:fields>
+        <bm:field name="province" databaseType="VARCHAR2" datatype="java.lang.String" forDisplay="true" physicalName="PROVINCE" prompt="FND_COMPANIES.ADDRESS_PROVINCE"/>
+        <bm:field name="city" databaseType="VARCHAR2" datatype="java.lang.String" forDisplay="true" physicalName="CITY" prompt="FND_COMPANIES.ADDRESS_CITY"/>
+        <bm:field name="district" databaseType="VARCHAR2" datatype="java.lang.String" forDisplay="true" forQuery="true" physicalName="CITY" prompt="FND_COMPANIES.ADDRESS_COUNTY"/>
+    </bm:fields>
+    <bm:query-fields>
+        <bm:query-field name="province" queryExpression="province like concat(concat(&apos;%&apos;, ${@province}),&apos;%&apos;)"/>
+        <bm:query-field name="city" queryExpression="city like concat(concat(&apos;%&apos;, ${@city}),&apos;%&apos;)"/>
+        <bm:query-field name="district" queryExpression="district like concat(concat(&apos;%&apos;, ${@district}),&apos;%&apos;)"/>
+    </bm:query-fields>
+</bm:model>

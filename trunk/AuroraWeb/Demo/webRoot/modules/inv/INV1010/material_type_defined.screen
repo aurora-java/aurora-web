@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: lhc  
+    $Date: 2012-9-24 下午3:17:02  
+    $Revision: 1.0  
+    $Purpose: 物品类型定义
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:view>
+        <a:link id="inv_1010_material_type_expand_attribute_link" url="${/request/@context_path}/modules/inv/INV1010/material_type_expand_attribute.screen"/>
+        <script><![CDATA[
+            function inv_1010_query() {
+                $('inv_1010_result_ds').query();
+            }
+            
+            function inv_1010_reset() {
+                $('inv_1010_query_ds').reset();
+            }
+            
+            function inv_1010_submit() {
+                $('inv_1010_result_ds').submit();
+            }
+            
+            function inv_1010_expand_1(value, record, name) {
+                var item_type_id = record.get('item_type_id');
+                var seq_num = 1;
+                var inv_mng_flag = record.get('inv_mng_flag');
+                var enabled_flag = record.get('enabled_flag');
+                if (inv_mng_flag == 'Y' && enabled_flag == 'Y') {
+                    return '<a href="javascript:inv_1010_openWindow(' + item_type_id + ',' + seq_num + ');">扩展属性1</a>';
+                }
+                return '扩展属性1';
+            }
+            
+            function inv_1010_expand_2(value, record, name) {
+                var item_type_id = record.get('item_type_id');
+                var seq_num = 2;
+                var inv_mng_flag = record.get('inv_mng_flag');
+                var enabled_flag = record.get('enabled_flag');
+                if (inv_mng_flag == 'Y' && enabled_flag == 'Y') {
+                    return '<a href="javascript:inv_1010_openWindow(' + item_type_id + ',' + seq_num + ');">扩展属性2</a>';
+                }
+                return '扩展属性2';
+            }
+            
+            function inv_1010_openWindow(item_type_id, seq_num) {
+                var url = $('inv_1010_material_type_expand_attribute_link').getUrl() + '?item_type_id=' + item_type_id +'&seq_num=' + seq_num;
+                new Aurora.Window({
+                    id: 'inv_1010_expand_attribute_win',
+                    title: '扩展属性' + seq_num + '自定义',
+                    url: url,
+                    width: 400,
+                    height: 400
+                });
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="inv_1010_query_ds"/>
+            <a:dataSet id="inv_1010_result_ds" autoCount="true" autoQuery="true" fetchAll="false" model="inv.INV1010.inv_material_types" pageSize="10" queryDataSet="inv_1010_query_ds" selectable="true" submitUrl2="${/request/@context_path}/modules/inv/INV1010/material_type_defined.svc">
+                <a:fields>
+                    <a:field name="item_type_id"/>
+                    <a:field name="company_id" defaultValue="${/session/@company_id}"/>
+                    <a:field name="inv_mng_flag" checkedValue="Y" defaultValue="Y" uncheckedValue="N"/>
+                    <a:field name="item_type_code" prompt="物品代码" required="true"/>
+                    <a:field name="description" prompt="物品名称" required="true"/>
+                    <a:field name="enabled_flag" checkedValue="Y" defaultValue="N" uncheckedValue="N"/>
+                </a:fields>
+                <a:events>
+                    <a:event name="submitsuccess" handler="inv_1010_query"/>
+                </a:events>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:form column="2" labelWidth="100" title="查询条件" width="600">
+                <a:textField name="item_type_code" bindTarget="inv_1010_query_ds" prompt="物品类型编码">
+                    <a:events>
+                        <a:event name="enterdown" handler="inv_1010_query"/>
+                    </a:events>
+                </a:textField>
+                <a:textField name="description" bindTarget="inv_1010_query_ds" prompt="物品类型描述">
+                    <a:events>
+                        <a:event name="enterdown" handler="inv_1010_query"/>
+                    </a:events>
+                </a:textField>
+            </a:form>
+            <a:hBox>
+                <a:button click="inv_1010_query" text="HAP_QUERY"/>
+                <a:button click="inv_1010_reset" text="HAP_RESET"/>
+            </a:hBox>
+            <a:grid bindTarget="inv_1010_result_ds" height="350" navBar="true" width="750">
+                <a:toolBar>
+                    <a:button type="add"/>
+                    <a:button type="clear"/>
+                    <a:button type="save"/>
+                </a:toolBar>
+                <a:columns>
+                    <a:column name="inv_mng_flag" align="center" editor="inv_1010_checkbox" width="80"/>
+                    <a:column name="item_type_code" align="center" editor="inv_1010_textfield" width="120"/>
+                    <a:column name="description" align="center" editor="inv_1010_textfield" width="150"/>
+                    <a:column align="center" prompt="扩展属性1" renderer="inv_1010_expand_1" width="150"/>
+                    <a:column align="center" prompt="扩展属性2" renderer="inv_1010_expand_2" width="150"/>
+                    <a:column name="enabled_flag" align="center" editor="inv_1010_checkbox" width="80"/>
+                </a:columns>
+                <a:editors>
+                    <a:checkBox id="inv_1010_checkbox"/>
+                    <a:textField id="inv_1010_textfield"/>
+                </a:editors>
+            </a:grid>
+        </a:screenBody>
+    </a:view>
+</a:screen>

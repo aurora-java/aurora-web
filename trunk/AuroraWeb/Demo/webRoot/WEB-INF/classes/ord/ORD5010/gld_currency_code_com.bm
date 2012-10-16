@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:model xmlns:ns2="aurora.database.local.oracle" xmlns:ns1="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="gc" extend="gld.gld_currency" extendMode="reference">
+    <ns1:fields>
+        <ns1:field name="currency_code" databaseType="VARCHAR2" datatype="java.lang.String" forDisplay="true" forQuery="true" physicalName="CURRENCY_CODE" prompt="GLD_CURRENCY.CURRENCY_CODE"/>
+        <ns1:field name="enabled_flag" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="ENABLED_FLAG" prompt="GLD_CURRENCY.ENABLED_FLAG"/>
+        <ns1:field name="currency_symbol" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="CURRENCY_SYMBOL" prompt="GLD_CURRENCY.CURRENCY_SYMBOL"/>
+    </ns1:fields>
+    <ns1:data-filters>
+        <ns1:data-filter name="enabled_flag" enforceOperations="query" expression="enabled_flag=&apos;Y&apos;"/>
+    </ns1:data-filters>
+</ns1:model>

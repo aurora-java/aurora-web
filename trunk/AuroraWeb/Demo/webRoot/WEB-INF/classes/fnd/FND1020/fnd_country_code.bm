@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="fc" baseTable="fnd_country_code">
+    <bm:fields>
+        <bm:field databaseType="VARCHAR" datatype="java.lang.String" name="country_code" prompt="FND_COUNTRY_CODE.COUNTRY_CODE"/>
+        <bm:field databaseType="BIGINT" datatype="java.lang.Long" multiLanguage="true" multiLanguageDescField="country_name" name="description_id"/>
+        <bm:field databaseType="VARCHAR" datatype="java.lang.String" forInsert="false" forUpdate="false" name="country_name" prompt="FND_COUNTRY_CODE.DESCRIPTION"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="country_code"/>
+    </bm:primary-key>
+    <bm:query-fields>
+        <bm:query-field field="country_code" queryOperator="like"/>
+        <bm:query-field field="country_name" queryExpression="exists (select 1 from fnd_descriptions fd where fc.description_id=fd.description_id and fd.description_text like ${@country_name} and fd.language = ${/session/@lang})"/>
+    </bm:query-fields>
+    <bm:features>
+        <f:standard-who/>
+        <f:multi-language-storage/>
+    </bm:features>
+    <bm:ref-fields/>
+</bm:model>

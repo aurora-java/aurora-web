@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>${page:title}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+${page:html.head.css} 
+${page:html.head.script}
+</head>
+<body>
+    <script language="javascript">
+       
+    </script>
+    <div></div>
+	${page:init}
+	${page:content}
+	<input type="hidden" class="logLink" screen="${/@service_name}" value="viewlog?file=${/@SERVICE_LOGGING_FILE}"/>	
+</body>
+</html>

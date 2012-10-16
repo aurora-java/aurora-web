@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2011-9-29 上午10:38:14  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+            select h.hour,
+			       sys_analytics_pkg.getMedianDurationOfHour(h.hour, 'screen', to_date(${/parameter/@startDate},'yyyy-mm-dd'), to_date(${/parameter/@endDate},'yyyy-mm-dd')) screen,
+			       sys_analytics_pkg.getMedianDurationOfHour(h.hour, 'svc', to_date(${/parameter/@startDate},'yyyy-mm-dd'), to_date(${/parameter/@endDate},'yyyy-mm-dd')) svc,
+			       sys_analytics_pkg.getMedianDurationOfHour(h.hour, 'query', to_date(${/parameter/@startDate},'yyyy-mm-dd'), to_date(${/parameter/@endDate},'yyyy-mm-dd')) query
+			  from (SELECT trim(to_char(rownum-1, '09')) hour
+			          FROM dual
+			        CONNECT BY rownum <= 24) h
+			 order by h.hour
+ ]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+</bm:model>

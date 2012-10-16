@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2011-9-29 下午3:25:52  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:view>
+        <script><![CDATA[
+            ]]></script>
+        <a:dataSets>
+            <a:dataSet id="full_visits_of_day_ds" autoQuery="true" model="sys.SYS2520.sys_analytics_summary_of_day" pageSize="100" queryDataSet="query_ds">
+                <a:fields>
+                    <a:field name="day" prompt="日期"/>
+                    <a:field name="visits" datatype="float" prompt="visits" type="line"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:chart bindTarget="full_visits_of_day_ds" style="width: 950px; height: 500px" type="line">
+                <a:title text="访问量"/>
+                <a:xAxis>
+                    <a:xAxi name="day">
+                        <a:labels formatter="dayRenderer"/>
+                    </a:xAxi>
+                </a:xAxis>
+                <a:yAxis>
+                    <a:yAxi name="visits">
+                        <a:title text="visits"/>
+                    </a:yAxi>
+                </a:yAxis>
+            </a:chart>
+        </a:screenBody>
+    </a:view>
+</a:screen>

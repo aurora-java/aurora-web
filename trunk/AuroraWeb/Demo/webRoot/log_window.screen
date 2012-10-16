@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view package="aurora.ui.std" template="default">
+        <a:link id="show_trace_flag_link_1" url="${/request/@context_path}/show_trace_flag.svc"/>
+        <a:link id="set_trace_flag_link_1" url="${/request/@context_path}/set_trace_flag.svc"/>
+        <script><![CDATA[
+        
+			function onUpdate(ds,record,name,value){
+				if(name == 'log_enabled'){
+					var url = record.get('screen');
+					if('Y' == value){
+						enableTrace(url);
+					}else{
+						diableTrace(url);
+					}
+				}
+			}
+			function enableTrace(url){
+				setTrace(url,'true');
+			}
+			function diableTrace(url){
+				setTrace(url,'false');
+			}
+			function setTrace(url,flag){
+				 var parameters={"url":url,"flag":flag};
+				 Aurora.request({url:/*set_trace_flag.svc*/$('set_trace_flag_link_1').getUrl(), para:parameters, success:function(){
+					 Aurora.showMessage('${l:PROMPT}','${l:PROMPT.OPERATION_SUCCESS}');
+				},scope:this});
+			}
+			function create_ds(ds,screen,link){
+			    var flag = 'N';
+				var parameters={"url":screen};
+				Aurora.request({url:/*show_trace_flag.svc*/$('show_trace_flag_link_1').getUrl(), para:parameters, success:function(res){
+					var status= res.result['status'];
+					if(true == status){
+						ds.create({screen:screen,link:link,log_enabled:'Y'});
+					}else{
+						ds.create({screen:screen,link:link});
+					}
+				},scope:this});
+			}
+        
+		]]></script>
+        <a:dataSets>
+            <a:dataSet id="log_window_dataset">
+                <a:fields>
+                    <a:field name="log_enabled" checkedValue="Y" unCheckedValue="N"/>
+                </a:fields>
+                <a:events>
+                    <a:event name="update" handler="onUpdate"/>
+                </a:events>
+            </a:dataSet>
+        </a:dataSets>
+        <script><![CDATA[
+        
+            function initLogWindow(){
+                var ds = $('log_window_dataset');
+                searchLogItem(document,ds);
+                processIframe(document,ds);
+            }
+            
+            function searchLogItem(el,ds){
+                var items = Ext.DomQuery.select('.logLink',el);
+                for(var k=0;k<items.length;k++){
+					var screen = Ext.fly(items[k]).getAttributeNS("","screen");
+                    var link = Ext.fly(items[k]).getAttributeNS("","value");
+					var log_enabled = 'N';
+					create_ds(ds,screen,link);
+                    //ds.create({screen:screen,link:link,log_enabled:log_enabled})
+                }
+            }
+            
+            function processIframe(d, ds){
+                var iframes = d.getElementsByTagName('iframe');
+                for(var i=0;i<iframes.length;i++){
+                    var iframe = iframes[0];
+                    var dt = iframe.contentDocument;
+                    searchLogItem(dt,ds);
+                }
+            }
+            
+            
+            initLogWindow();
+            
+            function _logRenderer(value,record, name){
+				if(record.get('link')!="viewlog?file=")
+					return '<a href="'+record.get('link')+'" target="_blank">${l:PROMPT.VIEW_LOG}</a>'
+            }
+        
+        ]]></script>
+        <a:grid bindTarget="log_window_dataset" height="270" style="margin:10px" width="470">
+            <a:columns>
+                <a:column name="screen" prompt="PROMPT.URL" width="300"/>
+                <a:column name="log_enabled" editor="log_window_grid_cb" prompt="PROMPT.ENABLED_FLAG" width="70"/>
+                <a:column name="act" prompt="PROMPT.VIEW_LOG" renderer="_logRenderer" width="70"/>
+            </a:columns>
+            <a:editors>
+                <a:checkBox id="log_window_grid_cb"/>
+            </a:editors>
+        </a:grid>
+    </a:view>
+</a:screen>

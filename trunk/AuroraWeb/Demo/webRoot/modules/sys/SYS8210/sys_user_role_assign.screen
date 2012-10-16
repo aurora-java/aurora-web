@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: ouyangzhaochang2663 $
+    $Date: 2010/11/15 07:47:58 $
+    $Revision: 1.6 $
+    $Purpose: 分配角色
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure><![CDATA[
+    ]]></a:init-procedure>
+    <a:view>
+        <script><![CDATA[
+    	
+            function closeRoleAssignWindow(){
+                $('sys_user_role_assign_window').close();
+            }
+            
+            function closeUserCreateWindow(){
+                $('sys_user_info_ds').close();
+            }
+            
+            function saveUser(){
+                $('sys_user_info_ds').submit();
+            }
+            
+            function roleCodeEditFunction(record,name){
+                if (record.get('user_role_group_id')){
+                    return '';
+                }else{
+                    return 'sys_user_role_assign_grid_lov';
+                }
+            }
+            
+            function compareDate(start, end){
+                if(start > end){
+                    return false;
+                }
+                return true;
+            }
+            
+            function dateValidator(record, name, value){
+                if(name == 'start_date' || name == 'end_date'){
+                    var start_date = record.get('start_date');
+                    var end_date = record.get('end_date');
+                    if(typeof(end_date) != 'undefined' && !Ext.isEmpty(end_date)){
+                        if(!compareDate(start_date, end_date)){
+                            return '${l:START_GREATER_THAN_END}';
+                        }
+                    }
+                    return true;
+                }
+            }
+            
+            function onUpdate(ds,record,name,value){
+                if(name == 'start_date' || name == 'end_date'){
+                    record.validate((name == 'start_date') ? 'end_date' : 'start_date');
+                }
+            }
+            
+            function userInfoSubmitsuccess(){
+            }
+            
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="sys_user_info_ds" loadData="true" model="sys.sys_user">
+                <a:fields>
+                    <a:field name="user_name" readOnly="true"/>
+                    <a:field name="description" readOnly="true"/>
+                </a:fields>
+            </a:dataSet>
+            <a:dataSet id="sys_user_role_assign_ds" autoQuery="true" fetchAll="false" model="sys.SYS8210.sys_user_role_assign" queryUrl="${/request/@context_path}/autocrud/sys.SYS8210.sys_user_role_assign/query?ORDER_FIELD=name&amp;user_id=${/parameter/@user_id}" selectable="true">
+                <a:fields>
+                    <a:field name="role_code" autoComplete="true" autoCompleteField="role_name" lovGridHeight="340" lovHeight="460" lovService="sys.sys_role?ORDER_FIELD=role_code" lovWidth="500" required="true" title="HAP_SELECT_ROLE">
+                        <a:mapping>
+                            <a:map from="role_id" to="role_id"/>
+                            <a:map from="role_code" to="role_code"/>
+                            <a:map from="role_name" to="role_name"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="user_id" defaultValue="${/parameter/@user_id}"/>
+                    <a:field name="company_code" autoComplete="true" autoCompleteField="company_code" lovGridHeight="340" lovHeight="460" lovService="fnd.fnd_companies?ORDER_FIELD=company_code" lovWidth="500" required="true" title="EXP_EMPLOYEE_ASSIGN.CHOOSE_COMPANY">
+                        <a:mapping>
+                            <a:map from="company_id" to="company_id"/>
+                            <a:map from="company_code" to="company_code"/>
+                            <a:map from="company_short_name" to="company_short_name"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="start_date" required="true" validator="dateValidator"/>
+                    <a:field name="end_date" validator="dateValidator"/>
+                </a:fields>
+                <a:events>
+                    <a:event name="update" handler="onUpdate"/>
+                    <a:event name="submitsuccess" handler="userInfoSubmitsuccess"/>
+                </a:events>
+            </a:dataSet>
+        </a:dataSets>
+        <a:fieldSet column="2" style="margin-left:10px;margin-top:10px;" title="ACCONT_INFO" width="510">
+            <a:textField name="user_name" bindTarget="sys_user_info_ds" prompt="SYS_USER.ACCOUNT"/>
+            <a:textField name="description" bindTarget="sys_user_info_ds" prompt="SYS_USER.DESCRIPTION"/>
+        </a:fieldSet>
+        <a:grid id="sys_user_role_assign_grid" bindTarget="sys_user_role_assign_ds" height="320" navBar="true" style="margin-left:10px;" width="675">
+            <a:toolBar>
+                <a:button type="add"/>
+                <a:button type="clear"/>
+                <a:button type="save"/>
+            </a:toolBar>
+            <a:columns>
+                <a:column name="role_code" editor="sys_user_role_assign_grid_lov" editorFunction="roleCodeEditFunction"/>
+                <a:column name="role_name" prompt="SYS_ROLE.ROLE_NAME" width="120"/>
+                <a:column name="company_code" align="center" editor="sys_user_role_assign_grid_lov"/>
+                <a:column name="company_short_name" prompt="COMPANY_SHORT_NAME" width="120"/>
+                <a:column name="start_date" align="center" editor="sys_user_role_start_dp" renderer="Aurora.formatDate"/>
+                <a:column name="end_date" align="center" editor="sys_user_role_end_dp" renderer="Aurora.formatDate"/>
+            </a:columns>
+            <a:editors>
+                <a:lov id="sys_user_role_assign_grid_lov"/>
+                <a:datePicker id="sys_user_role_start_dp"/>
+                <a:datePicker id="sys_user_role_end_dp"/>
+            </a:editors>
+        </a:grid>
+    </a:view>
+</a:screen>

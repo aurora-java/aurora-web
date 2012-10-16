@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uncertain-engine defaultLogLevel="INFO">
+    <path-config logPath="z:\logs" 
+        uiPackageBasePath="E:\workspace\Demo\AuroraUI\src"/>
+</uncertain-engine>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: niujiaqing1265 $
+    $Date: 2010/11/16 07:12:44 $
+    $Revision: 1.1 $
+    $Purpose: 功能分配页面
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure><![CDATA[
+    ]]></a:init-procedure>
+    <a:view>
+        <script><![CDATA[
+        
+            function closeAssignPage(){
+                $('sys_function_service_assign_window').close();
+            }
+            
+            function serviceLovFunction(record){
+                return record.isNew?'sys_function_service_grid_lv':'';
+            }
+            
+            
+            function saveAssignPage(){
+                var records = $('sys_function_service').getAll();
+                for(var i = 0;i<records.length;i++){
+                    var record = records[i];
+                    if(record.dirty){
+                        record.set('function_id', '${/parameter/@function_id}');
+                    }
+                }
+                $('sys_function_service').submit();
+            }
+        
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="sys_function" loadData="true" model="sys.SYS8010.sys_function">
+                <a:fields>
+                    <a:field name="function_code" readOnly="true"/>
+                    <a:field name="function_name" readOnly="true"/>
+                </a:fields>
+            </a:dataSet>
+            <a:dataSet id="sys_function_service" autoCount="false" autoQuery="true" fetchAll="true" model="sys.SYS8010.sys_function_service" queryDataSet="sys_function" selectable="true">
+                <a:fields>
+                    <a:field name="service_name" lovGridHeight="330" lovHeight="460" lovService="sys.sys_service" lovWidth="450" required="true" title="PAGE_SELECT">
+                        <a:mapping>
+                            <a:map from="service_id" to="service_id"/>
+                            <a:map from="service_name" to="service_name"/>
+                            <a:map from="title" to="title"/>
+                        </a:mapping>
+                    </a:field>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:form column="2" labelWidth="80" title="FUNCTION_CHECK" width="600">
+                <a:textField name="function_code" bindTarget="sys_function" prompt="FND_FUNCTION.FUNCTION_CODE" width="200"/>
+                <a:textField name="function_name" bindTarget="sys_function" prompt="FND_FUNCTION.FUNCTION_NAME" width="200"/>
+            </a:form>
+            <a:grid id="sys_function_service_grid" bindTarget="sys_function_service" height="300" navBar="false" width="600">
+                <a:toolBar>
+                    <a:button type="add"/>
+                    <a:button type="delete"/>
+                </a:toolBar>
+                <a:columns>
+                    <a:column name="service_name" editorFunction="serviceLovFunction" width="350"/>
+                    <a:column name="title" width="200"/>
+                </a:columns>
+                <a:editors>
+                    <a:lov id="sys_function_service_grid_lv"/>
+                </a:editors>
+            </a:grid>
+        </a:screenBody>
+        <div class="win-toolbar" style="width:620px;height:40px;">
+            <a:hBox style="float:right;margin-right:10px;margin-top:5px;">
+                <a:button click="saveAssignPage" text="HAP_SAVE" width="90"/>
+                <a:button click="closeAssignPage" text="HAP_CLOSE" width="90"/>
+            </a:hBox>
+        </div>
+    </a:view>
+</a:screen>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+            select * from (
+            ${:@sql_validation}) vv
+               #WHERE_CLAUSE#
+            ]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+    <bm:query-fields>
+        <bm:query-field name="value_code" queryExpression="vv.value_code like ${@value_code} "/>
+        <bm:query-field name="value_name" queryExpression="vv.value_name like ${@value_name}"/>
+        <bm:query-field name="value_id" queryExpression=" vv.value_id = ${@value_id}"/>
+    </bm:query-fields>
+</bm:model>

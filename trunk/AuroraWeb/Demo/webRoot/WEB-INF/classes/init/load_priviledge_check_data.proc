@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:procedure xmlns:a="http://www.aurora-framework.org/application" xmlns:ns1="uncertain.cache.action" xmlns:rs="aurora.database.rsconsumer" xmlns:p="uncertain.proc">
+    <ns1:cache-clear cacheName="RoleBmAccess"/>
+    <a:model-query fetchAll="true" model="init.load_role_bm_access">
+        <a:consumer>
+            <rs:cache-writer cacheName="RoleBmAccess" recordKey="${@role_bm}"/>
+        </a:consumer>
+    </a:model-query>
+    <p:echo message="Function BM access loaded"/>
+    <ns1:cache-clear cacheName="RoleServiceAccess"/>
+    <a:model-query fetchAll="true" model="init.load_role_service_access">
+        <a:consumer>
+            <rs:cache-writer cacheName="RoleServiceAccess" recordKey="${@role_service}"/>
+        </a:consumer>
+    </a:model-query>
+    <p:echo message="Function service access loaded"/>
+</p:procedure>

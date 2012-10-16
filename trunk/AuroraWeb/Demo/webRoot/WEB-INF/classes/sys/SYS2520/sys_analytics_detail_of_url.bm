@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2011-9-30 下午3:43:52  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+           select d.operation name,
+                  median(d.med_duration) time
+             from sys_runtime_req_url_detail d
+            where d.urlid in (select distinct t.id 
+                                from sys_runtime_req_top_timeuse t 
+                               where t.url = ${/parameter/@url}
+                                     and t.day >= to_date(${/parameter/@startDate},'yyyy-mm-dd')
+                                     and t.day < to_date(${/parameter/@endDate},'yyyy-mm-dd')+1)
+            group by d.operation
+            order by median(d.med_duration) desc
+ ]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+    <!--
+     select *
+              from (select op.name,
+                           (select median(d.duration)
+                              from sys_runtime_request_record r,
+                                   sys_runtime_request_detail d
+                             where r.request_id = d.request_id
+                               and r.url = ${/parameter/@url}
+                               and d.name = op.name
+                               and r.enter_time >= to_date(${/parameter/@startDate},'yyyy-mm-dd')
+                               and r.enter_time < to_date(${/parameter/@endDate},'yyyy-mm-dd')+1) time
+                      from (select distinct (d.name) name
+                              from sys_runtime_request_record r,
+                                   sys_runtime_request_detail d
+                             where r.request_id = d.request_id
+                               and r.url = ${/parameter/@url}
+                               and r.enter_time >= to_date(${/parameter/@startDate},'yyyy-mm-dd')
+                               and r.enter_time < to_date(${/parameter/@endDate},'yyyy-mm-dd')+1) op)
+             order by time desc
+    
+    -->
+</bm:model>

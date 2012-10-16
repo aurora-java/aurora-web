@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="SYS_CODES_VL">
+    <bm:fields>
+        <bm:field name="code_id" databaseType="NUMBER" datatype="java.lang.Double" physicalName="CODE_ID"/>
+        <bm:field name="code" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="CODE"/>
+        <bm:field name="sys_flag" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="SYS_FLAG"/>
+        <bm:field name="enabled_flag" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="ENABLED_FLAG"/>
+        <bm:field name="code_name" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="CODE_NAME"/>
+        <bm:field name="code_prompt" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="CODE_PROMPT"/>
+        <bm:field name="code_name_prompt" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="CODE_NAME_PROMPT"/>
+    </bm:fields>
+    <bm:features>
+        <f:standard-who/>
+    </bm:features>
+</bm:model>

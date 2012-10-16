@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:model xmlns:ns2="aurora.database.local.oracle" xmlns:ns1="http://www.aurora-framework.org/schema/bm">
+    <ns1:operations>
+        <ns1:operation name="query">
+            <ns1:query-sql><![CDATA[
+                select message,message_code from sys_raise_app_errors where app_error_line_id = ${@lineId}
+            ]]></ns1:query-sql>
+        </ns1:operation>
+    </ns1:operations>
+</ns1:model>

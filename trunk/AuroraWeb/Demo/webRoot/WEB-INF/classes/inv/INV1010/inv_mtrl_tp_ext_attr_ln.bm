@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: hand  
+    $Date: 2012-9-26 下午3:27:25  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="INV_ITEM_TP_EXT_ATTR_LN">
+    <bm:fields>
+        <bm:field name="attribute_line_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="ATTRIBUTE_LINE_ID" prompt="INV_MTRL_TP_EXT_ATTR_LN.ATTRIBUTE_LINE_ID"/>
+        <bm:field name="attribute_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="ATTRIBUTE_ID" prompt="INV_MTRL_TP_EXT_ATTR_LN.ATTRIBUTE_ID"/>
+        <bm:field name="attribute_line_code" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="ATTRIBUTE_LINE_CODE" prompt="INV_MTRL_TP_EXT_ATTR_LN.ATTRIBUTE_LINE_CODE"/>
+        <bm:field name="description" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="DESCRIPTION" prompt="INV_MTRL_TP_EXT_ATTR_LN.DESCRIPTION"/>
+        <bm:field name="enabled_flag" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="ENABLED_FLAG" prompt="INV_MTRL_TP_EXT_ATTR_LN.ENABLED_FLAG"/>
+        <bm:field name="default_flag" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="DEFAULT_FLAG" prompt="INV_MTRL_TP_EXT_ATTR_LN.DEFAULT_FLAG"/>
+    </bm:fields>
+    <bm:features>
+        <f:standard-who/>
+    </bm:features>
+    <bm:primary-key>
+        <bm:pk-field name="attribute_line_id"/>
+    </bm:primary-key>
+    <bm:query-fields>
+        <bm:query-field name="attribute_id" queryExpression="t1.attribute_id = ${@attribute_id}"/>
+    </bm:query-fields>
+</bm:model>

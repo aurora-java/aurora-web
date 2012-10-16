@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: niujiaqing1265 $
+    $Date: 2010/09/08 08:48:05 $
+    $Revision: 1.1 $
+    $Purpose: 功能树预览页面
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure><![CDATA[
+	]]></a:init-procedure>
+    <a:view package="aurora.ui.std" template="default">
+        <div/>
+        <a:dataSets>
+            <a:dataSet id="function_tree_ds" loadData="true" model="sys.SYS8010.sys_function"/>
+        </a:dataSets>
+        <a:tree id="functionTree" bindTarget="function_tree_ds" displayField="function_name" height="400" idField="function_id" parentField="parent_function_id" showCheckBox="false" style="margin:5px;" width="300"/>
+    </a:view>
+</a:screen>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:model xmlns:o="aurora.database.local.oracle" xmlns:ns1="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="f" baseTable="sys_function">
+    <ns1:operations>
+        <ns1:operation name="query">
+            <ns1:query-sql><![CDATA[
+                select (case ifnull(t.role_id,'null') when 'null' then 'N' else 'Y' end) as checked,
+                       t.role_id,
+                       ifnull(expanded, 'N') as expanded,
+                       t.function_id,
+                       t.function_code,
+                       t.function_name,
+                       t.function_type,
+                       t.parent_function_id,
+                       t.sequence,
+                       t.parent_function_name
+                  from (select f.function_id,
+                               (select s.role_id
+                                  from sys_role_function s
+                                 where s.role_id = ${/parameter/@role_id}
+                                   and s.function_id = f.function_id) as role_id,
+                               f.function_code,
+                               f.function_name_id,
+                               (select DESCRIPTION_TEXT
+                                  from fnd_descriptions
+                                 where DESCRIPTION_ID = f.function_name_id
+                                   and Language = ${/session/@lang}) AS function_name,
+                               pf.function_name_id AS parent_function_name_id,
+                               f.function_type,
+                               f.parent_function_id,
+                               (ifnull((select s.sequence
+                                      from sys_role_function s
+                                     where s.role_id = ${/parameter/@role_id}
+                                       and s.function_id = f.function_id),
+                                    f.sequence)) AS sequence,
+                               (select s.expanded
+                                  from sys_role_function s
+                                 where s.role_id = ${/parameter/@role_id}
+                                   and s.function_id = f.function_id) as expanded,
+                               (select DESCRIPTION_TEXT
+                                  from fnd_descriptions
+                                 where DESCRIPTION_ID = pf.function_name_id
+                                   and Language = ${/session/@lang}) AS parent_function_name
+                          from sys_function f
+                          LEFT OUTER JOIN sys_function pf ON f.parent_function_id =
+                                                             pf.function_id) t order by sequence
+
+            ]]></ns1:query-sql>
+        </ns1:operation>
+    </ns1:operations>
+</ns1:model>

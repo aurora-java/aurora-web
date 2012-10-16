@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view chartTheme="grid">
+        <script type="text/javascript"><![CDATA[ 
+            
+            function renderer1() {
+                    return  this.percentage.toFixed(2) +' %';
+            }
+            function renderer2() {
+                    return  "<b>"+this.point.name+"</b>:"+this.percentage.toFixed(2) +' %';
+            }
+            function sum(records,name){
+            	var sum=0;
+            	for(var i=0;i<records.length;i++){
+            		sum+=Number(records[i].get(name));
+            	}
+            	return "<b>"+sum.toFixed(2)+"</b>";
+            }
+            function sumTitle(){
+            	return "<b>总计</b>";
+            }
+            function toBlod(text){
+            	return "<b>"+text+"</b>";
+            }
+            function formatNumber(value){
+            	if(value==0)
+            		return '';
+            	return Number(value).toFixed(2);
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="ds1">
+                <a:datas>
+                    <a:record amount="1041670" period="2009-01" sum="575197378.99" test="1"/>
+                    <a:record amount="0" period="2009-02" sum="0" test="1"/>
+                    <a:record amount="2671484" period="2009-03" sum="1593471514.77" test="1"/>
+                    <a:record amount="2414418" period="2009-04" sum="1483073413.46" test="1"/>
+                    <a:record amount="2374674" period="2009-05" sum="1365856729.10" test="1"/>
+                    <a:record amount="2704678" period="2009-06" sum="1503993387.69" test="1"/>
+                    <a:record amount="2362715" period="2009-07" sum="1314209045.44" test="1"/>
+                    <a:record amount="2485335" period="2009-08" sum="1361022286.04" test="1"/>
+                    <a:record amount="2852281" period="2009-09" sum="1445393428.92" test="1"/>
+                    <a:record amount="2446930" period="2009-10" sum="1273907232.24" test="1"/>
+                    <a:record amount="2745544" period="2009-11" sum="1267839873.69" test="1"/>
+                    <a:record amount="2416236" period="2009-12" sum="1074077004.51" test="1"/>
+                </a:datas>
+                <a:fields>
+                    <a:field name="period" prompt="月"/>
+                    <a:field name="sum" datatype="float" prompt="销售金额" type="column"/>
+                    <a:field name="amount" datatype="float" prompt="销售数量"/>
+                    <a:field name="test" dataType="float" prompt="测试曲线"/>
+                </a:fields>
+            </a:dataSet>
+            <a:dataSet id="ds2">
+                <a:datas>
+                    <a:record amount="820988" period="2009-01" sum="537015777.04"/>
+                    <a:record amount="0" period="2009-02" sum="0"/>
+                    <a:record amount="2183860" period="2009-03" sum="1459777828.78"/>
+                    <a:record amount="1913114" period="2009-04" sum="1348071847.38"/>
+                    <a:record amount="1833034" period="2009-05" sum="1230909229.28"/>
+                    <a:record amount="2143150" period="2009-06" sum="1365075054.34"/>
+                    <a:record amount="1859844" period="2009-07" sum="1177085798.28"/>
+                    <a:record amount="1871050" period="2009-08" sum="1184533812.10"/>
+                    <a:record amount="2169770" period="2009-09" sum="1261870110.78"/>
+                    <a:record amount="1805696" period="2009-10" sum="1093945079.60"/>
+                    <a:record amount="2008076" period="2009-11" sum="1078835924.70"/>
+                    <a:record amount="1611308" period="2009-12" sum="872762339"/>
+                </a:datas>
+                <a:fields>
+                    <a:field name="period" prompt="月"/>
+                    <a:field name="sum" datatype="float" prompt="销售金额" type="column"/>
+                    <a:field name="amount" datatype="float" prompt="销售数量"/>
+                </a:fields>
+            </a:dataSet>
+            <a:dataSet id="ds3">
+                <a:datas>
+                    <a:record amount="8036" period="2009-01" sum="4858881.45"/>
+                    <a:record amount="0" period="2009-02" sum="0"/>
+                    <a:record amount="31860" period="2009-03" sum="17470131.86"/>
+                    <a:record amount="24339" period="2009-04" sum="15670553.22"/>
+                    <a:record amount="23802" period="2009-05" sum="13512750.49"/>
+                    <a:record amount="28109" period="2009-06" sum="17387205.25"/>
+                    <a:record amount="25940" period="2009-07" sum="12955654.71"/>
+                    <a:record amount="25675" period="2009-08" sum="15344742.67"/>
+                    <a:record amount="31189" period="2009-09" sum="16220235.52"/>
+                    <a:record amount="21522" period="2009-10" sum="12206281.62"/>
+                    <a:record amount="27685" period="2009-11" sum="12992897.29"/>
+                    <a:record amount="19776" period="2009-12" sum="11605779.90"/>
+                </a:datas>
+                <a:fields>
+                    <a:field name="period" prompt="月"/>
+                    <a:field name="sum" datatype="float" prompt="销售金额" type="column"/>
+                    <a:field name="amount" datatype="float" prompt="销售数量"/>
+                </a:fields>
+            </a:dataSet>
+            <a:dataSet id="ds4">
+                <a:datas>
+                    <a:record name="DEXTERO" value="717489" value2="1040620389.21"/>
+                    <a:record name="GRANDTOUR" value="1826701" value2="910551745.25"/>
+                    <a:record name="GREATWALL" value="1281942" value2="1226883308.68"/>
+                    <a:record name="GTRADIAL" value="15024827" value2="3261197257.53"/>
+                    <a:record name="HUALIN" value="1098923" value2="1155935473.85"/>
+                    <a:record name="NA" value="190" value2="16760"/>
+                    <a:record name="PRIMEWELL" value="3791463" value2="4121771295.65"/>
+                    <a:record name="ROADKING" value="998643" value2="1196418553.62"/>
+                    <a:record name="RUNWAY" value="860823" value2="149439683.18"/>
+                    <a:record name="TBA" value="11" value2="1049.81"/>
+                    <a:record name="TREVA" value="0" value2="0"/>
+                    <a:record name="YINLUN" value="618911" value2="888899631.89"/>
+                    <a:record name="HERCULES" value="0" value2="0"/>
+                    <a:record name="ROADPRO" value="4154" value2="4443090.09"/>
+                    <a:record name="Giti" value="47012" value2="10495940.41"/>
+                    <a:record name="HIGHWAY" value="0" value2="0"/>
+                    <a:record name="PLANET" value="0" value2="0"/>
+                    <a:record name="新力金" value="239614" value2="289391456.78"/>
+                </a:datas>
+                <a:fields>
+                    <a:field name="name" prompt="品牌全称"/>
+                    <a:field name="value" datatype="float" prompt="销售数量"/>
+                    <a:field name="value2" datatype="float" prompt="销售金额"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:tabPanel height="600" marginWidth="50" width="1200">
+            <a:tabs>
+                <a:tab prompt="销售分析概览" width="100"/>
+                <a:tab prompt="销售分析-销售区域" width="100">
+                    <a:hBox>
+                        <a:chart bindTarget="ds1" marginBottom="65" marginRight="75" style="width: 850px; height: 400px; margin:10px" type="line">
+                            <a:title text="销售分析-销售区域" x="-20"/>
+                            <a:xAxis>
+                                <a:xAxi name="period"><![CDATA[
+                                ]]></a:xAxi>
+                            </a:xAxis>
+                            <a:yAxis>
+                                <a:yAxi name="sum" opposite="false">
+                                    <a:title text="销售金额"/>
+                                </a:yAxi>
+                                <a:yAxi name="amount" opposite="true">
+                                    <a:title text="销售数量"/>
+                                </a:yAxi>
+                                <a:yAxi name="test">
+                                    <a:title text="测试曲线"/>
+                                </a:yAxi>
+                            </a:yAxis>
+                        </a:chart>
+                        <a:table bindTarget="ds1" width="600">
+                            <a:columns>
+                                <a:column>
+                                    <a:column name="period" footerRenderer="sumTitle" renderer="toBlod"/>
+                                </a:column>
+                                <a:column prompt="内销">
+                                    <a:column name="amount" align="right" footerRenderer="sum" renderer="formatNumber"/>
+                                </a:column>
+                                <a:column prompt="内销">
+                                    <a:column name="sum" align="right" footerRenderer="sum" renderer="formatNumber"/>
+                                </a:column>
+                            </a:columns>
+                        </a:table>
+                    </a:hBox>
+                </a:tab>
+                <a:tab prompt="销售分析-市场类型" width="100">
+                    <a:hBox>
+                        <a:table bindTarget="ds2" width="600">
+                            <a:columns>
+                                <a:column name="period" footerRenderer="sumTitle" renderer="toBlod"/>
+                                <a:column name="amount" align="right" footerRenderer="sum" renderer="formatNumber"/>
+                                <a:column name="sum" align="right" footerRenderer="sum" renderer="formatNumber"/>
+                            </a:columns>
+                        </a:table>
+                        <a:chart bindTarget="ds2" marginBottom="65" marginRight="75" style="width: 850px; height: 400px; margin:10px" type="line">
+                            <a:title text="销售分析-市场类型" x="-20"/>
+                            <a:xAxis>
+                                <a:xAxi name="period"><![CDATA[
+                                ]]></a:xAxi>
+                            </a:xAxis>
+                            <a:yAxis>
+                                <a:yAxi name="sum" opposite="true">
+                                    <a:title text="销售金额"/>
+                                </a:yAxi>
+                                <a:yAxi name="amount">
+                                    <a:title text="销售数量"/>
+                                </a:yAxi>
+                            </a:yAxis>
+                        </a:chart>
+                    </a:hBox>
+                </a:tab>
+                <a:tab prompt="销售分析-客户-省" width="100">
+                    <a:hBox>
+                        <a:table bindTarget="ds3" width="600">
+                            <a:columns>
+                                <a:column name="period" footerRenderer="sumTitle" renderer="toBlod"/>
+                                <a:column name="amount" align="right" footerRenderer="sum" renderer="formatNumber"/>
+                                <a:column name="sum" align="right" footerRenderer="sum" renderer="formatNumber"/>
+                            </a:columns>
+                        </a:table>
+                        <a:chart bindTarget="ds3" marginBottom="65" marginRight="75" style="width: 850px; height: 400px; margin:10px" type="line">
+                            <a:title text="销售分析-客户-省" x="-20"/>
+                            <a:xAxis>
+                                <a:xAxi name="period"><![CDATA[
+                                ]]></a:xAxi>
+                            </a:xAxis>
+                            <a:yAxis>
+                                <a:yAxi name="sum" opposite="true">
+                                    <a:title text="销售金额"/>
+                                </a:yAxi>
+                                <a:yAxi name="amount">
+                                    <a:title text="销售数量"/>
+                                </a:yAxi>
+                            </a:yAxis>
+                        </a:chart>
+                    </a:hBox>
+                </a:tab>
+                <a:tab prompt="销售分析-产品" width="100">
+                    <a:hBox>
+                        <a:table bindTarget="ds4" width="500">
+                            <a:columns>
+                                <a:column name="name" footerRenderer="sumTitle" renderer="toBlod"/>
+                                <a:column name="value" footerRenderer="sum" renderer="formatNumber"/>
+                                <a:column name="value2" footerRenderer="sum" renderer="formatNumber"/>
+                            </a:columns>
+                        </a:table>
+                        <a:chart bindTarget="ds4" marginBottom="65" marginRight="260" style="width: 800px; height: 500px; margin:10px" type="pie">
+                            <a:title text="销售分析-产品-品牌" x="-20"/>
+                            <a:tooltip formatter="renderer2"/>
+                            <a:legend align="right" borderWidth="0" layout="vertical" verticalAlign="top" width="200" x="-10" y="10"/>
+                            <a:plotOptions>
+                                <a:pie allowPointSelect="true" cursor="pointer" showInLegend="true">
+                                    <a:dataLabels formatter="renderer1"/>
+                                </a:pie>
+                            </a:plotOptions>
+                        </a:chart>
+                    </a:hBox>
+                </a:tab>
+            </a:tabs>
+        </a:tabPanel>
+    </a:view>
+</a:screen>

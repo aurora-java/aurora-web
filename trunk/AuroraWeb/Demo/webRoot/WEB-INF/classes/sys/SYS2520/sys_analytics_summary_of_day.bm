@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2011-9-28 下午7:23:56  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" baseTable="sys_runtime_req_summary" defaultOrderBy="day">
+    <bm:fields>
+        <bm:field name="id" databasetype="NUMBER" datatype="java.lang.Long"/>
+        <bm:field name="day" databasetype="date" datatype="java.lang.String" expression="to_char(day,&apos;yyyy-mm-dd&apos;)" physicalName="day"/>
+        <bm:field name="visits" databasetype="NUMBER" datatype="java.lang.Long"/>
+        <bm:field name="med_dur_screen" databasetype="NUMBER" datatype="java.lang.Long"/>
+        <bm:field name="med_dur_svc" databasetype="NUMBER" datatype="java.lang.Long"/>
+        <bm:field name="med_dur_query" databasetype="NUMBER" datatype="java.lang.Long"/>
+        <bm:field name="ratio_screen" databasetype="NUMBER" datatype="java.lang.Float"/>
+        <bm:field name="ratio_svc" databasetype="NUMBER" datatype="java.lang.Float"/>
+        <bm:field name="ratio_query" databasetype="NUMBER" datatype="java.lang.Float"/>
+    </bm:fields>
+    <!--
+    select h.day,
+	   (select count(1)
+	      from sys_runtime_request_record r
+	     where to_char(r.enter_time, 'yyyy-mm-dd') = h.day) visits
+	from (select to_char(to_date(${/parameter/@startDate}, 'yyyy-mm-dd') +
+	                   rownum - 1,
+	                   'yyyy-mm-dd') day
+	      from dual
+	    connect by rownum <=
+	               (to_date(${/parameter/@endDate}, 'yyyy-mm-dd') -
+	               to_date(${/parameter/@startDate}, 'yyyy-mm-dd') + 1)) h
+    -->
+    <bm:query-fields>
+        <bm:query-field name="startDate" queryExpression="day &gt;= to_date(${/parameter/@startDate},&apos;yyyy-mm-dd&apos;) "/>
+        <bm:query-field name="endDate" queryExpression="day &lt; to_date(${/parameter/@endDate},&apos;yyyy-mm-dd&apos;)+1 "/>
+    </bm:query-fields>
+</bm:model>

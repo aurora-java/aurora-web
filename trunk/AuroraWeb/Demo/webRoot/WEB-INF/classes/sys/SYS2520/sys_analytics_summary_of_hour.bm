@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2011-9-29 上午10:38:14  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" baseTable="sys_runtime_req_summary_hour" defaultOrderBy="hour">
+    <!--select h.hour,
+                   sys_analytics_pkg.getMedianDurationOfHour(h.hour, 'screen', to_date(${/parameter/@startDate},'yyyy-mm-dd'), to_date(${/parameter/@endDate},'yyyy-mm-dd')) screen,
+                   sys_analytics_pkg.getMedianDurationOfHour(h.hour, 'svc', to_date(${/parameter/@startDate},'yyyy-mm-dd'), to_date(${/parameter/@endDate},'yyyy-mm-dd')) svc,
+                   sys_analytics_pkg.getMedianDurationOfHour(h.hour, 'query', to_date(${/parameter/@startDate},'yyyy-mm-dd'), to_date(${/parameter/@endDate},'yyyy-mm-dd')) query
+              from (SELECT trim(to_char(rownum-1, '09')) hour
+                      FROM dual
+                    CONNECT BY rownum <= 24) h
+             order by h.hour-->
+    <bm:fields>
+        <bm:field name="hour" databaseType="varchar2" datatype="java.lang.String"/>
+        <bm:field name="visits" databaseType="number" datatype="java.lang.Long" expression="median (visits)"/>
+        <bm:field name="med_dur_screen" databaseType="number" datatype="java.lang.Long" expression="median(med_dur_screen)"/>
+        <bm:field name="med_dur_svc" databaseType="number" datatype="java.lang.Long" expression="median(med_dur_svc)"/>
+        <bm:field name="med_dur_query" databaseType="number" datatype="java.lang.Long" expression="median(med_dur_query)"/>
+    </bm:fields>
+    <bm:query-fields>
+        <bm:query-field name="startDate" queryExpression="day &gt;= to_date(${/parameter/@startDate},&apos;yyyy-mm-dd&apos;) "/>
+        <bm:query-field name="endDate" queryExpression="day &lt; to_date(${/parameter/@endDate},&apos;yyyy-mm-dd&apos;)+1 "/>
+    </bm:query-fields>
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+            select hour,
+                   median(visits) visits,
+                   median(med_dur_screen) med_dur_screen,
+                   median(med_dur_svc) med_dur_svc,
+                   median(med_dur_query) med_dur_query
+              from sys_runtime_req_summary_hour
+            #WHERE_CLAUSE#
+             group by hour
+             order by hour
+            ]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+</bm:model>

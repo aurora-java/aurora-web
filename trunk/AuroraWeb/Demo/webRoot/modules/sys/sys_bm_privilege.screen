@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: machao1505  $
+    $Date: 2010/11/1 06:30:25 $
+    $Revision: 1.0 $
+    $Purpose: BM 权限控制
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure><![CDATA[     
+    ]]></a:init-procedure>
+    <a:view>
+        <script><![CDATA[ 
+            function queryAlertRules(){
+                $('sys_bm_privilege_result_ds').query();
+            }
+            
+           
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="sys_bm_privilege_query_ds" model="sys.SYS8010.sys_bm_privilege"/>
+            <a:dataSet autoQuery="true" fetchAll="false" id="sys_bm_privilege_result_ds" model="sys.SYS8010.sys_bm_privilege" queryDataSet="sys_bm_privilege_query_ds" selectable="true">
+                <a:fields>
+                    <a:field checkedValue="Y" defaultValue="Y" name="insert_option" uncheckedValue="N"/>
+                    <a:field checkedValue="Y" defaultValue="Y" name="update_option" uncheckedValue="N"/>
+                    <a:field checkedValue="Y" defaultValue="Y" name="query_option" uncheckedValue="N"/>
+                    <a:field checkedValue="Y" defaultValue="Y" name="delete_option" uncheckedValue="N"/>
+                    <a:field checkedValue="Y" defaultValue="Y" name="execute_option" uncheckedValue="N"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:form column="2" title="SYS_PRIVILEGE.BM_CODE" width="500">
+                <a:textField bindTarget="sys_bm_privilege_query_ds" name="bm_name">
+                    <a:events>
+                        <a:event handler="queryAlertRules" name="bm_name"/>
+                    </a:events>
+                </a:textField>
+                <a:textField bindTarget="sys_bm_privilege_query_ds" name="dimension_code">
+                    <a:events>
+                        <a:event handler="queryAlertRules" name="dimension_code"/>
+                    </a:events>
+                </a:textField>
+            </a:form>
+            <a:hBox>
+                <a:button click="queryAlertRules" text="HAP_QUERY"/>
+            </a:hBox>
+            <a:grid bindTarget="sys_bm_privilege_result_ds" marginWidth="30" marginHeight="150" height="370" id="sys_bm_privilege_grid" navBar="true" width="450">
+                <a:toolBar>
+                    <a:button type="add"/>
+                    <a:button type="delete"/>
+                    <a:button type="save"/>
+                </a:toolBar>
+                <a:columns>
+                    <a:column editor="description_grid_tf" name="dimension_code" width="80"/>
+                    <a:column editor="description_grid_tf" name="dimension_value_code" width="80"/>
+                    <a:column editor="description_grid_tf" name="bm_name" width="80"/>
+                    <a:column editor="enabled_flag_cb" name="insert_option" width="30"/>
+                    <a:column editor="enabled_flag_cb" name="update_option" width="30"/>
+                    <a:column editor="enabled_flag_cb" name="delete_option" width="30"/>
+                    <a:column editor="enabled_flag_cb" name="execute_option" width="30"/>
+                    <a:column editor="enabled_flag_cb" name="query_option" width="30"/>
+                </a:columns>
+                <a:editors>
+                    <a:textField id="description_grid_tf"/>
+                    <a:checkBox id="enabled_flag_cb"/>
+                </a:editors>
+            </a:grid>
+        </a:screenBody>
+    </a:view>
+</a:screen>

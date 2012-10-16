@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: ouyangzhaochang2663 $
+    $Date: 2010/11/15 07:47:58 $
+    $Revision: 1.4 $
+    $Purpose: 邮件服务器设置
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure/>
+    <a:view>
+        <script><![CDATA[ 
+            function queryMailServer(){
+                $('sys_mail_server_result_ds').query();
+            }
+            function resetMailServer(){
+            	$('sys_mail_server_query_ds').reset();
+            }
+            function mailUsernameEdit(record, name){
+                if(record.get('auth_login_flag') == 'Y'){
+                    return 'mail_username_grid_tf';
+                }else{
+                    return '';
+                }
+            }
+            
+            function mailPasswordEdit(record, name){
+                if(record.get('auth_login_flag') == 'Y'){
+                    return 'password_grid_password';
+                }else{
+                    return '';
+                }
+            }
+            
+            function onUpdate(ds,record,name,value,oldValue){
+                if(name == 'auth_login_flag'){
+                    var rq = (value == 'Y');
+                    record.getMeta().getField('mail_username').setRequired(rq);
+                    record.getMeta().getField('mail_password').setRequired(rq);
+                    if(!rq){
+                        record.set('mail_username','');
+                        record.set('mail_password','');
+                    }
+                }                      	               
+            }            
+            function onAdd(ds,record){
+                record.getMeta().getField('mail_username').setRequired(true);
+                record.getMeta().getField('mail_password').setRequired(true);
+            }
+            
+            function setPassword(value, record, name){
+                var passwd ='';
+                if(typeof(record.get('mail_password')) != 'undefined' ){
+                    for(var i=0; i<value.length ; i++){
+                        passwd = passwd + '●';
+                    }
+                    return passwd;
+                }
+            }
+            
+            function emailValidator(record, name, value){  
+                var reg = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;  
+                if (!reg.test(value)){  
+                    return '${l:THE_ADDRESS_YOU_SENT_IS_NOT_CORRECT}';  
+                }
+                return true;
+            }
+            /*默认缺省值只能为一*/
+            function clickFunction(checkBox,checked){
+                var records=$('sys_mail_server_result_ds').getAll();            	
+            	for(var i=0;i<records.length;i++){
+            		records[i].set('default_flag','N');                		
+            	}            	
+            	checkBox.record.set('default_flag','Y');
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="sys_mail_server_query_ds" model="sys.SYS1030.sys_mail_server"/>
+            <a:dataSet id="sys_mail_server_result_ds" autoQuery="true" fetchAll="false" model="sys.SYS1030.sys_mail_server" queryDataSet="sys_mail_server_query_ds" selectable="true">
+                <a:fields>
+                    <a:field name="mail_address" required="true"/>
+                    <a:field name="mail_protocol" required="true"/>
+                    <a:field name="mail_smtp_host" required="true"/>
+                    <a:field name="auth_login_flag" checkedValue="Y" defaultValue="Y" required="true" uncheckedValue="N"/>
+                    <a:field name="mail_port_number" required="true"/>
+                    <a:field name="enabled_flag" checkedValue="Y" defaultValue="Y" uncheckedValue="N"/>
+                    <a:field name="default_flag" checkedValue="Y" defaultValue="N" uncheckedValue="N"/>
+                    <a:field name="mail_address" validator="emailValidator"/>
+                </a:fields>
+                <a:events>
+                    <a:event name="update" handler="onUpdate"/>
+                    <a:event name="add" handler="onAdd"/>
+                </a:events>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:form column="2" title="SYS_MAIL_SERVER.MAIL_SERVER_QUERY" width="500">
+                <a:textField name="mail_smtp_host" bindTarget="sys_mail_server_query_ds">
+                    <a:events>
+                        <a:event name="enterdown" handler="queryMailServer"/>
+                    </a:events>
+                </a:textField>
+                <a:textField name="mail_address" bindTarget="sys_mail_server_query_ds">
+                    <a:events>
+                        <a:event name="enterdown" handler="queryMailServer"/>
+                    </a:events>
+                </a:textField>
+                <a:textField name="mail_username" bindTarget="sys_mail_server_query_ds">
+                    <a:events>
+                        <a:event name="enterdown" handler="queryMailServer"/>
+                    </a:events>
+                </a:textField>
+            </a:form>
+            <a:hBox>
+                <a:button click="queryMailServer" text="HAP_QUERY"/>
+                <a:button click="resetMailServer" text="HAP_RESET"/>
+            </a:hBox>
+            <a:grid id="sys_mail_server_grid" bindTarget="sys_mail_server_result_ds" height="330" navBar="true" width="900">
+                <a:toolBar>
+                    <a:button type="add"/>
+                    <a:button type="delete"/>
+                    <a:button type="clear"/>
+                    <a:button type="save"/>
+                </a:toolBar>
+                <a:columns>
+                    <a:column name="mail_smtp_host" editor="text_grid_tf" sortable="true" width="150"/>
+                    <a:column name="mail_protocol" editor="text_grid_tf" width="50"/>
+                    <a:column name="mail_port_number" align="right" editor="mail_port_number_grid_numberField" width="40"/>
+                    <a:column name="default_flag" align="center" editor="checkbox_grid_ck" width="40"/>
+                    <a:column name="enabled_flag" editor="checkbox_grid_ckb" sortable="true" width="40"/>
+                    <a:column name="mail_address" editor="text_grid_tf" sortable="true" width="150"/>
+                    <a:column name="auth_login_flag" editor="checkbox_grid_ckb" sortable="true" width="76"/>
+                    <a:column name="mail_username" editorFunction="mailUsernameEdit" sortable="true"/>
+                    <a:column name="mail_password" editorFunction="mailPasswordEdit" renderer="setPassword" sortable="true"/>
+                    <a:column name="display_name" editor="text_grid_tf" sortable="true"/>
+                    <a:column name="reply_to" editor="text_grid_tf" sortable="true" width="150"/>
+                    <a:column name="mail_signature" editor="text_grid_tf" sortable="true"/>
+                </a:columns>
+                <a:editors>
+                    <a:textField id="text_grid_tf"/>
+                    <a:numberField id="mail_port_number_grid_numberField" allowDecimals="false" allowNegative="false"/>
+                    <a:checkBox id="checkbox_grid_ckb"/>
+                    <a:checkBox id="checkbox_grid_ck">
+                        <a:events>
+                            <a:event name="click" handler="clickFunction"/>
+                        </a:events>
+                    </a:checkBox>
+                    <a:passWord id="password_grid_password"/>
+                    <a:textField id="mail_username_grid_tf"/>
+                </a:editors>
+            </a:grid>
+        </a:screenBody>
+    </a:view>
+</a:screen>

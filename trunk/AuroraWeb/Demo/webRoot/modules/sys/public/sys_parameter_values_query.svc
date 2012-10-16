@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:service xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:init-procedure>
+        <p:switch test="/parameter/@level_id">
+            <p:case value="101">
+                <a:model-query autocount="true" model="sys.sys_parameter_system"/>
+            </p:case>
+            <p:case value="102">
+                <a:model-query autocount="true" model="sys.sys_parameter_role"/>
+            </p:case>
+            <p:case value="103">
+                <a:model-query autocount="true" model="sys.sys_parameter_user"/>
+            </p:case>
+            <p:case value="104">
+                <a:model-query autocount="true" model="sys.sys_parameter_company"/>
+            </p:case>
+        </p:switch>
+    </a:init-procedure>
+</a:service>

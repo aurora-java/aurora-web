@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:model xmlns:e="aurora.service.exception" xmlns:ns2="aurora.database.local.oracle" xmlns:ns1="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="fc" extend="fnd.fnd_companies" extendMode="reference">
+    <ns1:fields>
+        <ns1:field name="id" physicalName="company_id" databaseType="NUMBER" datatype="java.lang.Long"/>
+        <ns1:field name="company_code" databaseType="VARCHAR" datatype="java.lang.String" displayWidth="200" forQuery="true" fordisplay="true" prompt="COMPANY_CODE" queryWidth="150"/>
+        <ns1:field name="company_short_name_id" databaseType="NUMBER" datatype="java.lang.Long" multiLanguage="true" multiLanguageDescField="name"/>
+        <ns1:field name="name" databaseType="VARCHAR" datatype="java.lang.String" displayWidth="200" forInsert="false" forQuery="true" forUpdate="false" fordisplay="true" prompt="FND_COMPANIES.COMPANY_SHORT_NAME"/>
+    </ns1:fields>
+    <ns1:order-by>
+        <ns1:field name="company_code"/>
+    </ns1:order-by>
+    <ns1:query-fields>
+        <ns1:query-field field="company_code" queryOperator="like"/>
+        <ns1:query-field name="company_short_name" queryExpression="(select fd.description_text from fnd_descriptions fd where fd.description_id=fc.company_short_name_id         and fd.language =${/session/@lang}) like ${@company_short_name}"/>
+    </ns1:query-fields>
+</ns1:model>

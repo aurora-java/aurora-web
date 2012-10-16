@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--本文件为空,现在内容为系统自动创建,请修改并保存-->
+<a:service xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure>
+        <a:model-query autoCount="false" fetchAll="true" model="sys.get_info_mess_count"/>
+    </a:init-procedure>
+</a:service>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:model xmlns:ns1="http://www.aurora-framework.org/schema/bm" alias="ui" extend="sys.sys_user" extendmode="reference">
+    <ns1:fields>
+        <ns1:field name="user_name"/>
+    </ns1:fields>
+    <ns1:ref-fields/>
+</ns1:model>

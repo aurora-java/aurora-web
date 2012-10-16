@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="FND_COMPANIES_VL" defaultOrderBy="company_code">
+    <bm:fields>
+        <bm:field name="company_id" databaseType="NUMBER" datatype="java.lang.Double" physicalName="COMPANY_ID"/>
+        <bm:field name="company_code" databaseType="VARCHAR2" datatype="java.lang.String" displayWidth="225" forDisplay="true" forQuery="true" physicalName="COMPANY_CODE" prompt="FND_COMPANIES.COMPANY_CODE"/>
+        <bm:field name="company_icon" databaseType="BLOB" physicalName="COMPANY_ICON"/>
+        <bm:field name="company_short_name" databaseType="VARCHAR2" datatype="java.lang.String" displayWidth="225" forDisplay="true" forQuery="true" physicalName="COMPANY_SHORT_NAME" prompt="FND_COMPANIES_VL.COMPANY_SHORT_NAME"/>
+        <bm:field name="company_full_name" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="COMPANY_FULL_NAME"/>
+        <bm:field name="company_type" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="COMPANY_TYPE"/>
+        <bm:field name="set_of_books_id" databaseType="NUMBER" datatype="java.lang.Double" physicalName="SET_OF_BOOKS_ID"/>
+        <bm:field name="company_level_id" databaseType="NUMBER" datatype="java.lang.Double" physicalName="COMPANY_LEVEL_ID"/>
+        <bm:field name="chief_position_id" databaseType="NUMBER" datatype="java.lang.Double" physicalName="CHIEF_POSITION_ID"/>
+        <bm:field name="parent_company_id" databaseType="NUMBER" datatype="java.lang.Double" physicalName="PARENT_COMPANY_ID"/>
+        <bm:field name="address" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="ADDRESS"/>
+        <bm:field name="start_date_active" databaseType="DATE" datatype="java.util.Date" physicalName="START_DATE_ACTIVE"/>
+        <bm:field name="end_date_active" databaseType="DATE" datatype="java.util.Date" physicalName="END_DATE_ACTIVE"/>
+        <bm:field name="code_name" expression="concat(concat(company_code,&apos;-&apos;),company_short_name)"/>
+    </bm:fields>
+    <bm:features>
+        <f:standard-who/>
+    </bm:features>
+    <bm:query-fields>
+        <bm:query-field field="company_code" queryExpression="company_code like ${@company_code}"/>
+        <bm:query-field field="code_name" queryExpression="concat(concat(company_code,&apos;-&apos;),company_short_name) like ${@code_name}"/>
+        <bm:query-field field="company_short_name" queryExpression="company_short_name like ${@company_short_name}"/>
+    </bm:query-fields>
+    <bm:order-by>
+        <bm:order-field name="company_code"/>
+    </bm:order-by>
+</bm:model>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: ouyangzhaochang2663 $
+    $Date: 2010/12/10 08:05:10 $
+    $Revision: 1.4 $
+    $Purpose: 参数定义新建和修改
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure>
+        <a:model-query autoCount="false" defaultWhereClause="parameter_id=${@parameter_id}" fetchAll="false" model="sys.sys_parameters" rootPath="parameter_define_model"/>
+    </a:init-procedure>
+    <a:view>
+        <script><![CDATA[
+
+            function queryParameterFromId() {
+                $('sys_parameter_result_ds').query();
+            }
+            
+            function saveParam() {
+                $('sys_parameter_define_ds').submit();
+            }
+            
+            function closeWindow() {
+                closeNewWindow();
+                queryParameter();
+            }
+            
+            function closeNewWindow() {
+                $('sys_parameter_new').close();
+            }
+            
+            function onSuccess(dateSet, datas, results) {
+                Aurora.showMessage('${l:EXP_REP_PARTIALLY_SUBMITTED}', '${l:PROMPT.OPERATION_SUCCESS}', function(cmp) {
+                    closeWindow();
+                    cmp.close();
+                });
+            }
+            
+            
+            function onUpdate(ds, record, name, value) {
+                var sql_v = record.getMeta().getField('sql_validation');
+                if (name == 'validation_type') {
+                    if (value == 'SQL') {
+                        sql_v.setReadOnly(false);
+                    } else {
+                        sql_v.setReadOnly(true);
+                        record.set('sql_validation', null);
+                    }
+                }
+            }
+            
+            function onParameterLoad(ds) {
+                var record = ds.getCurrentRecord();
+                if (record.get('parameter_id')) {
+                    record.getMeta().getField('parameter_code').setReadOnly(true);
+                }
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="validation_type_ds">
+                <a:datas>
+                    <a:record name="CHARACTER" code="CHARACTER"/>
+                    <a:record name="SQL" code="SQL"/>
+                    <a:record name="NUMERIC" code="NUMERIC"/>
+                </a:datas>
+            </a:dataSet>
+            <a:dataSet id="sys_parameter_define_ds" autoCreate="true" model="sys.sys_parameters" submitUrl="${/request/@context_path}/modules/sys/SYS1110/sys_parameter.svc">
+                <a:datas dataSource="/model/parameter_define_model"/>
+                <a:fields>
+                    <a:field name="parameter_code" required="true"/>
+                    <a:field name="parameter_name" required="true"/>
+                    <a:field name="description" required="true"/>
+                    <a:field name="start_date_active" datatype="date" required="true"/>
+                    <a:field name="end_date_active" datatype="date"/>
+                    <a:field name="module_name_display" displayField="module_name_display" options="sys_module_ds" required="true" returnField="module_id" valueField="module_id"/>
+                    <a:field name="validation_type_display" displayField="name" options="validation_type_ds" required="true" returnField="validation_type" valueField="code"/>
+                    <a:field name="encrypt_value_flag" checkedValue="Y" defaultValue="N" uncheckedValue="N"/>
+                    <a:field name="user_visible_flag" checkedValue="Y" defaultValue="N" uncheckedValue="N"/>
+                    <a:field name="user_changeable_flag" checkedValue="Y" defaultValue="N" uncheckedValue="N"/>
+                    <a:field name="company_enabled_flag" checkedValue="Y" defaultValue="N" uncheckedValue="N"/>
+                    <a:field name="user_enabled_flag" checkedValue="Y" defaultValue="N" uncheckedValue="N"/>
+                    <a:field name="role_enabled_flag" checkedValue="Y" defaultValue="N" uncheckedValue="N"/>
+                    <a:field name="system_enabled_flag" checkedValue="Y" defaultValue="N" uncheckedValue="N"/>
+                </a:fields>
+                <a:events>
+                    <a:event name="submitsuccess" handler="onSuccess"/>
+                    <a:event name="update" handler="onUpdate"/>
+                    <a:event name="load" handler="onParameterLoad"/>
+                </a:events>
+            </a:dataSet>
+        </a:dataSets>
+        <a:fieldSet column="1" labelWidth="95" style="margin-left:10px;margin-top:10px;" title="SYS_PARAMETER.TITLE" width="480">
+            <a:textField name="parameter_code" bindTarget="sys_parameter_define_ds" typeCase="upper" width="356"/>
+            <a:textField name="parameter_name" bindTarget="sys_parameter_define_ds" width="356"/>
+            <a:textField name="description" bindTarget="sys_parameter_define_ds" width="356"/>
+            <a:hBox padding="0" prompt="HAP_START_DATE">
+                <a:datePicker name="start_date_active" bindTarget="sys_parameter_define_ds" prompt="" renderer="Aurora.formatDate" width="140"/>
+                <a:datePicker name="end_date_active" bindTarget="sys_parameter_define_ds" prompt="HAP_END_DATE" renderer="Aurora.formatDate" width="140"/>
+            </a:hBox>
+            <a:hBox padding="0" prompt="SYS_MODULE.MODULE_NAME">
+                <a:comboBox name="module_name_display" bindTarget="sys_parameter_define_ds" width="140"/>
+                <a:comboBox name="validation_type_display" bindTarget="sys_parameter_define_ds" width="140"/>
+            </a:hBox>
+            <a:checkBox name="encrypt_value_flag" bindTarget="sys_parameter_define_ds"/>
+            <a:hBox padding="0" prompt="SYS_PARAMETER_DEFINE.USER">
+                <a:checkBox name="user_visible_flag" bindTarget="sys_parameter_define_ds" label="SYS_PARAMETER.USER_VISIBLE_FLAG" prompt=""/>
+                <a:checkBox name="user_changeable_flag" bindTarget="sys_parameter_define_ds" label="SYS_PARAMETER.USER_CHANGEABLE_FLAG" prompt=""/>
+            </a:hBox>
+            <a:hBox padding="0" prompt="SYS_PARAMETER_DEFINE.LEVEL">
+                <a:checkBox name="system_enabled_flag" bindTarget="sys_parameter_define_ds" label="SYS_PARAMETER.SYSTEM_ENABLED_FLAG" prompt=""/>
+                <a:checkBox name="company_enabled_flag" bindTarget="sys_parameter_define_ds" label="SYS_PARAMETER.COMPANY_ENABLED_FLAG" prompt=""/>
+                <a:checkBox name="user_enabled_flag" bindTarget="sys_parameter_define_ds" label="SYS_PARAMETER.USER_ENABLED_FLAG" prompt=""/>
+                <a:checkBox name="role_enabled_flag" bindTarget="sys_parameter_define_ds" label="SYS_PARAMETER.ROLE_ENABLED_FLAG" prompt=""/>
+            </a:hBox>
+            <a:textArea name="sql_validation" id="sql_v" bindTarget="sys_parameter_define_ds" width="350"/>
+        </a:fieldSet>
+        <div class="win-toolbar" style="height:40px;">
+            <a:hBox style="float:right;margin-right:10px;margin-top:5px;">
+                <a:button click="saveParam" text="HAP_SAVE" width="90"/>
+                <a:button click="closeWindow" text="HAP_CLOSE" width="90"/>
+            </a:hBox>
+        </div>
+    </a:view>
+</a:screen>

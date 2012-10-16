@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure>
+    	
+    </a:init-procedure>
+    <a:view template="default" package="aurora.ui.std">
+    	
+        
+    	<a:dataSets>
+    		<a:dataSet id="test_ds" >
+    			<a:fields>
+    				<a:field name="test" defaultValue="Y" checkedValue="Y" unCheckedValue="N"/>
+    				<a:field name="test1" defaultValue="Y" checkedValue="Y" unCheckedValue="N"/>
+    			</a:fields>
+    		</a:dataSet>
+        	<a:dataSet id="demo_ds" >
+        		<a:fields>
+                    <a:field name="test" defaultValue="Y" checkedValue="Y" unCheckedValue="N"/>
+                </a:fields>
+    			<a:datas>
+    				<a:record name="个人文件夹" id="1" parent="-1" sequence="1" expanded="Y" />
+    				
+    				<a:record name="草稿" id="2" parent="1" sequence="1" />    				
+    				<a:record name="发件箱" id="3" parent="1" sequence="2"/>
+    				
+    				<a:record name="垃圾邮件" id="4" parent="1" sequence="3" />
+    				
+    				<a:record name="收件箱" id="5" parent="1" sequence="4" expanded="N"/>
+    				
+    				<a:record name="hand-china.com" id="6" parent="5" sequence="1" unread="7"/>
+    				
+    				<a:record name="126.com" id="7" parent="5" sequence="2" unread="10"/>
+    				<a:record name="gmail.com" id="17" parent="5" sequence="3" unread="0"/>
+    				
+    				<a:record name="未读文件" id="12" parent="11" sequence="2"/>
+    							
+                    <a:record name="存档文件夹" id="13" parent="-1" sequence="4" expanded="Y"/>
+                    
+                    <a:record name="已发送邮件" id="14" parent="13" sequence="1"/>
+                    <a:record name="已删除邮件" id="15" parent="16" sequence="2"/>
+                    <a:record name="搜索文件夹" id="16" parent="-1" sequence="3" expanded="Y"/>
+    				<a:record name="已发送邮件" id="8" parent="1" sequence="5" />
+    				<a:record name="已删除邮件" id="9" parent="1" sequence="6" />
+    				<a:record name="搜索文件夹" id="10" parent="1" sequence="7"/>
+    				<a:record name="大邮件" id="11" parent="1" sequence="10" expanded="Y"/>
+    				
+    			</a:datas>
+    		</a:dataSet>
+    	</a:dataSets>	
+    	<script>
+		<![CDATA[
+			function loadContract(){
+				load('contract.screen');
+			}
+			
+			function mailrenderer(text, record, node){
+				var unread = record.get('unread')||0;
+				if(unread>0){
+					return '<b>'+text+'(<font color="red">'+unread+'</font>)</b>';
+				}else{
+					return text;
+				}
+			}
+			
+			function loadData(){
+                var s = new Date();
+				var ds = $('test_ds');
+				var list = [];
+				for(var i=0;i<10;i++){
+				    list.add(new Aurora.Record(
+				        {
+				            name:'name_'+i,
+				            id:'I'+i,
+				            parent:-1,
+				            checked:'N',
+				            sequence:1,//i+1,
+				            expanded:'N'
+				        }
+				    ))
+				}
+				
+				for(var i=0;i<10;i++){
+				    for(var j=0;j<10;j++){
+                        list.add(new Aurora.Record(
+                            {
+                                name:'name_'+i + '_' + j,
+                                id:'I' + i + 'I' + j,
+                                parent:'I' + i,
+                                checked:(j<5) ? 'Y' : 'N',
+                                sequence:1,//j+1,
+                                expanded:'N'
+                            }
+                        ))
+                    }
+                }
+               
+                /*
+                for(var i=0;i<2;i++){
+                    for(var j=0;j<2;j++){
+                        for(var m=0;m<2;m++){
+                            list.add(new Aurora.Record(
+                                {
+                                    name:'name_'+i + '_' + j + '_'+m,
+                                    id:'I' + i + 'I' + j+'I'+m,
+                                    parent:'I' + i + 'I' + j,
+                                    checked:'Y',
+                                    sequence:1,//m+1
+                                }
+                            ))
+                        }
+                    }
+                }
+                */
+                ds.loadData(list)
+				setTimeout(function(){
+				    //alert(new Date() - s);
+				},10)
+				
+			}
+			
+			function redRenderer(value,record, name){
+                return '<font color="red">'+value+'</font>'
+			}
+			
+			function testRenderer(value,record,name){
+                return record.get('test')
+			}
+			
+			function summaryRenderer(datas,name){
+                var sum = 0;
+                for(var i=0;i<datas.length;i++){
+                    var r = datas[i];
+                    var d = r.get(name);
+                    var n = parseFloat(d);
+                    if(!isNaN(n)){                        
+                        sum +=n;
+                    }
+                }
+                return '合计金额: <font color="red">' + Aurora.formatNumber(sum) + '</font>';
+            }
+            
+            function testFunction(record,name){
+                if (record.get('sequence') == '1'){
+                    return '';
+                }else{
+                    return 'grid_cb';
+                }
+            }
+			
+		]]>
+		</script>
+		<a:hBox>
+			<!--
+    		<a:form padding="0" title="邮件文件夹" showMargin="false" style="margin:10px;">
+                <a:tree id="menu1" showCheckBox="true" width="220" height="350" renderer="mailrenderer" bindTarget="demo_ds" displayField="name" idField="id" parentField="parent"/>
+            </a:form>
+            -->
+            <a:treeGrid id="treegrid" width="700" navBar="false" style="margin:10px;" showCheckBox="true" bindTarget="test_ds"  height="500" idField="id" parentField="parent">
+            	
+            	<a:columns>
+                    <a:column name="name" lock="true" width="150" prompt="名称" renderer="mailrenderer" />  
+                    <a:column name="checked" width="60" prompt="选中" />                    
+                    <a:column name="test" width="60" prompt="选中" editor="grid_cb"/>  
+                    <a:column name="test1" width="60" prompt="状态" renderer="testRenderer"/>                  
+                    <a:column prompt="组合列">
+                        <a:column name="id" width="80" prompt="ID" editor="grid_tf"/>
+                        <a:column name="parent" width="80" prompt="父节点" editor="grid_tf"/>
+                    </a:column>
+                    <a:column name="sequence" align="right" width="100" prompt="序列号" editor="grid_tf" renderer="redRenderer" footerRenderer="summaryRenderer"/> 
+                </a:columns>
+                <a:editors>
+                    <a:textField id="grid_tf"/>
+                    <a:checkBox id="grid_cb"/>
+                </a:editors>
+            </a:treeGrid>
+            <a:button text="加载" click="loadData"/>
+            <!--
+            <a:grid id="grid" width="500" style="margin:10px;" showCheckBox="true" bindTarget="demo_ds"  height="400" idField="id" parentField="parent">
+                <a:columns>
+                    <a:column name="id" lock="true" width="120" prompt="名称"/>
+                    <a:column prompt="test">
+                        <a:column name="name" width="80" prompt="ID" editor="grid_tf1"/>
+                        <a:column name="parent" align="center" width="80" prompt="父节点" />
+                    </a:column>
+                    <a:column name="sequence" align="right" width="100" prompt="序列号" editor="grid_tf1" renderer="redRenderer" footerRenderer="summaryRenderer"/>
+                    <a:column name="test" width="60" prompt="单选框" editor="grid_cb1"/>               
+                </a:columns>
+                <a:editors>
+                    <a:textField id="grid_tf1"/>
+                    <a:checkBox id="grid_cb1"/>
+                </a:editors>
+            </a:grid>
+            -->
+        </a:hBox>
+    </a:view>
+</a:screen>

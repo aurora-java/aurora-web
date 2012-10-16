@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: shishiliyan  
+    $Date: 2012-6-15 上午11:11:26  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<ns1:model xmlns:e="aurora.service.exception" xmlns:o="aurora.database.local.oracle" xmlns:ns1="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="g" baseTable="sys_user">
+    <!-- SELECT
+                    start_date
+                FROM
+                    sys_user g
+                WHERE
+                    g.user_name   = ${@user_name} AND
+                    g.start_date <= now() AND
+                    (
+                        g.end_date >= now() OR
+                        g.end_date IS NULL
+                    ); -->
+    <ns1:fields>
+        <ns1:field name="user_id" databaseType="BIGINT" datatype="java.lang.Long"/>
+        <ns1:field name="user_name" databaseType="VARCHAR" datatype="java.lang.String" prompt="SYS_USER.ACCOUNT"/>
+        <ns1:field name="start_date" databaseType="DATE" datatype="java.sql.Date" forInsert="true" forUpdate="true" prompt="HAP_START_DATE"/>
+        <ns1:field name="end_date" databaseType="DATE" datatype="java.sql.Date" forInsert="true" forUpdate="true" prompt="HAP_END_DATE"/>
+    </ns1:fields>
+    <ns1:primary-key>
+        <ns1:pk-field name="user_id"/>
+    </ns1:primary-key>
+    <ns1:query-fields><![CDATA[
+    
+    ]]></ns1:query-fields>
+    <ns1:data-filters>
+        <ns1:data-filter name="user_name" expression="g.user_name = upper(${@user_name}) "/>
+        <ns1:data-filter name="start_date" expression=" start_date &lt;= now() "/>
+        <ns1:data-filter name="end_date" expression=" (g.end_date &gt;= now() OR g.end_date IS NULL )"/>
+    </ns1:data-filters>
+    <ns1:features>
+        <o:sequence-pk/>
+        <f:standard-who/>
+    </ns1:features>
+    <e:exception-descriptor-config>
+        <e:exception-descriptor exception="java.sql.SQLException" handleClass="aurora.database.SQLExceptionDescriptor">
+            <e:error-message code="1" message="SYS_USER.ACCOUNT_DISTICNT"/>
+        </e:exception-descriptor>
+    </e:exception-descriptor-config>
+</ns1:model>

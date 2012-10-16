@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" needAccessControl="false">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+            	select manual_flag from fnd_coding_rule_basics #WHERE_CLAUSE#
+        	]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+    <bm:fields>
+        <bm:field name="manual_flag" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="manual_flag"/>
+    </bm:fields>
+</bm:model>

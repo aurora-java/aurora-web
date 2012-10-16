@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: machao1505 $
+    $Date: 2010/12/21 09:04:27 $
+    $Revision: 1.4 $
+    $Purpose: 功能分配BM页面
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure><![CDATA[
+    ]]></a:init-procedure>
+    <a:view>
+        <script><![CDATA[
+            function closeAssignPage() {
+                $('sys_function_bm_window').close();
+            }
+            
+            function serviceLovFunction(record) {
+                return record.isNew ? 'sys_function_service_grid_lv' : '';
+            }
+            
+            function saveAssignBm() {
+                $('sys_function_bm_access_ds').submit();
+            }
+            
+            function setinitdata(ds, record, index) {
+                record.set('function_id', '${/parameter/@function_id}');
+            }
+            
+            function doFetch(){
+                var bms = fetchBM('${/parameter/@function_id}')[0];
+                var ds = $('sys_function_bm_access_ds');
+                for(var i=0;i<bms.length;i++){
+                    var rec=ds.create();
+                    rec.set('function_id','${/parameter/@function_id}');
+                    rec.set('bm_name',bms[i]);
+                    rec.set('query_option','Y');
+                    rec.set('insert_option','Y');
+                    rec.set('update_option','Y');
+                    rec.set('delete_option','Y');
+                    rec.set('execute_option','Y');
+                }
+            }
+            
+            ]]></script>
+        <a:dataSets>
+            <a:dataSet id="sys_function" loadData="true" model="sys.SYS8010.sys_function">
+                <a:fields>
+                    <a:field name="function_code" readOnly="true"/>
+                    <a:field name="function_name" readOnly="true"/>
+                </a:fields>
+            </a:dataSet>
+            <a:dataSet id="sys_function_bm_access_ds" autoQuery="true" fetchAll="false" model="sys.SYS8010.bm_accesscheck" queryUrl="${/request/@context_path}/autocrud/sys.SYS8010.bm_accesscheck/query?ORDER_FIELD=bm_name&amp;function_id=${/parameter/@function_id}" selectable="true">
+                <a:fields>
+                    <a:field name="function_id"/>
+                    <a:field name="bm_name" required="true"/>
+                    <a:field name="insert_option" checkedValue="Y" defaultValue="Y" uncheckedValue="N"/>
+                    <a:field name="update_option" checkedValue="Y" defaultValue="Y" uncheckedValue="N"/>
+                    <a:field name="query_option" checkedValue="Y" defaultValue="Y" uncheckedValue="N"/>
+                    <a:field name="delete_option" checkedValue="Y" defaultValue="Y" uncheckedValue="N"/>
+                    <a:field name="execute_option" checkedValue="Y" defaultValue="Y" uncheckedValue="N"/>
+                </a:fields>
+                <a:events>
+                    <a:event name="add" handler="setinitdata"/>
+                </a:events>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:form column="2" labelWidth="80" title="FUNCTION_CHECK" width="600">
+                <a:textField name="function_code" bindTarget="sys_function" prompt="FND_FUNCTION.FUNCTION_CODE" width="200"/>
+                <a:textField name="function_name" bindTarget="sys_function" prompt="FND_FUNCTION.FUNCTION_NAME" width="200"/>
+            </a:form>
+            <a:grid id="sys_function_bm_access" bindTarget="sys_function_bm_access_ds" height="300" navBar="true" width="600">
+                <a:toolBar>
+                    <a:button type="add"/>
+                    <a:button type="delete"/>
+                    <a:button click="doFetch" icon="${/request/@context_path}/images/addbm.png" text="FetchBM"/>
+                </a:toolBar>
+                <a:columns>
+                    <a:column name="bm_name" editor="description_grid_tf" width="260"/>
+                    <a:column name="insert_option" editor="enabled_flag_cb" width="60"/>
+                    <a:column name="update_option" editor="enabled_flag_cb" width="60"/>
+                    <a:column name="delete_option" editor="enabled_flag_cb" width="60"/>
+                    <a:column name="execute_option" editor="enabled_flag_cb" width="60"/>
+                    <a:column name="query_option" editor="enabled_flag_cb" width="60"/>
+                </a:columns>
+                <a:editors>
+                    <a:textField id="description_grid_tf"/>
+                    <a:checkBox id="enabled_flag_cb"/>
+                </a:editors>
+            </a:grid>
+        </a:screenBody>
+        <div class="win-toolbar" style="width:620px;height:40px;">
+            <a:hBox style="float:right;margin-right:10px;margin-top:5px;">
+                <a:button click="saveAssignBm" text="HAP_SAVE" width="90"/>
+                <a:button click="closeAssignPage" text="HAP_CLOSE" width="90"/>
+            </a:hBox>
+        </div>
+    </a:view>
+</a:screen>

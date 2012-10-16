@@ -1,0 +1,6 @@
+@charset "utf-8";
+/* CSS Document */
+
+.input_login { background-image:url(input_bg.gif); border-bottom:#999 1px solid; line-height:18px; width:150px; background-repeat:repeat-x; font-family:Arial, Helvetica, sans-serif; font-size:12px; border-left:#999 1px solid; border-right:#999 1px solid; border-top:#999 1px solid; vertical-align:middle; padding-bottom:0px; padding-left:5px; padding-right:0px; padding-top:0px; height:20px; }
+.font { font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; color:#666666; }
+

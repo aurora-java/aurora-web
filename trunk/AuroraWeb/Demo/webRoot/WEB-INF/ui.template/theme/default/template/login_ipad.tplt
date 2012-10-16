@@ -1,0 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>${page:title}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8;width=device-width; initial-scale=1"/>
+<link rel="stylesheet" type="text/css" href="${/request/@context_path}/css/jquery.mobile-1.0.min.css"/>
+<script src="${/request/@context_path}/javascripts/jquery-1.6.4.min.js"></script>
+<script src="${/request/@context_path}/javascripts/jquery.mobile-1.0.min.js"></script>
+<!--<script src="${/request/@context_path}/javascripts/json2.js"></script>-->
+</head>
+<body>
+	${page:init}
+	${page:content}
+	<input type="hidden" class="logLink" screen="${/@service_name}" value="viewlog?file=${/@SERVICE_LOGGING_FILE}"/>
+</body>
+</html>

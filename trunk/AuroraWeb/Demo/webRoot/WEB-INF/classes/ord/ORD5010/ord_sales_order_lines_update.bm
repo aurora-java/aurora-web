@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2012-10-10 下午4:27:04  
+    $Revision: 1.0  
+    $Purpose: 当头return_order_flag改变时，更新所有行上的trade_quantity,total_amount
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="execute">
+            <bm:update-sql><![CDATA[
+                UPDATE
+                    ord_sales_order_lines l
+                SET
+                    l.trade_quantity   =ABS(l.trade_quantity)*${@mul},
+                    l.total_amount     =ABS(l.total_amount)*${@mul},
+                    l.last_update_date =now(),
+                    l.last_updated_by  =${/session/@user_id}
+                WHERE
+                    l.sales_order_id=${@sales_order_id}
+            ]]></bm:update-sql>
+            <bm:parameters>
+                <bm:parameter name="sales_order_id" dataType="java.lang.Long"/>
+                <bm:parameter name="mul" dataType="java.lang.Long"/>
+            </bm:parameters>
+        </bm:operation>
+    </bm:operations>
+</bm:model>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: lhc  
+    $Date: 2012-9-24 下午6:18:38  
+    $Revision: 1.0  
+    $Purpose: 物品类型定义
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="insert">
+            <bm:parameters>
+                <bm:parameter name="material_type_id" dataType="java.lang.Long" input="false" output="true" outputPath="@material_type_id"/>
+            </bm:parameters>
+            <bm:update-sql><![CDATA[
+            	begin
+            		inv_item_type_pkg.create_item_type(p_company_id  => ${/session/@company_id},
+                                 p_item_type_code => ${@item_type_code},
+                                 p_inv_mng_flag       => ${@inv_mng_flag},
+                                 p_description        => ${@description},
+                                 p_enabled_flag       => ${@enabled_flag},
+                                 p_user_id            => ${/session/@user_id},
+                                 p_item_type_id   => ${@item_type_id});
+            	end;
+            ]]></bm:update-sql>
+        </bm:operation>
+        <bm:operation name="update">
+            <bm:update-sql><![CDATA[
+            	begin
+            		inv_item_type_pkg.update_item_type(p_item_type_id => ${@item_type_id},
+                                 p_inv_mng_flag     => ${@inv_mng_flag},
+                                 p_description      =>${@description},
+                                 p_enabled_flag     => ${@enabled_flag},
+                                 p_user_id          => ${/session/@user_id});
+            	end;
+            ]]></bm:update-sql>
+        </bm:operation>
+    </bm:operations>
+</bm:model>

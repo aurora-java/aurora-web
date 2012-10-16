@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure/>
+    <a:view package="aurora.ui.std" template="default">
+        <div/>
+        <script language="JavaScript"><![CDATA[
+			function _curdquery(){
+				$('SYS_CURD_RESULT_DS').query()
+			}
+		]]></script>
+        <a:dataSets>
+            <a:dataSet id="SYS_CURD_QUERY_DS" model="${/parameter/@service}"/>
+            <a:dataSet id="SYS_CURD_RESULT_DS" autoQuery="true" model="${/parameter/@service}" queryDataSet="SYS_CURD_QUERY_DS" queryUrl="autocrud/${/parameter/@service}/query" selectable="true" selectionModel="multiple" submitUrl="sys_curd.svc?service=${/parameter/@service}"/>
+        </a:dataSets>
+        <a:autoForm bindTarget="SYS_CURD_QUERY_DS" column="2" model="${/parameter/@service}" style="margin:10px;" title="查询条件" width="${/parameter/@querywidth}"/>
+        <a:button click="_curdquery" style="margin-left:10px;" text="查询"/>
+        <a:autoGrid bindTarget="SYS_CURD_RESULT_DS" height="${/parameter/@gridheight}" model="${/parameter/@service}" navBar="true" style="margin:10px;" width="${/parameter/@gridwidth}">
+            <a:toolBar>
+                <a:button type="add"/>
+                <a:button type="delete"/>
+                <a:button type="save"/>
+            </a:toolBar>
+            <!-- 
+            <a:columns>
+                <a:column name="SERVICE_NAME" prompt="测试"/>
+            </a:columns>
+            -->
+        </a:autoGrid>
+    </a:view>
+</a:screen>

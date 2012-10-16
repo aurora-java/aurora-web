@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: lqr  
+    $Date: 2012-9-24 上午10:47:59  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure><![CDATA[
+    ]]></a:init-procedure>
+    <a:view>
+        <script><![CDATA[
+          function import_check(){
+              if (document.getElementById('importFile').value) {
+                    var fileName = document.getElementById('importFile').value;
+                    var fileType = fileName.substr(fileName.lastIndexOf("."));
+                    /*if (fileType != '.xls') {
+                        alert('请选择正确的导入文件！');
+                    } else {*/
+                        document.getElementById('importForm').submit();
+                    /*}*/
+              }
+          }
+          
+          function do_import(){
+              
+          }
+       ]]></script>
+        <a:dataSets>
+            <a:dataSet id="inv_item_import_result_ds" model="inv.INV2010.inv_item_import">
+                <a:fields>
+                    <a:field name="inventory_flag" checkedValue="Y" defaultValue="Y" uncheckedValue="N"/>
+                    <a:field name="enabled_flag" checkedValue="Y" defaultValue="Y" uncheckedValue="N"/>
+                </a:fields>
+            </a:dataSet>
+            <a:dataSet id="inv_item_import_log_ds" model="inv.INV2010.inv_item_import_log"><![CDATA[
+          ]]></a:dataSet>
+        </a:dataSets>
+        <a:fieldSet style="margin-left:10px;margin-top:10px;" title="导入文件" width="500">
+            <form name="upload" id="importForm" action="inv_item_import_trans_upload.screen?batch_id=${/session/@session_id}" enctype="multipart/form-data" method="post">
+                <a:hBox>
+                    <div><![CDATA[1.请使用系统提供的模板文件]]></div>
+                </a:hBox>
+                <a:hBox>
+                    <div><![CDATA[2.请选择要引入的数据文件]]></div>
+                    <input name="CONTENT" id="importFile" style="margin-top:10px;margin-bottom:4px;width:160px;height:22px;" type="file"/>
+                    <input onclick="import_check()" style="margin-left:10px;margin-top:10px;margin-bottom:4px;width:60px;height:22px;" type="button" value="导入检查"/>
+                    <input onclick="do_import()" style="margin-left:10px;margin-top:10px;margin-bottom:4px;width:60px;height:22px;" type="button" value="确定导入"/>
+                </a:hBox>
+                <a:hBox>
+                    <div><![CDATA[3.数据检查结果]]></div>
+                </a:hBox>
+            </form>
+        </a:fieldSet>
+        <a:grid id="inv_item_import_result" bindTarget="inv_item_import_result_ds" height="150" navBar="true" style="margin-left:10px;margin-top:10px;" width="770">
+            <a:toolBar>
+                <a:button type="add"/>
+                <a:button type="delete"/>
+                <a:button type="save"/>
+            </a:toolBar>
+            <a:columns>
+                <a:column name="inventory_flag" editor="enabled_flag_ckb" sortable="true" width="50"/>
+                <a:column name="item_type_id" editor="textField2" sortable="true" width="150"/>
+                <a:column name="item_code" align="center" editor="textField2" sortable="true" width="150"/>
+                <a:column name="item_name" editor="textField2" sortable="true" width="150"/>
+                <a:column name="item_specs" editor="textField2" sortable="true" width="200"/>
+                <a:column name="enabled_flag" editor="enabled_flag_ckb" sortable="true" width="50"/>
+            </a:columns>
+            <a:editors>
+                <a:textField id="textField2"/>
+            </a:editors>
+        </a:grid>
+        <a:grid id="" bindTarget="inv_item_import_log_ds" height="140" style="margin-left:10px;margin-top:10px;" width="650">
+            <a:columns>
+                <a:column name="LINE_NUMBER" prompt="错误行号" width="100"/>
+                <a:column name="MESSAGE" prompt="错误信息" width="350"/>
+                <a:column name="CREATION_DATE" prompt="日志日期" width="150"/>
+            </a:columns>
+        </a:grid>
+    </a:view>
+</a:screen>

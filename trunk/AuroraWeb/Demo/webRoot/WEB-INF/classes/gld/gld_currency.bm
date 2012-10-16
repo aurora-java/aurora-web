@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: niujiaqing1265 $
+    $Date: 2010/12/09 05:48:38 $
+    $Revision: 1.2 $
+    $Purpose: 对应gld_currency表的bm
+-->
+<ns1:model xmlns:ns2="aurora.database.local.oracle" xmlns:ns1="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="gc" baseTable="GLD_CURRENCY" defaultorderby="currency_code">
+    <ns1:fields>
+        <ns1:field name="currency_code" databaseType="VARCHAR2" datatype="java.lang.String" forDisplay="true" forQuery="true" physicalName="CURRENCY_CODE" prompt="GLD_CURRENCY.CURRENCY_CODE"/>
+        <ns1:field name="enabled_flag" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="ENABLED_FLAG" prompt="GLD_CURRENCY.ENABLED_FLAG"/>
+        <ns1:field name="currency_name_id" databaseType="NUMBER" datatype="java.lang.Long" multiLanguage="true" multiLanguageDescField="currency_name"/>
+        <ns1:field name="currency_name" databaseType="VARCHAR" datatype="java.lang.String" forDisplay="true" forInsert="false" forQuery="true" forUpdate="false" prompt="GLD_CURRENCY.CURRENCY_NAME"/>
+        <ns1:field name="country_code" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="COUNTRY_CODE" prompt="FND_COUNTRY_CODE.COUNTRY_CODE"/>
+        <ns1:field name="precision" databaseType="NUMBER" datatype="java.lang.Double" physicalName="PRECISION" prompt="GLD_CURRENCY.PRECISION"/>
+        <ns1:field name="transaction_precision" databaseType="NUMBER" datatype="java.lang.Double" physicalName="TRANSACTION_PRECISION" prompt="GLD_CURRENCY.TRANSACTION_PRECISION"/>
+        <ns1:field name="currency_symbol" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="CURRENCY_SYMBOL" prompt="GLD_CURRENCY.CURRENCY_SYMBOL"/>
+    </ns1:fields>
+    <ns1:primary-key>
+        <ns1:pk-field name="currency_code"/>
+    </ns1:primary-key>
+    <ns1:query-fields>
+        <ns1:query-field field="currency_code" queryOperator="like"/>
+        <ns1:query-field field="currency_name" queryExpression="exists (select 1 from fnd_descriptions fd where gc.currency_name_id=fd.description_id and fd.description_text like ${@currency_name} and fd.language = ${/session/@lang})"/>
+        <ns1:query-field name="name" queryExpression="exists (select 1 from fnd_descriptions fd where fc.description_id=fd.description_id and fd.description_text like ${@country_name} and fd.language = ${/session/@lang})"/>
+    </ns1:query-fields>
+    <ns1:relations>
+        <ns1:relation name="fc" joinType="left outer" refModel="fnd.FND1020.fnd_country_code">
+            <ns1:reference foreignField="country_code" localField="country_code"/>
+        </ns1:relation>
+        <!--<ns1:relation name="sn" joinType="inner" refModel="sys.sys_notify">
+            <ns1:reference foreignField="notify_id" localField="notify_id"/>
+        </ns1:relation>-->
+    </ns1:relations>
+    <ns1:features>
+        <f:standard-who/>
+        <f:multi-language-storage/>
+    </ns1:features>
+    <ns1:ref-fields>
+        <ns1:ref-field name="description_id" forInsert="false" forUpdate="false" relationName="fc" sourceField="description_id"/>
+    </ns1:ref-fields>
+</ns1:model>

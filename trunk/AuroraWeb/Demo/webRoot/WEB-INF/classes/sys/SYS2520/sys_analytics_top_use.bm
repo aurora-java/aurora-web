@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2011-9-28 下午8:31:55  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" baseTable="sys_runtime_req_top_use">
+    <bm:fields>
+        <bm:field name="url" databaseType="varchar2" datatype="java.lang.String"/>
+        <bm:field name="visits" databaseType="varchar2" datatype="java.lang.Long"/>
+    </bm:fields>
+    <bm:query-fields>
+        <bm:query-field name="startDate" queryExpression="day &gt;= to_date(${/parameter/@startDate},&apos;yyyy-mm-dd&apos;) "/>
+        <bm:query-field name="endDate" queryExpression="day &lt; to_date(${/parameter/@endDate},&apos;yyyy-mm-dd&apos;)+1 "/>
+    </bm:query-fields>
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+            select *
+              from (select *
+                      from (select url, sum(visits) visits
+                              from sys_runtime_req_top_use
+                             #WHERE_CLAUSE#
+                             group by url)
+                     order by visits desc)
+             where rownum <= 20
+ ]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+    <!--
+    select *
+              from (select r.url page, count(*) visits
+                      from SYS_RUNTIME_REQUEST_RECORD r
+                     where r.enter_time >= to_date(${/parameter/@startDate},'yyyy-mm-dd')
+                           and r.enter_time < to_date(${/parameter/@endDate},'yyyy-mm-dd')+1
+                     group by r.url
+                     order by count(*) desc)
+             where rownum <= 20
+    -->
+</bm:model>

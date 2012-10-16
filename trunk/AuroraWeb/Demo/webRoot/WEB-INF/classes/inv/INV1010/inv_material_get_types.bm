@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: hand  
+    $Date: 2012-9-26 上午10:38:22  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+                SELECT
+                	t1.item_type_id,
+                    concat(concat(t1.item_type_code,'-'),t1.description) AS item_type_desc
+                FROM
+                    INV_ITEM_TYPES t1
+                WHERE
+                    t1.item_type_id = ${@item_type_id}
+            ]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+</bm:model>

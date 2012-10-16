@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: niujiaqing1265 $
+    $Date: 2010/11/30 06:14:58 $
+    $Revision: 1.8 $
+    $Purpose: 系统级描述
+-->
+<a:screen xmlns:c="aurora.application.action" xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:view package="aurora.ui.std" template="default">
+        <a:screenBody>
+            <div style="width:800px">
+                <!--PROMPT.UPLOAD_ATTACHMENT-->
+                <a:upload buttonWidth="75" fileType="*.*" pkvalue="${/parameter/@header_id}" sourcetype="${/parameter/@table_name}" text="附件上传"/>
+                <br/>
+            </div>
+        </a:screenBody>
+    </a:view>
+</a:screen>

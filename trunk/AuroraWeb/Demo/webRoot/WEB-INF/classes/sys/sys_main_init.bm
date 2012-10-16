@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+        select t.role_id, s.service_id, s.service_name
+  from sys_role t, sys_service s
+ 
+ #WHERE_CLAUSE#
+]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+    <bm:fields>
+        <bm:field name="role_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="ROLE_ID" required="true"/>
+        <bm:field name="service_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="SERVICE_ID" required="true"/>
+        <bm:field name="service_name" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="SERVICE_NAME" required="true"/>
+    </bm:fields>
+    <bm:data-filters>
+        <bm:data-filter expression="s.service_id = t.service_id and t.role_id = ${/session/@role_id}"/>
+    </bm:data-filters>
+</bm:model>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen
+    $Date: 2011-10-6 下午10:31:56
+    $Revision: 1.0
+    $Purpose:
+-->
+<a:screen xmlns:c="aurora.application.action" xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:init-procedure>
+        <a:model-query model="sys.SYS2520.sys_analytics_customize" rootPath="/model/customize"/>
+    </a:init-procedure>
+    <a:view>
+        <script><![CDATA[
+            //onerror = function(m, u, l) {
+            //    alert("msg : " + m + "\nurl : " + u + "\nline: " + l);
+            //};
+            var iii=0;
+            function emptyRenderer() {
+                return "";
+            }
+            
+            function msRenderer() {
+                if(Number(this.value)<0){
+                   return "";
+                }
+                return this.value + "ms";
+            }
+            
+            function dayRenderer(){
+                //2011-10-10
+                //返回10-10
+                return this.value.substr(5);
+            }
+            
+            function percentRenderer(){
+                var n = Number(this.value);
+                if(n<0||n>1){
+                    return "";
+                }else if(n==0){
+                    return "0";
+                }
+                return (n*100).toFixed(2)+"%";
+            }
+            
+            function checkNotEmpty(obj) {
+                return typeof(obj) != 'undefined' && !Ext.isEmpty(obj);
+            }
+            
+            function dateValidator(record, name, value) {
+                if (name == 'startDate' || name == 'endDate') {
+                    var start_date = record.get('startDate');
+                    var end_date = record.get('endDate');
+                    if (checkNotEmpty(start_date) && checkNotEmpty(end_date) && (start_date > end_date)) {
+                        return '${l:PROMPT.START_DATE_LESS_END_DATE}';
+                    }
+                }
+                return true;
+            }
+            
+            function refreshAll() {
+                var r = $('query_ds').getCurrentRecord();
+                var sd = r.get('startDate');
+                var ed = r.get('endDate');
+                var date = new Date();
+                date.setTime(date.getTime() - 1000 * 60 * 60 * 24);
+                if (ed > date) {
+                    ed = date;
+                    r.set('endDate', ed);
+                }
+                //$('summary_of_day_ds').query();
+                if (!r.validateRecord()) {
+                    return;
+                }
+                var recs= $('min_screen_ds').getAll();
+                for (var i = 0;i < recs.length;i++) {
+                    eval(recs[i].get('callback')+"()");
+                }
+            }
+            ]]></script>
+        <a:dataSets>
+            <a:dataSet id="query_ds" autoCreate="true">
+                <a:fields>
+                    <a:field name="startDate" required="true" validator="dateValidator"/>
+                    <a:field name="endDate" required="true" validator="dateValidator"/>
+                </a:fields>
+            </a:dataSet>
+            <a:dataSet id="min_screen_ds">
+                <a:datas dataSource="/model/customize"/>
+            </a:dataSet>
+            <!--<a:dataSet id='summary_of_day_ds' model='sys.analytics.sys_analytics_summary_of_day' queryDataSet = 'query_ds' />-->
+        </a:dataSets>
+        <a:screenBody>
+            <center>
+                <a:form column="3">
+                    <a:placeHolder id="screen_include_id"/>
+                </a:form>
+                <a:hBox>
+                    <a:datePicker name="startDate" bindTarget="query_ds" prompt="FND_CALENDAR.START_DATE"/>
+                    <a:datePicker name="endDate" bindTarget="query_ds" prompt="FND_CALENDAR.END_DATE"/>
+                    <a:button click="refreshAll" text="HAP_REFRESH"/>
+                </a:hBox>
+            </center>
+        </a:screenBody>
+        <script><![CDATA[
+            var r = $('query_ds').getCurrentRecord();
+            var date = new Date();
+            date.setTime(date.getTime() - 1000 * 60 * 60 * 24);
+            r.set('endDate', date);
+            var d = new Date();
+            d.setTime(date.getTime() - 1000 * 60 * 60 * 24 * 10);
+            r.set('startDate', d);
+            refreshAll();
+        ]]></script>
+    </a:view>
+    <a:view-config>
+        <c:create-config targetId="screen_include_id">
+            <p:loop nullable="true" source="/model/customize">
+                <c:process-config>
+                    <a:screen-include screen="${@screen}"/>
+                </c:process-config>
+            </p:loop>
+        </c:create-config>
+    </a:view-config>
+</a:screen>

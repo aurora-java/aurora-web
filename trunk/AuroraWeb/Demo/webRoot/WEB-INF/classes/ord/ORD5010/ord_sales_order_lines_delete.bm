@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2012-10-10 下午4:27:04  
+    $Revision: 1.0  
+    $Purpose: 按照头id删除所有行
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="execute">
+            <bm:update-sql><![CDATA[
+                DELETE l FROM ord_sales_order_lines l WHERE l.sales_order_id=${@sales_order_id}
+            ]]></bm:update-sql>
+            <bm:parameters>
+                <bm:parameter name="sales_order_id" dataType="java.lang.Long"/>
+            </bm:parameters>
+        </bm:operation>
+    </bm:operations>
+</bm:model>

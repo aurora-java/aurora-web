@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: tony  
+    $Date: 2012-9-24 上午9:58:55  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+                select *
+                from (
+                      select t.province
+                      from sys_region_codes t
+                      group by t.province
+                      order by t.province
+                    ) t1
+                    #WHERE_CLAUSE#
+            ]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+    <bm:fields>
+        <bm:field name="province" databaseType="VARCHAR2" datatype="java.lang.String" forDisplay="true" forQuery="true" physicalName="PROVINCE" prompt="FND_COMPANIES.ADDRESS_PROVINCE"/>
+    </bm:fields>
+    <bm:query-fields>
+        <bm:query-field name="province" queryExpression="t1.province like concat(concat (&apos;%&apos;, ${@province}),&apos;%&apos;)"/>
+    </bm:query-fields>
+</bm:model>

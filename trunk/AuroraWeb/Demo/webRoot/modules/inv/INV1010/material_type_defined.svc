@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:service xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:init-procedure>
+        <a:batch-apply sourcepath="/parameter">
+            <p:switch test="@current_parameter/@_status">
+                <p:case value="insert">
+                    <a:model-insert model="inv.INV1010.inv_material_types_maitain"/>
+                </p:case>
+                <p:case value="update">
+                    <a:model-update model="inv.INV1010.inv_material_types_maitain"/>
+                </p:case>
+                <p:case>
+                    <a:model-delete model="inv.INV1010.inv_material_types"/>
+                </p:case>
+            </p:switch>
+        </a:batch-apply>
+    </a:init-procedure>
+    <a:service-output output="/parameter"/>
+</a:service>

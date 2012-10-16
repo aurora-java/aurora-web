@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: Mouse Chow  
+    $Date: 2011-11-18 下午12:33:25  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:o="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="SYS_REPORT_TYPE">
+    <bm:fields>
+        <bm:field name="report_type_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="REPORT_TYPE_ID" prompt="SYS_REPORT_TYPE.REPORT_TYPE_ID"/>
+        <bm:field name="report_type_code" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="REPORT_TYPE_CODE" prompt="SYS_REPORT_TYPE.REPORT_TYPE_CODE"/>
+        <bm:field name="document_type" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="DOCUMENT_TYPE" prompt="SYS_REPORT_TYPE.DOCUMENT_TYPE"/>
+        <bm:field name="report_type_name" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="REPORT_TYPE_NAME" prompt="SYS_REPORT_TYPE.REPORT_TYPE_NAME"/>
+    </bm:fields>
+    <bm:query-fields>
+        <bm:query-field field="report_type_name" queryOperator="like"/>
+    </bm:query-fields>
+    <bm:primary-key>
+        <bm:pk-field name="report_type_id"/>
+    </bm:primary-key>
+    <bm:features>
+        <f:standard-who/>
+        <o:sequence-pk/>
+    </bm:features>
+</bm:model>

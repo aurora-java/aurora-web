@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: niujiaqing1265 $
+    $Date: 2010/11/24 07:33:17 $
+    $Revision: 1.6 $
+    $Purpose: 角色选择界面
+    $modify :duanjian 点击切换角色时，默认取到当前公司的角色。
+    $Date: 2012/3/5 $
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure>
+        <a:model-query model="sys.sys_user_role_groups" rootPath="role_list"/>
+    </a:init-procedure>
+    <a:view package="aurora.ui.std" template="default">
+        <a:link id="role_select_link_1" url="${/request/@context_path}/role_select.svc"/>
+        <style><![CDATA[
+            .item-radio-lb{    
+                font-size:14px;
+            }
+        ]]></style>
+        <script><![CDATA[
+        
+          
+            
+          
+            function refreshMain(){
+                var radio = $('roleRadios');
+                var record = radio.getItem();
+                if(record){
+                    
+                    Aurora.request({url:/*role_select.svc*/$('role_select_link_1').getUrl(), para:record.data, success:selectRoleSuccess, scope:this});
+                }else{
+                    Aurora.showWarningMessage('错误', "没有可选角色!");
+                }
+                
+            }
+            function afterOpen(){
+                canGoToMainService = false;
+                window._mainwin.focus();
+            }
+            
+            
+            function selectRoleSuccess(){
+               refreshMainScreen();
+               //$('role_choose_window').close();
+               
+            }
+            
+            function backToLogin(){
+                $('role_choose_window').close();
+            }
+            
+            function optionRenderer(){
+            
+            }
+        
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="role_list_ds">
+                <a:datas dataSource="/model/role_list"/>
+            </a:dataSet>
+        </a:dataSets>
+        <a:vBox id="roleForm">
+            <a:form row="1" title="HAP_SELECT_ROLE" width="300">
+                <img border="0" height="120" src="images/role.gif" style="margin:5px;" width="120"/>
+                <a:radio id="roleRadios" labelExpression="${@role_description}_${@company_short_name}" layout="vertical" options="/model/role_list" valueField="role_company" width="230">
+                    <a:events>
+                        <a:event name="enterdown" handler="refreshMain"/>
+                    </a:events>
+                </a:radio>
+            </a:form>
+            <center>
+                <a:hBox>
+                    <a:button click="backToLogin" text="返  回" width="120"/>
+                    <a:button click="refreshMain" text="选择" width="120"/>
+                </a:hBox>
+            </center>
+        </a:vBox>
+        <script><![CDATA[
+				        var el='roleForm';
+				        var ele;
+				    if(typeof(el)=="string"){
+				        var cmp = Aurora.CmpManager.get(el)
+				        if(cmp){
+				            if(cmp.wrap){
+				                ele = cmp.wrap;
+				            }
+				        }else{
+				             ele = Ext.get(el);
+				        }             
+				    }else{
+				        ele = Ext.get(el);
+				    }
+				    var screenWidth = Aurora.getViewportWidth();
+				    var screenHeight = Aurora.getViewportHeight();
+				    var x = Math.max(0,215);
+				    var y = Math.max(0,160);
+				    ele.setStyle('position','absolute');
+				    ele.moveTo(x,y);
+				    
+				    
+			Aurora.onReady(function(){
+            
+                Aurora.center('roleForm')
+                Aurora.get('roleForm').show();
+                
+                //默认取到当前公司的角色
+                //$('roleRadios').select(0);
+                var role_record =$('role_list_ds').getAll();
+             
+                for( var i=0;i<role_record.length;i++)
+                {
+	                 if (role_record[i].get("company_id")==${/session/@company_id})
+	                 {
+	                    $('roleRadios').select(i);
+	                    //alert(role_record[i].get("company_id"));
+	                 }
+	               
+                }
+                
+            })
+            
+    
+    
+                //Aurora.center('roleForm')
+                //Aurora.get('roleForm').show();
+                //$('roleRadios').select(0);
+   
+            
+        
+        ]]></script>
+    </a:view>
+</a:screen>

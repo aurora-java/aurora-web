@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:model xmlns:e="aurora.service.exception" xmlns:ns1="http://www.aurora-framework.org/schema/bm" xmlns:ns2="aurora.database.features" alias="evt" baseTable="evt_event" defaultOrderBy="event_name">
+    <ns1:fields>
+        <ns1:field name="event_name" databaseType="VARCHAR" datatype="java.lang.String" displayWidth="200" forDisplay="true" forQuery="true" prompt="EVT_EVENT.EVENT_NAME" queryWidth="120"/>
+        <ns1:field name="object_name" databaseType="VARCHAR" datatype="java.lang.String" prompt="EVT_EVENT.OBJECT_NAME"/>
+        <ns1:field name="event_type" databaseType="VARCHAR" datatype="java.lang.String" prompt="EVT_EVENT.EVENT_TYPE"/>
+        <ns1:field name="event_desc" databaseType="VARCHAR" datatype="java.lang.String" displayWidth="200" forDisplay="true" forQuery="true" prompt="EVT_EVENT.EVENT_DESC" queryWidth="120"/>
+        <ns1:field name="enabled_flag" databaseType="VARCHAR" datatype="java.lang.String" prompt="EVT_EVENT.ENABLED_FLAG"/>
+    </ns1:fields>
+    <ns1:primary-key>
+        <ns1:pk-field name="event_name"/>
+    </ns1:primary-key>
+    <ns1:query-fields>
+        <ns1:query-field field="event_name" queryOperator="like"/>
+        <ns1:query-field field="event_desc" queryOperator="like"/>
+    </ns1:query-fields>
+    <ns1:features>
+        <ns2:standard-who/>
+    </ns1:features>
+    <ns1:ref-fields/>
+    <e:exception-descriptor-config>
+        <e:exception-descriptor exception="java.sql.SQLException" handleClass="aurora.database.SQLExceptionDescriptor">
+            <e:error-message code="1" message="EVT_EVENT_HANDLE.EVENT_NAME_DISTINT"/>
+        </e:exception-descriptor>
+    </e:exception-descriptor-config>
+</ns1:model>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:parameter>
+        <a:param DataType="java.lang.String" Name="ORDER_FIELD"/>
+        <a:param DataType="java.lang.String" Name="ORDER_TYPE"/>
+    </a:parameter>
+    <a:init-procedure/>
+    <a:view package="aurora.ui.std" template="default">
+        <div/>
+        <script language="JavaScript"><![CDATA[
+        	function _getRecordByFieldName(r,displayField,valueField){
+        		var records=$('SYS_LOV_RESULT_DS').getAll();
+        		for(var i=0;i<records.length;i++){
+        			if(r.get(displayField)==records[i].get(displayField)&&r.get(valueField)==records[i].get(valueField))
+        				return records[i];
+        		}
+        		return null;
+        	}
+            function _onLovRowSelect(grid,record,row){
+            	if(_disableAdded(record)){
+	            	$('SYS_LOV_RETURN_DS').add(record);
+	            	record.isNew = false;
+	            	$('_superlov_autogrid').setSelectStatus(record);
+            	}
+            }
+            function _onLovRowUnSelect(grid,record,row){
+                record.isNew = true;
+            	$('SYS_LOV_RETURN_DS').remove(record);
+            	record.isNew = false;
+            	record=_getRecordByFieldName(record,$('${/parameter/@lovid}').displayfield,$('${/parameter/@lovid}').valuefield)
+            	if(record)
+            		$('_superlov_autogrid').setSelectStatus(record);
+            }
+            function _onLovRecordsCommit(){
+                $('${/parameter/@lovid}').commit($('SYS_LOV_RETURN_DS'));
+            }
+            function _lovquery(){
+                $('SYS_LOV_RESULT_DS').query()
+            }
+            function _addRecords(){
+                var ds = $('SYS_LOV_RESULT_DS');
+            	var selected=ds.getSelected();
+            	var grid=$('_superlov_autogrid');
+            	while(selected[0]){
+            	    var record = selected[0];
+            	    ds.unSelect(record);
+            		_onLovRowSelect(grid,record);
+            	}
+            	var cb = grid.wrap.child('div[atype=grid.headcheck]');
+            	grid.setCheckBoxStatus(cb,false);
+            }
+            function _removeRecords(){
+           		var selected=$('SYS_LOV_RETURN_DS').getSelected();
+           		var grid=$('_superlov_autogrid2');
+            	while(selected[0]){
+            		_onLovRowUnSelect(null,selected[0]);
+            	}
+            	var cb = grid.wrap.child('div[atype=grid.headcheck]');
+            	grid.setCheckBoxStatus(cb,false);
+            }
+            function _disableAdded(record){
+            	var all=$('SYS_LOV_RETURN_DS').getAll();
+            	for(var i=0;all[i];i++){
+	            	if(_isEqualRecordByFieldName(all[i],record,$('${/parameter/@lovid}').displayfield,$('${/parameter/@lovid}').valuefield)){
+	            		return false;
+	            	}
+            	}
+            	return true;
+            }
+            function _isEqualRecordByFieldName(r1,r2,displayField,valueField){
+            	if(r1===r2)return true;
+            	if(r1.get(displayField)==r2.get(displayField)&&r1.get(valueField)==r2.get(valueField))
+            			return true;
+	            return false;
+            }
+            function onLoad(){
+            	var ds=$('${/parameter/@lovid}').optionDataSet;
+            	if(ds&&$('SYS_LOV_RETURN_DS').getAll().length==0){
+            		var records=ds.getAll();
+            		for(var i=0;i < records.length;i++){
+            			$('SYS_LOV_RETURN_DS').add(records[i]);
+            		}
+            	}
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="SYS_LOV_QUERY_DS" model="${/parameter/@service}"/>
+            <a:dataSet id="SYS_LOV_RESULT_DS" autoQuery="${/parameter/@lovautoquery}" model="${/parameter/@service}" queryDataSet="SYS_LOV_QUERY_DS" queryUrl="${/parameter/@url}" selectFunction="_disableAdded" selectable="true">
+                <a:events>
+                    <a:event name="load" handler="onLoad"/>
+                </a:events>
+            </a:dataSet>
+            <a:dataSet id="SYS_LOV_RETURN_DS" selectable="true"/>
+        </a:dataSets>
+        <a:autoForm bindTarget="SYS_LOV_QUERY_DS" column="2" labelWidth="${/parameter/@lovlabelwidth}" model="${/parameter/@service}" style="margin:7px;" title="查询条件" width="${/parameter/@innerwidth}"/>
+        <a:button click="_lovquery" style="margin-left:7px;" text="查询"/>
+        <a:hBox>
+            <a:autoGrid id="_superlov_autogrid" bindTarget="SYS_LOV_RESULT_DS" enablepagesize="false" height="${/parameter/@gridheight}" model="${/parameter/@service}" navBar="true" style="margin:7px;" width="${/parameter/@innergridwidth}">
+                <a:events>
+                    <a:event name="dblclick" handler="_onLovRowSelect"/>
+                </a:events>
+            </a:autoGrid>
+            <div valign="middle">
+                <a:vBox>
+                    <a:button click="_addRecords" text="&gt;" width="30"/>
+                    <br/>
+                    <a:button click="_removeRecords" text="&lt;" width="30"/>
+                </a:vBox>
+            </div>
+            <a:autoGrid id="_superlov_autogrid2" bindTarget="SYS_LOV_RETURN_DS" enablepagesize="false" height="${/parameter/@gridheight}" model="${/parameter/@service}" style="margin:7px;" width="${/parameter/@innergridwidth}">
+                <a:events>
+                    <a:event name="dblclick" handler="_onLovRowUnSelect"/>
+                </a:events>
+            </a:autoGrid>
+        </a:hBox>
+        <div class="win-toolbar" style="width:100%;height:35px;position:absolute; bottom:0px;">
+            <a:hBox style="float:right;margin-right:10px;margin-top:5px;">
+                <a:button click="_onLovRecordsCommit" style="margin-left:7px;" text="提交"/>
+            </a:hBox>
+        </div>
+    </a:view>
+</a:screen>

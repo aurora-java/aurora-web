@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: niujiaqing1265 $
+    $Date: 2010/11/24 07:33:17 $
+    $Revision: 1.1 $
+    $Purpose: 对于IE8是共享cookie的,所以要避免同时登陆2个账号.
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure/>
+    <a:view package="aurora.ui.std" template="default">
+        <table style="margin:10px;">
+            <tr>
+                <td>
+                    <img style="margin:10px;" src="images/alert.png" width="64" height="64"/>
+                </td>
+                <td>
+                    <span style="font-size:20px;">重复登陆,系统已锁定!</span>
+                </td>
+            </tr>
+        </table>
+    </a:view>
+</a:screen>

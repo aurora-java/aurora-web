@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:model xmlns:ns2="aurora.database.local.oracle" xmlns:ns1="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="c" baseTable="fnd_interface_logs" needAccessControl="false">
+    <ns1:fields>
+        <ns1:field name="header_id" databaseType="NUMBER" datatype="java.lang.Long"/>
+        <ns1:field name="line_number" databaseType="VARCHAR" datatype="java.lang.String" prompt="错误行号"/>
+        <ns1:field name="message" databaseType="VARCHAR" datatype="java.lang.String" prompt="错误信息"/>
+        <ns1:field name="creation_date" databaseType="DATE" datatype="java.lang.Date" prompt="日志日期"/>
+    </ns1:fields>
+    <ns1:primary-key>
+        <ns1:pk-field name="header_id"/>
+    </ns1:primary-key>
+</ns1:model>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:service xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure>
+        <a:batch-apply sourcepath="/parameter">
+            <p:switch xmlns:p="uncertain.proc" test="@current_parameter/@_status">
+                <p:case value="update">
+                    <a:model-update model="sys.SYS1010.sys_codes"/>
+                    <a:model-batch-update model="sys.SYS1010.sys_code_values" sourcePath="@current_parameter/result_ds"/>
+                </p:case>
+                <p:case value="insert">
+                    <a:model-insert model="sys.SYS1010.sys_codes"/>
+                    <a:model-batch-update model="sys.SYS1010.sys_code_values" sourcePath="@current_parameter/result_ds"/>
+                </p:case>
+                <p:case value="delete">
+                    <a:model-delete model="sys.SYS1010.sys_codes"/>
+                    <a:model-delete model="sys.SYS1010.sys_code_values_del"/>
+                </p:case>
+            </p:switch>
+        </a:batch-apply>
+    </a:init-procedure>
+    <a:service-output output="/parameter"/>
+</a:service>

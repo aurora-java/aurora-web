@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: Mouse Chow  
+    $Date: 2011-11-18 下午12:19:21  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:e="aurora.service.exception" xmlns:o="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="SYS_REPORTS">
+    <bm:fields>
+        <bm:field name="report_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="REPORT_ID" prompt="SYS_REPORTS.REPORT_ID"/>
+        <bm:field name="report_name" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="REPORT_NAME" prompt="SYS_REPORTS.REPORT_NAME"/>
+        <bm:field name="report_type_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="REPORT_TYPE_ID" prompt="SYS_REPORTS.REPORT_TYPE_ID"/>
+        <bm:field name="param_name" prompt="SYS_REPORTS.PARAM_NAME"/>
+        <bm:field name="is_batch" prompt="SYS_REPORTS.IS_BATCH"/>
+        <bm:field name="is_author_control" prompt="SYS_REPORTS.IS_AHTHOR_CONTROL"/>
+    </bm:fields>
+    <bm:relations>
+        <bm:relation name="r1" joinType="inner" refAlias="r1" refModel="sys.SYS2850.sys_report_type">
+            <bm:reference foreignField="report_type_id" localField="report_type_id"/>
+        </bm:relation>
+    </bm:relations>
+    <bm:ref-fields>
+        <bm:ref-field name="report_type_name" relationName="r1" sourceField="report_type_name"/>
+    </bm:ref-fields>
+    <bm:query-fields>
+        <bm:query-field field="report_name" queryOperator="like"/>
+    </bm:query-fields>
+    <bm:primary-key>
+        <bm:pk-field name="report_id"/>
+    </bm:primary-key>
+    <bm:features>
+        <f:standard-who/>
+        <o:sequence-pk/>
+    </bm:features>
+    <e:exception-descriptor-config>
+        <e:exception-descriptor exception="java.sql.SQLException" handleClass="aurora.database.SQLExceptionDescriptor">
+            <e:error-message code="1" message="SYS_REPORTS.REPORT_NAME_REPEAT"/>
+        </e:exception-descriptor>
+    </e:exception-descriptor-config>
+</bm:model>

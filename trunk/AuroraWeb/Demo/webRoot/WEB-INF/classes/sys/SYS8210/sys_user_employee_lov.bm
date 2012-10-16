@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" alias="emp" baseTable="EXP_EMPLOYEES" extend="exp.exp_employees" extendMode="reference">
+    <bm:fields>
+        <bm:field name="employee_id" databaseType="NUMBER" datatype="java.lang.Long" forDisplay="false" forQuery="false" physicalName="EMPLOYEE_ID"/>
+        <bm:field name="employee_code" databaseType="VARCHAR2" datatype="java.lang.String" displayWidth="220" forDisplay="true" forQuery="true" physicalName="EMPLOYEE_CODE" prompt="EXP_EMPLOYEE.EMPLOYEE_CODE"/>
+        <bm:field name="name" databaseType="VARCHAR2" datatype="java.lang.String" displayWidth="240" forDisplay="true" forQuery="true" physicalName="NAME" prompt="EXP_EMPLOYEE.NAME"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="employee_id"/>
+    </bm:primary-key>
+    <bm:data-filters>
+        <bm:data-filter name="enabled_flag" enforceOperations="query" expression="emp.enabled_flag=&apos;Y&apos;"/>
+    </bm:data-filters>
+    <bm:query-fields>
+        <bm:query-field field="employee_code" queryOperator="like"/>
+        <bm:query-field field="name" queryOperator="like"/>
+    </bm:query-fields>
+</bm:model>

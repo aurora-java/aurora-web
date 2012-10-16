@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: wxji  
+    $Date: 2012-6-27 下午2:55:38  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+                SELECT
+                    count(*) as "count"
+                FROM
+                    sys_user
+                WHERE
+                    encrypted_user_password = ${@v_old_password} AND
+                    user_id                 = ${@p_user_id}
+            ]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+    <bm:fields>
+        <bm:field name="count" databaseType="VARCHAR2" datatype="java.lang.String"/>
+    </bm:fields>
+</bm:model>

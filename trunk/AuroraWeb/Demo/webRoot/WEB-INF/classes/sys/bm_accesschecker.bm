@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" alias="bm" extend="sys.SYS8010.sys_bm_privilege" extendMode="reference">
+    <bm:fields>
+        <bm:field name="privilege_id" databaseType="NUMBER" datatype="java.lang.Long"/>
+        <bm:field name="dimension_code" databaseType="VARCHAR" datatype="java.lang.String" prompt="SYS_PRIVILEGE.DIMENSION_CODE"/>
+        <bm:field name="dimension_value_code" databaseType="VARCHAR" datatype="java.lang.String" prompt="SYS_PRIVILEGE.DIMENSION_VALUE_CODE"/>
+        <bm:field name="bm_name" databaseType="VARCHAR" datatype="java.lang.String" prompt="SYS_PRIVILEGE.BM_NAME"/>
+        <bm:field name="insert_option" databaseType="VARCHAR" datatype="java.lang.String" prompt="SYS_PRIVILEGE.INSERT_OPTION"/>
+        <bm:field name="update_option" databaseType="VARCHAR" datatype="java.lang.String" prompt="SYS_PRIVILEGE.UPDATE_OPTION"/>
+        <bm:field name="delete_option" databaseType="VARCHAR" datatype="java.lang.String" prompt="SYS_PRIVILEGE.DELETE_OPTION"/>
+        <bm:field name="execute_option" databaseType="VARCHAR" datatype="java.lang.String" prompt="SYS_PRIVILEGE.QUERY_OPTION"/>
+        <bm:field name="query_option" databaseType="VARCHAR" datatype="java.lang.String" prompt="SYS_PRIVILEGE.EXECUTE_OPTION"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="privilege_id"/>
+    </bm:primary-key>
+    <bm:query-fields>
+        <bm:query-field field="bm_name" queryOperator="like"/>
+        <bm:query-field name="code" queryExpression="bm.dimension_code=${@code}"/>
+        <bm:query-field field="dimension_value_code" queryOperator="="/>
+    </bm:query-fields>
+    <bm:data-filters>
+        <bm:data-filter name="filter" expression="exists (select 1 from sys_role r, sys_role_function rf,sys_function fun where r.role_id=rf.role_id and to_char(rf.function_id)=bm.dimension_value_code and fun.function_id=rf.function_id and rf.role_id=${/session/@role_id})"/>
+    </bm:data-filters>
+</bm:model>

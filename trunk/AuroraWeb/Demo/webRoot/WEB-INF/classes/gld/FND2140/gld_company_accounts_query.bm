@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="gca" baseTable="gld_company_accounts">
+    <bm:fields>
+        <bm:field name="rowid"/>
+        <bm:field name="set_of_books_id" databaseType="NUMBER" datatype="java.lang.Long"/>
+        <bm:field name="company_id" databaseType="NUMBER" datatype="java.lang.Long"/>
+        <bm:field name="account_id" databaseType="NUMBER" datatype="java.lang.Long"/>
+        <bm:field name="functional_currency_code" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="enabled_flag" databaseType="VARCHAR2" datatype="java.lang.String" prompt="HAP_ENABLED_FLAG"/>
+        <bm:field name="subsystem_flag" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="company_short_name" databaseType="VARCHAR" datatype="java.lang.String" prompt="FND_COMPANIES.COMPANY_SHORT_NAME"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="account_id"/>
+        <bm:pk-field name="set_of_books_id"/>
+        <bm:pk-field name="account_id"/>
+    </bm:primary-key>
+    <bm:relations>
+        <bm:relation name="cpy" joinType="INNER" refModel="fnd.fnd_companies">
+            <bm:reference foreignField="company_id" localField="company_id"/>
+        </bm:relation>
+    </bm:relations>
+    <bm:query-fields>
+        <bm:query-field field="account_id" queryOperator="="/>
+        <bm:query-field field="set_of_books_id" queryOperator="="/>
+    </bm:query-fields>
+    <bm:features>
+        <f:standard-who/>
+        <f:multi-language-display/>
+    </bm:features>
+    <bm:ref-fields>
+        <bm:ref-field name="company_short_name_id" multiLanguage="true" multiLanguageDescField="company_short_name" relationName="cpy" sourceField="company_short_name_id"/>
+        <bm:ref-field name="company_code" prompt="FND_COMPANIES.COMPANY_CODE" relationName="cpy" sourceField="company_code"/>
+    </bm:ref-fields>
+</bm:model>

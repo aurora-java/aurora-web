@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:service xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:init-procedure>
+        <a:batch-apply sourcepath="/parameter">
+            <a:model-query defaultWhereClause="encrypt_value_flag = &apos;Y&apos;" model="sys.sys_parameters" rootPath="/rp_ep"/>
+            <p:switch test="/rp_ep/record/@parameter_id">
+                <p:case value="*">
+                    <!-- <p:method-invoke className="aurora.application.util.DesEncrypt" methodName="desEncrypt" resultPath="@current_parameter/@parameter_value">
+                        <p:arguments>
+                            <p:argument path="@current_parameter/@parameter_value" type="java.lang.String"/>
+                        </p:arguments>
+                    </p:method-invoke> -->
+                </p:case>
+            </p:switch>
+            <p:switch test="@current_parameter/@level_id">
+                <p:case value="101">
+                    <p:set field="@current_parameter/@level_value" value="1"/>
+                </p:case>
+            </p:switch>
+            <a:model-query model="sys.sys_parameter_values" rootPath="/rp_pv"/>
+            <p:switch test="/rp_pv/record/@parameter_id">
+                <p:case value="null">
+                    <a:model-insert model="sys.sys_parameter_values"/>
+                </p:case>
+                <p:case value="*">
+                    <a:model-update model="sys.sys_parameter_values"/>
+                </p:case>
+            </p:switch>
+        </a:batch-apply>
+    </a:init-procedure>
+    <a:service-output output="/parameter"/>
+</a:service>

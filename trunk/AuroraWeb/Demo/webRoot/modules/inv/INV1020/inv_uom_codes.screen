@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2012-9-26 上午11:18:19  
+    $Revision: 1.0  
+    $Purpose: 公司级计量单位定义
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:view>
+        <script><![CDATA[
+            function inv_1020_query() {
+                $('inv_uom_codes_ds').query();
+            }
+            
+            function inv_1020_reset() {
+                $('inv_uom_codes_ds').reset();
+            }
+            
+            function uom_code_editFunction(rec, name) {
+                return rec.isNew ? "tf" : "";
+            }
+            
+            function onSubbmitSuccess(ds, rec, name, value) {
+                rec.isNew = false;
+            }
+            
+            function common_validator(rec, name, value) {
+                if (!value) {
+                    if (name == 'uom_code') {
+                        return "计量单位代码字段属于必输项，请输入后再保存！";
+                    } else if (name == 'uom_description') {
+                        return "计量单位名称字段属于必输项，请输入后再保存！";
+                    }
+                }
+                return true;
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="inv_uom_codes_query_ds">
+                <a:fields>
+                    <a:field name="uom_code"/>
+                    <a:field name="uom_description"/>
+                    <a:field name="enabled_flag" checkedValue="Y" defaultValue="Y" uncheckedValue="N"/>
+                </a:fields>
+            </a:dataSet>
+            <a:dataSet id="inv_uom_codes_ds" autoQuery="true" model="inv.INV1020.inv_uom_codes" pageSize="10" queryDataSet="inv_uom_codes_query_ds" selectable="true">
+                <a:fields>
+                    <a:field name="uom_code" required="=false" validator="common_validator"/>
+                    <a:field name="uom_description" required="=false" validator="common_validator"/>
+                    <a:field name="company_id" defaultValue="${/session/@company_id}"/>
+                    <a:field name="enabled_flag" checkedValue="Y" defaultValue="N" uncheckedValue="N"/>
+                </a:fields>
+                <a:events>
+                    <a:event name="submitsuccess" handler="onSubbmitSuccess"/>
+                </a:events>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:form column="3" labelWidth="100" title="计量单位定义" width="700">
+                <a:textField name="uom_code" bindTarget="inv_uom_codes_query_ds" prompt="计量单位代码"/>
+                <a:textField name="uom_description" bindTarget="inv_uom_codes_query_ds" prompt="计量单位名称"/>
+                <a:checkBox name="enabled_flag" bindTarget="inv_uom_codes_query_ds" checkedValue="Y" prompt="显示启用"/>
+            </a:form>
+            <a:hBox>
+                <a:button click="inv_1020_query" text="查询"/>
+                <a:button click="inv_1020_reset" text="重置"/>
+            </a:hBox>
+            <a:grid bindTarget="inv_uom_codes_ds" navBar="true" width="500">
+                <a:toolBar>
+                    <a:button type="add"/>
+                    <a:button type="clear"/>
+                    <a:button type="save"/>
+                </a:toolBar>
+                <a:columns>
+                    <a:column name="uom_code" editorFunction="uom_code_editFunction" prompt="计量单位代码"/>
+                    <a:column name="uom_description" editor="tf" prompt="计量单位名称" width="150"/>
+                    <a:column name="enabled_flag" editor="cb" prompt="启用"/>
+                </a:columns>
+                <a:editors>
+                    <a:textField id="tf"/>
+                    <a:checkBox id="cb"/>
+                </a:editors>
+            </a:grid>
+        </a:screenBody>
+    </a:view>
+</a:screen>

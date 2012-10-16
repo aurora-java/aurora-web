@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: zhenweiyin$
+    $Date: $
+    $Revision: $
+    $Purpose: 部门定义
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure/>
+    <a:view>
+        <script><![CDATA[
+        onerror=function(m,u,l){
+            alert(m+"\n"+u+"\n"+l);
+        };
+
+            function inv1030_codeEditFunction(record, name) {
+                if (record.isNew) {
+                    return 'inv_warehouse_grid_upper_tf';
+                } else {
+                    return '';
+                }
+            }
+            
+            function inv1030_typeEditFunction(record, name) {
+                if (record.isNew) {
+                    return 'inv_warehouse_grid_cbox';
+                } else {
+                    return '';
+                }
+            }
+            
+            function inv1030_ds_load(ds) {
+                var records = ds.getAll();
+            
+                for (i = 1;i < records.length;i++) {
+                    var record=records[i];
+                    value =record.get('province');
+                    if (!Ext.isEmpty(value)) {
+                        record.getMeta().getField('city').setLovService('fnd.public.fnd_region_city');
+                        record.getField('city').setLovPara('province', value);
+                    } else {
+                        record.getMeta().getField('city').setLovService('');
+                    }
+                    record.getMeta().getField('prefecture').setLovService('');
+            
+                    value = record.get('city');
+                    var address_province = record.get('province');
+                    if (!Ext.isEmpty(value)) {
+                        record.getMeta().getField('prefecture').setLovService('fnd.public.fnd_region_country');
+                        record.getField('prefecture').setLovPara('province', address_province);
+                        record.getField('prefecture').setLovPara('city', value);
+                    } else {
+                        record.getMeta().getField('prefecture').setLovService('');
+                    }
+                }
+            }
+            
+            function inv1030_ds_info_update(dataSet, record, name, value, oldValue) {
+                if (name == 'province') {
+                    record.set('city', '');
+                    record.set('prefecture', '');
+            
+                    if (!Ext.isEmpty(value)) {
+                        record.getMeta().getField('city').setLovService('fnd.public.fnd_region_city');
+                        record.getField('city').setLovPara('province', value);
+                    } else {
+                        record.getMeta().getField('city').setLovService('');
+                    }
+                    record.getMeta().getField('prefecture').setLovService('');
+                }
+            
+                if (name == 'city') {
+                    record.set('prefecture', '');
+                    var address_province = record.get('province');
+                    if (!Ext.isEmpty(value)) {
+                        record.getMeta().getField('prefecture').setLovService('fnd.public.fnd_region_country');
+                        record.getField('prefecture').setLovPara('province', address_province);
+                        record.getField('prefecture').setLovPara('city', value);
+                    } else {
+                        record.getMeta().getField('prefecture').setLovService('');
+                    }
+                }
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="inv1030_warehouse_type_ds" lookupCode="INV_WAREHOUSE_TYPE"/>
+            <a:dataSet id="inv1030_warehouse_result_ds" autoCount="true" autoQuery="true" model="inv.INV1030.inv_warehouses" pageSize="10" selectable="true" submitUrl2="${/request/@context_path}/modules/inv/INV1030/inv_warehouses_update.svc">
+                <a:fields>
+                    <a:field name="warehouse_type_com" displayField="code_value_name" options="inv1030_warehouse_type_ds" prompt="INV_WAREHOUSES.WAREHOUSE_TYPE" required="true" returnField="warehouse_type" valueField="code_value"/>
+                    <a:field name="warehouse_code" required="true"/>
+                    <a:field name="warehouse_name" required="true"/>
+                    <a:field name="company_id" defaultValue="${/session/@company_id}"/>
+                    <a:field name="enabled_flag" checkedValue="Y" defaultValue="Y" required="true" unCheckedValue="N"/>
+                    <a:field name="province" lovGridHeight="350" lovHeight="500" lovService="fnd.public.fnd_region_province" lovWidth="450" title="INV_WAREHOUSES.PROVINCE">
+                        <a:mapping>
+                            <a:map from="province" to="province"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="city" lovGridHeight="350" lovHeight="500" lovWidth="450" title="INV_WAREHOUSES.CITY">
+                        <a:mapping>
+                            <a:map from="city" to="city"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="prefecture" lovGridHeight="350" lovHeight="500" lovWidth="500" title="INV_WAREHOUSES.PREFECTURE">
+                        <a:mapping>
+                            <a:map from="district" to="prefecture"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="detail_address" required="false"/>
+                    <a:field name="warehouse_id"/>
+                </a:fields>
+                <a:events>
+                    <a:event name="load" handler="inv1030_ds_load"/>
+                    <a:event name="update" handler="inv1030_ds_info_update"/>
+                </a:events>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:form title="库房定义">
+                <a:grid id="inv1030_warehouse_grid" bindTarget="inv1030_warehouse_result_ds" height="350" navBar="true" style="margin-left:5px;margin-top:5px;" width="750">
+                    <a:toolBar>
+                        <a:button type="add"/>
+                        <a:button type="clear"/>
+                        <a:button type="save"/>
+                    </a:toolBar>
+                    <a:columns>
+                        <a:column name="warehouse_type_com" align="center" editorFunction="inv1030_typeEditFunction" prompt="INV_WAREHOUSES.WAREHOUSE_TYPE" sortable="true" width="70"/>
+                        <a:column name="warehouse_code" align="center" editorFunction="inv1030_codeEditFunction" sortable="true" width="80"/>
+                        <a:column name="warehouse_name" align="center" editor="inv_warehouse_grid_tf" width="120"/>
+                        <a:column prompt="INV_WAREHOUSES.ADDRESS">
+                            <a:column name="province" editor="inv_warehouse_grid_lov" width="80"/>
+                            <a:column name="city" editor="inv_warehouse_grid_lov" width="80"/>
+                            <a:column name="prefecture" editor="inv_warehouse_grid_lov" width="80"/>
+                            <a:column name="detail_address" align="center" editor="inv_warehouse_grid_tf" width="160"/>
+                        </a:column>
+                        <a:column name="enabled_flag" align="center" editor="inv_warehouse_grid_cb" width="50"/>
+                    </a:columns>
+                    <a:editors>
+                        <a:textField id="inv_warehouse_grid_tf"/>
+                        <a:textField id="inv_warehouse_grid_upper_tf" typeCase="upper"/>
+                        <a:checkBox id="inv_warehouse_grid_cb"/>
+                        <a:comboBox id="inv_warehouse_grid_cbox"/>
+                        <a:lov id="inv_warehouse_grid_lov"/>
+                    </a:editors>
+                </a:grid>
+            </a:form>
+        </a:screenBody>
+    </a:view>
+</a:screen>

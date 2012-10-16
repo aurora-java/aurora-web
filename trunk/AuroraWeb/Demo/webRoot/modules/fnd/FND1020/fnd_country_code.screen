@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: ouyangzhaochang2663 $
+    $Date: 2010/11/15 07:47:05 $
+    $Revision: 1.2 $
+    $Purpose: 国家定义
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure><![CDATA[     
+    ]]></a:init-procedure>
+    <a:view>
+        <script><![CDATA[ 
+            function queryCountryCode(){
+                $('fnd_country_code_result_ds').query();
+            }
+            function resetCountryCode(){
+            	$('fnd_country_code_query_ds').reset();
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="fnd_country_code_query_ds" model="fnd.FND1020.fnd_country_code"/>
+            <a:dataSet id="fnd_country_code_result_ds" autoQuery="true" fetchAll="false" model="fnd.FND1020.fnd_country_code" pageSize="10" queryDataSet="fnd_country_code_query_ds"/>
+        </a:dataSets>
+        <a:screenBody>
+            <a:form column="2" title="FND_COUNTRY_CODE.COUNTRY_CODE_QUERY" width="500">
+                <a:textField name="country_code" bindTarget="fnd_country_code_query_ds" typeCase="upper">
+                    <a:events>
+                        <a:event name="enterdown" handler="queryCountryCode"/>
+                    </a:events>
+                </a:textField>
+                <a:textField name="country_name" bindTarget="fnd_country_code_query_ds">
+                    <a:events>
+                        <a:event name="enterdown" handler="queryCountryCode"/>
+                    </a:events>
+                </a:textField>
+            </a:form>
+            <a:hBox>
+                <a:button click="queryCountryCode" text="HAP_QUERY"/>
+                <a:button click="resetCountryCode" text="HAP_RESET"/>
+            </a:hBox>
+            <a:grid id="fnd_country_code_grid" bindTarget="fnd_country_code_result_ds" height="330" navBar="true" width="540">
+                <a:toolBar>
+                    <a:label/>
+                </a:toolBar>
+                <a:columns>
+                    <a:column name="country_code" align="center" sortable="true" width="200"/>
+                    <a:column name="country_name" align="left" sortable="true" width="299"/>
+                </a:columns>
+            </a:grid>
+        </a:screenBody>
+    </a:view>
+</a:screen>

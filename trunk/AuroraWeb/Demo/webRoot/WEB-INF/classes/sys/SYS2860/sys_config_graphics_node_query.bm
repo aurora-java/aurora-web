@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: Mouse Chow  
+    $Date: 2012-2-28 下午07:26:48  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+            select gd.detail_id,
+				gd.graphic_id,
+				gd.config,
+				gd.table_name,
+				r.plan_node_id as table_id,
+				gd.type,
+				r.name,
+				r.plan_id,
+				'' as info,
+				(select s.service_name from sys_service s where s.service_id = r.service_id) as service_name   
+			from  sys_graphics_detail gd,
+			(select sgd.graphic_id,n.plan_node_name as name,n.plan_node_id,n.plan_id,n.service_id   
+			from sys_system_config_plan_node n,sys_graphics_detail sgd
+			where sgd.table_id(+) = n.plan_node_id
+			and sgd.table_name = 'SYS_SYSTEM_CONFIG_PLAN_NODE'
+			and n.plan_id = ${/parameter/@plan_id}) r
+			where r.graphic_id = gd.graphic_id(+) and r.plan_node_id = gd.table_id(+)
+			
+			
+			union all
+			
+			
+			select gd.detail_id,
+				gd.graphic_id,
+				gd.config,
+				gd.table_name,
+				gd.table_id,
+				gd.type,
+				null,
+				null,
+				'' as info,
+				''
+			from  sys_graphics_detail gd,
+			(select distinct sgd.graphic_id 
+			from sys_system_config_plan_node n1,sys_graphics_detail sgd
+			where sgd.table_id(+) = n1.plan_node_id
+			and sgd.table_name = 'SYS_SYSTEM_CONFIG_PLAN_NODE'
+			and n1.plan_id = ${/parameter/@plan_id} and sgd.graphic_id is not null) r
+			where  r.graphic_id = gd.graphic_id(+) and (gd.table_id <=0 or gd.table_id is null)
+			
+			union all
+			
+			select null,
+			null,
+			null,
+			'SYS_SYSTEM_CONFIG_PLAN_NODE',
+			n2.plan_node_id,
+			'rect',
+			n2.plan_node_name,
+			to_number(${/parameter/@plan_id}),
+			'开始日期 : ' || to_char(n2.start_date,'yyyy-mm-dd') ||',结束日期 : '|| to_char(n2.end_date,'yyyy-mm-dd') ||'\n描述 : ' || n2.plan_node_desc,
+			(select s.service_name from sys_service s where s.service_id = n2.service_id) as service_name
+			from sys_system_config_plan_node n2
+			where n2.plan_id = ${/parameter/@plan_id}
+			and not exists(select 1 from sys_graphics_detail g3 where g3.table_id in (select plan_node_id from sys_system_config_plan_node n3 where n3.plan_id = n2.plan_id) and g3.table_name = 'SYS_SYSTEM_CONFIG_PLAN_NODE')
+			 
+			]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+</bm:model>

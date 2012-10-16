@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:ns2="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="ga" baseTable="gld_accounts">
+    <bm:fields>
+        <bm:field name="account_set_id" databaseType="NUMBER" datatype="java.lang.Long"/>
+        <bm:field name="account_id" databaseType="NUMBER" datatype="java.lang.Long"/>
+        <bm:field name="account_code" databaseType="VARCHAR2" datatype="java.lang.String" prompt="GLD_ACCOUNTS.ACCOUNT_CODE"/>
+        <bm:field name="description_id" databaseType="BIGINT" datatype="java.lang.Long" multiLanguage="true" multiLanguageDescField="account_description"/>
+        <bm:field name="account_description" databaseType="VARCHAR" datatype="java.lang.String" forInsert="false" forUpdate="false" prompt="GLD_ACCOUNTS.ACCOUNT_DESCRIPTION"/>
+        <bm:field name="account_type" databaseType="VARCHAR2" datatype="java.lang.String" lookupCode="ACCOUNT_TYPE" lookupField="account_type_display"/>
+        <bm:field name="account_type_display" databaseType="VARCHAR2" datatype="java.lang.String" forInsert="true" forUpdate="false" prompt="GLD_ACCOUNTS.ACCOUNT_TYPE"/>
+        <bm:field name="enabled_flag" databaseType="VARCHAR2" datatype="java.lang.String" prompt="HAP_ENABLED_FLAG"/>
+        <bm:field name="summary_flag" databaseType="VARCHAR2" datatype="java.lang.String" prompt="GLD_ACCOUNTS.SUMMARY_FLAG"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="account_id"/>
+    </bm:primary-key>
+    <bm:query-fields>
+        <bm:query-field field="account_code" queryOperator="like"/>
+        <bm:query-field field="account_type" queryOperator="="/>
+        <bm:query-field field="account_id" queryOperator="="/>
+        <bm:query-field field="account_set_id" queryOperator="="/>
+        <bm:query-field name="accountsetid" queryExpression="ga.account_set_id=${/parameter/@account_set_id}"/>
+        <bm:query-field field="account_description" queryExpression="exists (select 1 from fnd_descriptions fd where ga.description_id=fd.description_id and fd.description_text like ${@account_description} and fd.language = ${/session/@lang})"/>
+        <bm:query-field field="summary_flag" queryOperator="="/>
+        <bm:query-field name="account_id_from" queryExpression="ga.account_id &gt;= ${@account_id_from}"/>
+        <bm:query-field name="account_id_to" queryExpression="ga.account_id &lt;= ${@account_id_to}"/>
+    </bm:query-fields>
+    <bm:features>
+        <ns2:sequence-pk/>
+        <f:standard-who/>
+        <f:multi-language-storage/>
+    </bm:features>
+    <bm:ref-fields/>
+</bm:model>

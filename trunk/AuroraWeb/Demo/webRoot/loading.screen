@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: niujiaqing1265 $
+    $Date: 2010/11/18 08:21:59 $
+    $Revision: 1.2 $
+    $Purpose: 登陆加载界面
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view package="aurora.ui.std" template="default" title="正在登陆">
+        <a:link id="main_link" url="${/request/@context_path}/main.screen"/>
+        <center>
+            <div style="margin-top:100px;">
+                <div style="background:url(images/loading.gif) no-repeat;width:55px;height:55px;"><![CDATA[ ]]></div>
+                <span style="margin-top:20px;font-size:15px;font-family: 微软雅黑,tahoma, arial, sans-serif,helvetica;"><![CDATA[正在登录 . . . ]]></span>
+            </div>
+        </center>
+        <script><![CDATA[
+        
+            var tid,pid,p=0;
+            function init(){
+                var bar = document.getElementById('progressbar'); 
+                tid = setInterval(function(){
+                    if(opener && opener.canGoToMainService == true){
+                        clearInterval(tid);
+                        opener.afterOpen();
+                        window.location.href = /*main.screen*/$('main_link').getUrl() + location.search;
+                    }
+                },150);     
+            }
+            init();
+        
+        ]]></script>
+    </a:view>
+</a:screen>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: lqr  
+    $Date: 2012-9-24 上午10:43:06  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure><![CDATA[
+    ]]></a:init-procedure>
+    <a:view>
+        <script><![CDATA[
+           function queryItem(){
+               $('inv_item_basic_result_main_ds').query();
+           }
+           
+           function item_add(){
+               new Aurora.Window({id:'item_maintain_window',
+                                url:'inv_item_maintain.screen',
+                                title:'物品信息维护',width:800,height:450});
+           }
+           
+           function item_import(){
+               new Aurora.Window({id:'item_import_window',
+                                url:'inv_item_import.screen',
+                                title:'物品导入',width:800,height:450});
+           }
+           
+           function itemCodeRenderer(value,record,name){
+				    if(record.isNew){
+				        return '';
+				    }
+				    return '<a href=\'javascript:jumpItemDetail(' + record.get('item_id')  + ');\'>' + record.get('item_code') + '</a>';
+		   }
+		   
+		   function jumpItemDetail(itemId){
+				    new Aurora.Window({
+				        id:'inv_item_maintain_window',
+				    	url:'inv_item_maintain.screen' + '?item_id=' + itemId ,				    
+				    	title:'${l:INV_ITEM_DETAIL}',
+				    	width:800,
+				    	height:450
+				    });
+		   }
+				
+       ]]></script>
+        <a:dataSets>
+            <a:dataSet id="inv_item_basic_result_query_ds" model="inv.INV2010.inv_item_basic"><![CDATA[
+            ]]></a:dataSet>
+            <a:dataSet id="inv_item_basic_result_main_ds" autoCount="true" autoQuery="true" fetchAll="false" model="inv.INV2010.inv_item_basic" queryDataSet="inv_item_basic_result_query_ds" selectable="true">
+                <a:fields>
+                    <a:field name="item_type_id" readOnly="true"/>
+                    <a:field name="item_code" readOnly="true"/>
+                    <a:field name="item_name" readOnly="true"/>
+                    <a:field name="item_specs" readOnly="true"/>
+                    <a:field name="inventory_flag" checkedValue="Y" defaultValue="Y" readOnly="true" uncheckedValue="N"/>
+                    <a:field name="enabled_flag" checkedValue="Y" defaultValue="Y" uncheckedValue="N"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:form column="2" labelWidth="80" title="查询条件" width="600">
+                <a:textField name="item_code" bindTarget="inv_item_basic_result_query_ds" prompt="物品代码" typeCase="upper" width="200">
+                    <a:events>
+                        <a:event name="enterdown" handler="queryItem"/>
+                    </a:events>
+                </a:textField>
+            </a:form>
+            <a:hBox>
+                <a:button click="queryItem" text="查询"/>
+            </a:hBox>
+            <a:grid bindTarget="inv_item_basic_result_main_ds" height="380" navBar="true" width="800">
+                <a:toolBar>
+                    <a:button click="item_add" icon="${/request/@context_path}/images/add.gif" text="新增"/>
+                    <a:button type="clear"/>
+                    <a:button click="item_import" icon="${/request/@context_path}/images/addbm.png" text="导入"/>
+                    <a:button type="excel"/>
+                </a:toolBar>
+                <a:columns>
+                    <a:column name="inventory_flag" editor="enabled_flag_ckb" sortable="true" width="50"/>
+                    <a:column name="item_type_id" editor="textField" sortable="true" width="150"/>
+                    <a:column name="item_code" align="center" editor="textField" renderer="itemCodeRenderer" sortable="true" width="150"/>
+                    <a:column name="item_name" editor="textField" sortable="true" width="150"/>
+                    <a:column name="item_specs" editor="textField" sortable="true" width="200"/>
+                    <a:column name="enabled_flag" editor="enabled_flag_ckb" sortable="true" width="50"/>
+                </a:columns>
+                <a:editors>
+                    <a:textField id="textField"/>
+                    <a:checkBox id="enabled_flag_ckb"/>
+                </a:editors>
+            </a:grid>
+        </a:screenBody>
+    </a:view>
+</a:screen>

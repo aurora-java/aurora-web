@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2012-7-24 下午1:39:31  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+            select u.user_id,
+                   u.frozen_flag,
+                   encrypted_user_password,
+                   (select start_date
+                      from sys_user
+                     where user_id = u.user_id
+                       and start_date <= now()
+                       and (end_date >= now() or end_date is null)) start_date,
+                   (select l.nls_language
+                      from sys_languages l
+                     where l.language_code = ${@user_language}
+                       and l.installed_flag = 'Y') nls_language
+              from sys_user u
+             where u.user_name = upper(${@user_name})
+            ]]></bm:query-sql>
+            <bm:parameters>
+                <bm:parameter name="user_name" input="true" inputPath="user_name" required="true"/>
+                <bm:parameter name="user_language" input="true" inputPath="user_language" required="true"/>
+            </bm:parameters>
+        </bm:operation>
+    </bm:operations>
+</bm:model>

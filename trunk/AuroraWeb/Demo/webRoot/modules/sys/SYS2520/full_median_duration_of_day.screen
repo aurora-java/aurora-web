@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2011-9-29 下午3:25:52  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:view>
+        <script><![CDATA[
+            
+            ]]></script>
+        <a:dataSets>
+            <a:dataSet id="full_median_duration_of_day_ds" autoQuery="true" model="sys.SYS2520.sys_analytics_summary_of_day" pageSize="100" queryDataSet="query_ds">
+                <a:fields>
+                    <a:field name="day" prompt="日期"/>
+                    <a:field name="med_dur_screen" datatype="float" prompt="screen" type="line"/>
+                    <a:field name="med_dur_svc" datatype="float" prompt="svc" type="line"/>
+                    <a:field name="med_dur_query" datatype="float" prompt="query" type="line"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:chart bindTarget="full_median_duration_of_day_ds" marginRight="75" style="width: 950px; height: 500px" type="line">
+                <a:title text="平均响应时间（按日统计）"/>
+                <a:xAxis>
+                    <a:xAxi name="day">
+                        <a:labels formatter="dayRenderer"/>
+                    </a:xAxi>
+                </a:xAxis>
+                <a:yAxis>
+                    <a:yAxi name="med_dur_screen,med_dur_svc,med_dur_query">
+                        <a:labels formatter="msRenderer"/>
+                        <a:title text=""/>
+                    </a:yAxi>
+                </a:yAxis>
+            </a:chart>
+        </a:screenBody>
+    </a:view>
+</a:screen>

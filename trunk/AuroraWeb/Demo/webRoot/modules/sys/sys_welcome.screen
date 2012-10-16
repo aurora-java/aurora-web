@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:view>
+        <a:screenBody>
+            <!-- <img height="600" src="../../images/aurora.png" style="float:center;margin-center:5px;" width="800"/> --><![CDATA[
+            
+        ]]></a:screenBody>
+    </a:view>
+</a:screen>

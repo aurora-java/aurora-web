@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+				select *
+				  from (select su.user_name,
+				               su.user_id,
+				               su.description,
+				               date_format(su.start_date, '%Y-%m-%d') start_date,
+				               date_format(su.end_date, '%Y-%m-%d') end_date,
+				               (case su.frozen_flag
+				                 when 'y' then
+				                  '已冻结'
+				                 else
+				                  '未冻结'
+				               end) p_frozen_flag,
+				               su.frozen_flag,
+				               date_format(su.frozen_date, '%Y-%m-%d') frozen_date,
+				               (select e1.employee_code
+				                  from exp_employees e1
+				                 where e1.employee_id = su.employee_id) employee_code,
+				               (select e2.name
+				                  from exp_employees e2
+				                 where e2.employee_id = su.employee_id) employee_name
+				          from sys_user su
+				         order by su.user_name) a
+                         #WHERE_CLAUSE#
+            ]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+    <bm:query-fields>
+        <bm:query-field name="user_name" dataType="java.lang.String" queryExpression="upper(USER_NAME) like  upper(concat(concat(&apos;%&apos;,${@user_name}),&apos;%&apos;))"/>
+        <bm:query-field name="employee_code" dataType="java.lang.String" queryExpression="upper(EMPLOYEE_CODE) like  upper(concat(concat(&apos;%&apos;,${@employee_code}),&apos;%&apos;))"/>
+        <bm:query-field name="employee_name" dataType="java.lang.String" queryExpression="EMPLOYEE_NAME like  concat(concat(&apos;%&apos;,${@employee_name}),&apos;%&apos;)"/>
+        <bm:query-field name="frozen_flag" dataType="java.lang.String" queryExpression="FROZEN_FLAG =  ${@frozen_flag}"/>
+    </bm:query-fields>
+</bm:model>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:service trace="true" xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc">
+    <a:init-procedure>
+		<p:method-invoke instanceType="uncertain.logging.DefaultPerObjectLoggingConfig" methodName="getTraceFlag" resultPath="/parameter/@status" >
+			<p:arguments>
+				<p:argument type="java.lang.String" value="${/parameter/@url}" />
+			</p:arguments>
+		</p:method-invoke>
+    </a:init-procedure>
+    <a:service-output output="/parameter"/>
+</a:service>

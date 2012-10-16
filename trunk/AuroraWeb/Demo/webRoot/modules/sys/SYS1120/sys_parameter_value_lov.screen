@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure>
+        <a:model-query defaultwhereclause="parameter_id=${/parameter/@parameter_id}" model="sys.sys_parameters" rootPath="parameter_sql_value"/>
+    </a:init-procedure>
+    <a:view>
+        <script><![CDATA[
+
+            function griddbclick(grid, record, row, name) {
+                $('${/parameter/@lovid}').commit(record);
+            }
+            
+            function reset1() {
+                var form = $('query_ds').getCurrentRecord();
+                form.set('value_code', null);
+                form.set('value_name', null);
+            }
+            
+            function querygrid() {
+                $('grid_result_ds').query();
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="result_ds">
+                <a:datas datasource="/model/parameter_sql_value"/>
+            </a:dataSet>
+            <a:dataSet id="query_ds">
+                <a:fields>
+                    <a:field name="sql_validation" defaultValue="${/model/parameter_sql_value/record/@sql_validation}"/>
+                </a:fields>
+            </a:dataSet>
+            <a:dataSet id="grid_result_ds" autoQuery="true" model="sys.SYS1120.sys_parameters_lov" queryDataSet="query_ds" queryUrl="${/request/@context_path}/autocrud/sys.SYS1120.sys_parameters_lov/query?COMPANY_ID=${/parameter/@COMPANY_ID}"/>
+        </a:dataSets>
+        <a:screenBody>
+            <a:form column="2" style="margin-left:10px;;margin-top:10px;" title="HAP_QUERY_TITLE" width="420">
+                <a:textField name="value_code" bindTarget="query_ds" prompt="SYS_PARAMETERS.PARAMETER_CODE" width="100"/>
+                <a:textField name="value_name" bindTarget="query_ds" prompt="SYS_PARAMETER.DESCRIPTION" width="100"/>
+            </a:form>
+            <a:hBox style="margin-left:10px;;margin-top:10px;">
+                <a:button click="querygrid" text="HAP_QUERY"/>
+                <a:button click="reset1" text="HAP_RESET"/>
+            </a:hBox>
+            <a:grid id="result_grid" bindTarget="grid_result_ds" height="320" navBar="true" style="margin-left:10px;;margin-top:10px;" width="440">
+                <a:columns>
+                    <a:column name="value_code" prompt="SYS_PARAMETERS.PARAMETER_CODE" width="200"/>
+                    <a:column name="value_name" prompt="SYS_PARAMETER.DESCRIPTION" width="200"/>
+                </a:columns>
+                <a:events>
+                    <a:event name="dblclick" handler="griddbclick"/>
+                </a:events>
+            </a:grid>
+        </a:screenBody>
+    </a:view>
+</a:screen>
