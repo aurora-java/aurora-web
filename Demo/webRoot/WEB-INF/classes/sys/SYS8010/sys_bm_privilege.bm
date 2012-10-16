@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:ns2="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="sp" baseTable="sys_bm_privilege">
+    <bm:fields>
+        <bm:field databaseType="BIGINT" datatype="java.lang.Long" name="privilege_id"/>
+        <bm:field databaseType="VARCHAR" datatype="java.lang.String" name="dimension_code" prompt="SYS_PRIVILEGE.DIMENSION_CODE"/>
+        <bm:field databaseType="VARCHAR" datatype="java.lang.String" name="dimension_value_code" prompt="SYS_PRIVILEGE.DIMENSION_VALUE_CODE"/>
+        <bm:field databaseType="VARCHAR" datatype="java.lang.String" name="bm_name" prompt="SYS_PRIVILEGE.BM_NAME"/>
+        <bm:field databaseType="VARCHAR" datatype="java.lang.String" name="insert_option" prompt="SYS_PRIVILEGE.INSERT_OPTION"/>
+        <bm:field databaseType="VARCHAR" datatype="java.lang.String" name="update_option" prompt="SYS_PRIVILEGE.UPDATE_OPTION"/>
+        <bm:field databaseType="VARCHAR" datatype="java.lang.String" name="delete_option" prompt="SYS_PRIVILEGE.DELETE_OPTION"/>
+        <bm:field databaseType="VARCHAR" datatype="java.lang.String" name="execute_option" prompt="SYS_PRIVILEGE.QUERY_OPTION"/>
+        <bm:field databaseType="VARCHAR" datatype="java.lang.String" name="query_option" prompt="SYS_PRIVILEGE.EXECUTE_OPTION"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="privilege_id"/>
+    </bm:primary-key>
+    <bm:query-fields>
+        <bm:query-field field="bm_name" queryOperator="like"/>
+        <bm:query-field field="dimension_code" queryOperator="like"/>
+        <bm:query-field name="code" queryExpression="sp.dimension_code=${/parameter/@code}"/>
+        <bm:query-field name="dimension_value_code" queryExpression="sp.dimension_value_code=${/parameter/@dimension_value_code}"/>
+    </bm:query-fields>
+    <bm:features>
+        <ns2:sequence-pk/>
+        <f:standard-who/>
+    </bm:features>
+    <bm:ref-fields/>
+    <!--//////////////////////////////
+    <bm:query-fields>
+        <bm:query-field queryOperator="like" field="alert_rule_code"/>
+        <bm:query-field quelryExpression="exists (select 1 from fnd_descriptions fd where fc.description_id=fd.description_id and fd.description_text like ${@description} and fd.language = ${/session/@lang})" field="description"/>
+    </bm:query-fields>-->
+</bm:model>

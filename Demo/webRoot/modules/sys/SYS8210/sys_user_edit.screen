@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: ouyangzhaochang2663 $
+    $Date: 2011/02/21 08:37:47 $
+    $Revision: 1.8 $
+    $Purpose: 新增用户
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure>
+        <a:model-query model="sys.sys_user" rootPath="user_model"/>
+    </a:init-procedure>
+    <a:view>
+        <script><![CDATA[
+        
+            
+            function closeUserCreateWindow(){
+                $('sys_user_edit_window').close();
+            }
+            
+            function saveUser(){
+                var record = $('sys_user_edit_ds').getCurrentRecord();
+                var state = record.get('state');
+                if(state == 1){ //有效期为天时
+                    if(Ext.isEmpty(record.get('password_lifespan_days'))){
+                         Aurora.showMessage('${l:EXP_REP_PARTIALLY_SUBMITTED}','${l:PLEASE_INPUT_LOGIN_DAYS}');
+                         return;
+                    }
+                }else if(state == 2){
+                    if(Ext.isEmpty(record.get('password_lifespan_access'))){
+                         Aurora.showMessage('${l:EXP_REP_PARTIALLY_SUBMITTED','${l:PLEASE_INPUT_LOGIN_DAYS}');
+                         return;
+                    }
+                }
+                $('sys_user_edit_ds').submit();
+            }
+            
+            function closeWindow(){
+                closeUserCreateWindow();
+                queryService();
+            }
+            
+            function onCheckBoxChange(checkbox, newValue, oldValue){
+                var record = $('sys_user_edit_ds').getCurrentRecord();  
+                if(newValue == 'Y'){
+                    var date = new Date().format('yyyy-mm-dd');
+                    record.set('frozen_date',date);
+                }else{
+                    record.set('frozen_date','');
+                }
+            }
+            
+            function onModifyUserSuccess(dateSet, datas, results){
+                var messageWindow=Aurora.showMessage('${l:EXP_REP_PARTIALLY_SUBMITTED}','${l:USER_INFORMATION_MODIFY_SUCCESS}',function(){ closeUserCreateWindow();queryService();messageWindow.close();});
+            }
+            
+            function onRadioChange(radio, newValue, oldValue){
+                var record = $('sys_user_edit_ds').getCurrentRecord();  
+                if(newValue=='1'){
+                    record.set('password_lifespan_access',null)
+                    record.getMeta().getField('password_lifespan_days').setReadOnly(false);
+                    record.getMeta().getField('password_lifespan_access').setReadOnly(true);
+                }else if(newValue=='2'){
+                    record.set('password_lifespan_days',null)
+                    record.getMeta().getField('password_lifespan_days').setReadOnly(true);
+                    record.getMeta().getField('password_lifespan_access').setReadOnly(false);
+                }else{
+                    record.set('password_lifespan_access',null)
+                    record.set('password_lifespan_days',null)
+                    record.getMeta().getField('password_lifespan_days').setReadOnly(true);
+                    record.getMeta().getField('password_lifespan_access').setReadOnly(true);
+                }
+            }
+        
+            function compareDate(start, end){
+                if(start > end){
+                    return false;
+                }
+                return true;
+            }
+            
+            function dateValidator(record, name, value){
+                if(name == 'start_date' || name == 'end_date'){
+                    var start_date = record.get('start_date');
+                    var end_date = record.get('end_date');
+                    if(typeof(end_date) != 'undefined' && !Ext.isEmpty(end_date)){
+                        if(!compareDate(start_date, end_date)){
+                            return '${l:START_GREATER_THAN_END}';
+                        }
+                    }
+                    return true;
+                }
+            }
+            
+            function onUpdate(ds,record,name,value){
+                if(name == 'start_date' || name == 'end_date'){
+                    record.validate((name == 'start_date') ? 'end_date' : 'start_date');
+                }
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="sys_user_edit_ds" model="sys.sys_user">
+                <a:datas dataSource="/model/user_model"/>
+                <a:fields>
+                    <a:field name="user_name" readOnly="true"/>
+                    <a:field name="start_date" required="true" validator="dateValidator"/>
+                    <a:field name="end_date" validator="dateValidator"/>
+                    <a:field name="description" required="true"/>
+                    <a:field name="frozen_date" readOnly="true"/>
+                    <a:field name="emp_name" readOnly="true"/>
+                    <a:field name="employee_code" autoComplete="true" autoCompleteField="employee_code" lovGridHeight="300" lovHeight="430" lovService="fnd.FND1030.fnd_employees_lov" lovWidth="500">
+                        <a:mapping>
+                            <a:map from="employee_name" to="emp_name"/>
+                            <a:map from="employee_code" to="employee_code"/>
+                            <a:map from="employee_id" to="employee_id"/>
+                        </a:mapping>
+                    </a:field>
+                </a:fields>
+                <a:events>
+                    <a:event name="submitsuccess" handler="onModifyUserSuccess"/>
+                    <a:event name="update" handler="onUpdate"/>
+                </a:events>
+            </a:dataSet>
+        </a:dataSets>
+        <a:fieldSet column="2" style="margin-left:10px;margin-top:10px;" title="SYS_USER.USER_INFO" width="490">
+            <a:vBox>
+                <a:textField name="user_name" bindTarget="sys_user_edit_ds"/>
+                <a:datePicker name="start_date" bindTarget="sys_user_edit_ds"/>
+                <a:lov name="employee_code" bindTarget="sys_user_edit_ds"/>
+                <a:hBox padding="0" prompt="SYS_USER.PASSWD_EXPIRED_TYPE">
+                    <a:radio name="state" bindTarget="sys_user_edit_ds" layout="vertical" style="padding-top:5px;padding-bottom:5px;" width="80">
+                        <a:items>
+                            <a:item label="SYS_USER.PASSWD_EXPIRED_DAYS" value="1"/>
+                            <a:item label="SYS_USER.PASSWD_EXPIRED_TIMES" value="2"/>
+                            <a:item label="SYS_USER.PASSWD_EXPIRED_NEVER" value="3"/>
+                        </a:items>
+                        <a:events>
+                            <a:event name="change" handler="onRadioChange"/>
+                        </a:events>
+                    </a:radio>
+                    <a:vBox>
+                        <a:numberField name="password_lifespan_days" allowDecimals="false" allowNegative="false" bindTarget="sys_user_edit_ds" width="67"/>
+                        <a:numberField name="password_lifespan_access" allowDecimals="false" allowNegative="false" bindTarget="sys_user_edit_ds" width="67"/>
+                    </a:vBox>
+                </a:hBox>
+            </a:vBox>
+            <a:vBox>
+                <a:textField name="description" bindTarget="sys_user_edit_ds"/>
+                <a:datePicker name="end_date" bindTarget="sys_user_edit_ds"/>
+                <a:textField name="emp_name" bindTarget="sys_user_edit_ds"/>
+                <a:checkBox name="frozen_flag" bindTarget="sys_user_edit_ds">
+                    <a:events>
+                        <a:event name="change" handler="onCheckBoxChange"/>
+                    </a:events>
+                </a:checkBox>
+                <a:datePicker name="frozen_date" bindTarget="sys_user_edit_ds"/>
+            </a:vBox>
+        </a:fieldSet>
+        <div class="win-toolbar" style="width:100%;height:40px;position:absolute; bottom:0px;">
+            <a:hBox style="float:right;margin-right:10px;margin-top:5px;">
+                <a:button click="saveUser" text="HAP_SAVE" width="90"/>
+                <a:button click="closeUserCreateWindow" text="HAP_CLOSE" width="90"/>
+            </a:hBox>
+        </div>
+        <!-- <center>
+            <a:hBox style="margin-left:7px;">
+                <a:button text="HAP_SAVE" click="saveUser"/>
+                <a:button text="HAP_CLOSE" click="closeUserCreateWindow"/>
+            </a:hBox>
+        </center>-->
+        <script><![CDATA[
+        
+            function init(){
+                var record = $('sys_user_edit_ds').getCurrentRecord();
+                var passwordLifespanDays = record.get('password_lifespan_days');
+                var passwordLifespanAccess = record.get('password_lifespan_access');
+                //TODO:以后去掉0的判断
+                if(!Ext.isEmpty(passwordLifespanDays) && passwordLifespanDays!=0){
+                    record.set('state','1');
+                    record.set('password_lifespan_access',null);
+                    record.getMeta().getField('password_lifespan_access').setReadOnly(true);
+                } else if(!Ext.isEmpty(passwordLifespanAccess)&& passwordLifespanAccess!=0){
+                    record.set('state','2');
+                    record.set('password_lifespan_days',null);
+                    record.getMeta().getField('password_lifespan_days').setReadOnly(true);
+                } else {
+                    record.set('state','3');
+                    record.set('password_lifespan_days',null);
+                    record.set('password_lifespan_access',null);
+                    record.getMeta().getField('password_lifespan_days').setReadOnly(true);
+                    record.getMeta().getField('password_lifespan_access').setReadOnly(true);
+                }
+            }
+            init(); 
+            
+        
+        ]]></script>
+    </a:view>
+</a:screen>

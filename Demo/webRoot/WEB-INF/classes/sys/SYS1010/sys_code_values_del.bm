@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.aurora-framework.org/schema/bm" xmlns:ns2="aurora.database.local.oracle">
+    <operations>        
+        <operation name="delete">
+            <update-sql>
+                delete from sys_code_values where code_id = ${@code_id}
+            </update-sql>
+        </operation>
+    </operations>
+</model>

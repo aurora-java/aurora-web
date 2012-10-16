@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2012-9-28 下午1:20:17  
+    $Revision: 1.0  
+    $Purpose: 销售订单（头）
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view package="aurora.ui.std" template="default">
+        <a:link id="ord_sales_order_create_screen" url="${/request/@context_path}/modules/ord/ORD5010/ord_sales_order_create_edit.screen"/>
+        <a:link id="lk_header_close" url="${/request/@context_path}/modules/ord/ORD5010/ord_sales_order_header_close.svc"/>
+        <script><![CDATA[
+            function btn_query_order_header() {
+                $('ord_sales_order_headers_ds').query();
+            }
+            
+            function btn_reset_query_ds() {
+                $('ord_sales_order_header_query_ds').reset();
+            }
+            
+            function order_number_renderer(value, record, name) {
+                return "<a href='javascript:goToEdit(" + record.get('sales_order_id') + ")'>" + value + "</a>";
+            }
+            
+            function goToEdit(sales_order_id) {
+                var link = $('ord_sales_order_create_screen');
+                link.reset();
+                link.set('sales_order_id', sales_order_id);
+                var win_id = 'win_edit';
+                link.set('win_id', win_id);
+                new Aurora.Window({
+                    id: win_id,
+                    url: link.getUrl(),
+                    title: '编辑订单',
+                    fullScreen: true
+                });
+            }
+            
+            function btn_new_order() {
+                var link = $('ord_sales_order_create_screen');
+                link.reset();
+                var win_id = 'win_create';
+                link.set('win_id', win_id);
+                new Aurora.Window({
+                    id: win_id,
+                    url: link.getUrl(),
+                    title: '创建订单',
+                    fullScreen: true
+                });
+            }
+            
+            function btn_delete_order() {
+                var h_ds = $('ord_sales_order_headers_ds');
+                var sel = h_ds.getSelected();
+                if (!sel || !sel.length) {
+                    Aurora.showMessage('${l:PROMPT}', '请至少选择一行，方可删除！');
+                    return;
+                }
+                Aurora.showConfirm('?', '是否确认删除该销售订单的所有信息？', function() {
+                    h_ds.remove(sel);
+                });
+            }
+            
+            function btn_close_order() {
+                var rec = $('ord_sales_order_headers_ds').getSelected()[0];
+                if (!rec) {
+                    return;
+                }
+                if (rec.get('closed_flag') == 'Y') {
+                    Aurora.showErrorMessage('${l:PROMPT}', '当前订单已关闭，不能继续关闭！');
+                    return;
+                }
+                Aurora.showConfirm('?', '是否确认关闭当前订单？', function() {
+                    Aurora.request({
+                        url: $('lk_header_close').getUrl(),
+                        para: {
+                            sales_order_id: rec.get('sales_order_id')
+                        },
+                        success: function(res) {
+                            rec.set('closed_flag', 'Y', true);
+                        },
+                        scope: this
+                    });
+                });
+            }
+            
+            function total_amount_renderer(value, record, name) {
+                return Math.abs(value);
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="ord_order_status_ds" lookupCode="SALE_ORD_STATUS"/>
+            <a:dataSet id="ord_sales_order_header_query_ds">
+                <a:fields>
+                    <a:field name="order_date_from"/>
+                    <a:field name="order_date_to"/>
+                    <a:field name="order_number"/>
+                    <a:field name="return_order_flag" checkedValue="Y" uncheckedValue="N"/>
+                    <a:field name="customer_id"/>
+                    <a:field name="customer_lov" lovHeight="500" lovService="ord.ORD5010.fnd_business_customer_lov" lovWidth="500" title="客户选择">
+                        <a:mapping>
+                            <a:map from="partner_id" to="customer_id"/>
+                            <a:map from="partner_desc" to="customer_lov"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="salesmen_employee_id"/>
+                    <a:field name="salesmen_employee_lov" lovHeight="500" lovService="fnd.FND1030.fnd_employees_lov" lovWidth="500" title="Select Employee">
+                        <a:mapping>
+                            <a:map from="employee_id" to="salesmen_employee_id"/>
+                            <a:map from="employee_name" to="salesmen_employee_lov"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="goods_issue_flag" checkedValue="Y" uncheckedValue="N"/>
+                    <a:field name="status"/>
+                    <a:field name="status_com" displayField="code_value_name" options="ord_order_status_ds" returnField="status" valueField="code_value"/>
+                    <a:field name="closed_flag" checkedValue="Y" uncheckedValue="N"/>
+                </a:fields>
+            </a:dataSet>
+            <a:dataSet id="ord_sales_order_headers_ds" model="ord.ORD5010.ord_sales_order_headers" queryDataSet="ord_sales_order_header_query_ds" selectable="true" submitUrl="${/request/@context_path}/modules/ord/ORD5010/ord_sales_order_delete.svc">
+                <a:fields>
+                    <a:field name="sales_order_id"/>
+                    <a:field name="order_number"/>
+                    <a:field name="return_order_flag" checkedValue="Y" defaultValue="N" readOnly="true" uncheckedValue="N"/>
+                    <a:field name="goods_issue_flag" checkedValue="Y" defaultValue="N" readOnly="true" uncheckedValue="N"/>
+                    <a:field name="salesmen_employee_id"/>
+                    <a:field name="customer_id"/>
+                    <a:field name="order_date"/>
+                    <a:field name="issue_warehouse_id"/>
+                    <a:field name="currency_code"/>
+                    <a:field name="status"/>
+                    <a:field name="status_name" displayField="code_value_name" options="ord_order_status_ds" returnField="status" valueField="code_value"/>
+                    <a:field name="description"/>
+                    <a:field name="closed_flag" checkedValue="Y" defaultValue="N" readOnly="true" uncheckedValue="N"/>
+                    <a:field name="close_date"/>
+                    <a:field name="closed_flag" checkedValue="Y" defaultValue="N" readOnly="true" uncheckedValue="N"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:form column="1" title="查询订单">
+                <a:hBox labelWidth="100">
+                    <a:textField name="order_number" bindTarget="ord_sales_order_header_query_ds" prompt="订单号"/>
+                    <a:lov name="customer_lov" bindTarget="ord_sales_order_header_query_ds" prompt="客户"/>
+                    <a:hBox labelSeparator="" width="240">
+                        <a:button click="btn_query_order_header" prompt=" " text="HAP_QUERY"/>
+                        <a:button click="btn_reset_query_ds" text="HAP_RESET"/>
+                    </a:hBox>
+                </a:hBox>
+                <a:accordionPanel id="accordion_dim" width="800">
+                    <a:accordions>
+                        <a:accordion prompt="高级" selected="false">
+                            <a:vBox>
+                                <a:hBox labelWidth="100">
+                                    <a:datePicker name="order_date_from" bindTarget="ord_sales_order_header_query_ds" prompt="订单日期"/>
+                                    <a:datePicker name="order_date_to" bindTarget="ord_sales_order_header_query_ds" prompt="到"/>
+                                    <a:lov name="salesmen_employee_lov" bindTarget="ord_sales_order_header_query_ds" prompt="销售员"/>
+                                </a:hBox>
+                                <a:hBox labelWidth="100">
+                                    <a:comboBox name="status_com" bindTarget="ord_sales_order_header_query_ds" prompt="状态"/>
+                                    <a:checkBox name="goods_issue_flag" bindTarget="ord_sales_order_header_query_ds" prompt="发出商品"/>
+                                    <a:checkBox name="return_order_flag" bindTarget="ord_sales_order_header_query_ds" checkedValue="Y" prompt="退货订单" uncheckedValue="N"/>
+                                    <a:checkBox name="closed_flag" bindTarget="ord_sales_order_header_query_ds" prompt="关闭"/>
+                                </a:hBox>
+                            </a:vBox>
+                        </a:accordion>
+                    </a:accordions>
+                </a:accordionPanel>
+            </a:form>
+            <a:hBox/>
+            <a:grid bindTarget="ord_sales_order_headers_ds" height="350" navBar="true" width="1000">
+                <a:columns>
+                    <a:column name="order_number" prompt="订单号" renderer="order_number_renderer" width="150"/>
+                    <a:column name="order_date" align="center" prompt="订单日期" renderer="Aurora.formatDate" sortable="true"/>
+                    <a:column name="customer_name" align="center" prompt="客户"/>
+                    <a:column name="currency_code" align="center" prompt="币种" width="60"/>
+                    <a:column name="total_amount" align="right" prompt="金额" renderer="total_amount_renderer"/>
+                    <a:column name="salesmen_employee_name" align="center" prompt="销售员"/>
+                    <a:column name="status_name" align="center" prompt="状态"/>
+                    <a:column name="return_order_flag" editor="e_cb" prompt="退货订单" width="60"/>
+                    <a:column name="goods_issue_flag" editor="e_cb" prompt="发出商品" width="60"/>
+                    <a:column name="closed_flag" editor="e_cb" prompt="关闭" width="40"/>
+                </a:columns>
+                <a:editors>
+                    <a:checkBox id="e_cb"/>
+                </a:editors>
+                <a:toolBar>
+                    <a:button click="btn_new_order" icon="/images/add.gif" text="新建"/>
+                    <a:button click="btn_delete_order" icon="/images/remove.gif" text="删除"/>
+                    <a:button type="excel"/>
+                    <a:button click="btn_close_order" icon="/images/remove.png" text="关闭"/>
+                </a:toolBar>
+            </a:grid>
+        </a:screenBody>
+    </a:view>
+</a:screen>

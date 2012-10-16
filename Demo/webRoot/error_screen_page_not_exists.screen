@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: niujiaqing1265 $
+    $Date: 2010/11/24 07:35:10 $
+    $Revision: 1.2 $
+    $Purpose: 页面没有注册
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure/>
+    <a:view package="aurora.ui.std" template="default">
+        <a:form id="tipForm" className="mytable" height="100" style="position:absolute;left:-2000px;top:-2000px;" title="提示" width="320">
+            <table>
+                <tr>
+                    <td>
+                        <span style="font-size:20px;"><![CDATA[抱歉，您当前访问的页面暂时无法显示!]]></span>
+                    </td>
+                </tr>
+            </table>
+        </a:form>
+        <script><![CDATA[
+            Aurora.onReady(function(){
+                Aurora.center('tipForm');
+                Aurora.get('tipForm').show();
+            })
+
+        ]]></script>
+    </a:view>
+</a:screen>

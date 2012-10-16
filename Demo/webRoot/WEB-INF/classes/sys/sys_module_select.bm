@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:model xmlns:ns1="http://www.aurora-framework.org/schema/bm" defaultOrderBy="module_code" extend="sys.sys_module" extendMode="override">
+    <ns1:fields>
+        <ns1:field name="module_name_display" databaseType="VARCHAR" datatype="java.lang.String" expression="concat(concat(fc.module_code , &apos;-&apos; ), (select fd.description_text from fnd_descriptions fd where fc.module_name_id=fd.description_id and fd.language=${/session/@lang}))" forInsert="false" forUpdate="false"/>
+    </ns1:fields>
+    <ns1:ref-fields/>
+</ns1:model>

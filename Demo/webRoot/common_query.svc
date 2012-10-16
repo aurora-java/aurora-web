@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:service xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:init-procedure>
+        <a:model-query autoCount="true" fetchAll="false" fieldNameCase="lower" service="${/parameter/@svc}"/>
+    </a:init-procedure>
+    <a:service-output path="/model"/>
+</a:service>

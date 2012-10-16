@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: lqr  
+    $Date: 2012-9-26 上午10:52:21  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<ns1:model xmlns:e="aurora.service.exception" xmlns:o="aurora.database.local.oracle" xmlns:ns1="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="f" baseTable="fnd_business_partners" defaultOrderBy="partner_code" needAccessControl="false">
+    <ns1:fields>
+        <ns1:field name="partner_id" databaseType="BIGINT" datatype="java.lang.Long"/>
+        <ns1:field name="partner_code" databaseType="VARCHAR" datatype="java.lang.String" displayWidth="200" forQuery="true" fordisplay="true" prompt="供应商代码" queryWidth="150"/>
+        <ns1:field name="partner_name" databaseType="VARCHAR" datatype="java.lang.String" displayWidth="200" forInsert="false" forQuery="true" forUpdate="false" fordisplay="true" prompt="供应商名称" queryWidth="150"/>
+    </ns1:fields>
+    <ns1:primary-key>
+        <ns1:pk-field name="partner_id"/>
+    </ns1:primary-key>
+</ns1:model>

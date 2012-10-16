@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jco:sap-config xmlns:jco="aurora.plugin.sap.jco3">
+	<instances>
+		<jco:instance-config 
+			server_ip="192.168.18.11"
+		    sid="himes_train"
+		    sap_client="500"
+		    userid="hcmrfc"
+		    password="hcmrfc"
+		    default_lang="ZH"
+		    max_conn="5"
+		    system_number="00">
+		</jco:instance-config>
+		<jco:instance-config 
+			server_ip="192.168.18.12"
+		    sid="hsp_train"
+		    sap_client="500"
+		    userid="hcmrfc"
+		    password="hcmrfc"
+		    default_lang="ZH"
+		    max_conn="5"
+		    system_number="00">
+		</jco:instance-config>
+	</instances>		
+</jco:sap-config>

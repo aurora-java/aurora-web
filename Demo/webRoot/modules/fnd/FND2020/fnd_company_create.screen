@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: ouyangzhaochang2663 $
+    $Date: 2010/12/10 08:03:39 $
+    $Revision: 1.4 $
+    $Purpose: 公司创建
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure>
+        <a:model-query autoCount="false" fetchAll="true" fieldNameCase="lower" model="fnd.fnd_companies" rootPath="fnd_company"/>
+        <a:model-query autoCount="false" fetchAll="true" model="fnd.FND2020.fnd_company_position_cmb" rootPath="parent_companies"/>
+    </a:init-procedure>
+    <a:view package="aurora.ui.std" template="default">
+        <div/>
+        <script><![CDATA[
+        
+            
+            function createCompany(){
+                $('fnd_companies_create_ds').submit();
+            }
+            
+            function closeCompanyCreateWindow(){
+                $('company_create_window').close();                
+            }
+            function onCompanyCreateSuccess(){
+                closeCompanyCreateWindow();
+                queryCompanies();
+            }
+            function onUpdate(ds,record,name,value){
+                if(name == 'start_date_active' || name == 'end_date_active'){
+                    record.validate((name == 'start_date_active') ? 'end_date_active' : 'start_date_active');
+                }
+            }
+            
+            function compareDate(start, end){
+                if(start > end){
+                    return false;
+                }
+                return true;
+            }
+            
+            function dateValidator(record, name, value){
+                if(name == 'start_date_active' || name == 'end_date_active'){
+                    var start_date = record.get('start_date_active');
+                    var end_date = record.get('end_date_active');
+                    if(typeof(end_date) != 'undefined' && !Ext.isEmpty(end_date)){
+                        if(!compareDate(start_date, end_date)){
+                            return '${l:START_GREATER_THAN_END}';
+                        }
+                    }
+                    return true;
+                }
+            }
+            
+            function blurHandler(){
+                var company_code=$('fnd_companies_create_ds').getAt(0).get('company_code');
+                var records=$('fnd_companies_result_ds').getAll();
+                for(var i=0;i<records.length;i++){
+                    if(company_code==records[i].get('company_code')){
+                        Aurora.showMessage('${l:PROMPT}','${l:FND_COMPANY.COMPANY_CODE_REPEAT}');
+                        $('fnd_companies_create_ds').getAt(0).set('company_code','');
+                    }
+                }
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="fnd_companies_level_ds" autoCount="false" fetchAll="true" loadData="true" model="fnd.fnd_company_levels"/>
+            <a:dataSet id="fnd_companies_type_ds" lookupCode="COMPANY_TYPE"/>
+            <a:dataSet id="parent_companies_ds">
+                <a:datas dataSource="/model/parent_companies"/>
+            </a:dataSet>
+            <a:dataSet id="fnd_companies_parent_ds" autoCount="false" fetchAll="true" loadData="true" model="fnd.FND2020.fnd_companies_parent"/>
+            <a:dataSet id="fnd_companies_create_ds" autoCreate="true" model="fnd.fnd_companies" submitUrl="${/request/@context_path}/modules/fnd/FND2020/fnd_company_create_control.svc">
+                <a:fields>
+                    <a:field name="company_code" required="true"/>
+                    <a:field name="company_short_name" required="true"/>
+                    <a:field name="company_type_display" displayField="code_value_name" options="fnd_companies_type_ds" required="true" returnField="company_type" valueField="code_value"/>
+                    <!-- <a:field name="set_of_books_id_display" displayField="set_of_books_name_display" options="gld_set_of_book_ds" required="false" returnField="set_of_books_id" valueField="set_of_books_id"/> -->
+                    <a:field name="company_level_id_display" displayField="description_display" options="fnd_companies_level_ds" required="true" returnField="company_level_id" valueField="company_level_id"/>
+                    <a:field name="start_date_active" datatype="date" required="true" validator="dateValidator"/>
+                    <a:field name="end_date_active" datatype="date" validator="dateValidator"/>
+                    <a:field name="parent_company_id_display" displayField="company_code" options="fnd_companies_parent_ds" returnField="parent_company_id" valueField="company_id"/>
+                    <a:field name="chief_position_id_display" displayField="position_name_display" options="parent_companies_ds" readOnly="true" returnField="chief_position_id" valueField="position_id"/>
+                </a:fields>
+                <a:events>
+                    <a:event name="submitsuccess" handler="onCompanyCreateSuccess"/>
+                    <a:event name="update" handler="onUpdate"/>
+                </a:events>
+            </a:dataSet>
+        </a:dataSets>
+        <a:fieldSet column="1" style="margin:15px;" title="FND_COMPANIES.INFO" width="480">
+            <a:hBox>
+                <a:textField name="company_code" bindTarget="fnd_companies_create_ds" typeCase="upper">
+                    <a:events>
+                        <a:event name="blur" handler="blurHandler"/>
+                    </a:events>
+                </a:textField>
+                <a:textField name="company_short_name" bindTarget="fnd_companies_create_ds"/>
+            </a:hBox>
+            <a:hBox>
+                <a:textField name="company_full_name" bindTarget="fnd_companies_create_ds" width="385"/>
+            </a:hBox>
+            <a:hBox>
+                <a:comboBox name="company_type_display" bindTarget="fnd_companies_create_ds"/>
+                <!-- <a:comboBox name="set_of_books_id_display" bindTarget="fnd_companies_create_ds"/> -->
+            </a:hBox>
+            <a:hBox>
+                <a:comboBox name="company_level_id_display" bindTarget="fnd_companies_create_ds"/>
+                <a:comboBox name="chief_position_id_display" bindTarget="fnd_companies_create_ds"/>
+            </a:hBox>
+            <a:hBox>
+                <a:comboBox name="parent_company_id_display" bindTarget="fnd_companies_create_ds" width="385"/>
+            </a:hBox>
+            <a:hBox>
+                <a:datePicker name="start_date_active" bindTarget="fnd_companies_create_ds"/>
+                <a:datePicker name="end_date_active" bindTarget="fnd_companies_create_ds"/>
+            </a:hBox>
+            <a:hBox>
+                <a:textField name="address" bindTarget="fnd_companies_create_ds" width="385"/>
+            </a:hBox>
+        </a:fieldSet>
+        <div class="win-toolbar" style="width:510px;height:40px;">
+            <a:hBox style="float:right;margin-right:10px;margin-top:5px;">
+                <a:button click="createCompany" icon="${/request/@context_path}/images/save.gif" text="HAP_SAVE" width="90"/>
+                <a:button click="closeCompanyCreateWindow" text="HAP_CLOSE" width="90"/>
+            </a:hBox>
+        </div>
+    </a:view>
+</a:screen>

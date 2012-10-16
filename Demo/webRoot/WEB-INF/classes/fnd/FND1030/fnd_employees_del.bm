@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.aurora-framework.org/schema/bm" xmlns:ns2="aurora.database.local.oracle">
+    <operations>        
+        <operation name="delete">
+            <update-sql>
+                delete from fnd_employees where employee_id = ${@employee_id}
+            </update-sql>
+        </operation>
+    </operations>
+</model>

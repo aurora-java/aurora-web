@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2011-9-29 下午3:25:52  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:view>
+        <a:link id="full_median_duration_of_hour_link" url="${/request/@context_path}/modules/sys/SYS2520/full_median_duration_of_hour.screen"/>
+        <script><![CDATA[
+            function onclick5() {
+                new Aurora.Window({
+                    id: 'full_median_duration_of_hour',
+                    title:'平均响应时间（按时段统计）',
+                    url: /*full_median_duration_of_hour.screen*/$('full_median_duration_of_hour_link').getUrl(),
+                    width: 1000,
+                    height: 550
+                });
+            }
+            function query5(){
+                $('min_median_duration_of_hour_ds').query();
+            }
+            ]]></script>
+        <a:dataSets>
+            <a:dataSet id="min_median_duration_of_hour_ds" model="sys.SYS2520.sys_analytics_summary_of_hour" pageSize="100" queryDataSet="query_ds">
+                <a:fields>
+                    <a:field name="hour" prompt="日期"/>
+                    <a:field name="med_dur_screen" datatype="float" prompt="screen" type="line"/>
+                    <a:field name="med_dur_svc" datatype="float" prompt="svc" type="line"/>
+                    <a:field name="med_dur_query" datatype="float" prompt="query" type="line"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:chart bindTarget="min_median_duration_of_hour_ds" style="width: 350px; height: 200px" type="line">
+                <a:title text="平均响应时间（按时段统计）"/>
+                <a:xAxis>
+                    <a:xAxi name="hour">
+                        <a:labels formatter="emptyRenderer"/>
+                    </a:xAxi>
+                </a:xAxis>
+                <a:yAxis>
+                    <a:yAxi name="med_dur_screen,med_dur_svc,med_dur_query">
+                        <a:labels formatter="emptyRenderer"/>
+                        <a:title text=""/>
+                    </a:yAxi>
+                </a:yAxis>
+                <a:events>
+                    <a:event name="click" handler="onclick5"/>
+                </a:events>
+            </a:chart>
+        </a:screenBody>
+    </a:view>
+</a:screen>

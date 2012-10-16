@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view package="aurora.ui.std" template="default">
+        <a:link id="sys_log_show_all_trace_flag_link" url="${/request/@context_path}/modules/sys/SYS1009/sys_log_show_all_trace_flag.svc"/>
+        <a:link id="sys_log_cancel_all_trace_flag_link" url="${/request/@context_path}/modules/sys/SYS1009/sys_log_cancel_all_trace_flag.svc"/>
+        <a:link id="sys_log_set_all_trace_flag_link" url="${/request/@context_path}/modules/sys/SYS1009/sys_log_set_all_trace_flag.svc"/>
+        <script><![CDATA[
+            function onCheckBoxChange(checkbox, newValue, oldValue) {
+                var record = $('log_status').getCurrentRecord();
+                var url = record.get('service_name');
+                if (!url) {
+                    Aurora.showErrorMessage('${l:PROMPT.ERROR}', '${l:PROMPT.URL_CAN_NOT_BE_NULL}')
+                    return false;
+                }
+                if ('Y' == newValue) {
+                    enableTrace(url);
+                } else {
+                    diableTrace(url);
+                }
+            
+            }
+            
+            function enableTrace(url) {
+                setTrace(url, 'true');
+            }
+            
+            function diableTrace(url) {
+                setTrace(url, 'false');
+            }
+            
+            function setTrace(url, flag) {
+                var parameters = {
+                    "url": url,
+                    "flag": flag
+                };
+                Aurora.request({
+                    url: '${/request/@context_path}/set_trace_flag.svc',
+                    para: parameters,
+                    success: function() {
+                        Aurora.showMessage('${l:PROMPT}', '${l:PROMPT.OPERATION_SUCCESS}');
+                    },
+                    scope: this
+                });
+            }
+            
+            function showTraceFlag(url) {
+                var record = $('log_status').getCurrentRecord();
+                var parameters = {
+                    "url": url
+                };
+                Aurora.request({
+                    url: '${/request/@context_path}/show_trace_flag.svc',
+                    para: parameters,
+                    success: function(res) {
+                        var status = res.result['status'];
+                        if (true == status) {
+                            record.set('status', 'Y');
+                        } else {
+                            record.set('status', 'N');
+                        }
+                    },
+                    scope: this
+                });
+            }
+            
+            function onUpdate(ds, record, name, value) {
+                if (name == 'service_name') {
+                    showTraceFlag(value);
+                }
+            }
+            
+            function enableAllonUpdate(checkbox, newValue, oldValue) {
+                var flag = 'false';
+                if ('Y' == newValue) {
+                    flag = 'true';
+                }
+                Aurora.request({
+                    url: /*sys_log_set_all_trace_flag.svc*/$('sys_log_set_all_trace_flag_link').getUrl(),
+                    para: {
+                        "flag": flag
+                    },
+                    success: function() {
+                        Aurora.showMessage('${l:PROMPT}', '${l:PROMPT.OPERATION_SUCCESS}');
+                    },
+                    scope: this
+                });
+            }
+            
+            function cancel_all_trace_flag(d, ds) {
+                Aurora.request({
+                    url: /*sys_log_cancel_all_trace_flag.svc*/$('sys_log_cancel_all_trace_flag_link').getUrl(),
+                    para: {},
+                    success: function() {
+                        Aurora.showMessage('${l:PROMPT}', '${l:PROMPT.OPERATION_SUCCESS}');
+                    },
+                    scope: this
+                });
+            }
+            
+            function queryRecipientType() {
+                $('function_tree_ds').query();
+            }
+            
+            function save() {
+                $('function_tree_ds').submit();
+            }]]></script>
+        <a:dataSets>
+            <a:dataSet id="log_status">
+                <a:datas>
+                    <a:record service_name="" status="false"/>
+                </a:datas>
+                <a:events>
+                    <a:event name="update" handler="onUpdate"/>
+                </a:events>
+            </a:dataSet>
+            <a:dataSet id="enabled_all_dataset" autoCreate="true">
+                <a:datas>
+                    <a:record flag="N"/>
+                </a:datas>
+            </a:dataSet>
+            <a:dataSet id="parameter_static_ds" autoCreate="true">
+                <a:datas>
+                    <a:record base_dir="" file_ext="screen"/>
+                    <a:record base_dir="" file_ext="svc"/>
+                    <a:record base_dir="web-inf/classes" file_ext="bm"/>
+                </a:datas>
+            </a:dataSet>
+            <a:dataSet id="parameter_ds" autoCreate="true">
+                <a:fields>
+                    <a:field name="file_ext" displayField="file_ext" options="parameter_static_ds" valueField="file_ext">
+                        <a:mapping>
+                            <a:map from="file_ext" to="file_ext"/>
+                            <a:map from="base_dir" to="base_dir"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="base_dir" readOnly="true"/>
+                </a:fields>
+            </a:dataSet>
+            <a:dataSet id="function_tree_ds" autoCount="false" fetchAll="true" queryDataSet="parameter_ds" queryUrl="${/request/@context_path}/modules/sys/SYS1009/sys_log_get_config.svc" submitUrl="${/request/@context_path}/modules/sys/SYS1009/sys_log_set_config.svc">
+                <a:fields>
+                    <a:field name="trace_flag" checkedValue="Y" uncheckedValue="N"/>
+                    <a:field name="base_dir" readOnly="true"/>
+                    <a:field name="name" readOnly="true"/>
+                    <a:field name="path" readOnly="true"/>
+                    <a:field name="parent" readOnly="true"/>
+                    <a:field name="parent_path" readOnly="true"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <script><![CDATA[
+            function init() {
+                Aurora.request({
+                    url: /*sys_log_show_all_trace_flag.svc*/$('sys_log_show_all_trace_flag_link').getUrl(),
+                    para: {},
+                    success: function(res) {
+                        var status = res.result['status'];
+                        if (true == status) {
+                            $('enabled_all_dataset').getCurrentRecord().set('flag', 'Y');
+                        }
+                    },
+                    scope: this
+                });
+            }
+            init();]]></script>
+        <a:screenBody>
+            <a:tabPanel id="tabpanel" height="580" marginHeight="50" width="960">
+                <a:tabs>
+                    <a:tab prompt="PROMPT.SYSTEM">
+                        <a:form row="2" title="L.LOG" width="600">
+                            <a:hBox>
+                                <a:textField name="service_name" bindTarget="log_status" prompt="PROMPT.URL" width="390"/>
+                                <a:checkBox name="status" bindTarget="log_status" prompt="PROMPT.ENABLED_FLAG">
+                                    <a:events>
+                                        <a:event name="change" handler="onCheckBoxChange"/>
+                                    </a:events>
+                                </a:checkBox>
+                            </a:hBox>
+                            <a:hBox labelWidth="120">
+                                <a:checkBox name="flag" bindTarget="enabled_all_dataset" checkedValue="Y" prompt="SYSTEM_LOG.ENABLED_ALL_RESOURCE" uncheckedValue="N">
+                                    <a:events>
+                                        <a:event name="change" handler="enableAllonUpdate"/>
+                                    </a:events>
+                                </a:checkBox>
+                            </a:hBox>
+                        </a:form>
+                    </a:tab>
+                    <a:tab prompt="PROMPT.DETAIL">
+                        <a:form column="2" labelWidth="100" title="PROMPT.DETAIL" width="600">
+                            <a:comboBox name="file_ext" bindTarget="parameter_ds" prompt="PROMPT.FILE_TYPE"/>
+                            <a:textField name="base_dir" bindTarget="parameter_ds" prompt="PROMPT.DIRECTORY"/>
+                        </a:form>
+                        <a:hBox>
+                            <a:button click="queryRecipientType" text="HAP_QUERY"/>
+                            <a:button click="save" text="HAP_SAVE"/>
+                            <a:button click="cancel_all_trace_flag" text="SYSTEM_LOG.CLEAR_ALL_RESOURCE_FLAG"/>
+                        </a:hBox>
+                        <a:treeGrid id="functionTreeGrid" bindTarget="function_tree_ds" expandField="_expanded" height="400" idField="path" parentField="parent_path" sequenceField="path" showCheckBox="true" width="800">
+                            <a:columns>
+                                <a:column name="name" prompt="PROMPT.URL" width="600"/>
+                                <a:column name="trace_flag" align="right" editor="grid_cb" prompt="PROMPT.ENABLED_FLAG" width="100"/>
+                            </a:columns>
+                            <a:editors>
+                                <a:numberField id="grid_nf"/>
+                                <a:checkBox id="grid_cb"/>
+                            </a:editors>
+                        </a:treeGrid>
+                    </a:tab>
+                </a:tabs>
+            </a:tabPanel>
+        </a:screenBody>
+    </a:view>
+</a:screen>

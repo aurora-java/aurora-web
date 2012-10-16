@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: hand  
+    $Date: 2012-9-26 下午3:05:22  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="INV_ITEM_TP_EXT_ATTR_HD">
+    <bm:fields>
+        <bm:field name="attribute_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="ATTRIBUTE_ID" prompt="INV_MTRL_TP_EXT_ATTR_HD.ATTRIBUTE_ID"/>
+        <bm:field name="seq_num" databaseType="NUMBER" datatype="java.lang.Long" physicalName="SEQ_NUM" prompt="INV_MTRL_TP_EXT_ATTR_HD.SEQ_NUM"/>
+        <bm:field name="items_type_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="ITEM_TYPE_ID" prompt="INV_MTRL_TP_EXT_ATTR_HD.MATERIAL_TYPE_ID"/>
+        <bm:field name="attribute_code" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="ATTRIBUTE_CODE" prompt="INV_MTRL_TP_EXT_ATTR_HD.ATTRIBUTE_CODE"/>
+        <bm:field name="description" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="DESCRIPTION" prompt="INV_MTRL_TP_EXT_ATTR_HD.DESCRIPTION"/>
+    </bm:fields>
+    <bm:features>
+        <f:standard-who/>
+    </bm:features>
+    <bm:primary-key>
+        <bm:pk-field name="attribute_id"/>
+    </bm:primary-key>
+    <bm:query-fields>
+        <bm:query-field name="item_type_id" queryExpression="t1.item_type_id = ${@item_type_id}"/>
+        <bm:query-field name="seq_num" queryExpression="t1.seq_num = ${@seq_num}"/>
+    </bm:query-fields>
+</bm:model>

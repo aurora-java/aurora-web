@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:model xmlns:e="aurora.service.exception" xmlns:ns2="aurora.database.local.oracle" xmlns:ns1="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="fc" baseTable="sys_role" defaultOrderBy="role_code">
+    <ns1:fields>
+        <ns1:field name="role_id" databaseType="BIGINT" datatype="java.lang.Long" prompt="HAP_OPERATION"/>
+        <ns1:field name="role_code" databaseType="VARCHAR" datatype="java.lang.String" displayWidth="150" forDisplay="true" forQuery="true" prompt="SYS_ROLE.ROLE_CODE" queryWidth="150"/>
+        <ns1:field name="role_name_id" databaseType="BIGINT" datatype="java.lang.Long" multiLanguage="true" multiLanguageDescField="role_name"/>
+        <ns1:field name="role_name" databaseType="VARCHAR" datatype="java.lang.String" displayWidth="150" forInsert="false" forQuery="true" forUpdate="false" fordisplay="true" prompt="SYS_ROLE.ROLE_NAME"/>
+        <ns1:field name="description_id" databaseType="BIGINT" datatype="java.lang.Long" multiLanguage="true" multiLanguageDescField="role_description"/>
+        <ns1:field name="role_description" databaseType="VARCHAR" datatype="java.lang.String" forInsert="false" forUpdate="false" prompt="SYS_ROLE.ROLE_DESCRIPTION"/>
+        <ns1:field name="start_date" databaseType="DATE" datatype="java.sql.Date" forInsert="true" forUpdate="true" prompt="HAP_START_DATE"/>
+        <ns1:field name="end_date" databaseType="DATE" datatype="java.sql.Date" forInsert="true" forUpdate="true" prompt="HAP_END_DATE"/>
+    </ns1:fields>
+    <ns1:primary-key>
+        <ns1:pk-field name="role_id"/>
+    </ns1:primary-key>
+    <ns1:query-fields>
+        <ns1:query-field field="role_code" queryOperator="like"/>
+        <ns1:query-field field="role_name" queryExpression="exists (select 1 from fnd_descriptions fd where fc.role_name_id=fd.description_id and fd.description_text like ${@role_name} and fd.language = ${/session/@lang})"/>
+        <ns1:query-field field="role_id" queryOperator="="/>
+    </ns1:query-fields>
+    <ns1:features>
+        <ns2:sequence-pk/>
+        <f:standard-who/>
+        <f:multi-language-storage/>
+    </ns1:features>
+    <ns1:ref-fields/>
+    <ns1:data-filters>
+        <ns1:data-filter enforceOperations="query" expression="(END_DATE IS NULL OR END_DATE &gt; now())"/>
+    </ns1:data-filters>
+    <e:exception-descriptor-config>
+        <e:exception-descriptor exception="java.sql.SQLException" handleClass="aurora.database.SQLExceptionDescriptor">
+            <e:error-message code="1" message="ROLE_CODE_DISTINCT"/>
+        </e:exception-descriptor>
+    </e:exception-descriptor-config>
+</ns1:model>

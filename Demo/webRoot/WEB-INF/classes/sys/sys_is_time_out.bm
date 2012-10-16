@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: Mouse Chow  
+    $Date: 2012-5-17 下午07:48:34  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" needAccessControl="false">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+select 'false' as is_time_out from dual 
+where exists (select 1 from sys_session s where s.encrypted_session_id = ${/cookie/@JSID/@value})
+
+union 
+
+select 'true' as is_time_out from dual
+where not exists (select 1 from sys_session s where s.encrypted_session_id = ${/cookie/@JSID/@value})]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+</bm:model>

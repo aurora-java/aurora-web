@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:model xmlns:ns2="aurora.database.local.oracle" xmlns:ns1="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="pv" baseTable="sys_parameter_values">
+    <ns1:fields>
+        <ns1:field name="module_id" databaseType="NUMBER" datatype="java.lang.Long"/>
+        <ns1:field name="parameter_id" databaseType="NUMBER" datatype="java.lang.Long"/>
+        <ns1:field name="level_id" databaseType="NUMBER" datatype="java.lang.String"/>
+        <ns1:field name="level_value" databaseType="VARCHAR" datatype="java.lang.String" prompt="SYS_PARAMETER.VALIDATION_TYPE"/>
+        <ns1:field name="parameter_value" databaseType="VARCHAR" datatype="java.lang.String" prompt="SYS_PARAMETER_VALUES.PARAMETER_VALUE"/>
+        <ns1:field name="value_code" databaseType="VARCHAR" datatype="java.lang.String" prompt="SYS_PARAMETER_VALUES.VALUE_CODE"/>
+        <ns1:field name="value_name" databaseType="VARCHAR" datatype="java.lang.String" prompt="SYS_PARAMETER_VALUES.VALUE_NAME"/>
+    </ns1:fields>
+    <ns1:primary-key>
+        <ns1:pk-field name="module_id"/>
+        <ns1:pk-field name="parameter_id"/>
+        <ns1:pk-field name="level_id"/>
+        <ns1:pk-field name="level_value"/>
+    </ns1:primary-key>
+    <ns1:query-fields>
+        <ns1:query-field field="parameter_id" queryOperator="="/>
+        <ns1:query-field field="module_id" queryOperator="="/>
+        <ns1:query-field field="level_id" queryOperator="="/>
+        <ns1:query-field field="level_value" queryOperator="="/>
+        <!--<ns1:query-field field="parameter_code" queryOperator="like"/>-->
+        <!--<ns1:query-field field="description" queryOperator="like"/>-->
+        <!-- <ns1:query-field name="parameter_name" queryExpression="exists (select 1 from fnd_descriptions fd where pv.parameter_name_id=fd.description_id and fd.description_text like ${@parameter_name} and fd.language = ${/session/@lang})"/> -->
+    </ns1:query-fields>
+    <ns1:features>
+        <!-- <ns2:sequence-pk/> -->
+        <f:standard-who/>
+    </ns1:features>
+    <ns1:ref-fields/>
+</ns1:model>

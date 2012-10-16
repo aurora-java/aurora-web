@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:service xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" final-page="true" trace="true">
+    <a:init-procedure>
+        <p:method-invoke className="aurora.application.util.MD5Util" methodName="md5Hex" resultPath="/parameter/@v_new_password">
+            <p:arguments>
+                <p:argument path="/parameter/@p_new_password" type="java.lang.String"/>
+            </p:arguments>
+        </p:method-invoke>
+        <p:switch test="/parameter/@owner">
+            <p:case value="true">
+                <p:method-invoke className="aurora.application.util.MD5Util" methodName="md5Hex" resultPath="/parameter/@v_old_password">
+                    <p:arguments>
+                        <p:argument path="/parameter/@p_old_password" type="java.lang.String"/>
+                    </p:arguments>
+                </p:method-invoke>
+                <a:model-query model="sys.sys_get_current_user" rootPath="/current_user"/>
+                <p:set field="/parameter/@count" sourceField="/current_user/record/@count"/>
+                <p:assert Value="1" field="/parameter/@count" message="SYS_PASSWORD_FAILURE" operator="="/>
+            </p:case>
+            <p:case value="false">
+                <a:model-query model="sys.sys_get_original_password" rootPath="/original_password"/>
+                <p:set field="/parameter/@v_old_password" sourceField="/original_password/record/@encrypted_user_password"/>
+            </p:case>
+        </p:switch>
+        <a:model-update model="sys.sys_update_user_password"/>
+        <a:model-update model="sys.sys_insert_user_pwd_changed_logs"/>
+        <!--  <a:batch-apply sourcepath="/parameter">
+            <a:model-update model="sys.update_self_password"/>
+        </a:batch-apply> -->
+    </a:init-procedure>
+</a:service>

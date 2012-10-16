@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2012-9-28 下午3:22:28  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" extend="fnd.FND1030.fnd_employees" extendMode="reference">
+    <bm:fields>
+        <bm:field name="employee_id"/>
+        <bm:field name="employee_code" forDisplay="true" forQuery="true"/>
+        <bm:field name="employee_name" forDisplay="true" forQuery="true"/>
+    </bm:fields>
+    <bm:data-filters>
+        <bm:data-filter name="enabled_flag" enforceOperations="query" expression="enabled_flag=&apos;Y&apos;"/>
+        <bm:data-filter name="company_id" enforceOperations="query" expression="company_id=${/session/@company_id}"/>
+    </bm:data-filters>
+</bm:model>

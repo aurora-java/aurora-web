@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: tony  
+    $Date: 2012-9-24 上午9:58:55  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+                select *
+                from (
+                      select t.province,t.city
+                      from sys_region_codes t
+                      group by t.province,t.city
+                      order by t.province,t.city
+                    ) t1
+                    #WHERE_CLAUSE#
+            ]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+    <bm:fields>
+        <bm:field name="province" databaseType="VARCHAR2" datatype="java.lang.String" forDisplay="true" physicalName="PROVINCE" prompt="FND_COMPANIES.ADDRESS_PROVINCE"/>
+        <bm:field name="city" databaseType="VARCHAR2" datatype="java.lang.String" forDisplay="true" forQuery="true" physicalName="CITY" prompt="FND_COMPANIES.ADDRESS_CITY"/>
+    </bm:fields>
+    <bm:query-fields>
+        <bm:query-field name="province" queryExpression="province like &apos;%&apos;|| ${@province}||&apos;%&apos;"/>
+        <bm:query-field name="city" queryExpression="city like &apos;%&apos;|| ${@city}||&apos;%&apos;"/>
+    </bm:query-fields>
+</bm:model>

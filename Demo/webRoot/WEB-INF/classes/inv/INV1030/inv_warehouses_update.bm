@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author:zhenweiyin
+    $Date:
+    $Revision:
+    $Purpose:库房定义中，用于保存数据用的bm
+-->
+<ns1:model xmlns:e="aurora.service.exception" xmlns:ns2="aurora.database.local.oracle" xmlns:ns1="http://www.aurora-framework.org/schema/bm">
+    <ns1:operations>
+        <ns1:operation name="insert">
+            <ns1:update-sql><![CDATA[
+                DECLARE
+                    v_warehouse_id NUMBER;
+                BEGIN
+                    inv_warehouses_pkg.insert_inv_warehouse(v_warehouse_id, 
+                                                            ${/session/@company_id}, 
+                                                            ${@warehouse_code}, 
+                                                            ${@warehouse_name}, 
+                                                            ${@warehouse_type}, 
+                                                            ${@enabled_flag}, 
+                                                            ${@province}, 
+                                                            ${@city}, 
+                                                            ${@prefecture}, 
+                                                            ${@detail_address}, 
+                                                            ${/session/@user_id});
+                END;
+            ]]></ns1:update-sql>
+        </ns1:operation>
+        <ns1:operation name="update">
+            <ns1:update-sql><![CDATA[
+                begin
+                    inv_warehouses_pkg.update_inv_warehouse(${@warehouse_id}, 
+                                                            ${@warehouse_name},
+                                                            ${@enabled_flag}, 
+                                                            ${@province}, 
+                                                            ${@city}, 
+                                                            ${@prefecture}, 
+                                                            ${@detail_address}, 
+                                                            ${/session/@user_id});
+                end;
+            ]]></ns1:update-sql>
+        </ns1:operation>
+    </ns1:operations>
+</ns1:model>

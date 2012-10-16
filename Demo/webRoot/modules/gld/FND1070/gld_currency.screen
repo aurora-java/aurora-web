@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: ouyangzhaochang2663 $
+    $Date: 2010/11/15 07:47:59 $
+    $Revision: 1.2 $
+    $Purpose: 币种定义
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view>
+        <script><![CDATA[
+        
+            function queryCurrency(){
+                $('gld_currency_result_ds').query();
+            }
+			function resetCurrency(){
+				$('gld_currency_query_ds').reset();
+			}
+            function onPrecisionValuesChange(cmp,newValue, oldValue){
+                if(newValue < oldValue){
+                	var confirm=new Aurora.showConfirm("${l:PROMPT}",
+                	"${l:GLD_CURRENCY_SYS_MESSAGE_1}",
+                	function(){confirm.close();},null);
+                }
+            }
+
+            function onTransactionValuesChange(cmp,newValue, oldValue){
+                if(newValue < oldValue){
+                	var confirm=new Aurora.showConfirm("${l:PROMPT}",
+                	"${l:GLD_CURRENCY_SYS_MESSAGE_1}",
+                	function(){confirm.close();},null);
+                }
+            }
+
+        
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="gld_currency_query_ds" model="gld.gld_currency"/>
+            <a:dataSet id="gld_currency_result_ds" autoCount="true" autoQuery="true" fetchAll="false" model="gld.gld_currency" queryDataSet="gld_currency_query_ds" selectable="true">
+                <a:fields>
+                    <a:field name="enabled_flag" checkedValue="Y" defaultValue="N" uncheckedValue="N"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:form column="2" title="SYS_PROMPT.QUERY_TITLE" width="600">
+                <a:textField name="currency_code" bindTarget="gld_currency_query_ds" typeCase="upper">
+                    <a:events>
+                        <a:event name="enterdown" handler="queryCurrency"/>
+                    </a:events>
+                </a:textField>
+                <a:textField name="currency_name" bindTarget="gld_currency_query_ds">
+                    <a:events>
+                        <a:event name="enterdown" handler="queryCurrency"/>
+                    </a:events>
+                </a:textField>
+                <a:textField name="country_name" bindTarget="gld_currency_query_ds" prompt="GLD_CURRENCY.COUNTRY_NAME">
+                    <a:events>
+                        <a:event name="enterdown" handler="queryCurrency"/>
+                    </a:events>
+                </a:textField>
+            </a:form>
+            <a:hBox>
+                <a:button click="queryCurrency" text="HAP_QUERY"/>
+                <a:button click="resetCurrency" text="HAP_RESET"/>
+            </a:hBox>
+            <a:grid id="grid" bindTarget="gld_currency_result_ds" height="330" navBar="true" width="730">
+                <a:toolBar>
+                    <a:button type="save"/>
+                </a:toolBar>
+                <a:columns>
+                    <a:column name="currency_code" align="center" sortable="true"/>
+                    <a:column name="currency_name" align="left"/>
+                    <a:column name="country_name" align="center" prompt="GLD_CURRENCY.COUNTRY_NAME"/>
+                    <a:column name="precision" align="right" editor="gld_currency_result_grid_nf"/>
+                    <a:column name="transaction_precision" align="right" editor="gld_currency_result_transaction_grid_nf" sortable="true"/>
+                    <a:column name="currency_symbol" align="left" editor="gld_currency_result_grid_tf" sortable="true"/>
+                    <a:column name="enabled_flag" editor="gld_currency_result_grid_cb"/>
+                </a:columns>
+                <a:editors>
+                    <a:numberField id="gld_currency_result_grid_nf">
+                        <a:events>
+                            <a:event name="change" handler="onPrecisionValuesChange"/>
+                        </a:events>
+                    </a:numberField>
+                    <a:numberField id="gld_currency_result_transaction_grid_nf">
+                        <a:events>
+                            <a:event name="change" handler="onTransactionValuesChange"/>
+                        </a:events>
+                    </a:numberField>
+                    <a:textField id="gld_currency_result_grid_tf"/>
+                    <a:checkBox id="gld_currency_result_grid_cb"/>
+                </a:editors>
+            </a:grid>
+        </a:screenBody>
+    </a:view>
+</a:screen>

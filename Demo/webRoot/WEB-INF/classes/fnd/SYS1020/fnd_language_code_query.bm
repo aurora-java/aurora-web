@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="fc" baseTable="fnd_language_code" extend="fnd.SYS1020.fnd_language_code" extendMode="reference">
+    <bm:fields>
+        <bm:field name="language_code"/>
+        <bm:field name="installed_flag"/>
+        <bm:field name="description_id" multiLanguage="true" multiLanguageDescField="description"/>
+        <bm:field name="description"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="language_code"/>
+    </bm:primary-key>
+    <bm:data-filters>
+        <bm:data-filter expression="fc.installed_flag=&apos;Y&apos;"/>
+    </bm:data-filters>
+    <bm:ref-fields/>
+    <bm:features>
+        <f:multi-language-storage/>
+    </bm:features>
+</bm:model>

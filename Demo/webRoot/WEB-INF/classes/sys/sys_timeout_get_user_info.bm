@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: ZhouHao  
+    $Date: 2011-9-26 下午07:51:00  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+                SELECT
+                    (SELECT
+                        su.user_name
+                    FROM
+                        sys_user su
+                    WHERE
+                        su.user_id = ${/model/timeout_history/record/@user_id}
+                    ) AS user_name,
+                    (SELECT
+                        d.description_text
+                    FROM
+                        sys_role r,
+                        fnd_descriptions d
+                    WHERE
+                        r.role_id        = ${/model/timeout_history/record/@role_id} AND
+                        d.ref_table      = 'SYS_ROLE' AND
+                        d.ref_field      = 'ROLE_NAME_ID' AND
+                        d.language       = ${/model/timeout_history/record/@nls_language} AND
+                        d.description_id = r.role_name_id
+                    ) AS role_name,
+                    ${/model/timeout_history/record/@user_id} AS user_id,
+                    ${/model/timeout_history/record/@role_id} AS role_id,
+                    ${/model/timeout_history/record/@company_id} AS company_id,
+                    ${/model/timeout_history/record/@nls_language} AS language,
+                    (
+                        CASE ${/model/timeout_history/record/@nls_language}
+                            WHEN 'ZHS'
+                            THEN '简体中文'
+                            ELSE 'English'
+                        END) AS language_display
+                FROM
+                    dual
+            ]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+</bm:model>

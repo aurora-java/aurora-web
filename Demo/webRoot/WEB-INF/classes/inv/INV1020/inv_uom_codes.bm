@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2012-9-26 上午11:09:53  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:e="aurora.service.exception" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="i" baseTable="inv_uom_codes">
+    <bm:fields>
+        <bm:field name="uom_code" databaseType="VARCHAR" datatype="java.lang.String" physicalName="uom_code" required="true"/>
+        <bm:field name="company_id" databaseType="INT" datatype="java.lang.Long" insertExpression="${/session/@company_id}" physicalName="company_id" required="true"/>
+        <bm:field name="uom_description" databaseType="VARCHAR" datatype="java.lang.String" physicalName="uom_description" required="true"/>
+        <bm:field name="enabled_flag" databaseType="VARCHAR" datatype="java.lang.String" physicalName="enabled_flag"/>
+    </bm:fields>
+    <bm:features>
+        <f:standard-who/>
+    </bm:features>
+    <bm:data-filters>
+        <bm:data-filter enforceOperations="update" expression="company_id=${/session/@company_id}"/>
+        <bm:data-filter enforceOperations="query" expression="company_id=${/session/@company_id}"/>
+    </bm:data-filters>
+    <e:exception-descriptor-config>
+        <e:exception-descriptor exception="com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException" handleClass="aurora.database.SQLExceptionDescriptor">
+            <e:error-message code="1062" message="计量单位代码重复，请修改后保存！"/>
+        </e:exception-descriptor>
+    </e:exception-descriptor-config>
+    <bm:query-fields>
+        <bm:query-field field="uom_code" queryOperator="="/>
+        <bm:query-field field="uom_description" queryOperator="like"/>
+        <bm:query-field field="enabled_flag" queryOperator="="/>
+    </bm:query-fields>
+</bm:model>

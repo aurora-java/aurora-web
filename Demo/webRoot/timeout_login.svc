@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:service xmlns:t="aurora.application.action" xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:init-procedure>
+        <a:batch-apply sourcePath="/parameter">
+            <a:session-write source="@current_parameter/@user_id" target="user_id"/>
+            <a:session-write source="@current_parameter/@language" target="lang"/>
+            <a:session-write source="@current_parameter/@company_id" target="company_id"/>
+            <a:session-write source="@current_parameter/@role_id" target="role_id"/>
+            <!-- <a:model-execute model="sys.sys_timeout_user_login"/> -->
+            <p:set field="@current_parameter/@user_language" sourceField="@current_parameter/@language"/>
+            <a:model-query model="sys.login.sys_languages" rootPath="r_language"/>
+            <a:model-query model="sys.login.sys_user_login" rootPath="r_sys_user"/>
+            <a:model-query model="sys.login.validate_user" rootPath="r_validate_user"/>
+            <p:method-invoke className="aurora.application.util.MD5Util" methodName="md5Hex" resultPath="@current_parameter/@md5_user_password">
+                <p:arguments>
+                    <p:argument path="@current_parameter/@password" type="java.lang.String"/>
+                </p:arguments>
+            </p:method-invoke>
+            <t:batch-test>
+                <t:test field="/model/r_language/record/@nls_language" message="SYS_LANGUAGE_NULL" operator="null"/>
+                <t:test field="/model/r_sys_user/record/@user_id" message="SYS_USER_NULL" operator="null"/>
+                <t:test field="/model/r_sys_user/record/@frozen_flag" message="SYS_FROZEN_FAILURE" operator="=" value="Y"/>
+                <t:test field="@current_parameter/@password" message="SYS_PASSWORD_NULL" operator="null"/>
+                <t:test field="/model/r_sys_user/record/@encrypted_user_password" message="SYS_PASSWORD_FAILURE" operator="!=" value="${@current_parameter/@md5_user_password}"/>
+                <t:test field="/model/r_validate_user/record/@start_date" message="SYS_USER_FAILURE" operator="null"/>
+            </t:batch-test>
+            <!-- post_login -->
+            <p:set field="@current_parameter/@user_id" sourceField="/model/r_sys_user/record/@user_id"/>
+            <p:set field="/session/@user_id" sourceField="/model/r_sys_user/record/@user_id"/>
+            <a:model-update model="sys.login.sys_user_login"/>
+            <p:set field="@current_parameter/@encrypted_session_id" value="temp"/>
+            <p:set field="@current_parameter/@client_ip_address" sourceField="/request/@address"/>
+            <a:model-insert model="sys.login.sys_session"/>
+            <p:method-invoke className="aurora.application.util.DesEncrypt" methodName="desEncrypt" resultPath="@current_parameter/@encrypted_session_id">
+                <p:arguments>
+                    <p:argument path="@current_parameter/@session_id" type="java.lang.String"/>
+                </p:arguments>
+            </p:method-invoke>
+            <a:model-update model="sys.login.sys_session" updatePassedFieldOnly="true"/>
+            <p:set field="/parameter/@client_ip_address" sourceField="/request/@address"/>
+            <a:session-write source="/session"/>
+            <a:session-write source="@current_parameter/@session_id" target="session_id"/>
+            <a:model-insert model="sys.login.sys_user_logins"/>
+            <p:set field="@current_parameter/@encryted_session_id" sourceField="@current_parameter/@encrypted_session_id"/>
+        </a:batch-apply>
+    </a:init-procedure>
+    <a:service-output output="/parameter"/>
+</a:service>

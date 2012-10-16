@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:model xmlns:ns1="http://www.aurora-framework.org/schema/bm" extend="sys.sys_parameters" extendMode="override">
+    <ns1:fields>
+        <ns1:field name="level_id" databaseType="NUMBER" datatype="java.lang.Long" expression="             (select v.level_id             from sys_parameter_values v             where v.module_id = p.module_id             and v.parameter_id = p.parameter_id             and v.level_id = 102             and v.level_value =  ${@level_value})             "/>
+        <ns1:field name="level_value" databaseType="VARCHAR" datatype="java.lang.String" expression="             (select v.level_value             from sys_parameter_values v             where v.module_id = p.module_id             and v.parameter_id = p.parameter_id             and v.level_id = 102             and V.level_Value =  ${@level_value})             "/>
+        <ns1:field name="parameter_value" databaseType="VARCHAR" datatype="java.lang.String" expression="             (select v.parameter_value             from sys_parameter_values v             where v.module_id = p.module_id             and v.parameter_id = p.parameter_id             and v.level_id = 102             and v.level_value =  ${@level_value})             "/>
+        <ns1:field name="value_code" databaseType="VARCHAR" datatype="java.lang.String" expression="             (select v.value_code             from sys_parameter_values v             where v.module_id = p.module_id             and v.parameter_id = p.parameter_id             and v.level_id = 102             and v.level_value =  ${@level_value})             "/>
+        <ns1:field name="value_name" databaseType="VARCHAR" datatype="java.lang.String" expression="             (select v.Value_Name             from sys_parameter_values v             where v.module_id = p.module_id             and v.parameter_id = p.parameter_id             and v.level_id = 102             and v.level_value =  ${@level_value})             "/>
+    </ns1:fields>
+    <ns1:data-filters>
+        <ns1:data-filter name="role_enable" enforceOperations="query" expression=" p.role_enabled_flag = &apos;Y&apos; "/>
+        <ns1:data-filter name="now()" enforceOperations="query" expression=" now() BETWEEN START_DATE_ACTIVE AND ifnull(END_DATE_ACTIVE,now()+1) "/>
+    </ns1:data-filters>
+    <ns1:ref-fields/>
+</ns1:model>

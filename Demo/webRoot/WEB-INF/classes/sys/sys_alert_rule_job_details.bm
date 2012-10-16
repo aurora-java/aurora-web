@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="fc" baseTable="sys_alert_rule_job_details">
+    <bm:fields>
+        <bm:field databaseType="NUMBER" datatype="java.lang.Long" name="job_code_id"/>
+        <bm:field databaseType="NUMBER" datatype="java.lang.Long" name="job_id"/>
+        <bm:field databaseType="NUMBER" datatype="java.lang.Long" name="hour"/>
+        <bm:field databaseType="NUMBER" datatype="java.lang.Long" name="minute"/>
+        <bm:field databaseType="NUMBER" datatype="java.lang.Long" name="second"/>
+        <bm:field databaseType="VARCHAR2" datatype="java.lang.String" name="one_time_flag"/>
+        <bm:field databaseType="DATE" datatype="java.sql.Date" name="next_date"/>
+    </bm:fields>
+    <bm:query-fields><![CDATA[
+    ]]></bm:query-fields>
+    <bm:features>
+        <f:standard-who/>
+    </bm:features>
+    <bm:ref-fields/>
+</bm:model>

@@ -1,0 +1,151 @@
+@CHARSET "UTF-8";
+
+#wfl_approve_header{
+	display:block;
+	width:1024px;
+	height:100px;
+	top:0px;
+	z-index:1;
+	padding-top:10px;
+    padding-left:8px;
+}
+.btn_div{
+    float:right;
+    padding-right:10px;
+    padding-top:30px;
+    padding-right:10px;
+}
+.btn_image{
+    padding-left:30px;
+    padding-top:6px;
+}
+#d_applicant_message{
+    width:1024px;
+    padding-top:0px;
+    padding-left:8px;
+}
+#t_applicant_message{
+    border-collapse:separate;
+    border-spacing:0px 10px;
+}
+#t_applicant_th{
+    font-size:16px;
+    font-weight:bold;
+    width:1024px;
+    border-bottom:1px solid #9a9a9a;
+    text-align:left;
+}
+#t_head{
+    padding-left:10px;
+    font-size:14px;
+}
+.key{
+    width:90px;
+    text-align:right;
+    font-weight:bold;
+}
+.value{
+    width:158px;
+    border-bottom:1px solid #cecece;
+}
+/*备注信息模块*/
+#wfl_approve_content{
+    width:1024px;
+    padding-top:20px;
+}
+#dispose_field{
+    margin-left:9px;
+    border:1px solid #d4d4d4;
+}
+.out_view_left{
+    background-color:#fff1f1;
+    font-size:16px;
+    font-weight:bold;
+    padding-top:7px;
+    padding-left:15px;
+}
+.out_view_right{
+    font-size:16px;
+    font-weight:bold;
+    padding-top:7px;
+    padding-left:15px;
+}
+.out_view_hr_left{
+    background-color:#fff1f1;
+    padding:0px;
+}
+.inner_view{
+    background-color:#fff1f1;
+    padding:0px;
+}
+.inner_view{
+    padding:0px;
+}
+.view_left{
+    text-align:right;
+    width:80px;
+    font-size:12px;
+    font-weight:bold;
+}
+.view_right{
+    text-align:left;
+    width:280px;
+}
+.out_view_left{
+    width:320px;
+    
+}
+.out_view_right{
+    width:680px;
+}
+#dashed{
+    border:dashed 1px #d4d4d4;
+}
+#dispose_textarea{
+    width:680px;
+    height:140px;
+    border:none;
+    padding:10px;
+    border:none;
+    resize:none;
+}
+#dispose_center{
+    width:2px;
+    height:210px;
+    background-color: #d4d4d4;
+    padding:0;
+}
+/*圆角背景框*/
+#pane{
+    width:1024px;
+}
+.b1,.b2,.b3,.b4,.b1b,.b2b,.b3b,.b4b,.b{
+    display:block;
+    overflow:hidden;
+}
+.b1,.b2,.b3,.b1b,.b2b,.b3b{
+    height:1px;
+}
+.b2,.b3,.b4,.b2b,.b3b,.b4b,.b{
+    border-left:1px solid #dadada;
+    border-right:1px solid #dadada;
+}
+.b1,.b1b{margin:0 5px;
+    background-color:#dadada;
+}
+.b2,.b2b{
+    margin:0 3px;
+    border-width:2px;
+}
+.b3,.b3b{
+    margin:0 2px;
+}
+.b4,.b4b{height:2px;
+    margin:0 1px;
+}
+.d1{
+    background-color:#ececec;
+}
+.k {
+    height:64px;
+}

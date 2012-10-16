@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" alias="r" baseTable="sys_runtime_request_record">
+    <bm:fields>
+        <bm:field name="request_id" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="enter_time" databaseType="TIMESTAMP" datatype="java.sql.Timestamp"/>
+        <bm:field name="exit_time" databaseType="TIMESTAMP" datatype="java.sql.Timestamp"/>
+        <bm:field name="duration" databaseType="NUMBER" datatype="java.lang.Integer"/>
+        <bm:field name="is_success" databaseType="VARCHAR" datatype="java.lang.Boolean" parameterPath="@success"/>
+        <bm:field name="client_address" databaseType="VARCHAR" datatype="java.lang.String" parameterPath="@address"/>
+        <bm:field name="user_agent" databaseType="VARCHAR" datatype="java.lang.String" parameterPath="@user-agent"/>
+        <bm:field name="client_os_family" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="client_os" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="client_os_version" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="client_browser_family" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="client_browser" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="client_browser_version" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="client_renderer_kit" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="client_renderer_kit_version" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="client_platform" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="accept_language" databaseType="VARCHAR" datatype="java.lang.String" parameterPath="@accept-language"/>
+        <bm:field name="server_name" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="server_port" databaseType="NUMBER" datatype="java.lang.Integer"/>
+        <bm:field name="context_path" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="url" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="query_string" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="referer" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="session_id" databaseType="VARCHAR" datatype="java.lang.Long" parameterPath="session/@session_id"/>
+        <bm:field name="user_id" databaseType="VARCHAR" datatype="java.lang.Long" parameterPath="session/@user_id"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="request_id"/>
+    </bm:primary-key>
+    <bm:cascade-operations>
+        <bm:cascade-operation inputPath="detail" model="sys.monitor.sys_runtime_request_detail"/>
+        <bm:cascade-operation inputPath="exceptions" model="sys.monitor.sys_runtime_exception_log"/>
+    </bm:cascade-operations>
+</bm:model>

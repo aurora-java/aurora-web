@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: lqr  
+    $Date: 2012-9-24 上午10:45:15  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure>
+        <a:model-query defaultWhereClause=" company_id =${/session/@company_id} and basic_type = &apos;ITEM&apos;" model="inv.INV2010.inv_item_get_manual_flag" rootPath="manual_flag"/>
+    </a:init-procedure>
+    <a:view>
+        <script><![CDATA[
+                       
+          function save_basic() {
+                $('inv_item_basic_result_ds').submit();
+            }
+            
+            function INV2010_submitsuccess() {
+                Aurora.showMessage('${l:INV2010.MESSAGE}', '${l:INV2010.SAVE_SUCCESS}');
+                $('inv_item_basic_result_ds').query();
+            }
+          // function load_ds(ds,record){
+              // var ds1 = $('inv_item_basic_result_ds');
+              // var record1=ds1.getAt(0);    
+              // alert('1:'+record.get('MANUAL_FLAG'));     
+              // if(record.get('MANUAL_FLAG')=='Y'){
+                  // record1.getMeta().getField('item_code').setRequired(true);
+              // }else{
+                  // record1.getMeta().getField('item_code').setReadOnly(true);
+              // }
+          // } 
+                          
+       ]]></script>
+        <a:dataSets>
+            <a:dataSet id="inv_item_code_rule_ds" autoQuery="true" model="inv.INV2010.inv_item_code_rule">
+                <a:fields>
+                    <a:field name="MANUAL_FLAG"/>
+                </a:fields>
+            </a:dataSet>
+            <a:dataSet id="currency_code_ds" loadData="true" model="inv.INV2010.sys_currency"/>
+            <a:dataSet id="inv_item_basic_result_ds" autoQuery="true" loadData="true" model="inv.INV2010.inv_item_basic">
+                <a:fields>
+                    <a:field name="inventory_flag" checkedValue="Y" defaultValue="Y" uncheckedValue="N"/>
+                    <a:field name="item_type_id" lovGridHeight="300" lovHeight="430" lovService="inv.INV2010.fnd_business_partners" lovWidth="500" required="true" title="VENDER_QUERY">
+                        <a:mapping>
+                            <a:map from="partner_id" to="item_type_id"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="item_code"/>
+                    <a:field name="item_name" lovGridHeight="300" lovHeight="430" lovService="inv.INV2010.fnd_business_partners" lovWidth="500" required="true" title="VENDER_QUERY">
+                        <a:mapping>
+                            <a:map from="partner_name" to="item_name"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="item_specs"/>
+                    <a:field name="primary_uom" lovGridHeight="300" lovHeight="430" lovService="inv.INV2010.fnd_business_partners" lovWidth="500" required="true" title="VENDER_QUERY">
+                        <a:mapping>
+                            <a:map from="partner_name" to="primary_uom"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="trade_uom" lovGridHeight="300" lovHeight="430" lovService="inv.INV2010.fnd_business_partners" lovWidth="500" required="true" title="VENDER_QUERY">
+                        <a:mapping>
+                            <a:map from="partner_name" to="trade_uom"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="bar_code"/>
+                    <!-- <a:field name="stock_uom" lovGridHeight="300" lovHeight="430" lovService="inv.INV2010.fnd_business_partners" lovWidth="500" required="true" title="VENDER_QUERY">
+                        <a:mapping>
+                            <a:map from="partner_name" to="stock_uom"/>
+                        </a:mapping>
+                    </a:field> -->
+                    <a:field name="default_inv_warehouse_id" lovGridHeight="300" lovHeight="430" lovService="inv.INV2010.fnd_business_partners" lovWidth="500" required="true" title="VENDER_QUERY">
+                        <a:mapping>
+                            <a:map from="partner_id" to="default_inv_warehouse_id"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="lot_number_flag" checkedValue="Y" defaultValue="Y" uncheckedValue="N"/>
+                    <a:field name="lot_numbering_validity"/>
+                    <a:field name="enabled_flag" checkedValue="Y" defaultValue="Y" uncheckedValue="N"/>
+                </a:fields>
+                <a:events>
+                    <a:event name="submitsuccess" handler="INV2010_submitsuccess"/>
+                </a:events>
+            </a:dataSet>
+            <a:dataSet id="inv_item_purchase_result_ds" bindName="purchase_result_ds" bindTarget="inv_item_basic_result_ds" fetchAll="true" loadData="true" model="inv.INV2010.inv_item_purchase" queryUrl="${/request/@context_path}/autocrud/inv.INV2010.inv_item_purchase/query" selectable="true">
+                <a:fields>
+                    <a:field name="currency_code" displayField="currency_desc" options="currency_code_ds" returnField="currency_code" valueField="currency_code"/>
+                    <a:field name="vender_code" lovGridHeight="300" lovHeight="430" lovService="inv.INV2010.fnd_business_partners" lovWidth="500" prompt="供应商代码" required="true" title="VENDER_QUERY">
+                        <a:mapping>
+                            <a:map from="partner_code" to="vender_code"/>
+                            <a:map from="partner_name" to="vender_name"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="vender_name" prompt="供应商名称" readOnly="true"/>
+                    <a:field name="tax_include_flag" checkedValue="Y" defaultValue="Y" uncheckedValue="N"/>
+                </a:fields>
+            </a:dataSet>
+            <a:dataSet id="inv_item_sales_result_ds" bindName="sales_result_ds" bindTarget="inv_item_basic_result_ds" fetchAll="true" loadData="true" model="inv.INV2010.inv_item_sales" queryUrl="${/request/@context_path}/autocrud/inv.INV2010.inv_item_sales/query" selectable="true">
+                <a:fields>
+                    <a:field name="currency_code" displayField="currency_desc" options="currency_code_ds" returnField="currency_code" valueField="currency_code"/>
+                    <a:field name="customer_code" lovGridHeight="300" lovHeight="430" lovService="inv.INV2010.fnd_business_partners" lovWidth="500" prompt="客户代码" required="true" title="CUSTOMER_QUERY">
+                        <a:mapping>
+                            <a:map from="partner_code" to="customer_code"/>
+                            <a:map from="partner_name" to="customer_name"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="customer_name" prompt="客户名称" readOnly="true"/>
+                    <a:field name="tax_include_flag" checkedValue="Y" defaultValue="Y" uncheckedValue="N"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:tabPanel id="maitain_panel" height="400" width="780">
+                <a:tabs>
+                    <a:tab prompt="基本信息" width="100">
+                        <a:form height="275">
+                            <a:hBox>
+                                <a:vBox>
+                                    <a:hBox>
+                                        <a:checkBox name="inventory_flag" bindTarget="inv_item_basic_result_ds" prompt="库存管理"/>
+                                    </a:hBox>
+                                    <a:hBox>
+                                        <a:textField name="item_code" bindTarget="inv_item_basic_result_ds" prompt="物品代码"/>
+                                    </a:hBox>
+                                    <a:hBox>
+                                        <a:textField name="item_specs" bindTarget="inv_item_basic_result_ds" prompt="规格型号"/>
+                                    </a:hBox>
+                                    <a:hBox>
+                                        <a:lov name="trade_uom" bindTarget="inv_item_basic_result_ds" prompt="交易单位"/>
+                                    </a:hBox>
+                                    <!-- <a:hBox>
+                                        <a:lov name="stock_uom" bindTarget="inv_item_basic_result_ds" prompt="库存单位"/>
+                                    </a:hBox> -->
+                                    <a:hBox>
+                                        <a:checkBox name="lot_number_flag" bindTarget="inv_item_basic_result_ds" prompt="批次管理"/>
+                                    </a:hBox>
+                                    <a:hBox>
+                                        <a:checkBox name="enabled_flag" bindTarget="inv_item_basic_result_ds" prompt="物品启用"/>
+                                    </a:hBox>
+                                </a:vBox>
+                                <a:vBox>
+                                    <a:hBox>
+                                        <a:lov name="item_type_id" bindTarget="inv_item_basic_result_ds" prompt="物品类型"/>
+                                    </a:hBox>
+                                    <a:hBox>
+                                        <a:lov name="item_name" bindTarget="inv_item_basic_result_ds" prompt="物品名称"/>
+                                    </a:hBox>
+                                    <a:hBox>
+                                        <a:lov name="primary_uom" bindTarget="inv_item_basic_result_ds" prompt="基本单位"/>
+                                    </a:hBox>
+                                    <a:hBox>
+                                        <a:textField name="bar_code" bindTarget="inv_item_basic_result_ds" prompt="条形码"/>
+                                    </a:hBox>
+                                    <a:hBox>
+                                        <a:lov name="default_inv_warehouse_id" bindTarget="inv_item_basic_result_ds" prompt="默认库房"/>
+                                    </a:hBox>
+                                    <a:hBox>
+                                        <a:numberField name="lot_numbering_validity" bindTarget="inv_item_basic_result_ds" prompt="有效期(天)"/>
+                                    </a:hBox>
+                                </a:vBox>
+                            </a:hBox>
+                            <!-- <a:hBox>
+                                <a:checkBox name="inventory_flag" bindTarget="inv_item_basic_result_ds" prompt="库存管理"/>
+                                <a:lov name="item_type_id" bindTarget="inv_item_basic_result_ds" prompt="物品类型"/>
+                            </a:hBox>
+                            <a:hBox>
+                                <a:textField name="item_code" bindTarget="inv_item_basic_result_ds" prompt="物品代码"/>
+                                <a:lov name="item_name" bindTarget="inv_item_basic_result_ds" prompt="物品名称"/>
+                            </a:hBox>
+                            <a:hBox>
+                                <a:textField name="item_specs" bindTarget="inv_item_basic_result_ds" prompt="规格型号"/>
+                                <a:lov name="primary_uom" bindTarget="inv_item_basic_result_ds" prompt="基本单位"/>
+                            </a:hBox>
+                            <a:hBox>
+                                <a:lov name="trade_uom" bindTarget="inv_item_basic_result_ds" prompt="交易单位"/>
+                                <a:textField name="bar_code" bindTarget="inv_item_basic_result_ds" prompt="条形码"/>
+                            </a:hBox>
+                            <a:hBox>
+                                <a:lov name="stock_uom" bindTarget="inv_item_basic_result_ds" prompt="库存单位"/>
+                                <a:lov name="default_inv_warehouse_id" bindTarget="inv_item_basic_result_ds" prompt="默认库房"/>
+                            </a:hBox>
+                            <a:hBox>
+                                <a:checkBox name="lot_number_flag" bindTarget="inv_item_basic_result_ds" prompt="批次管理"/>
+                                <a:numberField name="lot_numbering_validity" bindTarget="inv_item_basic_result_ds" prompt="批次有效期"/>
+                            </a:hBox>
+                            <a:hBox>
+                                <a:checkBox name="enabled_flag" bindTarget="inv_item_basic_result_ds" prompt="物品启用"/>
+                            </a:hBox> -->
+                        </a:form>
+                        <div style="height:40px;">
+                            <a:hBox style="float:left;margin-left:25px;margin-top:5px;">
+                                <a:button click="save_basic" text="HAP_SAVE" width="60"/>
+                            </a:hBox>
+                        </div>
+                    </a:tab>
+                    <a:tab prompt="采购信息" width="100">
+                        <a:form style="margin-left:10px;margin-top:10px;" title="物品头信息" width="700">
+                            <a:hBox>
+                                <a:textField name="item_code" bindTarget="inv_item_basic_result_ds" prompt="物品代码" readOnly="true" typeCase="upper"/>
+                                <a:textField name="item_name" bindTarget="inv_item_basic_result_ds" prompt="物品名称" readOnly="true"/>
+                                <a:textField name="item_specs" bindTarget="inv_item_basic_result_ds" prompt="规格型号" readOnly="true"/>
+                            </a:hBox>
+                        </a:form>
+                        <a:grid bindTarget="inv_item_purchase_result_ds" height="275" navbar="true" style="margin-left:10px;margin-top:10px;" width="750">
+                            <a:toolBar>
+                                <a:button type="add"/>
+                                <a:button type="delete"/>
+                                <a:button type="save"/>
+                            </a:toolBar>
+                            <a:columns>
+                                <a:column name="vender_code" align="center" editor="vender_code_lov" sortable="true" width="90"/>
+                                <a:column name="vender_name" align="center" editor="text_Field" sortable="true" width="90"/>
+                                <a:column name="partner_item_code" align="center" editor="text_Field" sortable="true" width="90"/>
+                                <a:column name="partner_item_name" align="center" editor="text_Field" sortable="true" width="90"/>
+                                <a:column name="trade_uom" align="center" editor="text_Field" sortable="true" width="50"/>
+                                <a:column name="currency_code" align="center" editor="currency_code_cmb" sortable="true" width="50"/>
+                                <a:column name="tax_include_flag" align="center" editor="tax_flag_ckb1" sortable="true" width="50"/>
+                                <a:column name="tax_rate" align="center" editor="num_Field" sortable="true" width="50"/>
+                                <a:column name="price" align="right" editor="num_Field" sortable="true" width="90"/>
+                            </a:columns>
+                            <a:editors>
+                                <a:textField id="text_Field"/>
+                                <a:lov id="vender_code_lov"/>
+                                <a:comboBox id="currency_code_cmb"/>
+                                <a:numberField id="num_Field"/>
+                                <a:checkBox id="tax_flag_ckb1"/>
+                            </a:editors>
+                        </a:grid>
+                    </a:tab>
+                    <a:tab prompt="销售信息" width="100">
+                        <a:form style="margin-left:10px;margin-top:10px;" title="物品头信息" width="700">
+                            <a:hBox>
+                                <a:textField name="item_code" bindTarget="inv_item_basic_result_ds" prompt="物品代码" readOnly="true" typeCase="upper"/>
+                                <a:textField name="item_name" bindTarget="inv_item_basic_result_ds" prompt="物品名称" readOnly="true"/>
+                                <a:textField name="item_specs" bindTarget="inv_item_basic_result_ds" prompt="规格型号" readOnly="true"/>
+                            </a:hBox>
+                        </a:form>
+                        <a:grid bindtarget="inv_item_sales_result_ds" height="275" navbar="true" style="margin-left:10px;margin-top:10px;" width="750">
+                            <a:toolBar>
+                                <a:button type="add"/>
+                                <a:button type="delete"/>
+                                <a:button type="save"/>
+                            </a:toolBar>
+                            <a:columns>
+                                <a:column name="customer_code" align="center" editor="customer_code_lov" sortable="true" width="90"/>
+                                <a:column name="customer_name" align="center" editor="text_Field1" sortable="true" width="90"/>
+                                <a:column name="partner_item_code" align="center" editor="text_Field1" sortable="true" width="90"/>
+                                <a:column name="partner_item_name" align="center" editor="text_Field1" sortable="true" width="90"/>
+                                <a:column name="trade_uom" align="center" editor="text_Field1" sortable="true" width="50"/>
+                                <a:column name="currency_code" align="center" editor="currency_code_cmb1" sortable="true" width="50"/>
+                                <a:column name="tax_include_flag" align="center" editor="tax_flag_ckb1" sortable="true" width="50"/>
+                                <a:column name="tax_rate" align="center" editor="num_field1" sortable="true" width="50"/>
+                                <a:column name="price" align="right" editor="num_field1" sortable="true" width="90"/>
+                            </a:columns>
+                            <a:editors>
+                                <a:textField id="text_Field1"/>
+                                <a:lov id="customer_code_lov"/>
+                                <a:comboBox id="currency_code_cmb1"/>
+                                <a:numberField id="num_field1"/>
+                            </a:editors>
+                        </a:grid>
+                    </a:tab>
+                </a:tabs>
+            </a:tabPanel>
+        </a:screenBody>
+        <script><![CDATA[
+          function init(){
+              var ds = $('inv_item_basic_result_ds');
+              var record=ds.getAt(0);
+              if('${/model/manual_flag/record/@manual_flag}'=='Y'){
+                  //手工方式：设置必输
+                  record.getField('item_code').setRequired(true);
+              }else{
+                  //自动方式：生成物品编码并赋值
+                  //....
+                  record.getField('item_code').setReadOnly(true);
+              }
+          }
+          init();
+       ]]></script>
+    </a:view>
+</a:screen>

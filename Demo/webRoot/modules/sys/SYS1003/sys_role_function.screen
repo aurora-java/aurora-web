@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	$Author: ouyangzhaochang2663 $
+	$Date: 2010/11/15 07:47:58 $
+	$Revision: 1.3 $
+	$Purpose: 角色分配功能
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view package="aurora.ui.std" template="default">
+        <a:link id="sys_role_function_link_1" url="${/request/@context_path}/modules/sys/public/sys_role_function.svc"/>
+        <script><![CDATA[
+        
+            
+            function query(){
+                $('function_tree_ds').query();
+            }
+            
+            function save(){
+                var record = $('role_ds').getCurrentRecord();
+                var ds = $('function_tree_ds');
+                var role_id = record.get('role_id');
+                var data = {role_id:role_id};
+                var functions = [];
+                var items = ds.getAll();
+                var count = items.length;
+                if(count==0){
+                    Aurora.showMessage('${l:PROMPT}','${l:NO_MENU_INFO}!');
+                }else{
+                    var d = items[0].data;
+                    var dr = d['role_id'];
+                    if(dr && dr != role_id){
+                        Aurora.showMessage('${l:PROMPT}','${l:CHECK_MENU_DATA}');
+                        return;
+                    };
+                
+                    for(var i=0,l=count;i<l;i++){
+                        var d = items[i].data;
+                        d['role_id'] = role_id;
+                        functions[functions.length] = d;
+                    }
+                    data['functions'] = functions;
+                    Aurora.request({url:/*sys_role_function.svc*/$('sys_role_function_link_1').getUrl(), para:data, success:ds.onSubmitSuccess, error:ds.onSubmitError, scope:ds,failure:ds.onAjaxFailed});
+                }
+            }
+            
+            function expandEditorFunction(record,name){
+                if (record.get('function_type') == 'G'){
+                    return 'grid_cb';
+                }else{
+                    return '';
+                }
+            }
+            
+            function expandRenderer(value,record, name){
+                if (record.get('function_type') == 'F'){
+                    return '';
+                }
+            }
+            
+        
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="role_ds">
+                <a:fields>
+                    <a:field name="role_name" autoComplete="true" autoCompleteField="role_name" lovGridHeight="300" lovHeight="460" lovService="sys.sys_role" lovWidth="500" required="true" title="HAP_SELECT_ROLE">
+                        <a:mapping>
+                            <a:map from="role_id" to="role_id"/>
+                            <a:map from="role_name" to="role_name"/>
+                        </a:mapping>
+                    </a:field>
+                </a:fields>
+            </a:dataSet>
+            <a:dataSet id="function_tree_ds" autoCount="false" fetchAll="true" model="sys.sys_role_function_view" queryDataSet="role_ds">
+                <a:fields>
+                    <a:field name="function_code" readOnly="true"/>
+                    <a:field name="function_name" readOnly="true"/>
+                    <a:field name="expanded" checkedValue="Y" uncheckedValue="N"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:form column="2" labelWidth="80" title="SYS_ROLE.QUERY_TITLE" width="350">
+                <a:lov name="role_name" bindTarget="role_ds" prompt="FND_SYS_PARA_VALUE.ROLE" width="200"/>
+            </a:form>
+            <a:hBox>
+                <a:button click="query" text="HAP_QUERY"/>
+                <a:button click="save" text="HAP_SAVE"/>
+            </a:hBox>
+            <a:treeGrid id="functionTreeGrid" bindTarget="function_tree_ds" expandField="_expanded" height="400" idField="function_id" parentField="parent_function_id" sequenceField="sequence" showCheckBox="true" width="600">
+                <a:columns>
+                    <a:column name="function_name" prompt="FND_FUNCTION.FUNCTION_NAME" width="250"/>
+                    <a:column name="function_code" prompt="FND_FUNCTION.FUNCTION_CODE" width="120"/>
+                    <a:column name="expanded" editorFunction="expandEditorFunction" prompt="TO_EXPLAND" renderer="expandRenderer" width="80"/>
+                    <a:column name="sequence" align="right" editor="grid_nf" prompt="WFL_WORKFLOW_NODE.SEQUENCE_NUM" width="100"/>
+                </a:columns>
+                <a:editors>
+                    <a:numberField id="grid_nf"/>
+                    <a:checkBox id="grid_cb"/>
+                </a:editors>
+            </a:treeGrid>
+        </a:screenBody>
+    </a:view>
+</a:screen>

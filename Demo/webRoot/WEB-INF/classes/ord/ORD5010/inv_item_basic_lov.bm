@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:ns2="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="i" extend="inv.INV2010.inv_item_basic" extendMode="reference">
+    <bm:fields>
+        <bm:field name="item_id"/>
+        <bm:field name="item_code" forDisplay="true" forQuery="true"/>
+        <bm:field name="inventory_flag" prompt="库存管理"/>
+        <bm:field name="item_specs" forDisplay="true" prompt="规格型号"/>
+        <bm:field name="item_name" forDisplay="true" forQuery="true" prompt="物品名称"/>
+        <bm:field name="item_type_id" prompt="物品类型"/>
+        <bm:field name="trade_uom" prompt="交易单位"/>
+        <bm:field name="trade_uom_desc" expression="(select uom_description from INV_UOM_CODES where uom_code=i.trade_uom and company_id=${/session/@company_id} and enabled_flag=&apos;Y&apos;)" prompt="交易单位"/>
+        <bm:field name="primary_uom" prompt="基本单位"/>
+        <bm:field name="primary_uom_desc" expression="(select uom_description from INV_UOM_CODES where uom_code=i.primary_uom and company_id=${/session/@company_id} and enabled_flag=&apos;Y&apos;)" prompt="基本单位"/>
+        <bm:field name="item_desc" expression="concat(concat(concat(concat(item_code,&apos;-&apos;),item_name),&apos;-&apos;),item_specs)"/>
+    </bm:fields>
+    <bm:query-fields>
+        <bm:query-field field="item_code" queryOperator="like"/>
+        <bm:query-field field="item_name" queryOperator="like"/>
+    </bm:query-fields>
+    <bm:data-filters>
+        <bm:data-filter name="enabled_flag" enforceOperations="query" expression="enabled_flag=&apos;Y&apos;"/>
+        <bm:data-filter name="inventory_flag" enforceOperations="query" expression="inventory_flag=&apos;Y&apos;"/>
+        <bm:data-filter name="company_id" enforceOperations="query" expression="company_id=${/session/@company_id}"/>
+    </bm:data-filters>
+</bm:model>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:service xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure>
+        <p:method-invoke xmlns:p="uncertain.proc" instanceType="uncertain.logging.DefaultPerObjectLoggingConfig" methodName="setEnabledAll">
+            <p:arguments>
+                <p:argument type="boolean" value="${/parameter/@flag}"/>
+            </p:arguments>
+        </p:method-invoke>
+    </a:init-procedure>
+    <a:service-output output="/parameter"/>
+</a:service>

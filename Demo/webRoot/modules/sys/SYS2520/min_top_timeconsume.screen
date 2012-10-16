@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2011-9-29 下午3:25:52  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:view>
+        <a:link id="full_detail_of_url_link" url="${/request/@context_path}/modules/sys/SYS2520/full_detail_of_url.screen"/>
+        <a:link id="full_top_timeconsume_link" url="${/request/@context_path}/modules/sys/SYS2520/full_top_timeconsume.screen"/>
+        <script><![CDATA[
+            function onclick4() {
+                new Aurora.Window({
+                    id: 'full_top_timeconsume',
+                    title: '最常用功能',
+                    url: /*full_top_timeconsume.screen*/$('full_top_timeconsume_link').getUrl(),
+                    width: 1000,
+                    height: 550
+                });
+            }
+            function onpointclick(e, r) {
+                var r2 = $('query_ds').getCurrentRecord();
+                new Aurora.Window({
+                    id: 'asdewgsdfsewf',
+                    title:'耗时明细:'+r.get('url'),
+                    url: /*full_detail_of_url.screen*/$('full_detail_of_url_link').getUrl()+'?url=' + r.get('url') + "&startDate=" + Aurora.formatDate(r2.get('startDate')) + "&endDate=" + Aurora.formatDate(r2.get('endDate')),
+                    height: 450,
+                    width: 1000
+                });
+            }
+            function query4(){
+                $('min_top_timeconsume_ds').query();
+            }
+            ]]></script>
+        <a:dataSets>
+            <a:dataSet id="min_top_timeconsume_ds" model="sys.SYS2520.sys_analytics_top_timeconsume" pageSize="100" queryDataSet="query_ds">
+                <a:fields>
+                    <a:field name="url" prompt="页面"/>
+                    <a:field name="time" datatype="float" prompt="time"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:chart bindTarget="min_top_timeconsume_ds" inverted="false" style="width: 350px; height: 200px" type="column">
+                <a:title text="最耗时操作"/>
+                <a:xAxis>
+                    <a:xAxi name="url">
+                        <a:labels formatter="emptyRenderer"/>
+                    </a:xAxi>
+                </a:xAxis>
+                <a:yAxis>
+                    <a:yAxi name="time">
+                        <a:labels formatter="emptyRenderer"/>
+                        <a:title text=""/>
+                    </a:yAxi>
+                </a:yAxis>
+                <a:events>
+                    <a:event name="click" handler="onclick4"/>
+                    <a:event name="pointclick" handler="onpointclick"/>
+                </a:events>
+            </a:chart>
+        </a:screenBody>
+    </a:view>
+</a:screen>

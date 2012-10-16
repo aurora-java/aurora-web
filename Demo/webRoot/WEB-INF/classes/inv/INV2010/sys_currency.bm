@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: lqr  
+    $Date: 2012-9-26 上午11:09:52  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="GLD_CURRENCY" needAccessControl="false">
+    <bm:fields>
+        <bm:field name="currency_code" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="CURRENCY_CODE" prompt="SYS_CURRENCY.CURRENCY_CODE"/>
+        <bm:field name="currency_symbol" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="CURRENCY_SYMBOL" prompt="SYS_CURRENCY.CURRENCY_SYMBOL"/>
+        <bm:field name="currency_name_id" databaseType="INT" datatype="java.lang.Long" multiLanguage="true" multiLanguageDescField="currency_desc"/>
+        <bm:field name="enabled_flag" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="ENABLED_FLAG" prompt="SYS_CURRENCY.ENABLED_FLAG"/>
+    </bm:fields>
+    <bm:features>
+        <f:standard-who/>
+        <f:multi-language-display/>
+    </bm:features>
+    <bm:primary-key>
+        <bm:pk-field name="currency_code"/>
+    </bm:primary-key>
+</bm:model>

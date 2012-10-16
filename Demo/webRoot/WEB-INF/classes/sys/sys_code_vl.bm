@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:model xmlns:ns1="http://www.aurora-framework.org/schema/bm" baseTable="sys_code_vl">
+    <ns1:fields>
+        <ns1:field name="code" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <ns1:field name="code_value" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <ns1:field name="code_value_name" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <ns1:field name="code_value_id" databaseType="NUMBER" datatype="java.lang.Long"/>
+        <ns1:field name="language" databaseType="VARCHAR" datatype="java.lang.String"/>
+    </ns1:fields>
+    <ns1:query-fields>
+        <ns1:query-field field="code" queryOperator="="/>
+        <ns1:query-field field="language" queryOperator="="/>
+    </ns1:query-fields>
+</ns1:model>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="f" baseTable="sys_role_function">
+    <bm:fields>
+        <bm:field name="role_id" databaseType="BIGINT" datatype="java.lang.Long"/>
+        <bm:field name="function_id" databaseType="BIGINT" datatype="java.lang.Long"/>
+        <bm:field name="sequence" databaseType="BIGINT" datatype="java.lang.Long"/>
+        <bm:field name="expanded" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="command_line" databaseType="VARCHAR" datatype="java.lang.String" expression="(select s.service_name from sys_service s where s.service_id = fun.service_id)"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="role_id"/>
+        <bm:pk-field name="function_id"/>
+    </bm:primary-key>
+    <bm:relations>
+        <bm:relation name="fun" joinType="INNER" refModel="sys.SYS8010.sys_function">
+            <bm:reference foreignField="function_id" localField="function_id"/>
+        </bm:relation>
+    </bm:relations>
+    <bm:query-fields/>
+    <bm:features>
+        <f:multi-language-storage/>
+    </bm:features>
+    <bm:ref-fields>
+        <bm:ref-field name="parent_function_id" relationName="fun" sourceField="parent_function_id"/>
+        <bm:ref-field name="icon" relationName="fun" sourceField="icon"/>
+        <bm:ref-field name="function_name_id" relationName="fun" sourceField="function_name_id"/>
+        <bm:ref-field name="function_code" relationName="fun" sourceField="function_code"/>
+        <bm:ref-field name="function_type" relationName="fun" sourceField="function_type"/>
+    </bm:ref-fields>
+    <bm:data-filters>
+        <bm:data-filter name="function_type" expression="fun.function_type !=&apos;N&apos; and f.role_id = ${/session/@role_id}"/>
+    </bm:data-filters>
+</bm:model>

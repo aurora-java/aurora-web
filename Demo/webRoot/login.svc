@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:service xmlns:s="aurora.plugin.script" xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure>
+        <s:server-script import="tool.js" optimizeLevel="9"><![CDATA[
+            var p = $ctx.getChild('parameter');
+            if (!p.user_name) raise_app_error('Please Input UserName');
+            if (!p.user_password) raise_app_error('SYS_PASSWORD_NULL');
+            bm = $bm('sys.login.sys_login', {
+                rootPath: 'rp_user'
+            });
+            bm.query();
+            user = $ctx.get('/model/rp_user/record');
+            if (!user) user = new CompositeMap();
+            p.md5_user_password = md5(p.user_password);
+            $session.write('lang', '/parameter/@user_language');
+            if (!user.user_id) raise_app_error('SYS_USER_NULL');
+            if ('Y' == user.frozen_flag) raise_app_error('SYS_FROZEN_FAILURE');
+            if (!user.nls_language) raise_app_error('SYS_LANGUAGE_NULL');
+            if (p.md5_user_password != user.encrypted_user_password) raise_app_error('SYS_PASSWORD_FAILURE');
+            if (!user.start_date) raise_app_error('SYS_USER_FAILURE');
+            p.user_id = $session.user_id= user.user_id;
+            $bm('sys.login.sys_user_login').update();
+            p.encrypted_session_id = String(Math.random());
+            p.client_ip_address = $ctx.get('/request/@address');
+            $bm('sys.login.sys_session').insert();
+            p.encrypted_session_id = des_encrypt(p.session_id);
+            bm = $bm('sys.login.sys_session', {
+                updatePassedFieldOnly: true
+            });
+            bm.update();
+            $session.clear();
+            $session.write('session_id', '/parameter/@session_id');
+            $session.write('lang', '/parameter/@user_language');
+            $session.write('is_ipad', '/parameter/@is_ipad');
+            $session.write('user_id', '/model/rp_user/record/@user_id');
+            $cookie.put('JSID', p.encrypted_session_id);
+            $cookie.put('IS_NTLM', 'N');
+        ]]></s:server-script>
+    </a:init-procedure>
+    <a:service-output output="/parameter"/>
+</a:service>

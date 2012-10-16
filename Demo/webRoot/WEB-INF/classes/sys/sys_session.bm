@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="SYS_SESSION">
+    <bm:fields>
+        <bm:field name="session_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="SESSION_ID" prompt="SYS_SESSION.SESSION_ID"/>
+        <bm:field name="encrypted_session_id" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="ENCRYPTED_SESSION_ID" prompt="SYS_SESSION.ENCRYPTED_SESSION_ID"/>
+        <bm:field name="user_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="USER_ID" prompt="SYS_SESSION.USER_ID"/>
+        <bm:field name="role_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="ROLE_ID" prompt="SYS_SESSION.ROLE_ID"/>
+        <bm:field name="company_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="COMPANY_ID" prompt="SYS_SESSION.COMPANY_ID"/>
+        <bm:field name="lang" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="USER_LANGUAGE" prompt="SYS_SESSION.USER_LANGUAGE"/>
+        <bm:field name="app_ip_address" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="APP_IP_ADDRESS" prompt="SYS_SESSION.APP_IP_ADDRESS"/>
+        <bm:field name="client_ip_address" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="CLIENT_IP_ADDRESS" prompt="SYS_SESSION.CLIENT_IP_ADDRESS"/>
+        <bm:field name="machine_serial" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="MACHINE_SERIAL" prompt="SYS_SESSION.MACHINE_SERIAL"/>
+        <bm:field name="login_time" databaseType="DATE" datatype="java.util.Date" physicalName="LOGIN_TIME" prompt="SYS_SESSION.LOGIN_TIME"/>
+        <bm:field name="logout_time" databaseType="DATE" datatype="java.util.Date" physicalName="LOGOUT_TIME" prompt="SYS_SESSION.LOGOUT_TIME"/>
+        <bm:field name="note" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="NOTE" prompt="SYS_SESSION.NOTE"/>
+        <bm:field name="last_active_time" databaseType="DATE" datatype="java.util.Date" physicalName="LAST_ACTIVE_TIME" prompt="SYS_SESSION.LAST_ACTIVE_TIME"/>
+    </bm:fields>
+    <bm:features>
+        <f:standard-who/>
+    </bm:features>
+    <bm:primary-key>
+        <bm:pk-field name="session_id"/>
+    </bm:primary-key>
+    <bm:query-fields>
+        <bm:query-field name="encrypted_session_id" queryExpression="encrypted_session_id=${@encrypted_session_id}"/>
+    </bm:query-fields>
+</bm:model>

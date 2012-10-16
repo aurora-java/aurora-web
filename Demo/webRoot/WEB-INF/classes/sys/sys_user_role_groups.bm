@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:model xmlns:ns1="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="r" baseTable="sys_user_role_groups" needAccessControl="false">
+    <ns1:fields>
+        <ns1:field name="user_role_group_id" databaseType="BIGINT" datatype="java.lang.Long"/>
+        <ns1:field name="user_id" databaseType="BIGINT" datatype="java.lang.Long"/>
+        <ns1:field name="role_id" databaseType="BIGINT" datatype="java.lang.Long"/>
+        <ns1:field name="company_id" databaseType="BIGINT" datatype="java.lang.Long"/>
+        <ns1:field name="role_company" expression="r.role_id || &apos;_&apos; || r.company_id"/>
+    </ns1:fields>
+    <ns1:primary-key>
+        <ns1:pk-field name="user_role_group_id"/>
+    </ns1:primary-key>
+    <ns1:relations>
+        <ns1:relation name="fc" joinType="LEFT OUTER" refModel="fnd.fnd_companies">
+            <ns1:reference foreignField="company_id" localField="company_id"/>
+        </ns1:relation>
+        <ns1:relation name="ro" joinType="INNER" refModel="sys.sys_role">
+            <ns1:reference foreignField="role_id" localField="role_id"/>
+        </ns1:relation>
+    </ns1:relations>
+    <ns1:query-fields/>
+    <ns1:data-filters>
+        <ns1:data-filter enforceOperations="query" expression="r.user_id = ${/session/@user_id}"/>
+        <ns1:data-filter enforceOperations="query" expression="(r.end_date is null or r.end_date &gt;= curdate())"/>
+        <ns1:data-filter enforceOperations="query" expression="(ro.end_date is null or ro.end_date &gt;= curdate())"/>
+    </ns1:data-filters>
+    <ns1:features>
+        <f:multi-language-storage/>
+    </ns1:features>
+    <ns1:ref-fields>
+        <ns1:ref-field name="company_code" relationName="fc" sourceField="company_code"/>
+        <ns1:ref-field name="company_short_name_id" multiLanguage="true" multiLanguageDescField="company_short_name" relationName="fc" sourceField="company_short_name_id"/>
+        <ns1:ref-field name="role_code" relationName="ro" sourceField="role_code"/>
+        <ns1:ref-field name="description_id" multiLanguage="true" multiLanguageDescField="role_description" relationName="ro" sourceField="description_id"/>
+    </ns1:ref-fields>
+</ns1:model>

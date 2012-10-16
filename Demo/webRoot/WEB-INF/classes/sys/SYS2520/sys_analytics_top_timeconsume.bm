@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2011-9-29 下午1:47:49  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+             select *
+              from (select *
+                      from (select url, median(med_duration) time
+                              from sys_runtime_req_top_timeuse
+                             #WHERE_CLAUSE#
+                             group by url)
+                     order by time desc)
+             where rownum <= 20
+ ]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+    <bm:query-fields>
+        <bm:query-field name="startDate" queryExpression="day &gt;= to_date(${/parameter/@startDate},&apos;yyyy-mm-dd&apos;) "/>
+        <bm:query-field name="endDate" queryExpression="day &lt; to_date(${/parameter/@endDate},&apos;yyyy-mm-dd&apos;)+1 "/>
+    </bm:query-fields>
+    <bm:fields>
+        <bm:field name="url" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="URL"/>
+        <bm:field name="time" databaseType="NUMBER" datatype="java.lang.Long" physicalName="TIME"/>
+    </bm:fields>
+    <!--
+    select *
+	  from (select r.url, median(r.duration) time
+	          from sys_runtime_request_record r
+	         where r.enter_time >= to_date(${/parameter/@startDate},'yyyy-mm-dd')
+	               and r.enter_time < to_date(${/parameter/@endDate},'yyyy-mm-dd')+1
+	         group by r.url
+	         order by median(r.duration) desc)
+	 where rownum <= 20
+    -->
+</bm:model>

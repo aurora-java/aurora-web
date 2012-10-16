@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: zhangyi2652 $
+    $Date: 2010/11/30 06:19:22 $
+    $Revision: 1.4 $
+    $Purpose: 角色定义
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view>
+        <a:link id="sys_role_assign_function_link" url="${/request/@context_path}/modules/sys/SYS8110/sys_role_assign_function.screen"/>
+        <div/>
+        <script><![CDATA[
+        
+            function queryRole(){
+                $('sys_role_result_ds').query();
+            }
+			function resetRole(){
+				$('sys_role_query_ds').reset();
+			}
+            function actionRenderer(value,record, name){
+                var role_id=record.get('role_id');
+                if (role_id){
+                    return '<a href="javascript:editRoleInfo('+role_id+')">${l:HAP_ASSIGN_FUNCTION}</a>';
+                }else{
+                    return '';
+                }
+            }
+
+            function editRoleInfo(id){
+                new Aurora.Window({id:'assign_function', url:$('sys_role_assign_function_link').getUrl()+'?role_id='+id, title:'${l:HAP_ASSIGN_FUNCTION}', height:460,width:600});
+            }
+
+            function roleEditorFunction(record){
+                var role_id = record.get('role_id');
+                if(role_id){
+                    return '';
+                }else{
+                    return 'sys_role_result_grid_upper_tf';
+                }
+            }
+            
+            function compareDate(start, end){
+                if(start > end){
+                    return false;
+                }
+                return true;
+            }
+            
+            function dateValidator(record, name, value){
+                if(name == 'start_date' || name == 'end_date'){
+                    var start_date = record.get('start_date');
+                    var end_date = record.get('end_date');
+                    if(typeof(end_date) != 'undefined' && !Ext.isEmpty(end_date)){
+                        if(!compareDate(start_date, end_date)){
+                            return '${l:START_GREATER_THAN_END}';
+                        }
+                    }
+                    return true;
+                }
+            }
+            
+            function onUpdate(ds,record,name,value){
+                if(name == 'start_date' || name == 'end_date'){
+                    record.validate((name == 'start_date') ? 'end_date' : 'start_date');
+                }
+            }
+        
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="sys_role_query_ds" model="sys.sys_role"/>
+            <a:dataSet id="sys_role_result_ds" autoCount="true" autoQuery="true" fetchAll="false" model="sys.sys_role" queryDataSet="sys_role_query_ds" selectable="true">
+                <a:fields>
+                    <a:field name="role_code" required="true"/>
+                    <a:field name="start_date" required="true" validator="dateValidator"/>
+                    <a:field name="end_date" validator="dateValidator"/>
+                    <a:field name="role_name" required="true"/>
+                    <a:field name="role_description" required="true"/>
+                    <a:field name="service_name" lovAutoQuery="true" lovGridHeight="330" lovHeight="500" lovService="sys.sys_service" lovWidth="460" title="PAGE_SELECT">
+                        <a:mapping>
+                            <a:map from="service_id" to="service_id"/>
+                            <a:map from="service_name" to="service_name"/>
+                        </a:mapping>
+                    </a:field>
+                </a:fields>
+                <a:events>
+                    <a:event name="update" handler="onUpdate"/>
+                </a:events>
+            </a:dataSet>
+        </a:dataSets>
+        <a:form column="2" labelWidth="80" style="margin-left:10px;margin-top:10px;" title="SYS_ROLE.QUERY_TITLE" width="600">
+            <a:textField name="role_code" bindTarget="sys_role_query_ds" typeCase="upper" width="200">
+                <a:events>
+                    <a:event name="enterdown" handler="queryRole"/>
+                </a:events>
+            </a:textField>
+            <a:textField name="role_name" bindTarget="sys_role_query_ds" width="200">
+                <a:events>
+                    <a:event name="enterdown" handler="queryRole"/>
+                </a:events>
+            </a:textField>
+        </a:form>
+        <a:hBox style="margin-left:7px;">
+            <a:button click="queryRole" text="HAP_QUERY"/>
+            <a:button click="resetRole" text="HAP_RESET"/>
+        </a:hBox>
+        <a:grid id="grid" bindTarget="sys_role_result_ds" height="330" navBar="true" style="margin-left:10px;margin-top:10px;" width="800">
+            <a:toolBar>
+                <a:button type="add"/>
+                <a:button type="clear"/>
+                <a:button type="save"/>
+            </a:toolBar>
+            <a:columns>
+                <a:column name="role_code" editorFunction="roleEditorFunction" sortable="true" width="100"/>
+                <a:column name="role_name" editor="sys_role_result_grid_tf" width="150"/>
+                <a:column name="role_description" editor="sys_role_result_grid_tf" width="200"/>
+                <a:column name="service_name" editor="sys_role_result_grid_lv" width="250"/>
+                <a:column name="start_date" align="center" editor="sys_role_result_grid_dp" renderer="Aurora.formatDate"/>
+                <a:column name="end_date" align="center" editor="sys_role_result_grid_dp" renderer="Aurora.formatDate"/>
+                <a:column name="role_id" align="center" renderer="actionRenderer" width="120"/>
+            </a:columns>
+            <a:editors>
+                <a:textField id="sys_role_result_grid_tf"/>
+                <a:datePicker id="sys_role_result_grid_dp"/>
+                <a:lov id="sys_role_result_grid_lv"/>
+                <a:textField id="sys_role_result_grid_upper_tf" typeCase="upper"/>
+            </a:editors>
+        </a:grid>
+    </a:view>
+</a:screen>

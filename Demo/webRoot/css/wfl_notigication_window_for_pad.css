@@ -1,0 +1,66 @@
+@charset "utf-8";
+html,body{margin:0px;height:100%;}
+
+/*头尾*/
+.header,.bottom{height:46px;width:100%;background:url(../images/for_pad/uibg.gif) 0px -65px repeat-x;}
+.bottom{bottom:0px;left:0px;position:absolute}
+/*左右*/
+.left,.right{float:left;background:#fff;overflow:hidden;}
+.left{width:300px;position:absolute;z-index:10;left:0px;top:0px;border-right:#3b79b6 1px solid }
+.right{margin-left:300px;}
+.inner-right{overflow-x:hidden;overflow-y:auto;width:100%;}
+.inner_left{ position:absolute;top:46px;left:0px;float:left;overflow:auto;}
+/*左列表*/
+.left-list{width:290px;height:50px; font-weight:bold; line-height:50px; background:#f3f8fc;padding:0px 5px;border-bottom:#cccccc 1px solid}
+.left-list-selected{background:url(uibg.gif) repeat-x}
+.left-list:hover{background:url(uibg.gif) repeat-x}
+.clear{height:0px;width:0px; font-size:0px; clear:both;}
+
+/*按钮*/
+.f-left{float:left}
+.f-right{float:right}
+.button{height:46px;margin:0px 2px;line-height:46px; text-align:center; font-weight:bold; color:#333}
+.button-return{width:75px;background:url(../images/for_pad/uibutton.gif) 0px 0px no-repeat}
+.button-2char{width:54px;background:url(../images/for_pad/uibutton.gif) -75px 0px no-repeat}
+.button-4char{width:84px;background:url(../images/for_pad/uibutton.gif) -129px 0px no-repeat}
+.button-refresh{width:39px;background:url(../images/for_pad/uibutton.gif) 0px -46px no-repeat}
+.button-serach{width:40px;background:url(../images/for_pad/uibutton.gif) -39px -46px no-repeat}
+.button-up{width:46px;background:url(../images/for_pad/uibutton.gif) -79px -46px no-repeat}
+.button-down{width:46px;background:url(../images/for_pad/uibutton.gif) -125px -46px no-repeat}
+
+
+.div_txt {
+    border: 1px solid #C3C3C3;
+    border-top: 1px solid #7C7C7C;
+    border-left: 1px solid #9A9A9A;
+    height: auto;
+    _height: 16px;
+    min-height: 30px;
+    font-family: Tahoma;
+    overflow: auto;
+}
+.checkbox{
+	background:url(../images/for_pad/checkbox-2.gif) no-repeat center center;
+	width: 70px;
+	height: 50px;
+	float:left;
+}
+.checkbox-s{
+	background:url(../images/for_pad/checkbox-1.gif) no-repeat center center;
+	width: 70px;
+    height: 50px;
+    float:left;
+}
+.notlast{
+	background:url(../images/for_pad/notlast.gif) no-repeat center center;
+	width: 70px;
+	height: 50px;
+	float:right;
+}
+.notify_to_div{
+	float:left;
+	background:#f3f8fc;
+	margin:0px 2px;
+	height:18px;
+	line-height:18px;
+}

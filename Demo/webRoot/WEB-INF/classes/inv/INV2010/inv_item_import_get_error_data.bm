@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:model xmlns:ns2="aurora.database.local.oracle" xmlns:ns1="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="c" baseTable="inv_items_basics_interface" needAccessControl="false">
+    <ns1:fields>
+        <ns1:field name="item_id" databaseType="NUMBER" datatype="java.lang.Long"/>
+        <ns1:field name="item_code" databaseType="VARCHAR" datatype="java.lang.String" prompt="物品代码"/>
+        <ns1:field name="company_id" databaseType="NUMBER" datatype="java.lang.Long" defaultValue="1"/>
+        <ns1:field name="inventory_flag" databaseType="VARCHAR" datatype="java.lang.String" prompt="库存管理"/>
+        <ns1:field name="item_specs" databaseType="VARCHAR" datatype="java.lang.String" prompt="规格型号"/>
+        <ns1:field name="enabled_flag" databaseType="VARCHAR" datatype="java.lang.String" prompt="启用"/>
+        <ns1:field name="item_name" databaseType="VARCHAR" datatype="java.lang.String" prompt="物品名称"/>
+        <ns1:field name="item_type_id" databaseType="NUMBER" datatype="java.lang.Long" prompt="物品类型"/>
+    </ns1:fields>
+    <ns1:primary-key>
+        <ns1:pk-field name="item_id"/>
+    </ns1:primary-key>
+    <ns1:query-fields>
+        <ns1:query-field field="item_code" queryOperator="like"/>
+    </ns1:query-fields>
+    <ns1:features>
+        <ns2:sequence-pk/>
+        <f:standard-who/>
+    </ns1:features>
+    <ns1:ref-fields/>
+</ns1:model>

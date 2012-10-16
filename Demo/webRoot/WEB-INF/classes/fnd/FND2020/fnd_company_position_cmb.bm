@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:ns2="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="op" extend="exp.exp_org_position" extendMode="reference">
+    <bm:fields>
+        <bm:field name="position_id"/>
+        <bm:field name="position_code" forDisplay="true" forQuery="true" prompt="EXP_ORG_POSITION.POSITION_CODE"/>
+        <bm:field name="position_name" databaseType="VARCHAR2" datatype="java.lang.String" expression="(select fd.description_text from fnd_descriptions fd where op.description_id = fd.description_id and fd.language = ${/session/@lang})" forDisplay="true" forInsert="false" forQuery="true" forUpdate="false"/>
+        <bm:field name="position_name_display" databaseType="VARCHAR2" datatype="java.lang.String" expression="(select concat(concat(op.position_code , &apos;-&apos; ), fd.description_text) from fnd_descriptions fd where op.description_id = fd.description_id and fd.language = ${/session/@lang})" forInsert="false" forUpdate="false"/>
+        <bm:field name="company_id"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="position_id"/>
+    </bm:primary-key>
+    <bm:relations>
+        <bm:relation name="cpy" joinType="inner" refModel="fnd.fnd_companies">
+            <bm:reference foreignField="company_id" localField="company_id"/>
+        </bm:relation>
+    </bm:relations>
+    <bm:query-fields>
+        <bm:query-field name="position_name" queryExpression="exists(select fd.description_text from fnd_descriptions fd where op.description_id = fd.description_id and fd.language = ${/session/@lang}and fd.description_text like ${@position_name})"/>
+        <bm:query-field field="position_code" queryOperator="like"/>
+        <bm:query-field field="company_id" queryExpression="op.company_id = ${@company_id}"/>
+    </bm:query-fields>
+    <bm:data-filters>
+        <bm:data-filter enforceOperations="query" expression=" op.enabled_flag = &apos;Y&apos; "/>
+    </bm:data-filters>
+    <bm:features>
+        <ns2:sequence-pk/>
+        <f:standard-who/>
+        <f:multi-language-storage/>
+    </bm:features>
+    <bm:ref-fields>
+        <bm:ref-field name="chief_position_id" relationName="cpy" sourceField="chief_position_id"/>
+    </bm:ref-fields>
+</bm:model>

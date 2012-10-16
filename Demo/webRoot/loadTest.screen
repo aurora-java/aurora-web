@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2012-7-5 下午3:01:28  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:view title="结果汇总">
+        <a:dataSets>
+            <a:dataSet id="loaddata_ds">
+                <a:fields>
+                    <a:field name="vuser" prompt="vuser"/>
+                    <a:field name="ahit" datatype="float" prompt="异步点击次数"/>
+                    <a:field name="shit" datatype="float" prompt="同步点击次数"/>
+                    <a:field name="athr" datatype="float" prompt="异步吞吐量"/>
+                    <a:field name="sthr" datatype="float" prompt="同步吞吐量"/>
+                    <a:field name="arst" datatype="float" prompt="异步响应时间"/>
+                    <a:field name="srst" datatype="float" prompt="同步响应时间"/>
+                </a:fields>
+                <a:datas>
+                    <a:record ahit="92.4" arst="6.3" athr="790762.3" shit="76.4" srst="9.1" sthr="716936.9" vuser="50"/>
+                    <a:record ahit="155.3" arst="8.9" athr="1403098.1" shit="150.4" srst="9.3" sthr="1399215.7" vuser="100"/>
+                    <a:record ahit="168.1" arst="16.7" athr="1506780.5" shit="164.7" srst="18.0" sthr="1482825.1" vuser="150"/>
+                    <a:record ahit="163.8" arst="22.4" athr="1514265.8" shit="177.0" srst="22.2" sthr="1610704.3" vuser="200"/>
+                    <a:record ahit="159.3" arst="29.7" athr="1434570.8" shit="135.7" srst="36.4" sthr="1214625.3" vuser="250"/>
+                    <a:record ahit="158.4" arst="30.1" athr="1462752.1" shit="40.4" srst="58.1" sthr="414225.6" vuser="300"/>
+                </a:datas>
+            </a:dataSet>
+        </a:dataSets>
+        <a:box column="2" row="3">
+            <a:chart bindTarget="loaddata_ds" type="line">
+                <a:title text="每秒点击次数"/>
+                <a:xAxis>
+                    <a:xAxi name="vuser"/>
+                </a:xAxis>
+                <a:yAxis>
+                    <a:yAxi name="ahit,shit"/>
+                </a:yAxis>
+            </a:chart>
+            <a:chart bindTarget="loaddata_ds" type="line">
+                <a:title text="每秒吞吐量"/>
+                <a:xAxis>
+                    <a:xAxi name="vuser"/>
+                </a:xAxis>
+                <a:yAxis>
+                    <a:yAxi name="athr,sthr"/>
+                </a:yAxis>
+            </a:chart>
+            <a:chart bindTarget="loaddata_ds" type="line">
+                <a:title text="响应时间"/>
+                <a:xAxis>
+                    <a:xAxi name="vuser"/>
+                </a:xAxis>
+                <a:yAxis>
+                    <a:yAxi name="arst,srst"/>
+                </a:yAxis>
+            </a:chart>
+        </a:box>
+    </a:view>
+</a:screen>

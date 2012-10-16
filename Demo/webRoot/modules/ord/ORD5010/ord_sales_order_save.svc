@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:service xmlns:s="aurora.plugin.script" xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:init-procedure>
+        <s:server-script import="ord/ORD5010/ord_sales_order.js"><![CDATA[
+            var header = $ctx.parameter.getChildren()[0];
+            if (header) {
+                if (header._status == 'insert') {
+                    SalesOrder.insertOrder(header);
+                } else {
+                    SalesOrder.updateOrder(header);
+                }
+            }
+        ]]></s:server-script>
+    </a:init-procedure>
+    <a:service-output output="parameter"/>
+</a:service>

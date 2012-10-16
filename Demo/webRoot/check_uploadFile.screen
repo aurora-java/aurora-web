@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: niujiaqing1265 $
+    $Date: 2010/11/30 06:14:58 $
+    $Revision: 1.8 $
+    $Purpose: 系统级描述
+-->
+<a:screen xmlns:c="aurora.application.action" xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:view package="aurora.ui.std" template="default">
+        <a:screenBody>
+            <div style="width:800px">
+                <!--PROMPT.UPLOAD_ATTACHMENT-->
+                <a:upload buttonWidth="0" fileType="*.*" pkvalue="${/parameter/@header_id}" sourcetype="${/parameter/@table_name}" text=""/>
+                <br/>
+            </div>
+        </a:screenBody>
+        <script><![CDATA[
+            var getElementsByClassName = function(className, tag, elm) {
+                    if (document.getElementsByClassName) {
+                        getElementsByClassName = function(className, tag, elm) {
+                            elm = elm || document;
+                            var elements = elm.getElementsByClassName(className),
+                                nodeName = (tag) ? new RegExp("//b" + tag + "//b", "i") : null,
+                                returnElements = [],
+                                current;
+                            for (var i = 0,
+                                il = elements.length;i < il;i += 1) {
+                                current = elements[i];
+                                if (!nodeName || nodeName.test(current.nodeName)) {
+                                    returnElements.push(current);
+                                }
+                            }
+                            return returnElements;
+                        };
+                    } else if (document.evaluate) {
+                        getElementsByClassName = function(className, tag, elm) {
+                            tag = tag || "*";
+                            elm = elm || document;
+                            var classes = className.split(" "),
+                                classesToCheck = "",
+                                xhtmlNamespace = "http://www.w3.org/1999/xhtml",
+                                namespaceResolver = (document.documentElement.namespaceURI === xhtmlNamespace) ? xhtmlNamespace : null,
+                                returnElements = [],
+                                elements, node;
+                            for (var j = 0,
+                                jl = classes.length;j < jl;j += 1) {
+                                classesToCheck += "[contains(concat(' ', @class, ' '), ' " + classes[j] + " ')]";
+                            }
+                            try {
+                                elements = document.evaluate(".//" + tag + classesToCheck, elm, namespaceResolver, 0, null);
+                            } catch (e) {
+                                elements = document.evaluate(".//" + tag + classesToCheck, elm, null, 0, null);
+                            }
+                            while ((node = elements.iterateNext())) {
+                                returnElements.push(node);
+                            }
+                            return returnElements;
+                        };
+                    } else {
+                        getElementsByClassName = function(className, tag, elm) {
+                            tag = tag || "*";
+                            elm = elm || document;
+                            var classes = className.split(" "),
+                                classesToCheck = [],
+                                elements = (tag === "*" && elm.all) ? elm.all : elm.getElementsByTagName(tag),
+                                current, returnElements = [],
+                                match;
+                            for (var k = 0,
+                                kl = classes.length;k < kl;k += 1) {
+                                classesToCheck.push(new RegExp("(^|//s)" + classes[k] + "(//s|$)"));
+                            }
+                            for (var l = 0,
+                                ll = elements.length;l < ll;l += 1) {
+                                current = elements[l];
+                                match = false;
+                                for (var m = 0,
+                                    ml = classesToCheck.length;m < ml;m += 1) {
+                                    match = classesToCheck[m].test(current.className);
+                                    if (!match) {
+                                        break;
+                                    }
+                                }
+                                if (match) {
+                                    returnElements.push(current);
+                                }
+                            }
+                            return returnElements;
+                        };
+                    }
+                    return getElementsByClassName(className, tag, elm);
+                };
+            
+            function hideDelete() {
+                
+                var divs = getElementsByClassName('status_success');
+                for (var i = 0;i < divs.length;i++) {
+                    var div = divs[i];
+                    div.removeChild(div.childNodes[3]);
+                }
+            };
+            
+            hideDelete();]]></script>
+    </a:view>
+</a:screen>

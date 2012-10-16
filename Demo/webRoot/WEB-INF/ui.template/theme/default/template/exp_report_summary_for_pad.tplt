@@ -1,0 +1,51 @@
+<table cellpadding="4px" cellspacing="0" width="700px">
+  <tr>
+      <td align="right">${tr_1_1}</td>
+      <td >${tr_1_2}</td>
+      <td align="right">${tr_1_3}</td>
+      <td >${tr_1_4}</td>
+      <td align="right">${tr_1_5}</td>
+      <td >${tr_1_6}</td>
+  </tr>
+  <tr>
+      <td align="right">${tr_2_1}</td>
+      <td >${tr_2_2}</td>
+      <td align="right">${tr_2_3}</td>
+      <td >${tr_2_4}</td>
+      <td align="right">${tr_2_5}</td>
+      <td >${tr_2_6}</td>
+  </tr>
+  <tr>
+      <td align="right">${tr_3_1}</td>
+      <td >${tr_3_2}</td>
+      <td align="right">${tr_3_3}</td>
+      <td >${tr_3_4}</td>
+      <td align="right">${tr_3_5}</td>
+      <td >${tr_3_6}</td>
+  </tr>
+  <tr>
+      <td align="right">${tr_4_1}</td>
+      <td >${tr_4_2}</td>
+      <td align="right">${tr_4_3}</td>
+      <td >${tr_4_4}</td>
+      <td align="right">${tr_4_5}</td>
+      <td >${tr_4_6}</td>
+  </tr>
+  <tr>
+      <td align="right">${tr_5_1}</td>
+      <td >${tr_5_2}</td>
+      <td align="right">${tr_5_3}</td>
+      <td >${tr_5_4}</td>
+      <td align="right">${tr_5_5}</td>
+      <td >${tr_5_6}</td>
+  </tr>
+  <tr>
+      <td align="right">${tr_6_1}</td>
+      <td >${tr_6_2}</td>
+  </tr>
+  <tr>
+      <td align="right">${tr_7_1}</td>
+      <td colspan="7">${tr_7_2}</td>
+  </tr>
+</table>
+

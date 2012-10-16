@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:view template="default" package="aurora.ui.std">
+        <style>
+    		html {
+    			overflow:hidden;
+    			height:100%;
+    			margin:0px;
+    			background-color:#ffffff;
+    		}
+        </style>
+        <a:tabPanel width="500" height="250" style="margin:10px;" marginWidth="30" marginHeight="25">            
+            <a:tabs>
+                <a:tab prompt="HAP介绍" width="110">
+                    <div style="margin:15px;">Hand Application Platform.</div>
+                </a:tab>
+                <a:tab prompt="test" width="110"></a:tab>
+            </a:tabs>
+        </a:tabPanel>
+    </a:view>
+</a:screen>

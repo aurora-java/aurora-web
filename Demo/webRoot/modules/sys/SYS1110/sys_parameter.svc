@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:service xmlns:t="aurora.application.action" xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:init-procedure>
+        <a:batch-apply sourcepath="/parameter">
+            <t:and resultpath="/parameter/@and_result">
+                <t:check field="@current_parameter/@system_enabled_flag" value="N"/>
+                <t:check field="@current_parameter/@role_enabled_flag" value="N"/>
+                <t:check field="@current_parameter/@user_enabled_flag" value="N"/>
+                <t:check field="@current_parameter/@company_enabled_flag" value="N"/>
+            </t:and>
+            <t:test field="/parameter/@and_result" message="SYS_PARAMETER_CHECK_PARAMETERS_LEVEL" value="true"/>
+            <p:switch test="@current_parameter/@_status">
+                <p:case value="insert">
+                    <a:model-insert model="sys.sys_parameters"/>
+                </p:case>
+                <p:case value="update">
+                    <a:model-update model="sys.sys_parameters"/>
+                </p:case>
+            </p:switch>
+        </a:batch-apply>
+    </a:init-procedure>
+    <a:service-output output="/parameter"/>
+</a:service>

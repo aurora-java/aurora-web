@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:service xmlns:msg="aurora.application.features.msg" xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:init-procedure>
+        <msg:message-creator message="${/parameter/@message}" topic="${/parameter/@topic}"/>
+    </a:init-procedure>
+    <a:service-output/>
+</a:service>

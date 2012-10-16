@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" extend="inv.INV1030.inv_warehouses" extendMode="reference">
+    <bm:fields>
+        <bm:field name="warehouse_id"/>
+        <bm:field name="warehouse_type"/>
+        <bm:field name="warehouse_code" forDisplay="true" forQuery="true"/>
+        <bm:field name="warehouse_name" forDisplay="true" forQuery="true"/>
+        <!-- <bm:field name="addr" forDisplay="true" queryExpression="concat(concat(concat(province,&apos;-&apos;),city),&apos;-&apos;),prefecture)"/> -->
+        <bm:field name="detail_address" forDisplay="true"/>
+    </bm:fields>
+    <bm:data-filters>
+        <bm:data-filter name="company_id" enforceOperations="query" expression="t1.company_id=${/session/@company_id}"/>
+        <bm:data-filter name="enabled_flag" enforceOperations="query" expression="t1.enabled_flag=&apos;Y&apos;"/>
+    </bm:data-filters>
+    <bm:query-fields>
+        <bm:query-field field="warehouse_type" queryOperator="="/>
+    </bm:query-fields>
+</bm:model>

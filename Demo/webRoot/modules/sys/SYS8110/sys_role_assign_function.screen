@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: zhangyi2652 $
+    $Date: 2010/11/30 06:19:07 $
+    $Revision: 1.2 $
+    $Purpose: 角色分配功能
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:view>
+        <a:link id="sys_role_function_link" url="${/request/@context_path}/modules/sys/public/sys_role_function.svc"/>
+        <script><![CDATA[
+            function close(){
+                $('assign_function').close();
+            }
+            
+            function save(){
+                //var record = $('role_ds').getCurrentRecord();
+                var ds = $('function_tree_ds');
+                //var role_id = record.get('role_id');
+                var role_id='${/parameter/@role_id}';
+                var data = {role_id:role_id};
+                var functions = [];
+                var items = ds.getAll();
+                var count = items.length;
+                if(count==0){
+                    Aurora.showMessage('${l:PROMPT}','${l:NO_MENU_INFO}');
+                }else{
+                    var d = items[0].data;
+                    var dr = d['role_id'];
+                    if(dr && dr != role_id){
+                        Aurora.showMessage('${l:PROMPT}','${l:CHECK_MENU_DATA}');
+                        return;
+                    };
+
+                    for(var i=0,l=count;i<l;i++){
+                        var d = items[i].data;
+                        d['role_id'] = role_id;
+                        functions[functions.length] = d;
+                    }
+                    data['functions'] = functions;
+                    Aurora.request({url:/*sys_role_function.svc*/$('sys_role_function_link').getUrl(), para:data, success:ds.onSubmitSuccess, error:ds.onSubmitError, scope:ds,failure:ds.onAjaxFailed});
+                }
+            }
+
+            function expandEditorFunction(record,name){
+                if (record.get('function_type') == 'G'){
+                    return 'grid_cb';
+                }else{
+                    return '';
+                }
+            }
+
+            function expandRenderer(value,record, name){
+                if (record.get('function_type') == 'F'){
+                    return '';
+                }
+            }
+
+
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="function_tree_ds" autoCount="false" autoQuery="true" fetchAll="true" model="sys.sys_role_function_view" queryUrl="${/request/@context_path}/autocrud/sys.sys_role_function_view/query?role_id=${/parameter/@role_id}">
+                <a:fields>
+                    <a:field name="function_code" readOnly="true"/>
+                    <a:field name="function_name" readOnly="true"/>
+                    <a:field name="expanded" checkedValue="Y" uncheckedValue="N"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:treeGrid id="functionTreeGrid" bindTarget="function_tree_ds" expandField="_expanded" height="400" idField="function_id" parentField="parent_function_id" showCheckBox="true" width="570">
+                <a:columns>
+                    <a:column name="function_name" prompt="FND_FUNCTION.FUNCTION_NAME" width="250"/>
+                    <a:column name="function_code" prompt="FND_FUNCTION.FUNCTION_CODE" width="120"/>
+                    <a:column name="expanded" editorFunction="expandEditorFunction" prompt="TO_EXPLAND" renderer="expandRenderer" width="80"/>
+                    <a:column name="sequence" align="right" editor="grid_nf" prompt="WFL_WORKFLOW_NODE.SEQUENCE_NUM" width="100"/>
+                </a:columns>
+                <a:editors>
+                    <a:numberField id="grid_nf"/>
+                    <a:checkBox id="grid_cb"/>
+                </a:editors>
+            </a:treeGrid>
+        </a:screenBody>
+        <div class="win-toolbar" style="width:600px;height:40px;">
+            <a:hBox style="float:right;margin-right:10px;margin-top:5px;">
+                <a:button click="save" text="HAP_SAVE"/>
+                <a:button click="close" text="HAP_CLOSE"/>
+            </a:hBox>
+        </div>
+    </a:view>
+</a:screen>

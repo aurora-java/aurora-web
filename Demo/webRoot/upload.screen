@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	$Author$
+	$Date$
+	$Revision$
+	$Purpose: 上传界面
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+	<a:init-procedure></a:init-procedure>
+	<a:view template="default" package="aurora.ui.std">
+		<a:dataSets>
+			<a:dataSet id="lock_dataset">
+				<a:datas>
+					<a:record role_name="${/parameter/@role_name}" user_name="${/parameter/@user_name}"/>
+				</a:datas>
+				<a:fields>
+					<a:field name="user_name" readOnly="true"/>
+					<a:field name="role_name" readOnly="true"/>
+				</a:fields>
+			</a:dataSet>
+		</a:dataSets>
+		<script>
+		<![CDATA[
+			function closeUpload(){
+				$('upload_window').close();
+			}
+			
+			function showMask(){
+                Aurora.Masker.mask($('upload_window').wrap,'正在上传,请不要关闭浏览器窗口!')
+			}
+		]]>
+		</script>
+		<a:dataSets>
+			<a:dataSet id="upload_ds"/>
+		</a:dataSets>
+        <!--
+		<DIV style="WIDTH: 500px; HEIGHT: 95px" class="db-upload-progress-wrap">
+			<DIV class="db-upload-progress-bar">
+				<DIV class="x-progress-wrap">
+					<DIV class="x-progress-inner">
+						<DIV style="WIDTH: 0px; HEIGHT: 18px" class="x-progress-bar">
+							<DIV style="Z-INDEX: 99; WIDTH: 0px" class="x-progress-text ">
+								<DIV style="WIDTH: 454px; HEIGHT: 18px">完成进度 0%</DIV>
+							</DIV>
+						</DIV>
+						<DIV class="x-progress-text x-progress-text-back">
+							<DIV style="WIDTH: 454px; HEIGHT: 18px" >完成进度 0%</DIV>
+						</DIV>
+					</DIV>
+				</DIV>
+			</DIV>
+			<DIV class="db-upload-progress-text">
+				<TABLE class="db-upload-progress-table">
+					<TBODY>
+						<TR>
+							<TD class="db-upload-progress-label">上传文件:</TD>
+							<TD class="db-upload-progress-value">0 of 1</TD>
+							<TD class="db-upload-progress-label">上传大小:</TD>
+							<TD class="db-upload-progress-value">0 bytes of 179.5 KB</TD>
+						</TR>
+						<TR>
+							<TD class="db-upload-progress-label">上传用时:</TD>
+							<TD class="db-upload-progress-value">0: 0: 0</TD>
+							<TD class="db-upload-progress-label">剩余时间:</TD>
+							<TD class="db-upload-progress-value">0: 0: 0</TD>
+						</TR>
+						<TR>
+							<TD class="db-upload-progress-label">当前速度:</TD>
+							<TD class="db-upload-progress-value">0 bytes/s</TD>
+							<TD class="db-upload-progress-label">平均速度:</TD>
+							<TD class="db-upload-progress-value">0 bytes/s</TD>
+						</TR>
+					</TBODY>
+				</TABLE>
+			</DIV>			
+		</DIV>
+		-->
+		<a:vBox padding="0" style="margin-top:5px;margin-left:5px;">
+			<span>&#160;上传列表</span>
+    		<a:hBox style="height:150px;">
+    			<a:grid bindTarget="upload_ds" width="470" id="upload_grid" height="250">
+    				<a:columns>
+    					<a:column width="250" name="file_name" prompt="文件名"/>
+    					<a:column width="100" name="file_size" prompt="大小"/>
+    					<a:column width="100" name="status" prompt="状态"/>
+    				</a:columns>
+    			</a:grid>
+    			<a:vBox padding="0" style="margin-left:5px;">
+    				<a:button text="新增上传" width="90" click="showMask"/>
+    				<a:button text="开始上传" style="margin-top:10px" width="90"/>
+    				<a:button text="取消上传" style="margin-top:10px" width="90"/>
+    				<a:button text="清除上传列表" style="margin-top:10px" width="90"/>
+    			</a:vBox>
+    		</a:hBox>
+		</a:vBox>
+		<div class="win-toolbar" style="height:40px;margin-top:10px">
+			<a:hBox style="float:right;margin-right:15px;margin-top:5px;">
+				<a:button text="HAP_CLOSE" width="90" click="closeUpload"/>
+			</a:hBox>
+		</div>
+	</a:view>
+</a:screen>

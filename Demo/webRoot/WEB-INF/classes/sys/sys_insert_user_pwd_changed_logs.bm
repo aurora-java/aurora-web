@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: wxji  
+    $Date: 2012-6-27 下午3:11:00  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="update">
+            <bm:update-sql><![CDATA[
+                INSERT
+                INTO
+                    sys_user_pwd_changed_logs
+                    (
+                        changed_user_id,
+                        modify_type,
+                        ip_address,
+                        original_password,
+                        new_password,
+                        created_by,
+                        creation_date,
+                        last_updated_by,
+                        last_update_date
+                    )
+                    VALUES
+                    (
+                        ${@p_user_id},
+                        'SYS',
+                        ${/request/@address},
+                        ${@v_old_password},
+                        ${@v_new_password},
+                        ${/session/@user_id},
+                        now(),
+                        ${/session/@user_id},
+                        now()
+                    )
+            ]]></bm:update-sql>
+            <bm:parameters>
+                <bm:parameter name="p_user_id"/>
+                <bm:parameter inputPath="/request/@address"/>
+                <bm:parameter name="v_original_password"/>
+                <bm:parameter name="v_passwd"/>
+                <bm:parameter inputPath="/session/@user_id"/>
+            </bm:parameters>
+        </bm:operation>
+    </bm:operations>
+</bm:model>

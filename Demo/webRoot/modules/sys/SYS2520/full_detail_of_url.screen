@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2011-9-30 下午3:47:18  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:view>
+        <a:dataSets>
+            <a:dataSet id="detail_query_ds" autoCreate="true"/>
+            <a:dataSet id="full_detail_of_url_ds" model="sys.SYS2520.sys_analytics_detail_of_url" queryDataSet="detail_query_ds">
+                <a:fields>
+                    <a:field name="name"/>
+                    <a:field name="time"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:chart bindTarget="full_detail_of_url_ds" inverted="true" marginRight="75" style="width: 950px; height: 400px; margin:10px" type="column">
+            <a:title text="详细耗时"/>
+            <a:xAxis>
+                <a:xAxi name="name"/>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="time">
+                    <a:title text="time"/>
+                </a:yAxi>
+            </a:yAxis>
+        </a:chart>
+        <script><![CDATA[
+            var r = $('detail_query_ds').getCurrentRecord();
+            r.set('url', '${/parameter/@url}');
+            r.set('startDate', '${/parameter/@startDate}');
+            r.set('endDate', '${/parameter/@endDate}');
+            $('full_detail_of_url_ds').query();
+            
+            ]]></script>
+    </a:view>
+</a:screen>

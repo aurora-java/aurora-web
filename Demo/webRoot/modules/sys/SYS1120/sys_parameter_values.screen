@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: zhangyi2652 $
+    $Date: 2010/11/26 06:00:31 $
+    $Revision: 1.3 $
+    $Purpose: 鍙傛暟鎸囧畾
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure>
+        <a:model-query defaultwhereclause="parameter_id=${/parameter/@parameter_id}" model="sys.sys_parameters" rootPath="parameter_sql_value"/>
+    </a:init-procedure>
+    <a:view>
+        <a:link id="sys_parameter_value_lov_link" url="${/request/@context_path}/modules/sys/SYS1120/sys_parameter_value_lov.screen"/>
+        <script><![CDATA[
+        
+            function queryParameterValues(){
+                $('sys_parameter_values_result_ds').query();
+            }
+
+            function saveValue(){
+                $('sys_parameter_values_result_ds').submit();
+            }
+
+            function resetForm(){
+                var form = $('sys_parameter_values_query_ds').getCurrentRecord();
+                
+                //var level_value=form.getMeta().getField('level_value');
+                form.set('level_value',null);
+                form.set('module_id',null);
+                form.set('module_name_display',null);
+                form.set('level_id',101);
+                getLevelIDDisplay();
+                form.set('company_name',null);
+                form.set('role_name',null);
+                form.set('level_value',1);
+                form.set('user_name',null);
+                form.set('parameter_code',null);
+                form.set('parameter_name',null);
+            }
+
+            function onUpdate(ds,record,name){
+                if (name=='level_id'){
+                    var level_id=record.get('level_id');
+                    var company_name= record.getMeta().getField('company_name');
+                    var role_name= record.getMeta().getField('role_name');
+                    var user_name= record.getMeta().getField('user_name');
+
+                    record.set('level_value',null);
+                    record.set('company_name',null);
+                    record.set('user_name',null);
+                    record.set('role_name',null);
+
+                    company_name.setReadOnly(true);
+                    role_name.setReadOnly(true);
+                    user_name.setReadOnly(true);
+
+                    role_name.setRequired(false);
+                    company_name.setRequired(false);
+                    user_name.setRequired(false);
+
+                    if (level_id=='102'){
+                        role_name.setReadOnly(false);
+                        role_name.setRequired(true);
+                    }else if (level_id=='103'){
+                        user_name.setReadOnly(false);
+                        user_name.setRequired(true);
+                    }else if(level_id=='104'){
+                        company_name.setReadOnly(false);
+                        company_name.setRequired(true);
+                    }else if(level_id==101){
+                        record.set('level_value',1);
+                        record.set('company_name',null);
+                        record.set('user_name',null);
+                        record.set('role_name',null);
+                        
+                        company_name.setReadOnly(true);
+                        role_name.setReadOnly(true);
+                        user_name.setReadOnly(true);
+
+                        role_name.setRequired(false);
+                        company_name.setRequired(false);
+                        user_name.setRequired(false);
+                    }
+                }
+
+            }
+
+            function parameter_function(record,name){
+            
+                if (record.get('validation_type')=='SQL'){
+                
+                   return 'sys_parameter_values_result_ds_lov';
+                }
+                   return 'sys_parameter_values_result_ds_tf';
+            }
+           function  gridInit(record){
+              var meta =record.getMeta();
+               record.set('level_id',$('sys_parameter_values_query_ds').getAt(0).get('level_id'));
+               record.set('level_value',$('sys_parameter_values_query_ds').getAt(0).get('level_value'));
+               meta.getField('parameter_value').setLovPara('parameter_id' ,record.get('parameter_id'));
+               meta.getField('parameter_value').setLovPara('COMPANY_ID' ,$('sys_parameter_values_query_ds').getAt(0).get('level_value'));
+               meta.getField('parameter_value').setLovPara('ROLE_ID' ,$('sys_parameter_values_query_ds').getAt(0).get('level_value'));
+               meta.getField('parameter_value').setLovPara('USER_ID' ,$('sys_parameter_values_query_ds').getAt(0).get('level_value'));
+               meta.getField('parameter_value').setLovUrl(/*sys_parameter_value_lov.screen*/$('sys_parameter_value_lov_link').getUrl());   
+               record.dirty=false;
+           }
+           
+           function lovcommit(lov,r1,r2){
+             	r1.set('parameter_value',r2.get('value_id'));
+             	r1.set('value_code',r2.get('value_code'));
+             	r1.set('value_name',r2.get('value_name'));            
+           }
+           
+           function getLevelIDDisplay(){
+           		var ds = $('sys_level_id_ds');
+           		var records=ds.getAll();
+           		for(var i=0; i< records.length ; i++){           			
+           			if(records[i].get('code_value') == '101'){
+           				$('sys_parameter_values_query_ds').getAt(0).set('level_id_display',records[i].get('code_value_name'));
+           			}
+           		} 
+           }
+           
+           function paraLoadComplete(dataSet){
+           		var records = dataSet.getAll();
+           		for(var i = 0 ; i < records.length ; i ++){
+           			gridInit(records[i]);
+           		}
+           }
+           
+           
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="sys_module_ds" loadData="true" model="sys.sys_module_select"/>
+            <a:dataSet id="sys_level_id_ds" loadData="true" lookupCode="SYS_PARAMETER_LEVEL"/>
+            <a:dataSet id="sys_parameter_values_query_ds" model="sys.sys_parameters">
+                <a:fields>
+                    <a:field name="level_value"/>
+                    <a:field name="module_name_display" displayField="module_name_display" options="sys_module_ds" returnField="module_id" valueField="module_id"/>
+                    <a:field name="level_id" defaultValue="101"/>
+                    <a:field name="level_id_display" displayField="code_value_name" options="sys_level_id_ds" required="true" returnField="level_id" valueField="code_value"/>
+                    <a:field name="company_name" autoComplete="true" autoCompleteField="company_short_name" lovGridHeight="300" lovHeight="460" lovService="fnd.SYS1120.fnd_companies_parametervalues_lov" lovWidth="500" readOnly="true" title="FND_SYS_PARA_VALUE.COMPANY">
+                        <a:mapping>
+                            <a:map from="company_short_name" to="company_name"/>
+                            <a:map from="company_id" to="level_value"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="role_name" autoComplete="true" autoCompleteField="role_name" lovGridHeight="300" lovHeight="460" lovService="sys.SYS1120.sys_role_parametervalues_lov" lovWidth="500" readOnly="true" title="SYS_ROLE.ROLE_NAME">
+                        <a:mapping>
+                            <a:map from="role_name" to="role_name"/>
+                            <a:map from="role_id" to="level_value"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="user_name" autoComplete="true" autoCompleteField="user_name" lovGridHeight="300" lovHeight="460" lovService="sys.SYS1120.sys_user_parametervalues_lov" lovWidth="500" readOnly="true" title="SYS_PARAMETER_DEFINE.USER">
+                        <a:mapping>
+                            <a:map from="user_name" to="user_name"/>
+                            <a:map from="user_id" to="level_value"/>
+                        </a:mapping>
+                    </a:field>
+                </a:fields>
+                <a:events>
+                    <a:event name="update" handler="onUpdate"/>
+                </a:events>
+            </a:dataSet>
+            <a:dataSet id="sys_parameter_values_result_ds" autoCount="true" fetchAll="false" model="sys.sys_parameters" queryDataSet="sys_parameter_values_query_ds" queryUrl="${/request/@context_path}/modules/sys/public/sys_parameter_values_query.svc" submitUrl="${/request/@context_path}/modules/sys/SYS1120/sys_parameter_save_update.svc">
+                <a:fields>
+                    <a:field name="parameter_value" lovHeight="480" lovWidth="475" title="WFL_WORKFLOW_PARAMETER.PARAM_CODE"/>
+                </a:fields>
+                <a:events>
+                    <a:event name="load" handler="paraLoadComplete"/>
+                </a:events>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:form column="1" labelWidth="70" title="SYS_ROLE.QUERY_TITLE" width="700">
+                <a:hBox padding="0" prompt="SYS_MODULE.MODULE_NAME">
+                    <a:comboBox name="module_name_display" bindTarget="sys_parameter_values_query_ds" width="150"/>
+                    <a:textField name="parameter_code" bindTarget="sys_parameter_values_query_ds" typeCase="upper" width="150">
+                        <a:events>
+                            <a:event name="enterdown" handler="queryParameterValues"/>
+                        </a:events>
+                    </a:textField>
+                    <a:textField name="parameter_name" bindTarget="sys_parameter_values_query_ds" width="150">
+                        <a:events>
+                            <a:event name="enterdown" handler="queryParameterValues"/>
+                        </a:events>
+                    </a:textField>
+                </a:hBox>
+                <a:comboBox name="level_id_display" bindTarget="sys_parameter_values_query_ds" prompt="SYS_PARAMETER_VALUES.VALUE_LEVEL" width="150"/>
+                <a:hBox padding="0" prompt="SYS_PARAMETER_VALUES.QUERY_COMPANY_NAME">
+                    <a:lov name="company_name" bindTarget="sys_parameter_values_query_ds" width="150">
+                        <a:events>
+                            <a:event name="enterdown" handler="queryParameterValues"/>
+                        </a:events>
+                    </a:lov>
+                    <a:lov name="role_name" bindTarget="sys_parameter_values_query_ds" prompt="SYS_PARAMETER_VALUES.QUERY_ROLE_NAME" width="150">
+                        <a:events>
+                            <a:event name="enterdown" handler="queryParameterValues"/>
+                        </a:events>
+                    </a:lov>
+                    <a:lov name="user_name" bindTarget="sys_parameter_values_query_ds" prompt="SYS_PARAMETER_VALUES.QUERY_USER_NAME" width="150">
+                        <a:events>
+                            <a:event name="enterdown" handler="queryParameterValues"/>
+                        </a:events>
+                    </a:lov>
+                </a:hBox>
+            </a:form>
+            <a:hBox>
+                <a:button click="queryParameterValues" text="HAP_QUERY"/>
+                <a:button click="resetForm" text="HAP_RESET"/>
+            </a:hBox>
+            <a:grid id="grid" bindTarget="sys_parameter_values_result_ds" height="330" navBar="true" width="700">
+                <a:toolBar>
+                    <a:button click="saveValue" icon="${/request/@context_path}/images/save.gif" text="HAP_SAVE"/>
+                </a:toolBar>
+                <a:columns>
+                    <a:column name="parameter_code" sortable="true" width="240"/>
+                    <a:column name="parameter_name" width="190"/>
+                    <a:column name="parameter_value" editorFunction="parameter_function" prompt="SYS_PARAMETER_VALUES.PARAMETER_VALUE" width="100"/>
+                    <a:column name="value_code" prompt="SYS_PARAMETER_VALUES.VALUE_CODE" width="80"/>
+                    <a:column name="value_name" prompt="SYS_PARAMETER_VALUES.VALUE_NAME" width="80"/>
+                </a:columns>
+                <a:editors>
+                    <a:textField id="sys_parameter_values_result_ds_tf"/>
+                    <a:lov id="sys_parameter_values_result_ds_lov">
+                        <a:events>
+                            <a:event name="commit" handler="lovcommit"/>
+                        </a:events>
+                    </a:lov>
+                </a:editors>
+            </a:grid>
+        </a:screenBody>
+        <script><![CDATA[
+        	getLevelIDDisplay();
+        ]]></script>
+    </a:view>
+</a:screen>

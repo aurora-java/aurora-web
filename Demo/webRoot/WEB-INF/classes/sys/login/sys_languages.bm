@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: shishiliyan  
+    $Date: 2012-6-15 上午11:21:07  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t" baseTable="SYS_LANGUAGES">
+    <!--   begin
+      select t.nls_language
+        into v_language
+        from sys_languages t, fnd_language_code f
+       where t.language_code = f.language_code
+         and t.language_code = p_language
+         and f.installed_flag = 'Y';
+    exception
+      when no_data_found then
+        raise e_language_null;
+    end;
+ -->
+    <bm:fields>
+        <bm:field name="language_code" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="LANGUAGE_CODE" prompt="SYS_LANGUAGES.LANGUAGE_CODE"/>
+        <bm:field name="nls_language" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="NLS_LANGUAGE" prompt="SYS_LANGUAGES.NLS_LANGUAGE"/>
+        <bm:field name="nls_territory" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="NLS_TERRITORY" prompt="SYS_LANGUAGES.NLS_TERRITORY"/>
+        <bm:field name="iso_language" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="ISO_LANGUAGE" prompt="SYS_LANGUAGES.ISO_LANGUAGE"/>
+        <bm:field name="iso_territory" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="ISO_TERRITORY" prompt="SYS_LANGUAGES.ISO_TERRITORY"/>
+        <bm:field name="nls_codeset" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="NLS_CODESET" prompt="SYS_LANGUAGES.NLS_CODESET"/>
+        <bm:field name="local_date_language" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="LOCAL_DATE_LANGUAGE" prompt="SYS_LANGUAGES.LOCAL_DATE_LANGUAGE"/>
+        <bm:field name="utf8_date_language" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="UTF8_DATE_LANGUAGE" prompt="SYS_LANGUAGES.UTF8_DATE_LANGUAGE"/>
+        <bm:field name="installed_flag" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="INSTALLED_FLAG" prompt="SYS_LANGUAGES.INSTALLED_FLAG"/>
+        <bm:field name="description" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="DESCRIPTION" prompt="SYS_LANGUAGES.DESCRIPTION"/>
+    </bm:fields>
+    <bm:query-fields>
+        <!-- <bm:query-field field="language_code" queryExpression="t.language_code = ${@user_language}" /> --><![CDATA[
+        
+    ]]></bm:query-fields>
+    <bm:data-filters>
+        <bm:data-filter name="installed_flag_f" expression=" ll.installed_flag=&apos;Y&apos; "/>
+        <bm:data-filter name="language_code" expression=" t.language_code = ${@user_language} "/>
+    </bm:data-filters>
+    <bm:features>
+        <f:standard-who/>
+    </bm:features>
+    <bm:primary-key>
+        <bm:pk-field name="language_code"/>
+    </bm:primary-key>
+    <bm:ref-fields>
+        <bm:ref-field name="installed_flag_f" relationname="ll" sourcefield="installed_flag"/>
+    </bm:ref-fields>
+    <bm:relations>
+        <bm:relation name="ll" jointype="INNER" refmodel="fnd.SYS1020.fnd_language_code">
+            <bm:reference foreignfield="language_code" localfield="language_code"/>
+        </bm:relation>
+    </bm:relations>
+</bm:model>

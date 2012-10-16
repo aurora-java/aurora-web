@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure>
+        <a:refresh-prompts/>
+    </a:init-procedure>
+    <a:view package="aurora.ui.std" template="default">
+        <a:form id="tipForm" classname="mytable" height="100" style="position:absolute;left:-2000px;top:-2000px;" title="提示" width="320">
+            <table>
+                <tr>
+                    <td><![CDATA[
+                       
+                    ]]></td>
+                    <td>
+                        <span style="font-size:20px;"><![CDATA[refresh ok!]]></span>
+                    </td>
+                </tr>
+            </table>
+        </a:form>
+        <script><![CDATA[
+            Aurora.onReady(function(){
+                Aurora.center('tipForm');
+                Aurora.get('tipForm').show();
+            })
+
+        ]]></script>
+    </a:view>
+</a:screen>

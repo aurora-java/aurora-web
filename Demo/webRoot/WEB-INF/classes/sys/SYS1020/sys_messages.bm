@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:e="aurora.service.exception" xmlns:ns2="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="fc" baseTable="sys_messages" defaultOrderBy="message_code">
+    <bm:fields>
+        <bm:field name="message_code" databaseType="VARCHAR" datatype="java.lang.String" prompt="SYS_MESSAGES.MESSAGE_CODE"/>
+        <bm:field name="language" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="message_name" databaseType="VARCHAR" datatype="java.lang.String" prompt="SYS_MESSAGES.MESSAGE_NAME"/>
+        <bm:field name="module_id" databaseType="BIGINT" datatype="java.lang.Long" prompt=""/>
+        <bm:field name="message" databaseType="VARCHAR" datatype="java.lang.String" prompt="SYS_MESSAGES.MESSAGE"/>
+        <bm:field name="description" expression="(select description_text from fnd_descriptions fd where fd.description_id=fl.description_id  and language=${/session/@lang})" forinsert="false" forupdate="false" prompt="SYS_MESSAGES.LANGUAGE"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="message_code"/>
+        <bm:pk-field name="language"/>
+    </bm:primary-key>
+    <bm:relations>
+        <bm:relation name="sm" joinType="LEFT OUTER" refModel="sys.sys_module">
+            <bm:reference foreignField="module_id" localField="module_id"/>
+        </bm:relation>
+        <bm:relation name="fl" joinType="INNER" refModel="fnd.SYS1020.fnd_language_code">
+            <bm:reference foreignField="language_code" localField="language"/>
+        </bm:relation>
+    </bm:relations>
+    <bm:query-fields>
+        <bm:query-field field="message_code" queryOperator="like"/>
+        <bm:query-field field="message_name" queryOperator="like"/>
+        <bm:query-field field="message" queryOperator="like"/>
+    </bm:query-fields>
+    <bm:features>
+        <f:standard-who/>
+    </bm:features>
+    <bm:ref-fields>
+        <bm:ref-field name="module_name_id" relationName="sm" sourceField="module_name_id"/>
+        <bm:ref-field name="description_id" prompt="SYS_MESSAGES.LNAGUAGE" relationName="fl" sourceField="description_id"/>
+    </bm:ref-fields>
+    <e:exception-descriptor-config>
+        <e:exception-descriptor exception="java.sql.SQLException" handleClass="aurora.database.SQLExceptionDescriptor">
+            <e:error-message code="1" message="MSG_CODE_DISTINCT"/>
+        </e:exception-descriptor>
+    </e:exception-descriptor-config>
+</bm:model>

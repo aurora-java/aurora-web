@@ -1,0 +1,15 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>${page:title}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+${page:html.head.css} 
+${page:html.head.script}
+<link rel="stylesheet" type="text/css" href="${/request/@context_path}/css/wfl_approve.css"/>
+</head>
+<body>
+	${page:init}
+	${page:content}
+	<input type="hidden" class="logLink" screen="${/@service_name}" value="viewlog?file=${/@SERVICE_LOGGING_FILE}"/>
+</body>
+</html>

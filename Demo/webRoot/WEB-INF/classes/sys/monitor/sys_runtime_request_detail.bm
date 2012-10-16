@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" baseTable="sys_runtime_request_detail">
+    <bm:fields>
+        <bm:field name="request_id" databaseType="VARCHAR" datatype="java.lang.String" parameterPath="../../@request_id"/>
+        <bm:field name="sequence_num" databaseType="NUMBER" datatype="java.lang.Integer"/>
+        <bm:field name="name" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="enter_time" databaseType="TIMESTAMP" datatype="java.sql.Timestamp"/>
+        <bm:field name="exit_time" databaseType="TIMESTAMP" datatype="java.sql.Timestamp"/>
+        <bm:field name="duration" databaseType="NUMBER" datatype="java.lang.Integer"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="request_id"/>
+        <bm:pk-field name="sequence_num"/>
+    </bm:primary-key>
+</bm:model>

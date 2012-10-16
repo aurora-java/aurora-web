@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[	select t.user_id, t.session_id, u.user_name
+			  from sys_user_logins t, sys_user u
+			 where t.user_id = u.user_id
+			   and t.encrypted_session_id = ${/cookie/@JSID/@value}]]></bm:query-sql>
+            <bm:parameters>
+                <bm:parameter inputPath="/cookie/@JSID/@value"/>
+            </bm:parameters>
+        </bm:operation>
+    </bm:operations>
+    <bm:fields>
+        <bm:field name="user_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="USER_ID" required="true"/>
+        <bm:field name="session_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="SESSION_ID" required="true"/>
+        <bm:field name="user_name" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="USER_NAME" required="true"/>
+    </bm:fields>
+</bm:model>

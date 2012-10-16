@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2011-10-12 下午9:10:20  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="SYS_ANALYTICS_CUSTOMIZE" defaultOrderBy="t1.num">
+    <bm:fields>
+        <bm:field name="id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="ID"/>
+        <bm:field name="num" databaseType="NUMBER" datatype="java.lang.Long" physicalName="NUM"/>
+        <bm:field name="screen" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="SCREEN"/>
+        <bm:field name="enabled" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="ENABLED"/>
+        <bm:field name="callback" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="CALLBACK"/>
+    </bm:fields>
+    <bm:data-filters>
+        <bm:data-filter name="enabled" expression="t1.enabled=&apos;Y&apos;"/>
+    </bm:data-filters>
+</bm:model>

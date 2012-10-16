@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:model xmlns:e="aurora.service.exception" xmlns:ns2="aurora.database.local.oracle" xmlns:ns1="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="fc" defaultOrderBy="role_code" extend="sys.sys_role" extendMode="reference">
+    <ns1:fields>
+        <ns1:field name="id" databaseType="BIGINT" datatype="java.lang.Long" physicalName="role_id"/>
+        <ns1:field name="role_code" databaseType="VARCHAR" datatype="java.lang.String" displayWidth="200" forDisplay="true" forQuery="true" prompt="SYS_ROLE.ROLE_CODE" queryWidth="150"/>
+        <ns1:field name="role_name_id" databaseType="BIGINT" datatype="java.lang.Long" multiLanguage="true" multiLanguageDescField="name"/>
+        <ns1:field name="name" databaseType="VARCHAR" datatype="java.lang.String" displayWidth="200" forInsert="false" forQuery="true" forUpdate="false" fordisplay="true" prompt="SYS_ROLE.ROLE_NAME"/>
+    </ns1:fields>
+    <ns1:query-fields>
+        <ns1:query-field field="role_code" queryOperator="like"/>
+        <ns1:query-field name="role_name" queryExpression="exists (select 1 from fnd_descriptions fd where fc.role_name_id=fd.description_id and fd.description_text like ${@role_name} and fd.language = ${/session/@lang})"/>
+    </ns1:query-fields>
+</ns1:model>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: niujiaqing1265 $
+    $Date: 2010/11/30 06:14:58 $
+    $Revision: 1.8 $
+    $Purpose: 系统级描述
+-->
+<a:screen xmlns:c="aurora.application.action" xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:init-procedure>
+        <a:model-query fetchAll="true" model="sys.SYS1130.sys_user_info" rootPath="login_user"/>
+    </a:init-procedure>
+    <a:view package="aurora.ui.std" template="default">
+        <a:screenBody>
+            <div style="width:800px">
+                <!--
+                text:上传按钮描述
+                fileType: 上传文件类型
+                filesize: 上传文件大小  单位是KB, 默认是0表示无限制
+                buttonWidth: 按钮宽度
+                sourcetype:  业务来源
+                pkvalue: 业务主键
+                uploadUrl : 上传URL 默认是 atm_upload.svc
+                deleteUrl : 上传URL 默认是 atm_delete.svc
+                downloadUrl : 上传URL 默认是 atm_download.svc
+                -->
+                <a:upload buttonWidth="75" fileType="*.jpg" pkvalue="1" sourcetype="znjq" text="上传图片"/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <a:upload buttonWidth="75" fileType="*.*" pkvalue="2" sourcetype="olf" text="上传文本"/>
+            </div>
+            <!--  如果是导入最好用这种方式  url表示跳转的地址
+            <form name="form" action="${/request/@context_path}/upload.svc" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="source_type" value="znjqolf"/>
+                <input type="hidden" name="pkvalue" value="1265"/>
+                <input type="hidden" name="url" value="${/request/@context_path}/test.screen"/>
+                <input type="file" name="file" accept="image/gif, image/jpeg"/>
+                <input type="submit" value="导入附件"/>
+            </form>
+            -->
+        </a:screenBody>
+    </a:view>
+</a:screen>

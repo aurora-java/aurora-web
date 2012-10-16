@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure><![CDATA[     
+    ]]></a:init-procedure>
+    <a:view template="default" package="aurora.ui.std">
+        <a:dataSets>
+            <a:dataSet id="HTTPWATCH_DATASET">
+                <a:fields>
+                    <a:field name="request" readOnly="true"/>
+                    <a:field name="response" readOnly="true"/>
+                    <a:field name="url" readOnly="true"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <script>
+        <![CDATA[
+            //Safari下不这样写,从window中找不到
+            //window._spendRenderer = function(value,record, name){
+            //	return value+'ms';
+            //}
+            function _spendRenderer(value,record, name){
+                return value+'ms';
+            }
+        ]]>
+        </script>
+        <a:vBox>
+            <a:grid bindTarget="HTTPWATCH_DATASET" style="margin:10px" width="470" height="200">
+                <a:columns>
+                    <a:column name="status" width="60" prompt="status"/>
+                    <a:column name="result" width="60" prompt="result"/>
+                    <a:column name="spend" width="60" prompt="spend"  renderer="_spendRenderer"/>
+                    <a:column name="url" width="250" prompt="url"/>
+                </a:columns>
+            </a:grid>
+            <a:textArea name="url" style="margin-left:10px;" width="470" height="40" bindTarget="HTTPWATCH_DATASET"/>
+            <a:tabPanel width="470" height="250" style="margin-left:10px">
+                <a:tabs>
+                    <a:tab selected="true" prompt="Request" width="100">
+                        <a:textArea name="request" style="margin:5px;" width="450" height="200" bindTarget="HTTPWATCH_DATASET"/>
+                    </a:tab>
+                    <a:tab prompt="Response" width="100">
+                        <a:textArea name="response" style="margin:5px;" width="450" height="200" bindTarget="HTTPWATCH_DATASET"/>
+                    </a:tab>
+                </a:tabs>
+            </a:tabPanel>
+        </a:vBox>
+    </a:view>
+</a:screen>

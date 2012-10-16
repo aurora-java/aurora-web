@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure>
+        <a:model-query model="sys.sys_user_logins_query" rootPath="timeout_history"/>
+        <a:model-query model="sys.sys_timeout_get_user_info" rootPath="user_info"/>
+    </a:init-procedure>
+    <a:view>
+        <a:link id="login_link_5" url="${/request/@context_path}/login.screen"/>
+        <script><![CDATA[
+   			
+   			/*Aurora.request({
+   				url:'logout.svc',
+   				para:{}
+   			});*/
+   			
+   			var loginTime = 0;
+   			
+   			function loginTimeOut(){
+   				if(loginTime < 3){
+   					$('user_info_ds').submit();
+   					loginTime++;
+   				}else{
+   					Aurora.showInfoMessage('${l:PROMPT}','${l:TIMEOUT_UNLOCK_OVER_THREE_TIMES}',
+   					function(){
+   						if(opener && opener.location && opener.location.href){
+							opener.location.href = /*login.screen*/$('login_link_5').getUrl();
+						}
+						window.close();	
+   					},250,100);
+   				}
+   			}
+   				
+   			function loginComplete(dataset){
+   			    isTimeout = false;
+   				var res = dataset.getAt(0).data;
+   				if(res){
+   					if(res['encryted_session_id'] == 'ERROR'){
+						Aurora.showInfoMessage('${l:PROMPT}','${l:HAP_TIMEOUT_LOGIN_FAILED}',
+						function(){
+							if(opener && opener.location && opener.location.href){
+								opener.location.href = /*login.screen*/$('login_link_5').getUrl();
+							}
+							window.close();
+							//$('login_timeout_screen').close();	
+						},250,100);
+	            	}else{
+	            		window.jsid = res['encryted_session_id'];
+	            		var record = $('user_info_ds').getAt(0);
+			        	var userName = record.get('user_name');
+			        	var lang = record.get('language');
+			        	Aurora.setCookie('USERNAME',userName,30);
+		        		Aurora.setCookie('LANG',lang,30);
+		        		Aurora.setCookie('JSID',res['encryted_session_id']);
+		        		document.getElementById('mainFrame').src = targetUrl; 
+	            		$('login_timeout_screen').close();
+	            	}
+   				}
+   			}	
+   			
+   		]]></script>
+        <a:dataSets>
+            <a:dataSet id="user_info_ds" submitUrl="timeout_login.svc">
+                <a:datas dataSource="/model/user_info"/>
+                <a:fields>
+                    <a:field name="user_name" prompt="HAP_USERNAME" readOnly="true"/>
+                    <a:field name="role_name" prompt="HAP_ROLENAME" readOnly="true"/>
+                    <a:field name="user_id" readOnly="true"/>
+                    <a:field name="role_id" readOnly="true"/>
+                    <a:field name="company_id" readOnly="true"/>
+                    <a:field name="password" prompt="HAP_PASSWORD" required="true"/>
+                    <a:field name="language" readOnly="true"/>
+                    <a:field name="language_display" prompt="HAP_LANGUAGE" readOnly="true"/>
+                </a:fields>
+                <a:events>
+                    <a:event name="submitsuccess" handler="loginComplete"/>
+                </a:events>
+            </a:dataSet>
+        </a:dataSets>
+        <a:box style="margin-left:75px;margin-top:30px;">
+            <a:textField name="user_name" bindTarget="user_info_ds" style="margin-top:10px;"/>
+            <a:textField name="role_name" bindTarget="user_info_ds" style="margin-top:10px;"/>
+            <a:textField name="language_display" bindTarget="user_info_ds" style="margin-top:10px;"/>
+            <a:passWord name="password" bindTarget="user_info_ds" style="margin-top:10px;">
+                <a:events>
+                    <a:event name="enterdown" handler="loginTimeOut"/>
+                </a:events>
+            </a:passWord>
+        </a:box>
+        <a:hBox style="margin-left:185px;margin-top:10px;">
+            <a:button click="loginTimeOut" text="HAP_LOGIN"/>
+        </a:hBox>
+    </a:view>
+</a:screen>

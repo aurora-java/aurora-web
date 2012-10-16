@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" title="重载资源" trace="true">
+    <a:init-procedure>
+        <p:method-invoke className="aurora.application.features.cache.CacheProviderRegistry" methodName="getAllProvider" resultPath="/model/results"/>
+    </a:init-procedure>
+    <a:view>
+        <a:link id="reload_cache" url="${/request/@context_path}/modules/sys/reload_cache.svc"/>
+        <script><![CDATA[
+
+            function onSuccess(res, prompt) {
+                var message = "重载 " + prompt + " 成功";
+                Aurora.showMessage('${l:PROMPT_MESSAGE}', message);
+            }
+            
+           
+            function reloadCache(message, topic, prompt) {
+                var url = $('reload_cache').getUrl() + "?message=" + message + "&topic=" + topic;
+                Aurora.request({
+                    url: url,
+                    success: function(res) {
+                        onSuccess(res, prompt);
+                    },
+                    scope: this
+                });
+            }
+            
+            function reload(value, record, name) {
+                var topic = record.get('reloadTopic');
+                var message = record.get('reloadMessage');
+                var prompt = record.get('cacheDesc');
+                var url = '<a href="javascript:reloadCache(\'' + message + '\',\'' + topic + '\',\'' + prompt + '\')">重载</a>';
+                return url;
+            }
+            
+            function pastTime_renderer(value, record, name) {
+                var between = record.get('pastTime');
+                var pastTime = "";
+                var day = Math.floor(between / (24 * 3600));
+                if (day != 0) {
+                    pastTime = pastTime + day + " 天 ";
+                }
+                var hour = Math.floor(between % (24 * 3600) / 3600);
+                if (hour != 0) {
+                    pastTime = pastTime + hour + " 小时 ";
+                }
+                var minute = Math.floor(between % 3600 / 60);
+                if (minute != 0) {
+                    pastTime = pastTime + minute + " 分 ";
+                }
+                var second = Math.floor(between % 60);
+                if (second != 0) {
+                    pastTime = pastTime + second + " 秒 ";
+                }
+                return pastTime;
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="cacheProvider_ds">
+                <a:datas dataSource="/model/results"/>
+            </a:dataSet>
+        </a:dataSets>
+        <a:grid bindTarget="cacheProvider_ds" height="210" style="margin-left:10px;margin-top:50px;" width="860">
+            <a:columns>
+                <a:column name="cacheName" prompt="缓存名称" width="150"/>
+                <a:column name="cacheDesc" prompt="缓存描述" width="200"/>
+                <a:column name="lastReloadDate" prompt="上次重载时间" width="200"/>
+                <a:column name="pastTime" prompt="已过时间" renderer="pastTime_renderer" width="200"/>
+                <a:column name="reload" align="center" prompt="马上重载" renderer="reload" width="100"/>
+            </a:columns>
+        </a:grid>
+    </a:view>
+</a:screen>

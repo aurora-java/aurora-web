@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: hand  
+    $Date: 2012-9-26 上午10:35:58  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure>
+        <a:model-query model="inv.INV1010.inv_material_get_types" rootPath="inv_1010_item_type_desc"/>
+    </a:init-procedure>
+    <a:view>
+        <script><![CDATA[
+			function inv_1010_expand_save(){
+			    
+			}
+			
+			function inv_1010_expand_init(){
+			    var header_ds = $('inv_1010_expand_attribute_header_ds');
+			    var header_ds_record = header_ds.getAt(0);
+			    var value = "${/model/inv_1010_item_type_desc/record/@item_type_desc}";
+			    header_ds_record.set("item_type_desc",value);
+			    var attribute_code = header_ds_record.get('attribute_code');
+			    var attribute_code_f = header_ds.getField('attribute_code');
+			    var description = header_ds_record.get('description');
+			    var description_f = header_ds.getField('description');
+			    if(attribute_code==null||description==null){
+			        attribute_code_f.setReadOnly(false);
+			        description_f.setReadOnly(false);
+			    }else{
+			        attribute_code_f.setReadOnly(true);
+			        description_f.setReadOnly(true);
+			    }
+			}
+		]]></script>
+        <a:dataSets>
+            <a:dataSet id="inv_1010_expand_attribute_header_ds" autoCreate="true" autoQuery="true" model="inv.INV1010.inv_mtrl_tp_ext_attr_hd">
+                <a:fields>
+                    <a:field name="item_type_id" defaultValue="${/parameter/@item_type_id}"/>
+                    <a:field name="item_type_desc" readOnly="true" required="true"/>
+                    <a:field name="attribute_code" required="true"/>
+                    <a:field name="description" required="true"/>
+                </a:fields>
+                <!-- <a:events>
+                    <a:event name="submitsuccess" handler=""/>
+                </a:events> -->
+            </a:dataSet>
+            <a:dataSet id="inv_1010_expand_attribute_line_ds" autoQuery="true" bindTarget="inv_1010_expand_attribute_header_ds" model="inv.INV1010.inv_mtrl_tp_ext_attr_ln" pageSize="10" selectable="true">
+                <a:fields>
+                    <a:field name="attribute_line_code" required="true"/>
+                    <a:field name="description" required="true"/>
+                    <a:field name="enabled_flag" checkedValue="Y" defaultValue="N" uncheckedValue="N"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:vBox labelWidth="100" width="350">
+                <a:textField name="item_type_desc" bindTarget="inv_1010_expand_attribute_header_ds" prompt="物品类型"/>
+                <a:textField name="attribute_code" bindTarget="inv_1010_expand_attribute_header_ds" prompt="扩展属性代码"/>
+                <a:textField name="description" bindTarget="inv_1010_expand_attribute_header_ds" prompt="扩展属性名称"/>
+            </a:vBox>
+            <a:hBox>
+                <a:button click="inv_1010_expand_save" text="HAP_SAVE"/>
+            </a:hBox>
+            <a:grid bindTarget="inv_1010_expand_attribute_line_ds" height="300" navBar="true" width="400">
+                <a:toolBar>
+                    <a:button id="inv_1010_expand_add" type="add"/>
+                    <a:button id="inv_1010_expand_clear" type="clear"/>
+                </a:toolBar>
+                <a:columns>
+                    <a:column name="attribute_line_code" editor="inv_1010_expand_textfield" width="150"/>
+                    <a:column name="description" editor="inv_1010_expand_textfield" width="150"/>
+                    <a:column name="enabled_flag" editor="inv_1010_expand_checkbox" width="80"/>
+                </a:columns>
+                <a:editors>
+                    <a:textField id="inv_1010_expand_textfield"/>
+                    <a:checkBox id="inv_1010_expand_checkbox"/>
+                </a:editors>
+            </a:grid>
+        </a:screenBody>
+        <a:hotKey>
+            <a:keys>
+                <a:key bind="ctrl+s" handler="inv_1010_expand_save"/>
+            </a:keys>
+        </a:hotKey>
+        <script><![CDATA[
+			inv_1010_expand_init();        	
+        ]]></script>
+    </a:view>
+</a:screen>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:service xmlns:s="aurora.plugin.script" xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:init-procedure>
+        <s:server-script import="ord/ORD5010/ord_sales_order.js"><![CDATA[
+            var p = $ctx.parameter;
+            if (!SalesOrder.canModify(p)) {
+                raise_app_error('状态不可修改。');
+            }
+            if (p.closed_flag == 'Y') {
+                SalesOrder.closeLine(p);
+            } else {
+                SalesOrder.openLine(p);
+            }
+            if (SalesOrder.isAllLinesClosed(p)) { /*Y*/
+                SalesOrder.closeOrder(p, true);
+                p.header_closed_flag='Y';
+            } else { /*N*/
+                SalesOrder.openOrder(p);
+                p.header_closed_flag='N';
+            }
+        ]]></s:server-script>
+    </a:init-procedure>
+    <a:service-output output="/parameter"/>
+</a:service>

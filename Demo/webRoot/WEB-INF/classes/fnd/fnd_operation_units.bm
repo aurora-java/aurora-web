@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:e="aurora.service.exception" xmlns:ns2="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="fc" baseTable="fnd_operation_units" defaultOrderBy="operation_unit_code">
+    <bm:fields>
+        <bm:field name="operation_unit_id" databaseType="BIGINT" datatype="java.lang.Long"/>
+        <bm:field name="company_id" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <bm:field name="operation_unit_code" databaseType="VARCHAR" datatype="java.lang.String" prompt="FND_OPERATION_UNITS.OPERATION_UNIT_CODE"/>
+        <bm:field name="description_id" databaseType="BIGINT" datatype="java.lang.Long" multiLanguage="true" multiLanguageDescField="description"/>
+        <bm:field name="description" databaseType="VARCHAR" datatype="java.lang.String" forInsert="false" forUpdate="false" prompt="FND_OPERATION_UNITS.DESCRIPTION"/>
+        <bm:field name="summary_flag" databaseType="VARCHAR" datatype="java.lang.String" prompt="FND_OPERATION_UNITS.SUMMARY_FLAG"/>
+        <bm:field name="enabled_flag" databaseType="VARCHAR" datatype="java.lang.String" prompt="FND_OPERATION_UNITS.ENABLED_FLAG"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="operation_unit_id"/>
+    </bm:primary-key>
+    <bm:query-fields>
+        <bm:query-field field="operation_unit_code" queryOperator="like"/>
+        <bm:query-field field="description" queryExpression="exists (select 1 from fnd_descriptions fd where fc.description_id=fd.description_id and fd.description_text like ${@description} and fd.language = ${/session/@lang})"/>
+    </bm:query-fields>
+    <bm:features>
+        <ns2:sequence-pk/>
+        <f:standard-who/>
+        <f:multi-language-storage/>
+    </bm:features>
+    <bm:ref-fields/>
+    <bm:data-filters>
+        <bm:data-filter name="company_id" expression="company_id=${/session/@company_id}"/>
+    </bm:data-filters>
+    <e:exception-descriptor-config>
+        <e:exception-descriptor exception="java.sql.SQLException" handleClass="aurora.database.SQLExceptionDescriptor">
+            <e:error-message code="1" message="OPERATION_UNIT_CODE_DUP"/>
+        </e:exception-descriptor>
+    </e:exception-descriptor-config>
+</bm:model>

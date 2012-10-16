@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="SYS_CODES_VL" defaultorderby="code_value">
+    <bm:fields>
+        <bm:field name="code_id" databaseType="NUMBER" datatype="java.lang.Double" physicalName="CODE_ID"/>
+        <bm:field name="code" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="CODE"/>
+        <bm:field name="sys_flag" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="SYS_FLAG"/>
+        <bm:field name="enabled_flag" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="ENABLED_FLAG"/>
+        <bm:field name="code_name" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="CODE_NAME"/>
+        <bm:field name="code_prompt" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="CODE_PROMPT"/>
+        <bm:field name="code_name_prompt" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="CODE_NAME_PROMPT"/>
+    </bm:fields>
+    <bm:relations>
+        <bm:relation name="refc" joinType="INNER" refModel="sys.sys_code_values_vl">
+            <bm:reference foreignField="code_id" localField="code_id"/>
+        </bm:relation>
+    </bm:relations>
+    <bm:ref-fields>
+        <bm:ref-field name="code_value" relationName="refc" sourceField="code_value"/>
+        <bm:ref-field name="code_value_name" relationName="refc" sourceField="code_value_name"/>
+        <bm:ref-field name="code_value_id" relationName="refc" sourceField="code_value_id"/>
+        <bm:ref-field name="e_flag" relationName="refc" sourceField="enabled_flag"/>
+    </bm:ref-fields>
+</bm:model>
