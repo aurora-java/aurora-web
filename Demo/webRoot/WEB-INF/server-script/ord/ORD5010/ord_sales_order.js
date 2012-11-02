@@ -29,12 +29,11 @@ var SalesOrder = {
 		if (arr.length == 0)
 			raise_app_error('没有订单行，不能保存。');
 		// 校验订单编号是否重复
-		var tp = $ctx.createChild('tmp_param');
-		tp.order_number = h.order_number;
-		var res = SalesOrder.head_bm.queryAsMap(tp);
-		if (res.getChildren().length > 0)
+		try{
+			SalesOrder.head_bm.insert(h);
+		}catch(e){
 			raise_app_error('订单编号重复，请重新输入。');
-		SalesOrder.head_bm.insert(h);
+		}
 		var mul = h.return_order_flag == 'Y' ? -1 : 1;
 		for (i = 0; i < arr.length; i++) {
 			arr[i].sales_order_id = h.sales_order_id;
@@ -70,3 +69,4 @@ var SalesOrder = {
          return arr.length==0;
 	}
 };
+println('define SalesOrder')
