@@ -9,7 +9,7 @@
     <a:init-procedure>
         <s:server-script import="ord/ord5010/ord_sales_order_create.js"/>
     </a:init-procedure>
-    <a:view package="aurora.ui.std" template="default">
+    <a:view>
         <a:link id="lk_line_close_open" url="${/request/@context_path}/modules/ord/ORD5010/ord_sales_order_line_close_open.svc"/>
         <!-- <a:link id="lk_header_close" url="${/request/@context_path}/modules/ord/ORD5010/ord_sales_order_header_close.svc"/> -->
         <a:link id="lk_header_save" url="${/request/@context_path}/modules/ord/ORD5010/ord_sales_order_save.svc"/>
@@ -17,10 +17,6 @@
         <a:link id="lk_order_number_check" url="${/request/@context_path}/modules/ord/ORD5010/ord_sales_order_number_check.svc"/>
         <a:link id="lk_order_delete" url="${/request/@context_path}/modules/ord/ORD5010/ord_sales_order_delete.svc"/>
         <script><![CDATA[
-            onerror = function(m, s, l) {
-                alert(m + '\n' + s + "\n" + l);
-            };
-            
             function create_line() {
                 //TODO 校验后续操作
                 $('order_lines_ds').create();
@@ -162,11 +158,15 @@
             
             function onAddLine(ds, rec, idx) {
                 rec.set('require_date', new Date());
-                if (idx == 1) {
-                    rec.set('line_number', 10);
-                } else {
-                    rec.set('line_number', ds.getAt(idx - 2).get('line_number') + 10);
+                var max = 10;
+                var all = ds.getAll();
+                for (var i = 0;i < all.length;i++) {
+                    var t = Number(all[i].get('line_number'));
+                    if (t && t >= max) {
+                        max = t + 10;
+                    }
                 }
+                rec.set('line_number', max);
             }
             
             function onHeadDsUpdate(ds, rec, name, value, oldValue) {
@@ -239,6 +239,7 @@
             }
             
             //创建 或 修改 保存后 更改主页面数据,关闭当前弹出页面
+            
             function onHeadDsSubmitSuccess(ds, res) {
                 var main_head_ds = $('ord_sales_order_headers_ds');
                 var r = ds.getCurrentRecord();
@@ -442,10 +443,10 @@
                     <a:numberField id="e_nf_float2" allowDecimals="true" allowFormat="true" allowNegative="false"/>
                 </a:editors>
                 <a:toolBar>
-                    <a:button click="create_line" icon="/images/add.gif" text="新增"/>
-                    <a:button click="delete_line" icon="/images/remove.gif" text="删除"/>
-                    <a:button click="close_line" icon="/images/line_close.png" text="行关闭"/>
-                    <a:button click="open_line" icon="/images/line_open.png" text="行打开"/>
+                    <a:button click="create_line" icon="${/request/@context_path}/images/add.gif" text="新增"/>
+                    <a:button click="delete_line" icon="${/request/@context_path}/images/remove.gif" text="删除"/>
+                    <a:button click="close_line" icon="${/request/@context_path}/images/line_close.png" text="行关闭"/>
+                    <a:button click="open_line" icon="${/request/@context_path}/images/line_open.png" text="行打开"/>
                 </a:toolBar>
             </a:grid>
         </a:screenBody>

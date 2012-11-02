@@ -5,9 +5,9 @@
     $Revision: 1.0  
     $Purpose: 销售订单（头）
 -->
-<a:screen xmlns:a="http://www.aurora-framework.org/application">
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
     <a:init-procedure/>
-    <a:view package="aurora.ui.std" template="default">
+    <a:view>
         <a:link id="ord_sales_order_create_screen" url="${/request/@context_path}/modules/ord/ORD5010/ord_sales_order_create_edit.screen"/>
         <a:link id="lk_header_close" url="${/request/@context_path}/modules/ord/ORD5010/ord_sales_order_header_close.svc"/>
         <script><![CDATA[
@@ -185,10 +185,10 @@
                     <a:checkBox id="e_cb"/>
                 </a:editors>
                 <a:toolBar>
-                    <a:button click="btn_new_order" icon="/images/add.gif" text="新建"/>
-                    <a:button click="btn_delete_order" icon="/images/remove.gif" text="删除"/>
+                    <a:button click="btn_new_order" icon="${/request/@context_path}/images/add.gif" text="新建"/>
+                    <a:button click="btn_delete_order" icon="${/request/@context_path}/images/remove.gif" text="删除"/>
                     <a:button type="excel"/>
-                    <a:button click="btn_close_order" icon="/images/remove.png" text="关闭"/>
+                    <a:button click="btn_close_order" icon="${/request/@context_path}/images/remove.png" text="关闭"/>
                 </a:toolBar>
             </a:grid>
         </a:screenBody>
