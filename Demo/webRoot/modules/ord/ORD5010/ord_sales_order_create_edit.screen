@@ -249,6 +249,7 @@
                 } else {
                     rec = main_head_ds.create(r.data);
                 }
+                rec.set('lines',null);//remove bind lines
                 rec.isNew = false;
                 rec.dirty = false;
                 $('${/parameter/@win_id}').close();
