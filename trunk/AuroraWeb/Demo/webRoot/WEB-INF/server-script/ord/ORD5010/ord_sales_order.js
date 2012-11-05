@@ -1,12 +1,17 @@
 var SalesOrder = {
-	head_bm : $bm('ord.ORD5010.ord_sales_order_headers'),
-	line_bm : $bm('ord.ORD5010.ord_sales_order_lines'),
+	getHeadBm : function(){
+		return $bm('ord.ORD5010.ord_sales_order_headers');
+	},
+	getLineBm : function(){
+		return $bm('ord.ORD5010.ord_sales_order_lines');
+	},
 	deleteOrders : function(header_arr) {
-		var del_line_bm = $bm('ord.ORD5010.ord_sales_order_lines_delete');
+		var del_head_bm = $bm('ord.ORD5010.ord_sales_order_lines_delete');
+		var h_bm = SalesOrder.getHeadBm();
 		for(i=0;i<header_arr.length;i++){
 			var h=header_arr[i];
-			SalesOrder.head_bm.delete(h);// delete is a js Key Word
-			del_line_bm.execute(h);
+			h_bm.delete(h);// delete is a js Key Word
+			del_head_bm.execute(h);
 		}
 		
 	},
@@ -30,29 +35,31 @@ var SalesOrder = {
 			raise_app_error('没有订单行，不能保存。');
 		// 校验订单编号是否重复
 		try{
-			SalesOrder.head_bm.insert(h);
+			SalesOrder.getHeadBm().insert(h);
 		}catch(e){
 			raise_app_error('订单编号重复，请重新输入。');
 		}
 		var mul = h.return_order_flag == 'Y' ? -1 : 1;
+		var l_bm = SalesOrder.getLineBm();
 		for (i = 0; i < arr.length; i++) {
 			arr[i].sales_order_id = h.sales_order_id;
 			arr[i].trade_quantity = mul * Math.abs(arr[i].trade_quantity);
 			arr[i].total_amount = mul * Math.abs(arr[i].total_amount);
-			SalesOrder.line_bm.insert(arr[i]);
+			l_bm.insert(arr[i]);
 		}
 	},
 	updateOrder : function(h) {
 		if (!h)
 			return;
-		SalesOrder.head_bm.update(h);
+		SalesOrder.getHeadBm().update(h);
 		var arr = h.getChild('lines').getChildren();
 		var mul = h.return_order_flag == 'Y' ? -1 : 1;
+		var l_bm = SalesOrder.getLineBm();
 		for (i = 0; i < arr.length; i++) {
 			arr[i].sales_order_id = h.sales_order_id;
 			arr[i].trade_quantity = mul * Math.abs(arr[i].trade_quantity);
 			arr[i].total_amount = mul * Math.abs(arr[i].total_amount);
-			SalesOrder.line_bm[arr[i]._status](arr[i]);// arr[i]._status may be
+			l_bm[arr[i]._status](arr[i]);// arr[i]._status may be
 														// insert,delete,update
 		}
 	},
