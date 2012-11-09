@@ -17,6 +17,174 @@
         <a:link id="lk_order_number_check" url="${/request/@context_path}/modules/ord/ORD5010/ord_sales_order_number_check.svc"/>
         <a:link id="lk_order_delete" url="${/request/@context_path}/modules/ord/ORD5010/ord_sales_order_delete.svc"/>
         <script><![CDATA[
+            onerror = function(m, u, l) {
+                alert(m + '\n' + u + '\n' + l);
+            };
+            var create_new = true;
+                        
+            function do_save() {
+                var head_ds = $('order_headers_ds');
+                var rec = head_ds.getCurrentRecord();
+                if (!head_ds.validate(true, true)) {
+                    updateHeadStatus(rec, 'Error');
+                    return;
+                }
+                if ($('order_lines_ds').getAll().length == 0) {
+                    Aurora.showErrorMessage('Error', '请至少保存一条销售订单行信息！');
+                    updateHeadStatus(rec, 'Error');
+                    return;
+                }
+                if (rec.isNew) {
+                    var ret = validate_order_number(rec.get('order_number'));
+                    if (ret !== true) {
+                        Aurora.showErrorMessage('Error', ret);
+                        rec.set('order_number', null);
+                    } else {
+                        updateHeadStatus(rec, 'Verified', true);
+                        head_ds.submit();
+                    }
+                } else {
+                    updateHeadStatus(rec, 'Verified', true);
+                    head_ds.submit();
+                }
+                //will notify onHeadDsSubmitSuccess
+            }
+            
+            function btn_save_order() {
+                create_new = false;
+                do_save();
+            }
+            
+            function btn_save_add_order() {
+                create_new = true;
+                do_save(); //will notify onHeadDsSubmitSuccess
+            }
+            
+            
+            function btn_submit_order() {
+                var rec = $('order_headers_ds').getCurrentRecord();
+                if (rec.get('status') != 'Verified') {
+                    Aurora.showErrorMessage('${l:PROMPT}', '当前状态不允许提交！仅正常状态的订单允许提交！');
+                    return;
+                }
+                Aurora.showConfirm('?', '是否确认提交？', function() {
+                    Aurora.request({
+                        url: $('lk_header_submit').getUrl(),
+                        para: {
+                            sales_order_id: rec.get('sales_order_id')
+                        },
+                        success: function(res) {
+                            updateHeadStatus(rec, 'In Processing');
+                        },
+                        scope: this
+                    });
+                });
+            }
+            
+            function btn_delete_order() {
+                var h_ds = $('order_headers_ds');
+                var l_ds = $('order_lines_ds');
+                var rec = h_ds.getCurrentRecord();
+                if (rec.get('status') != 'Verified') {
+                    Aurora.showMessage('${l:PROMPT}', '当前状态不允许删除');
+                    return;
+                }
+                Aurora.showConfirm('?', '是否确认删除该销售订单的所有信息？', function() {
+                    Aurora.request({
+                        url: $('lk_order_delete').getUrl(),
+                        para: [{
+                            sales_order_id: rec.get('sales_order_id')
+                        }],
+                        success: function(res) {
+                            var ds = $('ord_sales_order_headers_ds');
+                            var r = ds.find('sales_order_id', rec.get('sales_order_id'));
+                            ds.removeLocal(r);
+                            $('${/parameter/@win_id}').close();
+                        },
+                        scope: this
+                    });
+                });
+            }
+            
+            function btn_close_order() {
+                var rec = $('order_headers_ds').getCurrentRecord();
+                if (rec.get('closed_flag') == 'Y') {
+                    Aurora.showErrorMessage('${l:PROMPT}', '当前订单已关闭，不能继续关闭！');
+                    return;
+                }
+                Aurora.showConfirm('?', '是否确认关闭当前订单？', function() {
+                    Aurora.request({
+                        url: $('lk_header_close').getUrl(),
+                        para: {
+                            sales_order_id: rec.get('sales_order_id')
+                        },
+                        success: function(res) {
+                            rec.set('closed_flag', 'Y', true);
+                            var main_head_ds = $('ord_sales_order_headers_ds');
+                            var r = main_head_ds.find('sales_order_id', rec.get('sales_order_id'));
+                            r.set('closed_flag', 'Y', true);
+                            var lns = $('order_lines_ds').getAll();
+                            for (i = 0;i < lns.length;i++) {
+                                lns[i].set('closed_flag', 'Y', true);
+                            }
+                        },
+                        scope: this
+                    });
+                });
+            }
+            
+            function onHeadDsLoad(ds) {
+                var rec = ds.getCurrentRecord();
+                var fld_order_number = rec.getMeta().getField('order_number');
+                fld_order_number.setReadOnly(true);
+                fld_order_number.setRequired(false);
+                var fld_status_name = rec.getMeta().getField('status_name');
+                fld_status_name.setReadOnly(true);
+                rec.getMeta().getField('return_order_flag').setReadOnly(true);
+                onHeadDsUpdate(ds, rec, 'return_order_flag', rec.get('return_order_flag'));
+            }
+            
+            function onHeadDsAdd(ds, rec, idx) {
+                rec.set('order_date', new Date());
+                var fld_order_number = rec.getMeta().getField('order_number');
+                fld_order_number.setReadOnly(false);
+                fld_order_number.setRequired(true);
+                var fld_status_name = rec.getMeta().getField('status_name');
+                fld_status_name.setReadOnly(false);
+                rec.getMeta().getField('return_order_flag').setReadOnly(false);
+                onHeadDsUpdate(ds, rec, 'return_order_flag', rec.get('return_order_flag'));
+            }
+            
+            function onHeadDsUpdate(ds, rec, name, value, oldValue) {
+                if (name == 'return_order_flag') {
+                    var lbl = document.getElementById('return_flag_l');
+                    lbl.style.cssText = value == 'Y' ? 'font-weight:bold;color:red;' : '';
+                }
+            }
+            
+            //创建 或 修改 保存后 更改主页面数据,关闭当前弹出页面
+            function onHeadDsSubmitSuccess(ds, res) {
+                var main_head_ds = $('ord_sales_order_headers_ds');
+                var r = ds.getCurrentRecord();
+                var rec = main_head_ds.find('sales_order_id', r.get('sales_order_id'));
+                if (rec) {
+                    rec.setObject(r.data);
+                } else {
+                    rec = main_head_ds.create(r.data);
+                }
+                rec.set('lines', null); //remove bind lines
+                rec.isNew = false;
+                rec.dirty = false;
+                if (create_new == true) {
+                    //create a new order
+                    ds.removeAll();
+                    $("order_lines_ds").removeAll();
+                    ds.create(); //will notify onHeadDsAdd
+                } else {
+                    onHeadDsLoad(ds);
+                }
+            }
+            
             function create_line() {
                 //TODO 校验后续操作
                 $('order_lines_ds').create();
@@ -84,78 +252,6 @@
                 });
             }
             
-            function btn_close_order() {
-                var rec = $('order_headers_ds').getCurrentRecord();
-                if (rec.get('closed_flag') == 'Y') {
-                    Aurora.showErrorMessage('${l:PROMPT}', '当前订单已关闭，不能继续关闭！');
-                    return;
-                }
-                Aurora.showConfirm('?', '是否确认关闭当前订单？', function() {
-                    Aurora.request({
-                        url: $('lk_header_close').getUrl(),
-                        para: {
-                            sales_order_id: rec.get('sales_order_id')
-                        },
-                        success: function(res) {
-                            rec.set('closed_flag', 'Y', true);
-                            var main_head_ds = $('ord_sales_order_headers_ds');
-                            var r = main_head_ds.find('sales_order_id', rec.get('sales_order_id'));
-                            r.set('closed_flag', 'Y', true);
-                            var lns = $('order_lines_ds').getAll();
-                            for (i = 0;i < lns.length;i++) {
-                                lns[i].set('closed_flag', 'Y', true);
-                            }
-                        },
-                        scope: this
-                    });
-                });
-            }
-            
-            function btn_submit_order() {
-                var rec = $('order_headers_ds').getCurrentRecord();
-                if (rec.get('status') != 'Verified') {
-                    Aurora.showErrorMessage('${l:PROMPT}', '当前状态不允许提交！仅正常状态的订单允许提交！');
-                    return;
-                }
-                Aurora.showConfirm('?', '是否确认提交？', function() {
-                    Aurora.request({
-                        url: $('lk_header_submit').getUrl(),
-                        para: {
-                            sales_order_id: rec.get('sales_order_id')
-                        },
-                        success: function(res) {
-                            updateHeadStatus(rec, 'In Processing');
-                        },
-                        scope: this
-                    });
-                });
-            }
-            
-            function btn_delete_order() {
-                var h_ds = $('order_headers_ds');
-                var l_ds = $('order_lines_ds');
-                var rec = h_ds.getCurrentRecord();
-                if (rec.get('status') != 'Verified') {
-                    Aurora.showMessage('${l:PROMPT}', '当前状态不允许删除');
-                    return;
-                }
-                Aurora.showConfirm('?', '是否确认删除该销售订单的所有信息？', function() {
-                    Aurora.request({
-                        url: $('lk_order_delete').getUrl(),
-                        para: [{
-                            sales_order_id: rec.get('sales_order_id')
-                        }],
-                        success: function(res) {
-                            var ds = $('ord_sales_order_headers_ds');
-                            var r = ds.find('sales_order_id', rec.get('sales_order_id'));
-                            ds.removeLocal(r);
-                            $('${/parameter/@win_id}').close();
-                        },
-                        scope: this
-                    });
-                });
-            }
-            
             function onAddLine(ds, rec, idx) {
                 rec.set('require_date', new Date());
                 var max = 10;
@@ -167,13 +263,6 @@
                     }
                 }
                 rec.set('line_number', max);
-            }
-            
-            function onHeadDsUpdate(ds, rec, name, value, oldValue) {
-                if (name == 'return_order_flag') {
-                    var lbl = document.getElementById('return_flag_l');
-                    lbl.style.cssText = value == 'Y' ? 'font-weight:bold;color:red;' : '';
-                }
             }
             
             function onUpdateLine(ds, rec, name, value, oldValue) {
@@ -202,59 +291,6 @@
                 }
             }
             
-            function btn_save_order() {
-                //check
-                var head_ds = $('order_headers_ds');
-                var rec = head_ds.getCurrentRecord();
-                if (!head_ds.validate(true, true)) {
-                    updateHeadStatus(rec, 'Error');
-                    return;
-                }
-                if ($('order_lines_ds').getAll().length == 0) {
-                    Aurora.showErrorMessage('Error', '请至少保存一条销售订单行信息！');
-                    updateHeadStatus(rec, 'Error');
-                    return;
-                }
-                if (rec.isNew) {
-                    Aurora.request({
-                        url: $('lk_order_number_check').getUrl(),
-                        para: {
-                            order_number: rec.get('order_number')
-                        },
-                        success: function(res) {
-                            if (res.result['exists'] > 0) {
-                                Aurora.showErrorMessage('Error', '销售订单号重复，请重新输入！');
-                                rec.set('order_number', null);
-                                return;
-                            }
-                            updateHeadStatus(rec, 'Verified', true);
-                            head_ds.submit();
-                        },
-                        scope: this
-                    });
-                } else {
-                    updateHeadStatus(rec, 'Verified', true);
-                    head_ds.submit();
-                }
-            }
-            
-            //创建 或 修改 保存后 更改主页面数据,关闭当前弹出页面
-            
-            function onHeadDsSubmitSuccess(ds, res) {
-                var main_head_ds = $('ord_sales_order_headers_ds');
-                var r = ds.getCurrentRecord();
-                var rec = main_head_ds.find('sales_order_id', r.get('sales_order_id'));
-                if (rec) {
-                    rec.setObject(r.data);
-                } else {
-                    rec = main_head_ds.create(r.data);
-                }
-                rec.set('lines',null);//remove bind lines
-                rec.isNew = false;
-                rec.dirty = false;
-                $('${/parameter/@win_id}').close();
-            }
-            
             function non_negative_renderer(value, record, name) {
                 return Math.abs(value) || '0';
             }
@@ -269,8 +305,10 @@
                         sum += Math.abs(n);
                     }
                 }
-                $('order_headers_ds').getCurrentRecord().set('total_amount', sum);
-                return Aurora.formatNumber(sum, '${/sys_parameter/@BUSINESS_ACCURACY}');
+                sum = sum.toFixed('${/sys_parameter/@BUSINESS_ACCURACY}');
+                var rec = $('order_headers_ds').getCurrentRecord();
+                if (rec) rec.set('total_amount', sum);
+                return Aurora.formatNumber(sum);
             }
             
             function primary_quantity_editf(rec, name) {
@@ -278,21 +316,6 @@
                     return 'e_nf_float1';
                 }
                 return "";
-            }
-            
-            function onHeadDsLoad(ds) {
-                var rec = ds.getCurrentRecord();
-                var fld_order_number = rec.getMeta().getField('order_number');
-                fld_order_number.setReadOnly(true);
-                fld_order_number.setRequired(false);
-                var fld_status_name = rec.getMeta().getField('status_name');
-                fld_status_name.setReadOnly(true);
-                rec.getMeta().getField('return_order_flag').setReadOnly(true);
-                onHeadDsUpdate(ds, rec, 'return_order_flag', rec.get('return_order_flag'));
-            }
-            
-            function onHeadDsAdd(ds, rec, idx) {
-                rec.set('order_date', new Date());
             }
             
             function status_name_renderer(value, recode, name) {
@@ -315,6 +338,33 @@
                     return '';
                 }
                 return 'e_nf_float2';
+            }
+            
+            function validate_order_number(value) {
+                if (!value) return true;
+                var ret = true;
+                Aurora.request({
+                    url: $('lk_order_number_check').getUrl(),
+                    para: {
+                        order_number: value
+                    },
+                    success: function(res) {
+                        if (res.result['exists'] > 0) {
+                            ret = '销售订单号重复，请重新输入！';
+                        }
+                    },
+                    scope: this,
+                    sync: true
+                });
+                return ret;
+            }
+            
+            function onOrderNumberBlur() {
+                var rec = $('order_headers_ds').getCurrentRecord();
+                var ret = validate_order_number(rec.get('order_number'));
+                if (ret !== true) {
+                    Aurora.showErrorMessage('Error', ret);
+                }
             }
         ]]></script>
         <a:dataSets>
@@ -390,7 +440,11 @@
         <a:screenBody>
             <a:box column="1">
                 <a:hBox labelWidth="100">
-                    <a:textField name="order_number" bindTarget="order_headers_ds" prompt="订单号"/>
+                    <a:textField name="order_number" bindTarget="order_headers_ds" prompt="订单号">
+                        <a:events>
+                            <a:event name="blur" handler="onOrderNumberBlur"/>
+                        </a:events>
+                    </a:textField>
                     <a:lov name="customer_desc" bindTarget="order_headers_ds" prompt="客户"/>
                     <a:comboBox name="currency_code" bindTarget="order_headers_ds" prompt="币种" width="60"/>
                     <a:datePicker name="order_date" bindTarget="order_headers_ds" prompt="订单日期"/>
@@ -412,6 +466,7 @@
             </a:box>
             <a:hBox>
                 <a:button click="btn_save_order" text="保存订单"/>
+                <a:button click="btn_save_add_order" text="保存并新增"/>
                 <a:button click="btn_delete_order" text="删除订单"/>
                 <a:button click="btn_submit_order" text="提交订单"/>
                 <a:button click="btn_close_order" text="关闭订单"/>

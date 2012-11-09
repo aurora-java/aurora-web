@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <a:service xmlns:s="aurora.plugin.script" xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
     <a:init-procedure>
-        <s:server-script ><![CDATA[
+        <s:server-script><![CDATA[
             $define('ord/ORD5010/ord_sales_order.js');
             var header = $ctx.parameter.getChildren()[0];
             if (header) {
+                header.company_id = header.company_id || $ctx.session.company_id;
                 if (header._status == 'insert') {
                     SalesOrder.insertOrder(header);
                 } else {

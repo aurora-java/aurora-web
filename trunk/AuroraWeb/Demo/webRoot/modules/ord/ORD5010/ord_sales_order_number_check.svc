@@ -2,9 +2,9 @@
 <a:service xmlns:s="aurora.plugin.script" xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
     <a:init-procedure>
         <s:server-script><![CDATA[
+            $define('ord/ORD5010/ord_sales_order.js');
             var p = $ctx.parameter;
-            var res = $bm('ord.ORD5010.ord_sales_order_headers').queryAsMap(p);
-            p.exists = res.getChildren().length;
+            p.exists = SalesOrder.orderNumberCheck(p.order_number, $ctx.session.company_id);
         ]]></s:server-script>
     </a:init-procedure>
     <a:service-output output="/parameter"/>
