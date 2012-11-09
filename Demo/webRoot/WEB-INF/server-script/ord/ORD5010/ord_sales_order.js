@@ -27,13 +27,19 @@ var SalesOrder = {
 	openOrder : function(p){
 		$bm('ord.ORD5010.ord_sales_order_headers_open').execute(p);
 	},
+	orderNumberCheck : function(order_number,company_id){
+		var bm=$bm('ord.ORD5010.ord_sales_order_number_check');
+		var para = new CompositeMap();
+		para.order_number=order_number;
+		para.company_id=company_id;
+		var res = bm.queryAsMap(para);
+		return res.getChildren()[0].exists;
+	},
 	insertOrder : function(h) {
-		if (!h)
-			return;
+		if (!h) return;
 		var arr = h.getChild('lines').getChildren();
 		if (arr.length == 0)
 			raise_app_error('没有订单行，不能保存。');
-		// 校验订单编号是否重复
 		try{
 			SalesOrder.getHeadBm().insert(h);
 		}catch(e){
@@ -49,8 +55,7 @@ var SalesOrder = {
 		}
 	},
 	updateOrder : function(h) {
-		if (!h)
-			return;
+		if (!h) return;
 		SalesOrder.getHeadBm().update(h);
 		var arr = h.getChild('lines').getChildren();
 		var mul = h.return_order_flag == 'Y' ? -1 : 1;
@@ -59,8 +64,8 @@ var SalesOrder = {
 			arr[i].sales_order_id = h.sales_order_id;
 			arr[i].trade_quantity = mul * Math.abs(arr[i].trade_quantity);
 			arr[i].total_amount = mul * Math.abs(arr[i].total_amount);
-			l_bm[arr[i]._status](arr[i]);// arr[i]._status may be
-														// insert,delete,update
+			arr[i].company_id=arr[i].company_id||h.company_id;
+			l_bm[arr[i]._status](arr[i]);// arr[i]._status may be insert,delete,update
 		}
 	},
 	closeLine:function(p){
@@ -76,4 +81,3 @@ var SalesOrder = {
          return arr.length==0;
 	}
 };
-println('define SalesOrder')
