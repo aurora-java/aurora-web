@@ -85,7 +85,7 @@
                                     'name','jsdoc',
                                     'allowscriptaccess','always',
                                     'pluginspage','http://www.macromedia.com/go/getflashplayer',
-                                    'flashvars','appname=JavaScriptDocument&appurl=http://www.aurora-framework.org/doc/AuroraJsDoc.air&airversion=2.5&buttoncolor=FF0000&messagecolor=000000&imageurl=resources/JavaScriptDocument.jpg',
+                                    'flashvars','appname=JavaScriptDocument&appurl=http://'+location.host+'${/request/@context_path}/doc/AuroraJsDoc.air&airversion=2.5&buttoncolor=FF0000&messagecolor=000000&imageurl=resources/JavaScriptDocument.jpg',
                                     'movie','badge',
                                     'wmode','transparent' ); //end AC code
                     
@@ -112,7 +112,7 @@
                                     'name','tagdoc',
                                     'allowscriptaccess','always',
                                     'pluginspage','http://www.macromedia.com/go/getflashplayer',
-                                    'flashvars','appname=TagDocument&appurl=http://www.aurora-framework.org/doc/AuroraTagDoc.air&airversion=2.5&buttoncolor=FF0000&messagecolor=000000&imageurl=resources/TagDocument.jpg',
+                                    'flashvars','appname=TagDocument&appurl=http://'+location.host+'${/request/@context_path}/doc/AuroraTagDoc.air&airversion=2.5&buttoncolor=FF0000&messagecolor=000000&imageurl=resources/TagDocument.jpg',
                                     'movie','badge',
                                     'wmode','transparent' ); //end AC code
                     
