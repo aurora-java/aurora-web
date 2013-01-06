@@ -1,0 +1,27 @@
+.button-add div,.button-delete div,.button-save div,.button-clear div,.button-excel div,.button-cust div,.button-txt div{
+    background-image:url(../images/btn_icon.png);
+    background-repeat:no-repeat;
+    background-position: 0px;
+    padding-left:20px;
+}
+.button-add div {
+    background-position:0px 3px;
+}
+.button-delete div {
+    background-position:0px -22px;
+}
+.button-save div {
+    background-position:0px -73px;
+}
+.button-clear div {
+    background-position:0px -47px;
+}
+.button-excel div {
+    background-position:0px -122px;
+}
+.button-cust div {
+    background-position:0px -98px;
+}
+.button-txt div {
+    background-position:0px -149px;
+}
