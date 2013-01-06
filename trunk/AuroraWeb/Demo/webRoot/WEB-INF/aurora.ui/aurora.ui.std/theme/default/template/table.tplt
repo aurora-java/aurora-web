@@ -1,0 +1,15 @@
+<TABLE tabIndex="${tabindex}" class="${wrapClass}" id="${id}" hidefocus style="outline:none;width:${percentwidth};${style}" cellSpacing="0" cellPadding="0" border="0">
+<THEAD>
+	${title}
+	${heads}
+</THEAD>
+<TBODY>
+</TBODY>
+${foots}
+${navbar}
+</TABLE>
+<SCRIPT LANGUAGE="JavaScript">
+	new Aurora.Table(${config});
+	$('${id}').bind('${bindtarget}');
+</SCRIPT>
+${editors}
