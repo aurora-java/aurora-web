@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>${page:title}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+${page:html.head.css} 
+${page:html.head.script}
+</head>
+<body>
+    <style>
+            .item-wrap {
+                background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAACCAMAAABIdo1RAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRF8vLy2dnZzgvGVQAAABBJREFUeNpiYAQCBhAACDAAACgABekA5OQAAAAASUVORK5CYII=");
+                background-repeat:repeat-x;
+            }
+            .item-wrap input {
+                background-color : transparent 
+            }
+            .layout-form {
+                -moz-border-radius: 5px;
+                -webkit-border-radius: 5px;
+                border-radius: 5px;
+                background-color: #f6f6f6;
+                background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f6f6f6), color-stop(100%, #eaeaea));
+                -moz-box-shadow: 0px 1px 2px 1px #c8c8c8;
+                -webkit-box-shadow: 0px 1px 2px 1px #c8c8c8;
+                box-shadow: 0px 1px 2px 1px #c8c8c8;
+
+            }
+            .formTitle {
+                font-size:14px;
+                font-weight:bold;
+                margin-bottom:5px;
+            }
+            .grid-ub td, .grid-lb td {
+                border-bottom:none;
+                border-right:none;
+                height:23px;
+            }
+            .cell-editor {
+                border:none;
+                height:22px;
+            }
+            .row-alt {
+                background-color:#f3f6fa;
+            }
+            
+            .grid-lh {
+                border-right:1px solid #ccc;
+            }
+            .grid-la {
+                border-right:none;
+                
+            }
+            .grid-hl {
+                display:none;
+            }
+            .grid-rowbox {
+                background-image:none;
+                width:26px;
+            }
+    </style>
+    <script language="javascript">
+        function checkFrame(){
+            if(Aurora){
+                Aurora.Status.enable = false;
+                Aurora.SideBar.enable = false;
+            }
+        }
+        checkFrame();
+		
+    </script>
+    <div></div>
+	${page:init}
+	${page:content}
+</body>
+</html>
