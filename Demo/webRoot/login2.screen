@@ -7,7 +7,7 @@
 -->
 <a:screen xmlns:s="aurora.plugin.script" xmlns:a="http://www.aurora-framework.org/application" trace="true">
     <a:init-procedure/>
-    <a:view template="default">
+    <a:view>
         <a:link id="role_select_link_2" url="${/request/@context_path}/role_select.screen"/>
         <a:link id="password_expired_update_link" url="${/request/@context_path}/password_expired_update.screen"/>
         <a:link id="login_link_4" url="${/request/@context_path}/login.svc"/>
@@ -20,9 +20,10 @@
             </a:dataSet>
             <a:dataSet id="login_dataset" autocreate="true">
                 <a:fields>
-                    <a:field name="user_name" defaultValue="admin"/>
+                    <a:field name="user_name" defaultValue="ADMIN"/>
                     <a:field name="user_password" defaultValue="1"/>
-                    <a:field name="language" defaultValue="ZHS" displayField="name" options="language_dataset" returnField="user_language" valueField="code"/>
+                    <a:field name="user_language" defaultValue="ZHS"/>
+                    <a:field name="language" displayField="name" options="language_dataset" returnField="user_language" valueField="code"/>
                 </a:fields>
             </a:dataSet>
         </a:dataSets>
@@ -30,16 +31,16 @@
             Aurora.Status.enable = false;
             Aurora.SideBar.enable = false;
             //判断是否IPAD，如果是IPAD并且JSID存在就直接跳转
-            if (isIpad()) {
-                Aurora.setCookie('JSID','',-1);
-                deleteJSID();
-                window.location.href = $('login_ipad_link').getUrl();
-            }
+            // if (isIpad()) {
+                // Aurora.setCookie('JSID','',-1);
+                // deleteJSID();
+                // window.location.href = $('login_ipad_link').getUrl();
+            // }
             /**如果不是IPAD就删除上次的JSID*********************************/
-            else{
+            // else{
                 Aurora.setCookie('JSID','',-1);
                 deleteJSID();
-            }
+            // }
             /**************************************************************/
             //删除JSID的cookie，用于判断上次是超时还是正常登出
             function deleteJSID() {
@@ -52,20 +53,20 @@
             try {
                 username = document.cookie.match(new RegExp("(^| )" + "USERNAME" + "=([^;]*)(;|$)"))[2] == undefined ? '' : document.cookie.match(new RegExp("(^| )" + "USERNAME" + "=([^;]*)(;|$)"))[2];
             } catch (err) {
-                username = '';
+                username = 'ADMIN';
             }
             var lang;
             try {
                 lang = document.cookie.match(new RegExp("(^| )" + "LANG" + "=([^;]*)(;|$)"))[2] == undefined ? '' : document.cookie.match(new RegExp("(^| )" + "LANG" + "=([^;]*)(;|$)"))[2];
             } catch (err) {
-                lang = '';
+                lang = 'ZHS';
             }
             
             function login() {
                 var lds = $('login_dataset');
                 var record = lds.getCurrentRecord();
                 //添加是否IPAD登录的判断
-                record.set('is_ipad',isIpad()?'Y':'N');
+                // record.set('is_ipad',isIpad()?'Y':'N');
                 Aurora.request({
                     url: /*login.svc*/$('login_link_4').getUrl(),
                     para: record.data,
@@ -83,9 +84,9 @@
                             }, 250, 100);
                         } else {
                             saveUserNameLang();
-                            if(isIpad()){
-                                saveSessionId();
-                            }
+                            // if(isIpad()){
+                                // saveSessionId();
+                            // }
                             window.location.href = $('role_select_link_2').getUrl() + location.search;
                         }
                     },
@@ -98,7 +99,7 @@
                 var userName = record.get('user_name');
                 var lang = record.get('user_language');
                 Aurora.setCookie('USERNAME', userName, 30);
-                Aurora.setCookie('LANG', lang, 30)
+                Aurora.setCookie('LANG', lang, 30);
             }
             
             //iPAD下保存sessionId
@@ -111,65 +112,53 @@
                 var tf = $('user_name_tf');
                 setTimeout(function() {
                     tf.focus();
-                }, 10)
+                }, 10);
             }
             Aurora.manager.on('ajaxfailed', function(manager, url, para, res) {
                 if (res && res.error && res.error.code == 'img_code_error') {
                     $('img_code').refresh();
                 }
-            })
+            });
             
             
         ]]></script>
-        <div id="loginForm" style="position:absolute;left:-2000px;top:-2000px;background-image:url(images/role_select2_background.png);width:960px;height:368px;">
-            <div style="padding-left:165px;padding-top:135px;">
-                <table>
-                    <tr>
-                        <td>
-                            <a:vBox className="mytable" labelWidth="80">
-                                <a:textField name="user_name" id="user_name_tf" bindTarget="login_dataset" prompt="HAP_USERNAME" width="150">
-                                    <a:events>
-                                        <a:event name="enterdown" handler="login"/>
-                                    </a:events>
-                                </a:textField>
-                                <a:passWord name="user_password" bindTarget="login_dataset" prompt="HAP_PASSWORD" width="150">
-                                    <a:events>
-                                        <a:event name="enterdown" handler="login"/>
-                                    </a:events>
-                                </a:passWord>
-                                <a:comboBox name="language" bindTarget="login_dataset" prompt="HAP_LANGUAGE" width="150">
-                                    <a:events>
-                                        <a:event name="enterdown" handler="login"/>
-                                    </a:events>
-                                </a:comboBox>
-                            </a:vBox>
-                        </td>
-                        <td>
-                            <a:hBox width="90">
-                                <a:button id="btn_1" click="login" height="72" text="HAP_LOGIN" width="72"/>
-                            </a:hBox>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+        <a:form id="loginForm" labelWidth="100" row="1" style="position:absolute;left:-2000px;top:-2000px;" title="登录" width="330">
+            <a:vBox className="mytable" labelWidth="80">
+                <a:textField name="user_name" id="user_name_tf" bindTarget="login_dataset" prompt="HAP_USERNAME" width="150">
+                    <a:events>
+                        <a:event name="enterdown" handler="login"/>
+                    </a:events>
+                </a:textField>
+                <a:passWord name="user_password" bindTarget="login_dataset" prompt="HAP_PASSWORD" width="150">
+                    <a:events>
+                        <a:event name="enterdown" handler="login"/>
+                    </a:events>
+                </a:passWord>
+                <a:comboBox name="language" bindTarget="login_dataset" prompt="HAP_LANGUAGE" width="150">
+                    <a:events>
+                        <a:event name="enterdown" handler="login"/>
+                    </a:events>
+                </a:comboBox>
+            </a:vBox>
+            <a:hBox width="90">
+                <a:button id="btn_1" click="login" height="72" text="HAP_LOGIN" width="72"/>
+            </a:hBox>
+        </a:form>
         <script><![CDATA[
-        
-            Aurora.onReady(function(){
+            Aurora.onReady(function() {
                 Aurora.center('loginForm');
                 Aurora.get('loginForm').show();
                 init();
-            })
-           var record =$('login_dataset').getAt(0);
-               record.set('user_name',username);
-               record.set('user_language',lang); 
-           var records =$('language_dataset').getAll();  
-             for (var i=0;i<records.length;i++){
-                    if (records[i].get('code')==lang){
-                        record.set('language',records[i].get('name'));
-                  }
-             }
-             
+            });
+            var record = $('login_dataset').getAt(0);
+            record.set('user_name', username);
+            record.set('user_language', lang);
+            var records = $('language_dataset').getAll();
+            for (var i = 0;i < records.length;i++) {
+                if (records[i].get('code') == lang) {
+                    record.set('language', records[i].get('name'));
+                }
+            }
         ]]></script>
     </a:view>
 </a:screen>

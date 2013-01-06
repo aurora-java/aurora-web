@@ -29,7 +29,7 @@
             
             function popsizewin(tleft,ttop,twidth,theight,tscrollbar,tresizable){
                 var jsid = Aurora.getCookie('JSID');
-                window._mainwin = window.open(/*loading.screen*/$('loading_link').getUrl() + location.search,jsid,"left=" + tleft +",top="+ ttop + ",width=" + twidth + ",height="+ theight + ",status=0,toolbar=0,menubar=0,location=0,scrollbars="+ tscrollbar+",resizable="+tresizable,false);
+                window._mainwin = window.open($('loading_link').getUrl() + location.search,jsid,"left=" + tleft +",top="+ ttop + ",width=" + twidth + ",height="+ theight + ",status=0,toolbar=0,menubar=0,location=0,scrollbars="+ tscrollbar+",resizable="+tresizable,false);
             }
             
             Aurora.Status.enable = false;
@@ -38,8 +38,8 @@
                 var radio = $('roleRadios');
                 var record = radio.getItem();
                 if(record){
-                    openwin();
-                    Aurora.request({url:/*role_select.svc*/$('role_select_link').getUrl(), para:record.data, success:selectRoleSuccess, scope:this});
+                    //openwin();
+                    Aurora.request({url:$('role_select_link').getUrl(), para:record.data, success:selectRoleSuccess, scope:this});
                 }else{
                     Aurora.showWarningMessage('${l:PROMPT}', "${l:NO_ROLE_SELECTABLE}");
                 }
@@ -52,11 +52,12 @@
             
             
             function selectRoleSuccess(){
-                canGoToMainService = true;
+                window.location.href="main.screen";
+                //canGoToMainService = true;
             }
             
             function backToLogin(){
-                window.location.href = /*login.screen*/$('login_link').getUrl();
+                window.location.href = $('login_link').getUrl();
             }
             
             function optionRenderer(){
@@ -93,7 +94,7 @@
                 Aurora.get('roleForm').show();
                 $('roleRadios').select(0);
                 if($('role_list_ds').getAll().length == 1){
-	                //goToMain();
+	                goToMain();
                 }
             });
             
