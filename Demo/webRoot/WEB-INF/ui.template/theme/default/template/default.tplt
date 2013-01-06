@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>${page:title}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+${page:html.head.css} 
+${page:html.head.script}
+<link href="${page:contextPath}/css/common.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <script language="javascript">
+        function initAurora(){
+            if(Aurora){
+                Aurora.Status.enable = false;
+                Aurora.SideBar.enable = false;
+            }
+            Ext.getBody().on('click',function(el){
+                if(parent && parent.hideCurrentMenu) parent.hideCurrentMenu();
+            })
+        }
+        initAurora();
+    </script>
+	${page:init}
+    <div style="padding-left:17px;padding-right:20px;">
+        <div style="width:100%">
+            ${page:content}
+        </div>
+    </div>
+</body>
+</html>
