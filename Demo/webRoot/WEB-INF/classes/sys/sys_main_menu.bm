@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+select *
+  from (SELECT t.function_id,
+               t.function_code,
+               t.parent_function_id,
+               (select DESCRIPTION_TEXT
+                  from fnd_descriptions
+                 where DESCRIPTION_ID = t.function_name_id
+                   and Language = 'ZHS') AS function_description
+          FROM sys_function t, sys_role_function rf
+         where t.function_type = 'G'
+           and t.parent_function_id is null
+           and t.function_id = rf.function_id
+           and rf.role_id = ${/session/@role_id}
+         order by t.sequence) v
+            ]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+</bm:model>
