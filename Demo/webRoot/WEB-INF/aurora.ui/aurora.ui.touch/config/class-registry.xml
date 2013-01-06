@@ -1,0 +1,11 @@
+<class-registry>
+    <feature-attach elementName="button" nameSpace="http://www.aurora-framework.org/touch" featureClass="aurora.presentation.component.touch.Button" />
+    <feature-attach elementName="textField" nameSpace="http://www.aurora-framework.org/touch" featureClass="aurora.presentation.component.touch.TextField" />
+    <feature-attach elementName="passWord" nameSpace="http://www.aurora-framework.org/touch" featureClass="aurora.presentation.component.touch.PassWord" />
+    <feature-attach elementName="textArea" nameSpace="http://www.aurora-framework.org/touch" featureClass="aurora.presentation.component.touch.TextArea" />
+    <feature-attach elementName="dateField" nameSpace="http://www.aurora-framework.org/touch" featureClass="aurora.presentation.component.touch.DateField" />
+    <feature-attach elementName="ajax" nameSpace="http://www.aurora-framework.org/touch" featureClass="aurora.presentation.component.touch.Ajax" />
+    <feature-attach elementName="switchButton" nameSpace="http://www.aurora-framework.org/touch" featureClass="aurora.presentation.component.touch.SwitchButton" />
+    <feature-attach elementName="list" nameSpace="http://www.aurora-framework.org/touch" featureClass="aurora.presentation.component.touch.List" />
+    <feature-attach elementName="searchField" nameSpace="http://www.aurora-framework.org/touch" featureClass="aurora.presentation.component.touch.SearchField" />
+</class-registry>

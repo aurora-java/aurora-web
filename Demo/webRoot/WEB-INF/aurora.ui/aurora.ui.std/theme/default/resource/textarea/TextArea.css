@@ -1,0 +1,17 @@
+.item-textarea {
+	border:1px solid #cccccc;
+	resize: none;
+	padding:2px;
+	overflow-y:auto;
+	/*
+	font-size:11px;
+	font-family: sans-serif !important;
+	font-family: tahoma, arial, sans-serif,helvetica;
+	*/
+}
+.ext-ie6 .item-textarea{
+	font-size:12px;
+}
+.item-textarea.item-focus{
+	border:1px solid blue;
+}
