@@ -67,6 +67,16 @@
 		<url-pattern>/autocrud/*</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+        <servlet-name>wsdl</servlet-name>
+        <servlet-class>aurora.service.http.WSDLServlet</servlet-class>
+    </servlet>
+	
+	<servlet-mapping>
+		<servlet-name>wsdl</servlet-name>
+		<url-pattern>/wsdl/*</url-pattern>
+	</servlet-mapping>
+	
 
 	<servlet-mapping>
 		<servlet-name>birtForward</servlet-name>
