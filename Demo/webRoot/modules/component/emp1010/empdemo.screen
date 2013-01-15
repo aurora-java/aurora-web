@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2012-9-28 下午1:20:17  
+    $Revision: 1.0  
+    $Purpose: 销售订单（头）
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:t="uncertain.composite.transform" xmlns:p="uncertain.proc" trace="true">
+    <a:init-procedure>
+        <a:model-query model="fnd.FND1030.fnd_employees" rootPath="source_emp_list"/>
+        <t:group-transform groupfield="department_id" source="/model/source_emp_list" subgroupname="enabled_flag" target="/model/target_emp_list/a"><![CDATA[
+        ]]></t:group-transform>
+        <!-- <p:echo name="model"/> -->
+    </a:init-procedure>
+    <a:view>
+        <a:screenBody>
+            <a:form column="1" title="Demo1">
+                <!--  <a:table bindTarget="demo_ds" height="1000" prompt="" width="500">
+                    <a:columns>
+                        <a:column name="employee_code" prompt="工号"/>
+                        <a:column name="employee_name" prompt="姓名"/>
+                    </a:columns>
+                </a:table> -->
+                <a:listView datamodel="/model/source_emp_list" width="500">
+                    <a:columns>
+                        <a:column name="employee_code" align="center" prompt="员工工号"/>
+                        <a:column name="employee_name" align="center" prompt="员工名"/>
+                        <a:column name="department_id" align="center" prompt="部门id"/>
+                    </a:columns>
+                </a:listView>
+            </a:form>
+            <a:repeater datamodel="/model/target_emp_list/a">
+                <a:listView datamodel="enabled_flag">
+                    <a:columns>
+                        <a:column name="employee_code" align="center" prompt="员工工号"/>
+                        <a:column name="employee_name" align="center" prompt="员工名"/>
+                        <a:column name="department_id" align="center" prompt="部门id"/>
+                    </a:columns>
+                </a:listView>
+            </a:repeater>
+        </a:screenBody>
+    </a:view>
+</a:screen>

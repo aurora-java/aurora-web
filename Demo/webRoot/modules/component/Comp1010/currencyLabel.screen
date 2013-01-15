@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2012-9-28 下午1:20:17  
+    $Revision: 1.0  
+    $Purpose: 销售订单（头）
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:init-procedure>
+        <a:model-query model="ord.ORD5010.ord_sales_order_headers" rootPath="emp_list"/>
+        <p:echo name="model"/>
+    </a:init-procedure>
+    <a:view>
+        <script><![CDATA[
+            function total_amount_renderer(value, record, name) {
+                return Math.abs(value);
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="demo_ds" autoCreate="true">
+                <a:fields>
+                    <a:field name="count1" defaultValue="111111"/>
+                </a:fields>
+            </a:dataSet>
+            <a:dataSet id="demo_ds2" autoCreate="true" autoQuery="true" fetchAll="true" loadData="true">
+                <a:fields>
+                    <a:field name="count1" defaultValue="111111"/>
+                </a:fields>
+                <a:datas>
+                    <a:record count1="444"/>
+                    <a:record count1="111"/>
+                    <a:record count1="333"/>
+                    <a:record count1="44"/>
+                    <a:record count1="666"/>
+                    <a:record count1="111"/>
+                </a:datas>
+            </a:dataSet>
+        </a:dataSets>
+        <a:screenBody>
+            <a:form column="1" title="Demo测试">
+                <a:hBox labelWidth="100">
+                    <a:currencyLabel name="count1" bindTarget="demo_ds" prompt="金额"/>
+                </a:hBox>
+            </a:form>
+            <a:repeater datamodel="/model/emp_list">
+                <a:hBox labelWidth="100">
+                    <label><![CDATA[工资：]]></label>
+                    <a:viewItem format="###,###.00" renderer="total_amount_renderer" style="font-weight:bold" value="@total_amount"/>
+                </a:hBox>
+            </a:repeater>
+        </a:screenBody>
+    </a:view>
+</a:screen>
