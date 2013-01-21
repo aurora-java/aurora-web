@@ -8,9 +8,18 @@
 <a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:t="uncertain.composite.transform" xmlns:p="uncertain.proc" trace="true">
     <a:init-procedure>
         <a:model-query model="fnd.FND1030.fnd_employees" rootPath="source_emp_list"/>
+        <!-- <a:model-query model="sys.SYS8010.sys_function" rootPath="source_tree"/> -->
         <t:group-transform groupfield="department_id" source="/model/source_emp_list" subgroupname="enabled_flag" target="/model/target_emp_list/a"><![CDATA[
         ]]></t:group-transform>
-        <!-- <p:echo name="model"/> -->
+        <t:group-transform groupfield="department_id" source="/model/source_emp_list" target="/model/group_transform"/>
+        <t:map-transform keyField="employee_code" source="/model/source_emp_list" target="/model/map_transform"><![CDATA[
+        ]]></t:map-transform>
+        <!--  sharedField="" putValueOnly=""  -->
+        <t:matrix-transform columnField="employee_code" groupField="department_id" putValueOnly="true" source="/model/source_emp_list" target="/model/matrix_transform" valueField="employee_name"><![CDATA[
+        ]]></t:matrix-transform>
+        <t:tree-transform idField="employee_id" parentField="supervisor" source="/model/source_emp_list" target="/model/tree_transform"><![CDATA[
+        ]]></t:tree-transform>
+        <p:echo name="model"/>
     </a:init-procedure>
     <a:view>
         <a:screenBody>
