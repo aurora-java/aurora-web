@@ -2120,7 +2120,7 @@ DROP TABLE IF EXISTS `fnd_descriptions_s`;
 CREATE TABLE `fnd_descriptions_s` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=gbk COMMENT='用来模拟ORACLE数据库的序列';
+) ENGINE=InnoDB AUTO_INCREMENT=1327 DEFAULT CHARSET=gbk COMMENT='用来模拟ORACLE数据库的序列';
 
 --
 -- Dumping data for table `fnd_descriptions_s`
