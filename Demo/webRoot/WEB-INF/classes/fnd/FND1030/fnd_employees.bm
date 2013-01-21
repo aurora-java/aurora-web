@@ -7,6 +7,7 @@
         <ns1:field name="employee_name" databaseType="VARCHAR" datatype="java.lang.String" prompt="FND_EMPLOYEES.EMPLOYEE_NAME"/>
         <ns1:field name="department_id" databaseType="NUMBER" datatype="java.lang.Long"/>
         <ns1:field name="enabled_flag" databaseType="VARCHAR" datatype="java.lang.String" prompt="FND_EMPLOYEES.ENABLED_FLAG"/>
+        <ns1:field name="supervisor" databaseType="NUMBER" datatype="java.lang.Long"/>
     </ns1:fields>
     <ns1:primary-key>
         <ns1:pk-field name="employee_id"/>
