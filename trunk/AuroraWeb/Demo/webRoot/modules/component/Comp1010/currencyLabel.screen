@@ -39,13 +39,18 @@
         <a:screenBody>
             <a:form column="1" title="Demo测试">
                 <a:hBox labelWidth="100">
-                    <a:currencyLabel name="count1" bindTarget="demo_ds" prompt="金额"/>
+                    <label><![CDATA[正数：]]></label>
+                    <a:curLabel value="10000"/>
+                </a:hBox>
+                <a:hBox labelWidth="100">
+                    <label><![CDATA[负数：]]></label>
+                    <a:curLabel value="-10000"/>
                 </a:hBox>
             </a:form>
             <a:repeater datamodel="/model/emp_list">
                 <a:hBox labelWidth="100">
                     <label><![CDATA[工资：]]></label>
-                    <a:viewItem format="###,###.00" renderer="total_amount_renderer" style="font-weight:bold" value="@total_amount"/>
+                    <a:curLabel value="@total_amount"/>
                 </a:hBox>
             </a:repeater>
         </a:screenBody>
