@@ -7,7 +7,7 @@
 -->
 <a:screen xmlns:s="aurora.plugin.script" xmlns:a="http://www.aurora-framework.org/application">
     <a:init-procedure>
-        <s:server-script import="ord/ord5010/ord_sales_order_create.js"/>
+        <s:server-script import="ord/ORD5010/ord_sales_order_create.js"/>
     </a:init-procedure>
     <a:view>
         <a:link id="lk_line_close_open" url="${/request/@context_path}/modules/ord/ORD5010/ord_sales_order_line_close_open.svc"/>
