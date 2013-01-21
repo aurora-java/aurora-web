@@ -2146,20 +2146,28 @@ CREATE TABLE `fnd_employees` (
   `created_by` int(11) NOT NULL,
   `last_update_date` date NOT NULL,
   `last_updated_by` int(11) NOT NULL,
+  `supervisor` int(11) DEFAULT NULL,
   PRIMARY KEY (`employee_id`),
   UNIQUE KEY `FND_EMPLOYEES_U1` (`company_id`,`employee_code`),
   KEY `FND_EMPLOYEES_N1` (`company_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB AUTO_INCREMENT=10007 DEFAULT CHARSET=gbk;
 
 --
 -- Dumping data for table `fnd_employees`
 --
 
 /*!40000 ALTER TABLE `fnd_employees` DISABLE KEYS */;
-INSERT INTO `fnd_employees` (`employee_id`,`company_id`,`employee_code`,`employee_name`,`department_id`,`enabled_flag`,`creation_date`,`created_by`,`last_update_date`,`last_updated_by`) VALUES 
- (1,22,'EMP01','莫言',49,'Y','2012-09-21',1,'2012-10-12',21),
- (5,22,'EMP02','李四',44,'N','2012-09-26',1,'2012-09-28',21),
- (6,22,'EMP05','王五',46,'Y','2012-09-27',1,'2012-09-28',21);
+INSERT INTO `fnd_employees` (`employee_id`,`company_id`,`employee_code`,`employee_name`,`department_id`,`enabled_flag`,`creation_date`,`created_by`,`last_update_date`,`last_updated_by`,`supervisor`) VALUES (1,22,'EMP01','莫言',49,'Y','2012-09-21',1,'2012-10-12',21,NULL);
+INSERT INTO `fnd_employees` (`employee_id`,`company_id`,`employee_code`,`employee_name`,`department_id`,`enabled_flag`,`creation_date`,`created_by`,`last_update_date`,`last_updated_by`,`supervisor`) VALUES (5,22,'EMP02','李四',44,'N','2012-09-26',1,'2012-09-28',21,NULL);
+INSERT INTO `fnd_employees` (`employee_id`,`company_id`,`employee_code`,`employee_name`,`department_id`,`enabled_flag`,`creation_date`,`created_by`,`last_update_date`,`last_updated_by`,`supervisor`) VALUES (6,22,'EMP05','王五',46,'Y','2012-09-27',1,'2012-09-28',21,NULL);
+INSERT INTO `fnd_employees` (`employee_id`,`company_id`,`employee_code`,`employee_name`,`department_id`,`enabled_flag`,`creation_date`,`created_by`,`last_update_date`,`last_updated_by`,`supervisor`) VALUES (10000,22,'EMP06','徐洋',49,'Y','2012-09-27',1,'2012-09-28',21,1);
+INSERT INTO `fnd_employees` (`employee_id`,`company_id`,`employee_code`,`employee_name`,`department_id`,`enabled_flag`,`creation_date`,`created_by`,`last_update_date`,`last_updated_by`,`supervisor`) VALUES (10001,22,'EMP07','马飞',49,'Y','2012-09-27',1,'2012-09-28',21,1);
+INSERT INTO `fnd_employees` (`employee_id`,`company_id`,`employee_code`,`employee_name`,`department_id`,`enabled_flag`,`creation_date`,`created_by`,`last_update_date`,`last_updated_by`,`supervisor`) VALUES (10002,22,'EMP08','蔡斌',49,'Y','2012-09-27',1,'2012-09-28',21,5);
+INSERT INTO `fnd_employees` (`employee_id`,`company_id`,`employee_code`,`employee_name`,`department_id`,`enabled_flag`,`creation_date`,`created_by`,`last_update_date`,`last_updated_by`,`supervisor`) VALUES (10003,22,'EMP09','李焱',44,'Y','2012-09-27',1,'2012-09-28',21,10001);
+INSERT INTO `fnd_employees` (`employee_id`,`company_id`,`employee_code`,`employee_name`,`department_id`,`enabled_flag`,`creation_date`,`created_by`,`last_update_date`,`last_updated_by`,`supervisor`) VALUES (10004,22,'EMP11','王猛',44,'Y','2012-09-27',1,'2012-09-28',21,10002);
+INSERT INTO `fnd_employees` (`employee_id`,`company_id`,`employee_code`,`employee_name`,`department_id`,`enabled_flag`,`creation_date`,`created_by`,`last_update_date`,`last_updated_by`,`supervisor`) VALUES (10005,22,'EMP10','王洋',49,'Y','2012-09-27',1,'2012-09-28',21,6);
+INSERT INTO `fnd_employees` (`employee_id`,`company_id`,`employee_code`,`employee_name`,`department_id`,`enabled_flag`,`creation_date`,`created_by`,`last_update_date`,`last_updated_by`,`supervisor`) VALUES (10006,22,'EMP12','赵风',46,'Y','2012-09-27',1,'2012-09-28',21,10005);
+
 /*!40000 ALTER TABLE `fnd_employees` ENABLE KEYS */;
 
 
