@@ -1,0 +1,11 @@
+<style>
+.item-label-red{
+height:22px;
+color:red;
+font-weight:bold;
+line-height:22px;
+vertical-align:middle;
+}
+</style>
+
+<DIV class="${wrapClass}" style="width:${width}px;${style}"   >${value}</DIV>
