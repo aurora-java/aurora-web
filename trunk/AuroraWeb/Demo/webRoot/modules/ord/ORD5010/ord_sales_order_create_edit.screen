@@ -17,9 +17,6 @@
         <a:link id="lk_order_number_check" url="${/request/@context_path}/modules/ord/ORD5010/ord_sales_order_number_check.svc"/>
         <a:link id="lk_order_delete" url="${/request/@context_path}/modules/ord/ORD5010/ord_sales_order_delete.svc"/>
         <script><![CDATA[
-            onerror = function(m, u, l) {
-                alert(m + '\n' + u + '\n' + l);
-            };
             var create_new = true;
                         
             function do_save() {
@@ -405,7 +402,7 @@
                     <a:event name="submitsuccess" handler="onHeadDsSubmitSuccess"/>
                 </a:events>
             </a:dataSet>
-            <a:dataSet id="order_lines_ds" bindName="lines" bindTarget="order_headers_ds" model="ord.ORD5010.ord_sales_order_lines" selectable="true">
+            <a:dataSet id="order_lines_ds" bindName="lines" bindTarget="order_headers_ds" fetchAll="true" model="ord.ORD5010.ord_sales_order_lines" selectable="true">
                 <a:fields>
                     <a:field name="item_id" required="true"/>
                     <a:field name="item_desc" lovGridHeight="260" lovService="ord.ORD5010.inv_item_basic_lov" lovWidth="600" required="true" title="选择物品">

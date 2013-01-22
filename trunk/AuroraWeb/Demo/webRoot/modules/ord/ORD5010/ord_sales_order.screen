@@ -138,36 +138,25 @@
             </a:dataSet>
         </a:dataSets>
         <a:screenBody>
-            <a:form column="1" title="查询订单">
-                <a:hBox labelWidth="100">
+            <a:queryForm bindTarget="ord_sales_order_header_query_ds" resultTarget="ord_sales_order_headers_ds" style="width:100%;border:none">
+                <a:formToolBar>
                     <a:textField name="order_number" bindTarget="ord_sales_order_header_query_ds" prompt="订单号"/>
                     <a:lov name="customer_lov" bindTarget="ord_sales_order_header_query_ds" prompt="客户"/>
-                    <a:hBox labelSeparator="" width="240">
-                        <a:button click="btn_query_order_header" prompt=" " text="HAP_QUERY"/>
-                        <a:button click="btn_reset_query_ds" text="HAP_RESET"/>
+                </a:formToolBar>
+                <a:formBody>
+                    <a:hBox labelWidth="100">
+                        <a:datePicker name="order_date_from" bindTarget="ord_sales_order_header_query_ds" prompt="订单日期"/>
+                        <a:datePicker name="order_date_to" bindTarget="ord_sales_order_header_query_ds" prompt="到"/>
+                        <a:lov name="salesmen_employee_lov" bindTarget="ord_sales_order_header_query_ds" prompt="销售员"/>
                     </a:hBox>
-                </a:hBox>
-                <a:accordionPanel id="accordion_dim" width="800">
-                    <a:accordions>
-                        <a:accordion prompt="高级" selected="false">
-                            <a:vBox>
-                                <a:hBox labelWidth="100">
-                                    <a:datePicker name="order_date_from" bindTarget="ord_sales_order_header_query_ds" prompt="订单日期"/>
-                                    <a:datePicker name="order_date_to" bindTarget="ord_sales_order_header_query_ds" prompt="到"/>
-                                    <a:lov name="salesmen_employee_lov" bindTarget="ord_sales_order_header_query_ds" prompt="销售员"/>
-                                </a:hBox>
-                                <a:hBox labelWidth="100">
-                                    <a:comboBox name="status_com" bindTarget="ord_sales_order_header_query_ds" prompt="状态"/>
-                                    <a:checkBox name="goods_issue_flag" bindTarget="ord_sales_order_header_query_ds" prompt="发出商品"/>
-                                    <a:checkBox name="return_order_flag" bindTarget="ord_sales_order_header_query_ds" checkedValue="Y" prompt="退货订单" uncheckedValue="N"/>
-                                    <a:checkBox name="closed_flag" bindTarget="ord_sales_order_header_query_ds" prompt="关闭"/>
-                                </a:hBox>
-                            </a:vBox>
-                        </a:accordion>
-                    </a:accordions>
-                </a:accordionPanel>
-            </a:form>
-            <a:hBox/>
+                    <a:hBox labelWidth="100">
+                        <a:comboBox name="status_com" bindTarget="ord_sales_order_header_query_ds" prompt="状态"/>
+                        <a:checkBox name="goods_issue_flag" bindTarget="ord_sales_order_header_query_ds" prompt="发出商品"/>
+                        <a:checkBox name="return_order_flag" bindTarget="ord_sales_order_header_query_ds" checkedValue="Y" prompt="退货订单" uncheckedValue="N"/>
+                        <a:checkBox name="closed_flag" bindTarget="ord_sales_order_header_query_ds" prompt="关闭"/>
+                    </a:hBox>
+                </a:formBody>
+            </a:queryForm>
             <a:grid bindTarget="ord_sales_order_headers_ds" height="350" navBar="true" width="1000">
                 <a:columns>
                     <a:column name="order_number" prompt="订单号" renderer="order_number_renderer" width="150"/>
