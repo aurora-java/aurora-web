@@ -5,7 +5,7 @@
         <a:model-query model="sys.sys_timeout_get_user_info" rootPath="user_info"/>
     </a:init-procedure>
     <a:view>
-        <a:link id="login_link_5" url="${/request/@context_path}/login.screen"/>
+        <a:link id="login_link_5" url="${/request/@context_path}/login2.screen"/>
         <script><![CDATA[
    			
    			/*Aurora.request({
