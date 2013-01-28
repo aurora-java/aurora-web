@@ -62,6 +62,10 @@
                 });
             }
             
+            function btn_export_order(){
+                $('header_grid_id')._export('xls','');
+            }
+            
             function btn_close_order() {
                 var rec = $('ord_sales_order_headers_ds').getSelected()[0];
                 if (!rec) {
@@ -129,7 +133,7 @@
                     <a:field name="issue_warehouse_id"/>
                     <a:field name="currency_code"/>
                     <a:field name="status"/>
-                    <a:field name="status_name" displayField="code_value_name" options="ord_order_status_ds" returnField="status" valueField="code_value"/>
+                    <!-- <a:field name="status_name" displayField="code_value_name" options="ord_order_status_ds" returnField="status" valueField="code_value"/> -->
                     <a:field name="description"/>
                     <a:field name="closed_flag" checkedValue="Y" defaultValue="N" readOnly="true" uncheckedValue="N"/>
                     <a:field name="close_date"/>
@@ -137,49 +141,48 @@
                 </a:fields>
             </a:dataSet>
         </a:dataSets>
-        <a:screenBody>
-            <a:queryForm bindTarget="ord_sales_order_header_query_ds" resultTarget="ord_sales_order_headers_ds" style="width:100%;border:none">
-                <a:formToolBar>
-                    <a:textField name="order_number" bindTarget="ord_sales_order_header_query_ds" prompt="订单号"/>
-                    <a:lov name="customer_lov" bindTarget="ord_sales_order_header_query_ds" prompt="客户"/>
-                </a:formToolBar>
-                <a:formBody>
-                    <a:hBox labelWidth="100">
-                        <a:datePicker name="order_date_from" bindTarget="ord_sales_order_header_query_ds" prompt="订单日期"/>
-                        <a:datePicker name="order_date_to" bindTarget="ord_sales_order_header_query_ds" prompt="到"/>
-                        <a:lov name="salesmen_employee_lov" bindTarget="ord_sales_order_header_query_ds" prompt="销售员"/>
-                    </a:hBox>
-                    <a:hBox labelWidth="100">
-                        <a:comboBox name="status_com" bindTarget="ord_sales_order_header_query_ds" prompt="状态"/>
-                        <a:checkBox name="goods_issue_flag" bindTarget="ord_sales_order_header_query_ds" prompt="发出商品"/>
-                        <a:checkBox name="return_order_flag" bindTarget="ord_sales_order_header_query_ds" checkedValue="Y" prompt="退货订单" uncheckedValue="N"/>
-                        <a:checkBox name="closed_flag" bindTarget="ord_sales_order_header_query_ds" prompt="关闭"/>
-                    </a:hBox>
-                </a:formBody>
-            </a:queryForm>
-            <a:grid bindTarget="ord_sales_order_headers_ds" height="350" navBar="true" width="1000">
-                <a:columns>
-                    <a:column name="order_number" prompt="订单号" renderer="order_number_renderer" width="150"/>
-                    <a:column name="order_date" align="center" prompt="订单日期" renderer="Aurora.formatDate" sortable="true"/>
-                    <a:column name="customer_name" align="center" prompt="客户"/>
-                    <a:column name="currency_code" align="center" prompt="币种" width="60"/>
-                    <a:column name="total_amount" align="right" prompt="金额" renderer="total_amount_renderer"/>
-                    <a:column name="salesmen_employee_name" align="center" prompt="销售员"/>
-                    <a:column name="status_name" align="center" prompt="状态"/>
-                    <a:column name="return_order_flag" editor="e_cb" prompt="退货订单" width="60"/>
-                    <a:column name="goods_issue_flag" editor="e_cb" prompt="发出商品" width="60"/>
-                    <a:column name="closed_flag" editor="e_cb" prompt="关闭" width="40"/>
-                </a:columns>
-                <a:editors>
-                    <a:checkBox id="e_cb"/>
-                </a:editors>
-                <a:toolBar>
-                    <a:button click="btn_new_order" icon="${/request/@context_path}/images/add.gif" text="新建"/>
-                    <a:button click="btn_delete_order" icon="${/request/@context_path}/images/remove.gif" text="删除"/>
-                    <a:button type="excel"/>
-                    <a:button click="btn_close_order" icon="${/request/@context_path}/images/remove.png" text="关闭"/>
-                </a:toolBar>
-            </a:grid>
-        </a:screenBody>
+        <a:screenTopToolbar>
+            <a:screenTitle/>
+            <a:toolbarButton className="item-rbtn-blue button-add" click="btn_new_order" style="margin-left:20px;" text="HAP_NEW" width="100"/>
+            <a:toolbarButton className="item-rbtn-blue button-delete" click="btn_delete_order" text="HAP_DELETE" width="100"/>
+            <a:toolbarButton className="item-rbtn-blue button-excel" click="btn_export_order" text="HAP_EXPORT" width="100"/>
+            <a:toolbarButton click="btn_close_order" text="关闭" width="100"/>
+        </a:screenTopToolbar>
+        <a:queryForm bindTarget="ord_sales_order_header_query_ds" resultTarget="ord_sales_order_headers_ds" style="width:100%;border:none">
+            <a:formToolBar>
+                <a:textField name="order_number" bindTarget="ord_sales_order_header_query_ds" prompt="订单号"/>
+                <a:lov name="customer_lov" bindTarget="ord_sales_order_header_query_ds" prompt="客户"/>
+            </a:formToolBar>
+            <a:formBody>
+                <a:hBox labelWidth="100">
+                    <a:datePicker name="order_date_from" bindTarget="ord_sales_order_header_query_ds" prompt="订单日期"/>
+                    <a:datePicker name="order_date_to" bindTarget="ord_sales_order_header_query_ds" prompt="到"/>
+                    <a:lov name="salesmen_employee_lov" bindTarget="ord_sales_order_header_query_ds" prompt="销售员"/>
+                </a:hBox>
+                <a:hBox labelWidth="100">
+                    <a:comboBox name="status_com" bindTarget="ord_sales_order_header_query_ds" prompt="状态"/>
+                    <a:checkBox name="goods_issue_flag" bindTarget="ord_sales_order_header_query_ds" prompt="发出商品"/>
+                    <a:checkBox name="return_order_flag" bindTarget="ord_sales_order_header_query_ds" checkedValue="Y" prompt="退货订单" uncheckedValue="N"/>
+                    <a:checkBox name="closed_flag" bindTarget="ord_sales_order_header_query_ds" prompt="关闭"/>
+                </a:hBox>
+            </a:formBody>
+        </a:queryForm>
+        <a:grid id="header_grid_id" bindTarget="ord_sales_order_headers_ds" height="350" marginHeight="120" marginWidth="45" navBar="true" width="1000">
+            <a:columns>
+                <a:column name="order_number" prompt="订单号" renderer="order_number_renderer" width="150"/>
+                <a:column name="order_date" align="center" prompt="订单日期" renderer="Aurora.formatDate" sortable="true"/>
+                <a:column name="customer_name" align="center" prompt="客户"/>
+                <a:column name="currency_code" align="center" prompt="币种" width="60"/>
+                <a:column name="total_amount" align="right" prompt="金额" renderer="total_amount_renderer"/>
+                <a:column name="salesmen_employee_name" align="center" prompt="销售员"/>
+                <a:column name="status_name" align="center" prompt="状态"/>
+                <a:column name="return_order_flag" editor="e_cb" prompt="退货订单" width="60"/>
+                <a:column name="goods_issue_flag" editor="e_cb" prompt="发出商品" width="60"/>
+                <a:column name="closed_flag" editor="e_cb" prompt="关闭" width="40"/>
+            </a:columns>
+            <a:editors>
+                <a:checkBox id="e_cb"/>
+            </a:editors>
+        </a:grid>
     </a:view>
 </a:screen>

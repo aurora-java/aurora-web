@@ -434,7 +434,15 @@
                 </a:events>
             </a:dataSet>
         </a:dataSets>
-        <a:screenBody>
+        <a:defaultScreen>
+            <a:screenTopToolbar>
+                <a:screenTitle/>
+                <a:toolbarButton className="item-rbtn-blue button-save" click="btn_save_order" text="保存订单" width="100"/>
+                <a:toolbarButton click="btn_save_add_order" style="margin-left:20px;" text="保存并新增" width="100"/>
+                <a:toolbarButton className="item-rbtn-blue button-delete" click="btn_delete_order" text="删除订单" width="100"/>
+                <a:toolbarButton className="item-rbtn-blue button-excel" click="btn_submit_order" text="提交订单" width="100"/>
+                <a:toolbarButton click="btn_close_order" text="关闭订单" width="100"/>
+            </a:screenTopToolbar>
             <a:box column="1">
                 <a:hBox labelWidth="100">
                     <a:textField name="order_number" bindTarget="order_headers_ds" prompt="订单号">
@@ -461,13 +469,6 @@
                     <a:textField name="description" bindTarget="order_headers_ds" prompt="备注" width="830"/>
                 </a:hBox>
             </a:box>
-            <a:hBox>
-                <a:button click="btn_save_order" text="保存订单"/>
-                <a:button click="btn_save_add_order" text="保存并新增"/>
-                <a:button click="btn_delete_order" text="删除订单"/>
-                <a:button click="btn_submit_order" text="提交订单"/>
-                <a:button click="btn_close_order" text="关闭订单"/>
-            </a:hBox>
             <a:grid bindTarget="order_lines_ds" height="350" navBar="true" width="1000">
                 <a:columns>
                     <a:column name="line_number" align="center" editor="e_tf" prompt="行号" width="40"/>
@@ -502,7 +503,7 @@
                     <a:button click="open_line" icon="${/request/@context_path}/images/line_open.png" text="行打开"/>
                 </a:toolBar>
             </a:grid>
-        </a:screenBody>
+        </a:defaultScreen>
         <script><![CDATA[
             var header_ds = $('order_headers_ds');
             if ('${/parameter/@sales_order_id}') {
