@@ -15,7 +15,7 @@
         <bm:field name="salesmen_employee_id" databaseType="INT" datatype="java.lang.Long"/>
         <bm:field name="customer_id" databaseType="INT" datatype="java.lang.Long"/>
         <bm:field name="customer_desc" expression="concat(concat(p.partner_code,&apos;-&apos;),p.partner_name)" forInsert="false" forUpdate="false"/>
-        <bm:field name="order_date" databaseType="DATETIME" datatype="java.sql.Date"/>
+        <bm:field name="order_date" databaseType="DATE" datatype="java.sql.Date"/>
         <bm:field name="issue_warehouse_id" databaseType="INT" datatype="java.lang.Long"/>
         <bm:field name="currency_code" databaseType="VARCHAR" datatype="java.lang.String"/>
         <bm:field name="status" databaseType="VARCHAR" datatype="java.lang.String"/>
@@ -24,6 +24,7 @@
         <bm:field name="closed_by" databaseType="INT" datatype="java.lang.Long"/>
         <bm:field name="close_date" databaseType="DATETIME" datatype="java.sql.Date"/>
         <bm:field name="total_amount" expression="(select sum(l.total_amount) from ord_sales_order_lines l where l.sales_order_id=h.sales_order_id)" forInsert="false" forUpdate="false"/>
+        <bm:field name="status_name" expression="(select d.description_text from fnd_descriptions d where d.ref_table=&apos;SYS_CODE_VALUES&apos; and d.ref_field=&apos;CODE_VALUE_NAME_ID&apos; and d.language=&apos;ZHS&apos; and d.description_id=(select v.code_value_name_id from sys_code_values v where v.code_value=h.status and code_id=(select c.code_id from sys_codes c where c.code=&apos;SALE_ORD_STATUS&apos;)))" forInsert="false" forUpdate="false"/>
     </bm:fields>
     <bm:primary-key>
         <bm:pk-field name="sales_order_id"/>
