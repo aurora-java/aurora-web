@@ -14,7 +14,7 @@
  
 Ext.Ajax.timeout = 1800000;
 
-$A = Aurora = {version: '1.0',revision:'$Rev: 6901 $'};
+$A = Aurora = {version: '1.0',revision:'$Rev: 6985 $'};
 //$A.firstFire = false;
 $A.fireWindowResize = function(){
     if($A.winWidth != $A.getViewportWidth() || $A.winHeight != $A.getViewportHeight()){
@@ -1436,6 +1436,8 @@ $A.doExport=function(dataset,cols,mergeCols,type,separator,filename,generate_sta
                 var c={prompt:column.prompt}
                 if(column.width)c.width=column.width;
                 if(column.name)c.name=column.exportfield||column.name;
+                if(column.exportdatatype)c.datatype = column.exportdatatype;
+                if(column.exportdataformat)c.dataformat = column.exportdataformat;
                 c.align=column.align||"left";
                 var o=column._parent?_parentColumn(column._parent,c):c;
                 if(o)columns.add(o);
@@ -5619,7 +5621,7 @@ $A.TriggerField = Ext.extend($A.TextField,{
     processListener: function(ou){
     	$A.TriggerField.superclass.processListener.call(this, ou);
     	this.trigger[ou]('click',this.onTriggerClick, this, {preventDefault:true})
-    	this.popup[ou]('click',this.onPopupClick, this)
+    	this.popup[ou]('click',this.onPopupClick, this,{stopPropagation:true})
     },
     /**
      * 判断当时弹出面板是否展开
@@ -5660,8 +5662,7 @@ $A.TriggerField = Ext.extend($A.TextField,{
     	$A.TriggerField.superclass.onKeyDown.call(this,e);
     },
     isEventFromComponent:function(el){
-    	var isfrom = $A.TriggerField.superclass.isEventFromComponent.call(this,el);
-    	return isfrom || this.popup.contains(el);
+    	return $A.TriggerField.superclass.isEventFromComponent.call(this,el) || this.popup.dom == el || this.popup.contains(el);
     },
 	destroy : function(){
 		if(this.isExpanded()){
@@ -5673,8 +5674,8 @@ $A.TriggerField = Ext.extend($A.TextField,{
     	delete this.popup;
     	delete this.shadow;
 	},
-    triggerBlur : function(e){
-    	if(this.popup.dom != e.target && !this.popup.contains(e.target) && !this.wrap.contains(e.target)){    		
+    triggerBlur : function(e,t){
+    	if(!this.isEventFromComponent(t)){    		
             if(this.isExpanded()){
 	    		this.collapse();
 	    	}	    	
@@ -6619,13 +6620,16 @@ $A.DatePicker = Ext.extend($A.TriggerField,{
     	this.shadow.setHeight(this.popup.getHeight());
     },
     onSelect: function(e,t){
-		if((Ext.fly(t).hasClass('item-day'))&& Ext.fly(t).getAttributeNS("",'_date') != '0'){
-    		var date=new Date(parseInt(Ext.fly(t).getAttributeNS("",'_date')));
-	    	this.collapse();
-            this.processDate(date);            
-	    	this.setValue(date);
-	    	this.fireEvent('select',this, date);
-    	}
+//    	if(((t =Ext.fly(t)).hasClass('item-day'))){
+			var _date =  Ext.fly(t).getAttributeNS('','_date');
+			if(_date && _date != '0'){
+	    		var sf = this,date=new Date(Number(_date));
+		    	sf.collapse();
+	            sf.processDate(date);            
+		    	sf.setValue(date);
+		    	sf.fireEvent("select",sf, date);
+			}
+//    	}
     },
     wrapDate : function(d){},
     processDate : function(d){},
@@ -7076,7 +7080,7 @@ $A.Window = Ext.extend($A.Component,{
            this.closeBtn[ou]("mouseout", this.onCloseOut,  this);
            this.closeBtn[ou]("mousedown", this.onCloseDown,  this);
         }
-        if(!this.modal) this.wrap[ou]("click", this.toFront, this);
+        this.wrap[ou]("click", this.onClick, this,{stopPropagation:true});
         this.wrap[ou]("keydown", this.onKeyDown,  this);
         if(this.draggable)this.head[ou]('mousedown', this.onMouseDown,this);
     },
@@ -7103,16 +7107,19 @@ $A.Window = Ext.extend($A.Component,{
          */
         'load');        
     },
+    onClick : function(e){
+    	if(!this.modal)this.toFront();
+    },
     onKeyDown : function(e){
         var key = e.getKey();
         if(key == 9){
             var fk,lk,ck,cmp
             for(var k in this.cmps){
                 cmp = this.cmps[k];
-                if(!fk && cmp.focus){
-                    fk=k;
+                if(cmp.focus){
+                    if(!fk)fk=k;
+	                lk=k;
                 }
-                lk=k;
                 if(cmp.hasFocus){
                     ck = k;
                 }
@@ -7600,7 +7607,7 @@ $A.showOkCancelWindow = function(title, msg, okfun,cancelfun,width, height){
         okbtnhtml = $A.Button.getTemplate(okid,_lang['window.button.ok']),
         cancelbtnhtml = $A.Button.getTemplate(cancelid,_lang['window.button.cancel']),
         cmp = new $A.Window({id:'aurora-msg-ok-cancel'+id,closeable:true,title:title, height:height||100,width:width||300});
-        if(msg){
+        if(!Ext.isEmpty(msg,true)){
             cmp.body.update(msg+ '<center><table cellspacing="5"><tr><td>'+okbtnhtml+'</td><td>'+cancelbtnhtml+'</td><tr></table></center>',true,function(){
                 var okbtn = $(okid);
                 var cancelbtn = $(cancelid);
@@ -7612,6 +7619,41 @@ $A.showOkCancelWindow = function(title, msg, okfun,cancelfun,width, height){
                 });
                 cancelbtn.on('click',function(){
                     if(cancelfun && cancelfun.call(this,cmp) === false)return;
+                    cmp.close();
+                });
+            });
+        }
+    //}
+    return cmp;
+}
+$A.showYesNoCancelWindow = function(title, msg, yesfun,nofun,width, height){
+    //var cmp = $A.CmpManager.get('aurora-msg-ok-cancel')
+    //if(cmp == null) {
+        var id = Ext.id(),
+        	yesid = 'aurora-msg-yes'+id,
+        	noid = 'aurora-msg-no'+id,
+        	cancelid = 'aurora-msg-cancel'+id,
+	        yesbtnhtml = $A.Button.getTemplate(yesid,_lang['window.button.yes']),
+	        nobtnhtml = $A.Button.getTemplate(noid,_lang['window.button.no']),
+	        cancelbtnhtml = $A.Button.getTemplate(cancelid,_lang['window.button.cancel']),
+        	cmp = new $A.Window({id:'aurora-msg-yes-no-cancel'+id,closeable:true,title:title, height:height||100,width:width||300});
+        if(!Ext.isEmpty(msg,true)){
+            cmp.body.update(msg+ '<center><table cellspacing="5"><tr><td>'+yesbtnhtml+'</td><td>'+nobtnhtml+'</td><td>'+cancelbtnhtml+'</td><tr></table></center>',true,function(){
+                var yesbtn = $(yesid),
+                	nobtn = $(noid),
+                	cancelbtn = $(cancelid);
+                cmp.cmps[yesid] = yesbtn;
+                cmp.cmps[noid] = nobtn;
+                cmp.cmps[cancelid] = cancelbtn;
+                yesbtn.on('click',function(){
+                    if(yesfun && yesfun.call(this,cmp) === false)return;
+                    cmp.close();
+                });
+                nobtn.on('click',function(){
+                    if(nofun && nofun.call(this,cmp) === false)return;
+                    cmp.close();
+                });
+                cancelbtn.on('click',function(){
                     cmp.close();
                 });
             });
@@ -7636,7 +7678,7 @@ $A.showOkWindow = function(title, msg, width, height,callback){
         var id = Ext.id(),yesid = 'aurora-msg-yes'+id,
         btnhtml = $A.Button.getTemplate(yesid,_lang['window.button.ok']),
         cmp = new $A.Window({id:'aurora-msg-ok'+id,closeable:true,title:title, height:height,width:width});
-        if(msg){
+        if(!Ext.isEmpty(msg,true)){
             cmp.body.update(msg+ '<center>'+btnhtml+'</center>',true,function(){
                 var btn = $(yesid);
                 cmp.cmps[yesid] = btn;
@@ -8455,6 +8497,15 @@ $A.QueryForm = Ext.extend($A.Component,{
 		sf.searchInput = $A.CmpManager.get(sf.id + '_query');
 		sf.rds = $A.CmpManager.get(sf.resulttarget);
 	},
+	processListener: function(ou){
+    	$A.QueryForm.superclass.processListener.call(this, ou);
+    	Ext.fly(document)[ou]('click',this.formBlur,this);
+    },
+    formBlur : function(e,t){
+    	if(!this.isEventFromComponent(t)){
+    		this.close();
+    	}
+    },
 	bind : function(ds){
 		if(Ext.isString(ds)){
 			ds = $(ds);

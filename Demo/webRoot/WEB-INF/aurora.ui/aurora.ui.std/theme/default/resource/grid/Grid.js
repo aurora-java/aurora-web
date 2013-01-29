@@ -166,15 +166,15 @@ A.Grid = Ext.extend(A.Component,{
         var sf = this;
         A.Grid.superclass.processListener.call(sf, ou);
         sf.wrap[ou]("mouseover", sf.onMouseOver, sf)
-            [ou]("mouseout", sf.onMouseOut, sf)
+            [ou]("mouseout", sf.onMouseOut, sf);
 //          [ou](EVT_CLICK,sf.focus,sf)
-            [ou]("focus",sf.onFocus,sf)
-            [ou]("blur",sf.onBlur,sf);
         if(sf.canwheel !== FALSE){
             sf.wb[ou]('mousewheel',sf.onMouseWheel,sf);
         }
         sf.wb[ou](Ext.isOpera ? "keypress" : EVT_KEY_DOWN, sf.handleKeyDown,  sf)
-            [ou]("keyup", sf.handleKeyUp,  sf);
+            [ou]("keyup", sf.handleKeyUp,  sf)
+            [ou]("focus",sf.onFocus,sf)
+            [ou]("blur",sf.onBlur,sf);
         sf.ub[ou]('scroll',sf.syncScroll, sf)
             [ou](EVT_CLICK,sf.onClick, sf)
             [ou](EVT_DBLCLICK,sf.onDblclick, sf);
@@ -691,7 +691,7 @@ A.Grid = Ext.extend(A.Component,{
             Ext.fly(ltr).set({style:css.style,_row:record.id});
             EACH(columns,function(col){
                 if(col.lock === TRUE){
-                    if(col.hidden) return TRUE;
+                    if(col.hidden && col.visiable == false) return TRUE;
                     var td = DOC.createElement(TD);
                     if(col.type == ROW_CHECK) {
                         Ext.fly(td).set({recordid:record.id,atype:GRID$ROWCHECK})
@@ -741,7 +741,7 @@ A.Grid = Ext.extend(A.Component,{
         Ext.fly(utr).set({style:css.style,_row:record.id});
         EACH(columns,function(col){
             if(col.lock !== TRUE){
-                if(col.hidden) return TRUE;
+                if(col.hidden && col.visiable == false) return TRUE;
                 var td = DOC.createElement(TD);
                 td.style.visibility=col.hidden === TRUE ? HIDDEN : VISIBLE;
                 td.style.textAlign=col.align||LEFT;
@@ -1552,7 +1552,6 @@ A.Grid = Ext.extend(A.Component,{
         if(hth) hth.setStyle(WIDTH, size+PX);
         if(bth) {
             bth.setStyle(WIDTH, size+PX);
-            bth.setStyle("display", size==0 ? 'none' : '');
         }
         var mlw = Math.max(sf.width - lw,0);
         if(sf.fb){
@@ -1637,7 +1636,7 @@ A.Grid = Ext.extend(A.Component,{
      */
     showColumn : function(name){
         var col = this.findColByName(name);
-        if(col){
+        if(col && col.visiable != false){
             if(col.hidden === TRUE){
                 delete col.hidden;
                 col.forexport = TRUE;
@@ -1661,7 +1660,7 @@ A.Grid = Ext.extend(A.Component,{
      */
     hideColumn : function(name){
         var col = this.findColByName(name);
-        if(col){
+        if(col && col.visiable != false){
             if(col.hidden !== TRUE){
                 col.hiddenwidth = col.width;
                 this.setColumnSize(name, 0, FALSE);
@@ -1927,16 +1926,17 @@ A.Grid = Ext.extend(A.Component,{
                 }else n++;
             });
             if(exportall)msg[7]=ITEM_CKB_C;
-            msg.push('</tbody></table></div></div>');
+            msg.push('</tbody></table></div></div>',
+            '<div style="margin:15px;width:270px;color:red">',_lang['grid.export.confirmMsg'],'</div>');
         sf.exportwindow = A.showOkCancelWindow(_lang['grid.export.config'],msg.join(_N),function(win2){
-            A.showConfirm(_lang['grid.export.confirm'],_lang['grid.export.confirmMsg'],function(win){
+            //A.showConfirm(_lang['grid.export.confirm'],_lang['grid.export.confirmMsg'],function(win){
                 sf.doExport();
-                win.close();
+                //win.close();
                 win2.body.un(EVT_CLICK,sf.onExportClick,sf);
-                win2.close();
-            });
-            return FALSE;
-        },NULL,NULL,300);
+                //win2.close();
+            //});
+            //return FALSE;
+        },NULL,NULL,350);
         sf.exportwindow.body.on(EVT_CLICK,sf.onExportClick,sf);
     },
     initColumnPrompt : function(){
@@ -2048,5 +2048,5 @@ A.Grid = Ext.extend(A.Component,{
         if(d)d.remove();
     }
 });
-A.Grid.revision='$Rev: 6957 $';
+A.Grid.revision='$Rev: 7101 $';
 })($A);
