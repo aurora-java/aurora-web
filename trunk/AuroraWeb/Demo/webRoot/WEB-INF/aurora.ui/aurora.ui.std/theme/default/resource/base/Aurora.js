@@ -14,7 +14,7 @@
  
 Ext.Ajax.timeout = 1800000;
 
-$A = Aurora = {version: '1.0',revision:'$Rev: 6901 $'};
+$A = Aurora = {version: '1.0',revision:'$Rev: 6985 $'};
 //$A.firstFire = false;
 $A.fireWindowResize = function(){
     if($A.winWidth != $A.getViewportWidth() || $A.winHeight != $A.getViewportHeight()){
@@ -1436,6 +1436,8 @@ $A.doExport=function(dataset,cols,mergeCols,type,separator,filename,generate_sta
                 var c={prompt:column.prompt}
                 if(column.width)c.width=column.width;
                 if(column.name)c.name=column.exportfield||column.name;
+                if(column.exportdatatype)c.datatype = column.exportdatatype;
+                if(column.exportdataformat)c.dataformat = column.exportdataformat;
                 c.align=column.align||"left";
                 var o=column._parent?_parentColumn(column._parent,c):c;
                 if(o)columns.add(o);

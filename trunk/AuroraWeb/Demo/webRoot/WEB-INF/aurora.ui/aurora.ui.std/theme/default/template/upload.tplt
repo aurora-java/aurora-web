@@ -1,5 +1,5 @@
 <span style="display:${showupload}"><span id="${id}"></span></span>
-<div style="height:1px;background-color:#666;font-size:0px;display:${linestyle}"> </div>
+<div style="border:2px dashed silver;display:${linestyle}">
 <SCRIPT LANGUAGE="JavaScript">
 window.${id}_download_path = '${downloadurl}';
 function ${id}(){
@@ -10,7 +10,7 @@ function ${id}(){
     };
     Ext.apply(settings, {
         button_placeholder_id: "${id}",
-        post_params: {"source_type" : "${sourcetype}","pkvalue":${pkvalue},"JSID":jsid||''},
+        post_params: {"source_type" : "${sourcetype}","pkvalue":"${pkvalue}","JSID":jsid||''},
         button_width: "${buttonwidth}",
         button_height: "23",
         debug: false,
@@ -18,7 +18,7 @@ function ${id}(){
         button_image_url:"${context_path}/resource/aurora.ui.std/default/upload/s.gif",
         button_cursor: SWFUpload.CURSOR.HAND,
         button_text: '<a class="theFont" >${text}</a>',
-        button_text_style: ".theFont {cursor:hand;text-decoration:underline;font-family: 宋体;font-size:12px;text-align:center;}",
+        button_text_style: ".theFont {cursor:hand;font-family: 宋体;font-size:13px;text-align:center;}",
         button_text_top_padding: 2,
         file_size_limit: ${filesize}, //默认单位是KB,0表示无限制
         file_types:'${filetype}',
@@ -28,20 +28,31 @@ function ${id}(){
                 file_name : file.name,
                 file_size : file.size,
                 table_name: "${sourcetype}",
-                table_pk_value : ${pkvalue},
+                table_pk_value : "${pkvalue}",
                 percent : 0
             });
             $('${id}_ds').add(record,0)
         },
         upload_success_handler : function(file, serverData, responseReceived) {
+            var res = Ext.decode(serverData);
             var record = $('${id}_ds').find('file_id', file.id);
-            if (record) {
-                if(serverData != '') record.set('attachment_id',serverData);
-                record.set('status', 1);
-                record.set('creation_time',new Date())
-                record.commit();
+            if(!isNaN(res)){
+                if (record) {
+                    if(serverData != '') record.set('attachment_id',serverData);
+                    record.set('status', 1);
+                    record.set('creation_time',new Date())
+                    record.commit();
+                }
+                $('${id}').fireEvent("upload", this, "${pkvalue}",'${sourcetype}',serverData);
+            } else if(!res.success) {
+                $A.showErrorMessage('错误', res.error.message||res.error.stackTrace,null,400,200);
+                record.ds.remove(record);
+            }else {
+                $A.showErrorMessage('错误', '未知错误!');
+                record.ds.remove(record);
             }
-            $('${id}').fireEvent("upload", this, ${pkvalue},'${sourcetype}',serverData);
+        
+            
         },
         file_queue_error_handler : function(file, code, message) {
             try {
@@ -144,3 +155,7 @@ ${id}();
 new Aurora.Uploader(${config});
 </SCRIPT>
 ${up_table}
+<SCRIPT LANGUAGE="JavaScript">
+    ${upload_list}
+</SCRIPT>
+</div>
