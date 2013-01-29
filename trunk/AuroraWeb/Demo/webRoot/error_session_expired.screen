@@ -8,7 +8,7 @@
 <a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
     <a:init-procedure/>
     <a:view package="aurora.ui.std" template="default">
-        <a:link id="login_link_3" url="${/request/@context_path}/login2.screen"/>
+        <a:link id="login_link_3" url="${/request/@context_path}/login.screen"/>
         <a:form id="tipForm" className="mytable" height="100" style="position:absolute;left:-2000px;top:-2000px;" title="提示" width="320">
             <table>
                 <tr>

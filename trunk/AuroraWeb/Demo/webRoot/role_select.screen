@@ -10,7 +10,7 @@
         <a:model-query model="sys.sys_user_role_groups" rootPath="role_list"/>
     </a:init-procedure>
     <a:view package="aurora.ui.std" template="default">
-        <a:link id="login_link" url="${/request/@context_path}/login2.screen"/>
+        <a:link id="login_link" url="${/request/@context_path}/login.screen"/>
         <a:link id="role_select_link" url="${/request/@context_path}/role_select.svc"/>
         <a:link id="loading_link" url="${/request/@context_path}/loading.screen"/>
         <style><![CDATA[

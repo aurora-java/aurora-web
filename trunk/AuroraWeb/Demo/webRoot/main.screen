@@ -327,10 +327,10 @@
                         success: function() {
                             try {
                                 if (window.opener) {
-                                    opener.location.href = 'login2.screen';
+                                    opener.location.href = 'login.screen';
                                     window.close();
                                 } else {
-                                    location.href = 'login2.screen';
+                                    location.href = 'login.screen';
                                 }
                                 //opener.location.href='login.screen';
                             } catch (e) {
