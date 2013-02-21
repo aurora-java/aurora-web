@@ -40,20 +40,7 @@
     	 	$('pur_5010_order_form_window').addListener('close',pur_5010_order_form_window_close);
     	}
     	function pur_5010_main_order_number_render(value,record,name){
-    		var purchase_order_header_id = record.get('purchase_order_header_id');
-    		var filter_flag = record.get('filter_flag');
-    		var read_only = record.get('read_only');
-    		var url;
-    		if(read_only == 'Y'){
-    		    url=$('pur_5010_order_open_close_link').getUrl()+'?purchase_order_header_id='+purchase_order_header_id+'&read_only=Y';
-    			return '<a href="javascript:pur_5010_jump_order_detail(\'' + url + '\');">'+value+'</a>';
-    		}
-    		if(filter_flag == 'N'){
-    		    url=$('pur_5010_order_detail_link').getUrl()+'?purchase_order_header_id='+purchase_order_header_id;
-    		}
-    		if(filter_flag == 'Y'){
-    		 	url=$('pur_5010_order_open_close_link').getUrl()+'?purchase_order_header_id='+purchase_order_header_id; 
-    		}
+    		var url = '';
 			return '<a href="javascript:pur_5010_jump_order_detail(\'' + url + '\');">'+value+'</a>';
     	}
     	function pur_5010_jump_order_detail(url){
@@ -89,7 +76,7 @@
 		    if(value<0){
 		     	value = -value;   
 		    }
-		    return Aurora.formatNumber(value,'${/model/pur_5010_get_amount_precision/record/@value}');
+		    return Aurora.formatNumber(value,2);
 		}
 		
 		function pur_5010_add_new_fun(){
@@ -140,19 +127,7 @@
                 </a:fields>
             </a:dataSet>
             <a:dataSet id="pur_5010_order_header_ds" autoPageSize="true" autoQuery="true" model="pur.PUR5010.pur_purchase_order_headers" queryDataSet="pur_5010_service_query_ds" selectable="true" selectionModel="multiple" submitUrl="${/request/@context_path}/modules/pur/PUR5010/pur_purchase_order_submit.svc">
-                <a:fields>
-                    <a:field name="operation_flag"/>
-                    <a:field name="vender_id"/>
-                    <a:field name="vender_name"/>
-                    <a:field name="buyer_employee_id"/>
-                    <a:field name="buyer_employee_name"/>
-                    <a:field name="closed_flag" checkedValue="Y" readOnly="true" uncheckedValue="N"/>
-                    <a:field name="return_order_flag" checkedValue="Y" readOnly="true" uncheckedValue="N"/>
-                    <a:field name="outsourcing_flag" checkedValue="Y" readOnly="true" uncheckedValue="N"/>
-                </a:fields>
-                <a:events>
-                    <a:event name="submitsuccess" handler="pur_5010_order_header_ds_submitsuccess"/>
-                </a:events>
+                
             </a:dataSet>
         </a:dataSets>
         <a:defaultScreen>
@@ -229,13 +204,7 @@
                     <a:column name="total_amount" align="right" prompt="金额" renderer="pur_5010_entrance_show_positive_number" sortable="true" width="130"/>
                     <a:column name="buyer_employee_name" align="left" prompt="采购员" sortable="true" width="130"/>
                     <a:column name="status_name" align="left" prompt="状态" sortable="true" width="80"/>
-                    <a:column name="return_order_flag" prompt="退货订单" sortable="true" width="60"/>
-                    <a:column name="outsourcing_flag" prompt="委外订单" sortable="true" width="60"/>
-                    <a:column name="closed_flag" prompt="关闭" sortable="true" width="60"/>
                 </a:columns>
-                <a:editors>
-                    <a:checkBox id="pur_5010_main_checkBox" checkedValue="Y" uncheckedValue="N"/>
-                </a:editors>
             </a:grid>
         </a:defaultScreen>
     </a:view>
