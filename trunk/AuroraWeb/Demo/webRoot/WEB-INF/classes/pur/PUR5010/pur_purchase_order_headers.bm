@@ -11,9 +11,12 @@
         <bm:field name="company_id" databaseType="INT" datatype="java.lang.Long" insertExpression="${/session/@company_id}"/>
         <bm:field name="order_number" databaseType="VARCHAR" datatype="java.lang.String"/>
         <bm:field name="vender_id" databaseType="INT" datatype="java.lang.Long"/>
+        <bm:field name="buyer_employee_id" databaseType="INT" datatype="java.lang.Long"/>
+        <bm:field name="status" databaseType="VARCHAR" datatype="java.lang.String"/>
         <bm:field name="order_date" databaseType="DATE" datatype="java.sql.Date"/>
         <bm:field name="currency_code" databaseType="VARCHAR" datatype="java.lang.String"/>
         <bm:field name="total_amount" expression="(select sum(l.amount) from pur_purchase_order_lines l where l.purchase_order_header_id=h.purchase_order_header_id)" forInsert="false" forUpdate="false"/>
+        <bm:field name="status_name" expression="(select d.description_text from fnd_descriptions d where d.ref_table=&apos;SYS_CODE_VALUES&apos; and d.ref_field=&apos;CODE_VALUE_NAME_ID&apos; and d.language=&apos;ZHS&apos; and d.description_id=(select v.code_value_name_id from sys_code_values v where v.code_value=h.status and code_id=(select c.code_id from sys_codes c where c.code=&apos;SALE_ORD_STATUS&apos;)))" forInsert="false" forUpdate="false"/>
     </bm:fields>
     <bm:query-fields>
         <bm:query-field field="purchase_order_header_id" queryOperator="="/>
@@ -30,6 +33,10 @@
             <bm:reference foreignField="partner_id" localField="vender_id"/>
         </bm:relation>
     </bm:relations>
+    <bm:ref-fields>
+        <bm:ref-field name="buyer_employee_name" relationName="emp" sourceField="employee_name"/>
+        <bm:ref-field name="vender_name" relationName="partner" sourceField="partner_name"/>
+    </bm:ref-fields>
     <bm:features>
         <f:standard-who/>
     </bm:features>
