@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: jessen  
+    $Date: 2012-9-28 下午1:20:17  
+    $Revision: 1.0  
+    $Purpose: 新增 或 维护 销售订单
+-->
+<a:screen xmlns:s="aurora.plugin.script" xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure>
+        <s:server-script import="pur/PUR5010/pur_purchase_order_new.js"/>
+    </a:init-procedure>
+    <a:view>
+        <a:link id="lk_header_submit" url="${/request/@context_path}/modules/pur/PUR5010/pur_purchase_order_header_submit.svc"/>
+        <a:link id="lk_order_number_check" url="${/request/@context_path}/modules/pur/PUR5010/pur_purchase_order_number_check.svc"/>
+        <a:link id="lk_order_delete" url="${/request/@context_path}/modules/pur/PUR5010/pur_purchase_order_delete.svc"/>
+        <script><![CDATA[
+            var create_new = true;
+                        
+            function do_save() {
+                var head_ds = $('order_headers_ds');
+                var rec = head_ds.getCurrentRecord();
+                if (!head_ds.validate(true, true)) {
+                    updateHeadStatus(rec, 'Error');
+                    return;
+                }
+                if ($('order_lines_ds').getAll().length == 0) {
+                    Aurora.showErrorMessage('Error', '请至少保存一条销售订单行信息！');
+                    updateHeadStatus(rec, 'Error');
+                    return;
+                }
+                if (rec.isNew) {
+                    var ret = validate_order_number(rec.get('order_number'));
+                    if (ret !== true) {
+                        Aurora.showErrorMessage('Error', ret);
+                        rec.set('order_number', null);
+                    } else {
+                        updateHeadStatus(rec, 'Verified', true);
+                        head_ds.submit();
+                    }
+                } else {
+                    updateHeadStatus(rec, 'Verified', true);
+                    head_ds.submit();
+                }
+                //will notify onHeadDsSubmitSuccess
+            }
+            
+            function btn_save_order() {
+                create_new = false;
+                do_save();
+            }
+            
+            function btn_save_add_order() {
+                create_new = true;
+                do_save(); //will notify onHeadDsSubmitSuccess
+            }
+            
+            
+            function btn_submit_order() {
+                var rec = $('order_headers_ds').getCurrentRecord();
+                if (rec.get('status') != 'Verified') {
+                    Aurora.showErrorMessage('${l:PROMPT}', '当前状态不允许提交！仅正常状态的订单允许提交！');
+                    return;
+                }
+                Aurora.showConfirm('?', '是否确认提交？', function() {
+                    Aurora.request({
+                        url: $('lk_header_submit').getUrl(),
+                        para: {
+                            purchase_order_header_id: rec.get('purchase_order_header_id')
+                        },
+                        success: function(res) {
+                            updateHeadStatus(rec, 'In Processing');
+                        },
+                        scope: this
+                    });
+                });
+            }
+            
+            function btn_delete_order() {
+                var h_ds = $('order_headers_ds');
+                var l_ds = $('order_lines_ds');
+                var rec = h_ds.getCurrentRecord();
+                if (rec.get('status') != 'Verified') {
+                    Aurora.showMessage('${l:PROMPT}', '当前状态不允许删除');
+                    return;
+                }
+                Aurora.showConfirm('?', '是否确认删除该销售订单的所有信息？', function() {
+                    Aurora.request({
+                        url: $('lk_order_delete').getUrl(),
+                        para: [{
+                            purchase_order_header_id: rec.get('purchase_order_header_id')
+                        }],
+                        success: function(res) {
+                            var ds = $('ord_sales_order_headers_ds');
+                            var r = ds.find('purchase_order_header_id', rec.get('purchase_order_header_id'));
+                            ds.removeLocal(r);
+                            $('${/parameter/@win_id}').close();
+                        },
+                        scope: this
+                    });
+                });
+            }
+            
+            function onHeadDsLoad(ds) {
+                var rec = ds.getCurrentRecord();
+                var fld_order_number = rec.getMeta().getField('order_number');
+                fld_order_number.setReadOnly(true);
+                fld_order_number.setRequired(false);
+                var fld_status_name = rec.getMeta().getField('status_name');
+                fld_status_name.setReadOnly(true);
+            }
+            
+            function onHeadDsAdd(ds, rec, idx) {
+                rec.set('order_date', new Date());
+                var fld_order_number = rec.getMeta().getField('order_number');
+                fld_order_number.setReadOnly(false);
+                fld_order_number.setRequired(true);
+                var fld_status_name = rec.getMeta().getField('status_name');
+                fld_status_name.setReadOnly(false);
+            }
+            
+            
+            //创建 或 修改 保存后 更改主页面数据,关闭当前弹出页面
+            function onHeadDsSubmitSuccess(ds, res) {
+                var main_head_ds = $('pur_5010_order_header_ds');
+                var r = ds.getCurrentRecord();
+                var rec = main_head_ds.find('purchase_order_header_id', r.get('purchase_order_header_id'));
+                if (rec) {
+                    rec.setObject(r.data);
+                } else {
+                    rec = main_head_ds.create(r.data);
+                }
+                rec.set('lines', null); //remove bind lines
+                rec.isNew = false;
+                rec.dirty = false;
+                if (create_new == true) {
+                    //create a new order
+                    ds.removeAll();
+                    $("order_lines_ds").removeAll();
+                    ds.create(); //will notify onHeadDsAdd
+                } else {
+                    onHeadDsLoad(ds);
+                }
+            }
+            
+            function create_line() {
+                //TODO 校验后续操作
+                $('order_lines_ds').create();
+            }
+            
+            function delete_line() {
+                //TODO 校验后续操作
+                var sel = $('order_lines_ds').getSelected();
+                if (!sel || !sel.length) {
+                    Aurora.showMessage('${l:PROMPT}', '请至少选择一行，方可删除！');
+                    return;
+                }
+                Aurora.showConfirm('?', '是否确认删除所选订单行信息？', function() {
+                    $('order_lines_ds').removeRemote(sel);
+                });
+            }
+            
+            function onAddLine(ds, rec, idx) {
+                rec.set('require_date', new Date());
+                var max = 10;
+                var all = ds.getAll();
+                for (var i = 0;i < all.length;i++) {
+                    var t = Number(all[i].get('line_number'));
+                    if (t && t >= max) {
+                        max = t + 10;
+                    }
+                }
+                rec.set('line_number', max);
+            }
+            
+            function onUpdateLine(ds, rec, name, value, oldValue) {
+                //自动计算总金额
+                if (name == 'price' || name == 'quantity') {
+                    var total = rec.get('price') * rec.get('quantity');
+                    // if (rec.get('tax_included_flag') == 'N') {
+                        // total *= (1 + (rec.get('tax_rate') || 0) / 100);
+                    // }
+                    var tm = Math.pow(10, '${/sys_parameter/@BUSINESS_ACCURACY}');
+                    total = Math.round(total * tm) / tm;
+                    rec.set('amount', total);
+                }
+            }
+            
+            function non_negative_renderer(value, record, name) {
+                return Math.abs(value) || '0';
+            }
+            
+            function total_amount_footRender(datas, name) {
+                var sum = 0;
+                for (var i = 0;i < datas.length;i++) {
+                    var r = datas[i];
+                    var d = r.get(name);
+                    var n = parseFloat(d);
+                    if (!isNaN(n)) {
+                        sum += Math.abs(n);
+                    }
+                }
+                sum = sum.toFixed('${/sys_parameter/@BUSINESS_ACCURACY}');
+                var rec = $('order_headers_ds').getCurrentRecord();
+                if (rec) rec.set('total_amount', sum);
+                return Aurora.formatNumber(sum);
+            }
+            
+            function primary_quantity_editf(rec, name) {
+                if (rec.get('trade_uom') != rec.get('primary_uom')) {
+                    return 'e_nf_float1';
+                }
+                return "";
+            }
+            
+            function status_name_renderer(value, recode, name) {
+                var code = recode.get('status');
+                return !!code ? getStatusName(code) : '';
+            }
+            
+            function updateHeadStatus(rec, code, dirty) {
+                rec.set('status', code, !dirty);
+                rec.set('status_name', getStatusName(code), !dirty);
+            }
+            
+            function getStatusName(code) {
+                var rec = $('ord_order_status_ds').find('code_value', code);
+                return !!rec ? rec.get('code_value_name') : '';
+            }
+            
+            function validate_order_number(value) {
+                if (!value) return true;
+                var ret = true;
+                Aurora.request({
+                    url: $('lk_order_number_check').getUrl(),
+                    para: {
+                        order_number: value
+                    },
+                    success: function(res) {
+                        if (res.result['exists'] > 0) {
+                            ret = '销售订单号重复，请重新输入！';
+                        }
+                    },
+                    scope: this,
+                    sync: true
+                });
+                return ret;
+            }
+            
+            function onOrderNumberBlur() {
+                var rec = $('order_headers_ds').getCurrentRecord();
+                var ret = validate_order_number(rec.get('order_number'));
+                if (ret !== true) {
+                    Aurora.showErrorMessage('Error', ret);
+                }
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="ord_order_status_ds" lookupCode="SALE_ORD_STATUS"/>
+            <a:dataSet id="ord_order_currency_code_ds" loadData="true" model="ord.ORD5010.gld_currency_code_com"/>
+            <a:dataSet id="order_headers_ds" autoCreate="true" model="pur.PUR5010.pur_purchase_order_headers" queryUrl="${/request/@context_path}/autocrud/pur.PUR5010.pur_purchase_order_headers/query?purchase_order_header_id=${/parameter/@purchase_order_header_id}" submitUrl="${/request/@context_path}/modules/pur/PUR5010/pur_purchase_order_save.svc">
+                <a:fields>
+                    <a:field name="order_number" required="true"/>
+                    <a:field name="buyer_employee_id" defaultValue="${/session/@employee_id}"/>
+                    <a:field name="buyer_employee_name" defaultValue="${/session/@employee_name}" readOnly="true"/>
+                    <a:field name="vender_id"/>
+                    <a:field name="customer_desc" lovHeight="500" lovService="pur.PUR5010.fnd_business_partner_lov" lovWidth="500" required="true" title="客户选择">
+                        <a:mapping>
+                            <a:map from="partner_id" to="vender_id"/>
+                            <a:map from="partner_name" to="customer_name"/>
+                            <a:map from="partner_desc" to="customer_desc"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="order_date"/>
+                    <a:field name="currency_code" defaultValue="CNY" displayField="currency_code" options="ord_order_currency_code_ds" returnField="currency_code" valueField="currency_code"/>
+                    <a:field name="status"/>
+                </a:fields>
+                <a:events>
+                    <a:event name="add" handler="onHeadDsAdd"/>
+                    <a:event name="load" handler="onHeadDsLoad"/>
+                    <a:event name="submitsuccess" handler="onHeadDsSubmitSuccess"/>
+                </a:events>
+            </a:dataSet>
+            <a:dataSet id="order_lines_ds" bindName="lines" bindTarget="order_headers_ds" fetchAll="true" model="ord.ORD5010.ord_sales_order_lines" selectable="true">
+                <a:fields>
+                    <a:field name="item_id" required="true"/>
+                    <a:field name="item_desc" lovGridHeight="260" lovService="ord.ORD5010.inv_item_basic_lov" lovWidth="600" required="true" title="选择物品">
+                        <a:mapping>
+                            <a:map from="item_desc" to="item_desc"/>
+                            <a:map from="item_id" to="item_id"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="quantity" required="true"/>
+                    <a:field name="price" required="true"/>
+                </a:fields>
+                <a:events>
+                    <a:event name="add" handler="onAddLine"/>
+                    <a:event name="update" handler="onUpdateLine"/>
+                </a:events>
+            </a:dataSet>
+        </a:dataSets>
+        <a:defaultScreen>
+            <a:screenTopToolbar>
+                <a:screenTitle/>
+                <a:toolbarButton className="item-rbtn-blue button-save" click="btn_save_order" text="保存订单" width="100"/>
+                <a:toolbarButton click="btn_save_add_order" style="margin-left:20px;" text="保存并新增" width="100"/>
+                <a:toolbarButton className="item-rbtn-blue button-delete" click="btn_delete_order" text="删除订单" width="100"/>
+                <a:toolbarButton className="item-rbtn-blue button-excel" click="btn_submit_order" text="提交订单" width="100"/>
+            </a:screenTopToolbar>
+            <a:box column="1">
+                <a:hBox labelWidth="100">
+                    <a:textField name="order_number" bindTarget="order_headers_ds" prompt="订单号">
+                        <a:events>
+                            <a:event name="blur" handler="onOrderNumberBlur"/>
+                        </a:events>
+                    </a:textField>
+                    <a:lov name="customer_desc" bindTarget="order_headers_ds" prompt="客户"/>
+                    <a:comboBox name="currency_code" bindTarget="order_headers_ds" prompt="币种" width="60"/>
+                    <a:datePicker name="order_date" bindTarget="order_headers_ds" prompt="订单日期"/>
+                </a:hBox>
+                <a:hBox labelWidth="100">
+                    <a:label name="status_name" bindTarget="order_headers_ds" prompt="状态" renderer="status_name_renderer" style="background-color:#ccc;text-align:center;" width="80"/>
+                    <a:hBox>
+                        <a:label name="buyer_employee_name" bindTarget="order_headers_ds" prompt="销售员" style="background-color:#ccc;text-align:center;" width="90"/>
+                    </a:hBox>
+                </a:hBox>
+            </a:box>
+            <a:grid bindTarget="order_lines_ds" height="350" navBar="true" width="1000">
+                <a:columns>
+                    <a:column name="line_number" align="center" editor="e_tf" prompt="行号" width="40"/>
+                    <a:column name="item_desc" editor="e_lov" prompt="物品" width="120"/>
+                    <a:column name="quantity" align="right" editor="e_nf_float1" prompt="交易数量" renderer="non_negative_renderer" width="80"/>
+                    <a:column name="price" align="right" editor="e_nf_float2" prompt="单价" width="50"/>
+                    <a:column name="amount" align="right" autoAdjust="true" footerRenderer="total_amount_footRender" prompt="金额" renderer="non_negative_renderer" width="60"/>
+                </a:columns>
+                <a:editors>
+                    <a:lov id="e_lov"/>
+                    <a:textField id="e_tf"/>
+                    <a:numberField id="e_nf_float1" allowDecimals="true" allowFormat="true" allowNegative="false"/>
+                    <a:numberField id="e_nf_float2" allowDecimals="true" allowFormat="true" allowNegative="false"/>
+                </a:editors>
+                <a:toolBar>
+                    <a:button click="create_line" icon="${/request/@context_path}/images/add.gif" text="新增"/>
+                    <a:button click="delete_line" icon="${/request/@context_path}/images/remove.gif" text="删除"/>
+                </a:toolBar>
+            </a:grid>
+        </a:defaultScreen>
+        <script><![CDATA[
+            var header_ds = $('order_headers_ds');
+            if ('${/parameter/@purchase_order_header_id}') {
+                header_ds.query();
+            }
+        ]]></script>
+    </a:view>
+</a:screen>
