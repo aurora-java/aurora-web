@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:service xmlns:s="aurora.plugin.script" xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:init-procedure>
+        <s:server-script><![CDATA[
+            var p = $ctx.parameter;
+            p.status = 'In Processing';
+            $bm('pur.PUR5010.pur_purchase_order_headers_submit').execute(p);
+        ]]></s:server-script>
+    </a:init-procedure>
+    <a:service-output output="/parameter"/>
+</a:service>

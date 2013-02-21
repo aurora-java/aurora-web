@@ -7,32 +7,13 @@
 -->
 <bm:model xmlns:o="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="PUR_PURCHASE_ORDER_LINES" defaultOrderBy="line_number,item_id" needAccessControl="false">
     <bm:fields>
-        <bm:field name="purchase_order_line_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="PURCHASE_ORDER_LINE_ID" prompt="PUR_PURCHASE_ORDER_LINES.PURCHASE_ORDER_LINE_ID"/>
-        <bm:field name="purchase_order_header_id" databaseType="NUMBER" datatype="java.lang.Long" insertExpression="${../../@purchase_order_header_id}" physicalName="PURCHASE_ORDER_HEADER_ID" prompt="PUR_PURCHASE_ORDER_LINES.PURCHASE_ORDER_HEADER_ID"/>
-        <bm:field name="company_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="COMPANY_ID" prompt="PUR_PURCHASE_ORDER_LINES.COMPANY_ID"/>
-        <bm:field name="line_number" databaseType="NUMBER" datatype="java.lang.Long" physicalName="LINE_NUMBER" prompt="PUR_PURCHASE_ORDER_LINES.LINE_NUMBER"/>
-        <bm:field name="item_id" databaseType="NUMBER" datatype="java.lang.Long" physicalName="ITEM_ID" prompt="PUR_PURCHASE_ORDER_LINES.ITEM_ID"/>
-        <bm:field name="trade_uom" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="TRADE_UOM" prompt="PUR_PURCHASE_ORDER_LINES.TRADE_UOM"/>
-        <bm:field name="trade_quantity" databaseType="NUMBER" datatype="java.lang.Double" insertExpression="decode(${../../@return_order_flag},&apos;N&apos;,${@trade_quantity},-${@trade_quantity})" physicalName="TRADE_QUANTITY" prompt="PUR_PURCHASE_ORDER_LINES.TRADE_QUANTITY" updateExpression="decode(${../../@return_order_flag},&apos;N&apos;,${@trade_quantity},-${@trade_quantity})"/>
-        <bm:field name="primary_uom" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="PRIMARY_UOM" prompt="PUR_PURCHASE_ORDER_LINES.PRIMARY_UOM"/>
-        <bm:field name="primary_quantity" databaseType="NUMBER" datatype="java.lang.Double" insertExpression="decode(${../../@return_order_flag},&apos;N&apos;,${@primary_quantity},-${@primary_quantity})" physicalName="PRIMARY_QUANTITY" prompt="PUR_PURCHASE_ORDER_LINES.PRIMARY_QUANTITY" updateExpression="decode(${../../@return_order_flag},&apos;N&apos;,${@primary_quantity},-${@primary_quantity})"/>
-        <bm:field name="gift_flag" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="GIFT_FLAG" prompt="PUR_PURCHASE_ORDER_LINES.GIFT_FLAG"/>
-        <bm:field name="require_date" insertExpression="to_date(${@require_date},&apos;yyyy-mm-dd&apos;)" physicalName="REQUIRE_DATE" prompt="PUR_PURCHASE_ORDER_LINES.REQUIRE_DATE" updateExpression="to_date(${@require_date},&apos;yyyy-mm-dd&apos;)"/>
-        <bm:field name="tax_included_flag" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="TAX_INCLUDED_FLAG" prompt="PUR_PURCHASE_ORDER_LINES.TAX_INCLUDED_FLAG"/>
-        <bm:field name="tax_rate" databaseType="NUMBER" datatype="java.lang.Double" physicalName="TAX_RATE" prompt="PUR_PURCHASE_ORDER_LINES.TAX_RATE"/>
-        <bm:field name="price" databaseType="NUMBER" datatype="java.lang.Double" physicalName="PRICE" prompt="PUR_PURCHASE_ORDER_LINES.PRICE"/>
-        <bm:field name="amount" databaseType="NUMBER" datatype="java.lang.Double" physicalName="AMOUNT" prompt="PUR_PURCHASE_ORDER_LINES.AMOUNT"/>
-        <bm:field name="description" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="DESCRIPTION" prompt="PUR_PURCHASE_ORDER_LINES.DESCRIPTION"/>
-        <bm:field name="closed_flag" databaseType="VARCHAR2" datatype="java.lang.String" physicalName="CLOSED_FLAG" prompt="PUR_PURCHASE_ORDER_LINES.CLOSED_FLAG"/>
-        <bm:field name="closed_by" databaseType="NUMBER" datatype="java.lang.Long" physicalName="CLOSED_BY" prompt="PUR_PURCHASE_ORDER_LINES.CLOSED_BY"/>
-        <bm:field name="close_date" databaseType="DATE" datatype="java.util.Date" physicalName="CLOSE_DATE" prompt="PUR_PURCHASE_ORDER_LINES.CLOSE_DATE"/>
-        <bm:field name="received_trade_quantity" databaseType="NUMBER" datatype="java.lang.Double" physicalName="RECEIVED_TRADE_QUANTITY" prompt="PUR_PURCHASE_ORDER_LINES.RECEIVED_TRADE_QUANTITY"/>
-        <bm:field name="received_primary_quantity" databaseType="NUMBER" datatype="java.lang.Double" physicalName="RECEIVED_PRIMARY_QUANTITY" prompt="PUR_PURCHASE_ORDER_LINES.RECEIVED_PRIMARY_QUANTITY"/>
+        <bm:field name="purchase_order_line_id" databaseType="INT" datatype="java.lang.Long"/>
+        <bm:field name="purchase_order_header_id" databaseType="INT" datatype="java.lang.Long"/>
+        <bm:field name="item_id" databaseType="INT" datatype="java.lang.Long"/>
+        <bm:field name="quantity" databaseType="INT" datatype="java.lang.Double"/>
+        <bm:field name="price" databaseType="INT" datatype="java.lang.Double"/>
+        <bm:field name="amount" databaseType="INT" datatype="java.lang.Double"/>
         <bm:field name="item_code_name" expression="(select b.item_code || &apos;-&apos; || b.item_name from inv_items_basics b where b.item_id = t1.item_id)" forInsert="false" forUpdate="false"/>
-        <bm:field name="trade_uom_name" expression="(select c.uom_description from inv_uom_codes c where c.uom_code=t1.trade_uom and c.company_id = t1.company_id)" forInsert="false" forUpdate="false"/>
-        <bm:field name="primary_uom_name" expression="(select c.uom_description from inv_uom_codes c where c.uom_code=t1.primary_uom and c.company_id = t1.company_id)" forInsert="false" forUpdate="false"/>
-        <bm:field name="gr_warehouse_name" expression="(select w.warehouse_name from inv_warehouses w ,pur_purchase_order_headers h where w.warehouse_id = h.gr_warehouse_id and h.purchase_order_header_id = t1.purchase_order_header_id)" forInsert="false" forUpdate="false"/>
-        <bm:field name="gr_warehouse_code_name" expression="(select w.warehouse_code||&apos;-&apos;||w.warehouse_name from inv_warehouses w ,pur_purchase_order_headers h where w.warehouse_id = h.gr_warehouse_id and h.purchase_order_header_id = t1.purchase_order_header_id)" forInsert="false" forUpdate="false"/>
     </bm:fields>
     <bm:query-fields>
         <bm:query-field field="purchase_order_line_id" queryOperator="="/>
