@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: Wanq  
+    $Date: 2012-10-9 下午4:36:26  
+    $Revision: 1.0  
+    $Purpose: 采购订单列表查询
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure>
+    </a:init-procedure>
+    <a:view>
+        <a:link id="pur_5010_order_open_close_link" url="${/request/@context_path}/modules/pur/PUR5010/pur_purchase_order_open_close.screen"/>
+        <a:link id="pur_5010_order_detail_link" url="${/request/@context_path}/modules/pur/PUR5010/pur_purchase_order_detail.screen"/>
+        <a:link id="pur_5010_new_order_link" url="${/request/@context_path}/modules/pur/PUR5010/pur_purchase_order_new.screen"/>
+        <script><![CDATA[
+        
+    	function pur_5010_queryHook(value,ds){
+    	    var record = ds.getCurrentRecord();
+	        record.set('vender_id',null);
+	        record.set('order_number',null);
+	        if(Aurora.isChinese(value)){
+	            record.set('vender_id',value);
+	        }else{
+	            record.set('order_number',value);
+        	}
+    	}
+    	function pur_5010_queryFunction(){
+    	 	//$('pur_5010_function_query_form').doSearch();
+    	 	$('pur_5010_service_query_ds').getAt(0).set('enter_state','');  
+    	 	// $('pur_5010_order_header_ds').query();
+    	 	$('pur_5010_function_query_form').doSearch();
+    	}
+    	function pur_5010_newOrder(){
+    		new Aurora.Window({
+    	 		id:'pur_5010_order_form_window', 
+    	 	   	url:$('pur_5010_new_order_link').getUrl(), 
+    	 	   	title:'新增采购订单', 
+    	 	   	fullScreen:true
+    	 	});
+    	 	$('pur_5010_order_form_window').addListener('close',pur_5010_order_form_window_close);
+    	}
+    	function pur_5010_main_order_number_render(value,record,name){
+    		var purchase_order_header_id = record.get('purchase_order_header_id');
+    		var filter_flag = record.get('filter_flag');
+    		var read_only = record.get('read_only');
+    		var url;
+    		if(read_only == 'Y'){
+    		    url=$('pur_5010_order_open_close_link').getUrl()+'?purchase_order_header_id='+purchase_order_header_id+'&read_only=Y';
+    			return '<a href="javascript:pur_5010_jump_order_detail(\'' + url + '\');">'+value+'</a>';
+    		}
+    		if(filter_flag == 'N'){
+    		    url=$('pur_5010_order_detail_link').getUrl()+'?purchase_order_header_id='+purchase_order_header_id;
+    		}
+    		if(filter_flag == 'Y'){
+    		 	url=$('pur_5010_order_open_close_link').getUrl()+'?purchase_order_header_id='+purchase_order_header_id; 
+    		}
+			return '<a href="javascript:pur_5010_jump_order_detail(\'' + url + '\');">'+value+'</a>';
+    	}
+    	function pur_5010_jump_order_detail(url){
+    	    new Aurora.Window({
+	            id: 'pur_5010_order_form_window',
+	            url: url,
+	            title: '采购订单维护',
+	            fullScreen:true
+	        });
+	        $('pur_5010_order_form_window').addListener('close',pur_5010_order_form_window_close);
+    	}
+    	function pur_5010_order_delete(){
+    	    var select_arr = $('pur_5010_order_header_ds').getSelected();
+    	    if(select_arr.length==0){
+    	        Aurora.showMessage('提示','请至少选择一行，方可删除！');
+    	        return;
+    	    }else{
+    	        for(var i=0;i<select_arr.length;i++){
+    	        	select_arr[i].set('operation_flag','delete');
+    	        }
+    	        Aurora.showConfirm('提示','是否确认删除该采购订单的所有信息？',function(){
+    	         	$('pur_5010_order_header_ds').submit();
+    	        });
+    	    }
+    	}
+    	function pur_5010_order_header_ds_submitsuccess(dataSet, res){
+    	    dataSet.query();
+    	}
+    	function pur_5010_order_form_window_close(){
+    	    $('pur_5010_order_header_ds').query();
+    	}
+    	function pur_5010_entrance_show_positive_number(value,record,name){
+		    if(value<0){
+		     	value = -value;   
+		    }
+		    return Aurora.formatNumber(value,'${/model/pur_5010_get_amount_precision/record/@value}');
+		}
+		
+		function pur_5010_add_new_fun(){
+		    $('pur_5010_order_form_window').close();
+		    pur_5010_newOrder();
+		}
+		function pur_5010_order_export(){
+		    $('pur_5010_order_header_ds')._export('xls','purchase_order');
+		}
+		
+		function show_open_close_window(purchase_order_header_id){
+			var url = $('pur_5010_order_open_close_link').getUrl()+'?purchase_order_header_id='+purchase_order_header_id;
+			pur_5010_jump_order_detail(url);
+		}
+		function show_detail_window(purchase_order_header_id){
+			var url = $('pur_5010_order_detail_link').getUrl()+'?purchase_order_header_id='+purchase_order_header_id;
+			pur_5010_jump_order_detail(url);
+		}
+    	]]></script>
+        <a:dataSets>
+            <a:dataSet id="pur_5010_yes_no_ds" lookupCode="YES_NO"/>
+            <a:dataSet id="pur_5010_get_price_precision_main_ds">
+                <a:datas dataSource="pur_5010_get_price_precision"/>
+            </a:dataSet>
+            <a:dataSet id="purchase_order_status_ds" lookupCode="PURCHASE_ORDER_STATUS"/>
+            <a:dataSet id="pur_5010_service_query_ds" autoCreate="true">
+                <a:fields>
+                    <a:field name="order_date_from"/>
+                    <a:field name="order_date_to"/>
+                    <a:field name="vender_name" autoComplete="true" autoCompleteField="code_name" autoCompleteSize="1" lovGridHeight="320" lovHeight="450" lovService="pur.PUR5010.fnd_business_partner_lov" lovWidth="500" title="供应商查询">
+                        <a:mapping>
+                            <a:map from="partner_code_name" to="vender_name"/>
+                            <a:map from="partner_id" to="vender_id"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="vender_id"/>
+                    <a:field name="buyer_employee_id"/>
+                    <a:field name="status_name" displayField="code_value_description" options="purchase_order_status_ds" returnField="status" valueField="code_value"/>
+                    <a:field name="status"/>
+                    <a:field name="closed_flag_name" displayField="code_value_description" options="pur_5010_yes_no_ds" returnField="closed_flag" valueField="code_value"/>
+                    <a:field name="closed_flag"/>
+                    <a:field name="return_order_flag_name" displayField="code_value_description" options="pur_5010_yes_no_ds" returnField="return_order_flag" valueField="code_value"/>
+                    <a:field name="return_order_flag"/>
+                    <a:field name="outsourcing_flag_name" displayField="code_value_description" options="pur_5010_yes_no_ds" returnField="outsourcing_flag" valueField="code_value"/>
+                    <a:field name="outsourcing_flag"/>
+                    <a:field name="enter_state" defaultValue="Y"/>
+                    <a:field name="data_no_follow" defaultValue="Y"/>
+                </a:fields>
+            </a:dataSet>
+            <a:dataSet id="pur_5010_order_header_ds" autoPageSize="true" autoQuery="true" model="pur.PUR5010.pur_purchase_order_headers" queryDataSet="pur_5010_service_query_ds" selectable="true" selectionModel="multiple" submitUrl="${/request/@context_path}/modules/pur/PUR5010/pur_purchase_order_submit.svc">
+                <a:fields>
+                    <a:field name="operation_flag"/>
+                    <a:field name="vender_id"/>
+                    <a:field name="vender_name"/>
+                    <a:field name="buyer_employee_id"/>
+                    <a:field name="buyer_employee_name"/>
+                    <a:field name="closed_flag" checkedValue="Y" readOnly="true" uncheckedValue="N"/>
+                    <a:field name="return_order_flag" checkedValue="Y" readOnly="true" uncheckedValue="N"/>
+                    <a:field name="outsourcing_flag" checkedValue="Y" readOnly="true" uncheckedValue="N"/>
+                </a:fields>
+                <a:events>
+                    <a:event name="submitsuccess" handler="pur_5010_order_header_ds_submitsuccess"/>
+                </a:events>
+            </a:dataSet>
+        </a:dataSets>
+        <a:defaultScreen>
+            <a:screenTopToolbar>
+                <a:screenTitle/>
+                <a:gridButton click="pur_5010_newOrder" text="新增" width="100"/>
+                <a:gridButton click="pur_5010_order_delete" text="删除" width="100"/>
+            </a:screenTopToolbar>
+            <a:queryForm id="pur_5010_function_query_form" bindTarget="pur_5010_service_query_ds" createSearchButton="false" defaultQueryField="account_code" defaultQueryHint="请输入订单号或者供应商名称" queryHook="pur_5010_queryHook" resultTarget="pur_5010_order_header_ds" style="width:100%;border:none">
+                <a:formToolBar>
+                    <a:textField style="width:100%;display:none"/>
+                    <a:hBox>
+                        <a:textField name="order_number" bindTarget="pur_5010_service_query_ds" prompt="订单号">
+                            <a:events>
+                                <a:event name="enterdown" handler="pur_5010_queryFunction"/>
+                            </a:events>
+                        </a:textField>
+                        <a:lov name="vender_name" bindTarget="pur_5010_service_query_ds" prompt="供应商">
+                            <a:events>
+                                <a:event name="enterdown" handler="pur_5010_queryFunction"/>
+                            </a:events>
+                        </a:lov>
+                        <a:comboBox name="closed_flag_name" bindTarget="pur_5010_service_query_ds" prompt="关闭">
+                            <a:events>
+                                <a:event name="enterdown" handler="pur_5010_queryFunction"/>
+                            </a:events>
+                        </a:comboBox>
+                    </a:hBox>
+                    <a:toolbarButton className="item-rbtn-gray" click="pur_5010_queryFunction" text="HAP_QUERY" width="80"/>
+                </a:formToolBar>
+                <a:formBody style="margin-left:8px">
+                    <a:hBox>
+                        <a:datePicker name="order_date_from" bindTarget="pur_5010_service_query_ds" prompt="订单日期">
+                            <a:events>
+                                <a:event name="enterdown" handler="pur_5010_queryFunction"/>
+                            </a:events>
+                        </a:datePicker>
+                        <a:datePicker name="order_date_to" bindTarget="pur_5010_service_query_ds" prompt="至">
+                            <a:events>
+                                <a:event name="enterdown" handler="pur_5010_queryFunction"/>
+                            </a:events>
+                        </a:datePicker>
+                        <a:lov name="buyer_employee_name" bindTarget="pur_5010_service_query_ds" prompt="采购员">
+                            <a:events>
+                                <a:event name="enterdown" handler="pur_5010_queryFunction"/>
+                            </a:events>
+                        </a:lov>
+                    </a:hBox>
+                    <a:hBox>
+                        <a:comboBox name="status_name" bindTarget="pur_5010_service_query_ds" prompt="状态">
+                            <a:events>
+                                <a:event name="enterdown" handler="pur_5010_queryFunction"/>
+                            </a:events>
+                        </a:comboBox>
+                        <a:comboBox name="return_order_flag_name" bindTarget="pur_5010_service_query_ds" prompt="退货订单">
+                            <a:events>
+                                <a:event name="enterdown" handler="pur_5010_queryFunction"/>
+                            </a:events>
+                        </a:comboBox>
+                        <a:comboBox name="outsourcing_flag_name" bindTarget="pur_5010_service_query_ds" prompt="委外订单">
+                            <a:events>
+                                <a:event name="enterdown" handler="pur_5010_queryFunction"/>
+                            </a:events>
+                        </a:comboBox>
+                    </a:hBox>
+                </a:formBody>
+            </a:queryForm>
+            <a:grid id="pur_5010_order_header_grid" bindTarget="pur_5010_order_header_ds" height="350" marginHeight="125" marginWidth="50" navBar="true" width="1160">
+                <a:columns>
+                    <a:column name="order_number" align="left" prompt="订单号" renderer="pur_5010_main_order_number_render" sortable="true" width="130"/>
+                    <a:column name="order_date" align="left" prompt="订单日期" renderer="Aurora.formatDate" sortable="true" width="100"/>
+                    <a:column name="vender_name" align="left" prompt="供应商" sortable="true" width="290"/>
+                    <a:column name="currency_code" align="left" prompt="币种" sortable="true" width="80"/>
+                    <a:column name="total_amount" align="right" prompt="金额" renderer="pur_5010_entrance_show_positive_number" sortable="true" width="130"/>
+                    <a:column name="buyer_employee_name" align="left" prompt="采购员" sortable="true" width="130"/>
+                    <a:column name="status_name" align="left" prompt="状态" sortable="true" width="80"/>
+                    <a:column name="return_order_flag" prompt="退货订单" sortable="true" width="60"/>
+                    <a:column name="outsourcing_flag" prompt="委外订单" sortable="true" width="60"/>
+                    <a:column name="closed_flag" prompt="关闭" sortable="true" width="60"/>
+                </a:columns>
+                <a:editors>
+                    <a:checkBox id="pur_5010_main_checkBox" checkedValue="Y" uncheckedValue="N"/>
+                </a:editors>
+            </a:grid>
+        </a:defaultScreen>
+    </a:view>
+</a:screen>

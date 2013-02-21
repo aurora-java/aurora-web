@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:model xmlns:e="aurora.service.exception" xmlns:o="aurora.database.local.oracle" xmlns:ns1="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="c" baseTable="fnd_business_partners">
+    <ns1:fields>
+        <ns1:field name="partner_id" databaseType="BIGINT" datatype="java.lang.Long"/>
+        <ns1:field name="partner_code" databaseType="VARCHAR" datatype="java.lang.String" displayWidth="100" forQuery="true" fordisplay="true" prompt="供应商代码" queryWidth="150"/>
+        <ns1:field name="partner_name" databaseType="VARCHAR" datatype="java.lang.String" displayWidth="200" forInsert="false" forQuery="true" forUpdate="false" fordisplay="true" prompt="供应商名称" queryWidth="150"/>
+        <ns1:field name="partner_desc" expression="concat(c.partner_code,concat(&apos;-&apos;,c.partner_name))"/>
+    </ns1:fields>
+    <ns1:primary-key>
+        <ns1:pk-field name="partner_id"/>
+    </ns1:primary-key>
+    <ns1:data-filters>
+        <ns1:data-filter name="customer_flag" enforceOperations="query" expression="c.customer_flag=&apos;Y&apos;"/>
+        <ns1:data-filter name="enabled_flag" enforceOperations="query" expression="c.enabled_flag=&apos;Y&apos;"/>
+        <ns1:data-filter name="management_flag" enforceOperations="query" expression="c.management_flag=&apos;Y&apos;"/>
+        <ns1:data-filter name="company_id" enforceOperations="query" expression="c.company_id=${/session/@company_id}"/>
+    </ns1:data-filters>
+</ns1:model>
