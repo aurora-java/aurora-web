@@ -16,12 +16,14 @@
             .solidblockmenu A:visited {COLOR: #fff; TEXT-DECORATION: none}
             .solidblockmenu A:active {COLOR: #fff;TEXT-DECORATION: none}
             .solidblockmenu A:hover {COLOR: #fff;TEXT-DECORATION: none}
+            
             /** Head Menu **/
             .solidblockmenu{
                 margin: 0px;
                 padding: 0px;
                 float: left;
-                font-size:14px;
+                width:100%;
+                font-size:15px;
                 font-weight:bold;
                 line-height:34px;
                 -webkit-border-radius:4px;
@@ -29,6 +31,7 @@
                 -moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
                 -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
                 box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+                background: transparent url(images/globalnavmiddle.png) 0px 0px repeat-x;
             }
             .solidblockmenu li{
                 display: inline;
@@ -38,7 +41,8 @@
             .solidblockmenu li a{
                 text-align:center;
                 float: left;
-                width: 102px;
+                //width:102px;
+                width:92px;
                 overflow:hidden;
                 color: white;
                 height:36px;
@@ -49,13 +53,17 @@
             .solidblockmenu .first a{
                 background-position: 0px 0px;
             }
+            .solidblockmenu .exit {
+                background: transparent url(images/globalsearch_bg.png) 100% 0px no-repeat;
+            }
             .solidblockmenu .last {
-                float:left;
+                float:right;
                 width:140px;
                 padding-left:12px;
                 padding-right:8px;
                 height:36px;
-                background: transparent url(images/globalsearch_bg.png) 100% 0px no-repeat;
+                /*background: transparent url(images/globalsearch_bg.png) 100% 0px no-repeat;*/
+                background: transparent url(images/globalnavmiddle.png) 0px 0px repeat-x;
             }
             
             .solidblockmenu .searchbox {
@@ -77,9 +85,11 @@
             
             .solidblockmenu li a:hover{
                 background-position:-102px -72px;
+                //background-position:-92px -72px;
             }
             .solidblockmenu  a.active,.solidblockmenu  a.active:hover{
                 background-position:-102px -108px;
+                //background-position:-92px -108px;
             }
             
             .solidblockmenu .first a:hover{
@@ -129,6 +139,7 @@
                 float:left;
                 margin-right:5px;
                 margin-bottom:10px;
+                white-space: nowrap;
             }
             .menu .head{
                 font-size:15px;
@@ -232,6 +243,13 @@
                                         </#if>
                                     ]]></a:freeMarker>
                                 <li>
+                                    <!-- <a class="exit" href="javascript:exitSystem();" style="width:70px;float:right"><![CDATA[退出]]></a> -->
+                                    <a href="javascript:exitSystem();" style="width:50px;float:right"><![CDATA[退出]]></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:showSessionMessage();" style="width:50px;float:right"><![CDATA[会话]]></a>
+                                </li>
+                                <li>
                                     <div class="last">
                                         <div id="search_box" class="searchbox">
                                             <input name="q" id="sp-searchtext" accessKey="s" autocomplete="off" type="text"/>
@@ -239,8 +257,6 @@
                                     </div>
                                 </li>
                             </ul>
-                            <a href="javascript:showSessionMessage();" style="float:right;line-height:15px;margin-right:15px;color:black;"><![CDATA[SESSION]]></a>
-                            <a href="javascript:exitSystem();" style="float:right;line-height:15px;margin-right:15px;color:black;"><![CDATA[退出]]></a>
                         </td>
                     </tr>
                     <tr>
