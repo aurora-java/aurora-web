@@ -36,7 +36,6 @@ var PurOrder = {
 		var l_bm = PurOrder.getLineBm();
 		for (i = 0; i < arr.length; i++) {
 			arr[i].purchase_order_header_id = h.purchase_order_header_id;
-			println(l_bm.insert);
 			l_bm.insert(arr[i]);
 		}
 	},
