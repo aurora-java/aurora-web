@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:model xmlns:ns2="aurora.database.local.oracle" xmlns:ns1="http://www.aurora-framework.org/schema/bm" xmlns:ns3="aurora.database.features" alias="f" baseTable="sys_prompts" defaultOrderBy="prompt_code,language">
+    <ns1:fields>
+        <ns1:field name="prompt_id" databaseType="BIGINT" datatype="java.lang.Long"/>
+        <ns1:field name="prompt_code" databaseType="VARCHAR" datatype="java.lang.String" prompt="SYS_PROMPT.PROMPT_CODE"/>
+        <ns1:field name="language" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <ns1:field name="language_display" databaseType="VARCHAR" datatype="java.lang.String" expression="decode(f.language,&apos;US&apos;,&apos;English&apos;,&apos;简体中文&apos;)" forInsert="false" forUpdate="false" prompt="SYS_PROMPT.LANGUAGE"/>
+        <ns1:field name="description" databaseType="VARCHAR" datatype="java.lang.String" prompt="SYS_PROMPT.DESCRIPTION"/>
+    </ns1:fields>
+    <ns1:primary-key>
+        <ns1:pk-field name="prompt_id"/>
+    </ns1:primary-key>
+    <ns1:query-fields>
+        <ns1:query-field field="prompt_code" queryOperator="like"/>
+        <ns1:query-field field="description" queryOperator="like"/>
+    </ns1:query-fields>
+    <ns1:features>
+        <ns2:sequence-pk/>
+        <ns3:standard-who/>
+    </ns1:features>
+    <ns1:ref-fields/>
+</ns1:model>

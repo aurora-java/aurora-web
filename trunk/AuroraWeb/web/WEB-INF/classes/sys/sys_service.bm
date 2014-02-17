@@ -15,6 +15,7 @@
     <ns1:query-fields>
         <ns1:query-field field="service_name" queryOperator="like"/>
         <ns1:query-field field="title" queryOperator="like"/>
+        <ns1:query-field field="service_id" queryOperator="="/>
     </ns1:query-fields>
     <ns1:features>
         <ns2:sequence-pk/>

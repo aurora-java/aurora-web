@@ -21,6 +21,7 @@
 			end;
 			]]></bm:update-sql>
         </bm:operation>
+        <!--
         <bm:operation name="insert">
             <bm:update-sql><![CDATA[
             begin
@@ -51,6 +52,7 @@
 			end;
 			]]></bm:update-sql>
         </bm:operation>
+        -->
     </bm:operations>
     <bm:features>
         <f:standard-who/>
