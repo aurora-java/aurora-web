@@ -11,6 +11,9 @@
         </p:method-invoke>
         <batch-apply sourcepath="/parameter">
             <a:model-insert model="doc.doc_article"/>
+            <a:batch-apply sourcePath="@current_parameter/demo_ds">
+                <a:model-insert model="doc.doc_demo"/>
+            </a:batch-apply>
         </batch-apply>
     </a:init-procedure>
     <a:service-output output="/model/result"/>
