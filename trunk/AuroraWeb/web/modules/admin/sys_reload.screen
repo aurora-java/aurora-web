@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
+    <a:init-procedure>
+        <p:method-invoke className="aurora.application.features.cache.CacheProviderRegistry" methodName="getAllProvider" resultPath="/model/results"/>
+    </a:init-procedure>
+    <a:view package="ui.template" template="empty">
+        <a:link id="reload_cache" url="${/request/@context_path}/modules/admin/sys_cache_data_reload.svc"/>
+        <a:link id="get_cache" url="${/request/@context_path}/modules/admin/sys_query_cache_data.svc"/>
+        <script><![CDATA[
+            var intervals = {};
+            
+            function reloadCache(reocrd_index, topic, message) {
+                var dataSet = $('cacheProvider_ds');
+                var record = dataSet.getAt(reocrd_index);
+            
+                var updateUrl = $('reload_cache').getUrl() + "?message=" + message + "&topic=" + topic;
+                var queryUrl = $('get_cache').getUrl() + "?cacheName=" + record.get('cacheName');
+            
+                Aurora.request({
+                    url: updateUrl,
+                    success: function(res) {
+                        record.set('reloding', '更新中。。。');
+                        intervals[message] = setInterval(function() {
+                            Aurora.request({
+                                url: queryUrl,
+                                success: function(res) {
+                                    if (res.result.record.lastReloadDate != record.get('lastReloadDate')) {
+                                        clearInterval(intervals[message]);
+                                        record.set('lastReloadDate',res.result.record.lastReloadDate);
+                                        record.set('reloding', '更新成功');
+                                    }
+                                },
+                                scope: this
+                            });
+                        }, 2000);
+                    },
+                    scope: this
+                });
+            }
+            
+            function reload(value, record, name) {
+                var topic = record.get('reloadTopic');
+                var message = record.get('reloadMessage');
+                var prompt = record.get('cacheDesc');
+            
+                var reocrd_index = $('cacheProvider_ds').indexOf(record);
+            
+                var url = '<a href="javascript:reloadCache(\'' + reocrd_index + '\',\'' + topic + '\',\'' + message + '\')">更新</a>';
+                return url;
+            }
+            
+            function convertTime(time) {
+                var display = "";
+                var day = Math.floor(time / (24 * 3600));
+                if (day != 0) {
+                    display = display + day + " 天 ";
+                }
+                var hour = Math.floor(time % (24 * 3600) / 3600);
+                if (hour != 0) {
+                    display = display + hour + " 小时 ";
+                }
+                var minute = Math.floor(time % 3600 / 60);
+                if (minute != 0) {
+                    display = display + minute + " 分 ";
+                }
+                var second = Math.floor(time % 60);
+                if (second != 0) {
+                    display = display + second + " 秒 ";
+                }
+                return display;
+            }
+            
+            function pastTime_renderer(value, record, name) {
+                var reloading = record.get('reloding');
+                if (reloading) {
+                    return reloading;
+                }
+                var between = record.get('pastTime');
+                return convertTime(between);
+            
+            }
+            
+            function reloadType_renderer(value, record, name) {
+                var reloadType = record.get('reloadType');
+                if (reloadType == 'periodMode') {
+                    return '自动';
+                }
+                return '';
+            }
+            
+            function reloadInterval_renderer(value, record, name) {
+                var reloadInterval = record.get('reloadInterval');
+                return convertTime(reloadInterval / 1000);
+            }
+            
+            function reload_select() {
+                var ds = $('cacheProvider_ds');
+                var records = ds.getSelected();
+                if (records.length == 0) {
+                    Aurora.showMessage('提示', '请至少选中一行!');
+                    return;
+                }
+            
+                var record;
+                for (var i = 0;i < records.length;i++) {
+                    record = records[i];
+                    var topic = record.get('reloadTopic');
+                    var message = record.get('reloadMessage');
+            
+                    var reocrd_index = $('cacheProvider_ds').indexOf(record);
+                    reloadCache(reocrd_index, topic, message);
+                }
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="cacheProvider_ds" selectable="true">
+                <a:datas dataSource="/model/results"/>
+            </a:dataSet>
+        </a:dataSets>
+        <a:grid bindTarget="cacheProvider_ds" height="227" style="margin-left:10px;margin-top:10px;" width="776">
+            <a:toolBar>
+                <a:button click="reload_select" icon="${/request/@context_path}/images/continue.png" style="height:16px;" text="更新缓存"/>
+            </a:toolBar>
+            <a:columns>
+                <a:column name="cacheDesc" prompt="缓存描述" width="100"/>
+                <a:column name="pastTime" prompt="已过时间" renderer="pastTime_renderer" width="100"/>
+                <!--
+                <a:column name="reload" align="center" prompt="马上更新" renderer="reload" width="100"/>
+                -->
+                <a:column name="cacheName" prompt="缓存名称" width="200"/>
+                <a:column name="reloadType" prompt="更新类型" renderer="reloadType_renderer" width="100"/>
+                <a:column name="reloadInterval" prompt="更新间隔" renderer="reloadInterval_renderer" width="100"/>
+                <a:column name="lastReloadDate" prompt="上次更新时间" width="100"/>
+            </a:columns>
+        </a:grid>
+    </a:view>
+</a:screen>

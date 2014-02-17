@@ -74,7 +74,7 @@
                     </a:field>
                 </a:fields>
             </a:dataSet>
-            <a:dataSet id="doc_article_result_ds" autoQuery="true" model="doc.doc_article_v" queryDataSet="doc_article_query_ds"/>
+            <a:dataSet id="doc_article_result_ds" autoQuery="true" pageSize="20" model="doc.doc_article_v" queryDataSet="doc_article_query_ds"/>
         </a:dataSets>
         <a href="${/request/@context_path}/modules/admin/post_article.screen" style="font-size:16px;float:right;margin-right:30px;"><![CDATA[发表文章]]></a>
         <div style="margin:5px;float:left;width:99%;">

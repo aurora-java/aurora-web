@@ -9,9 +9,18 @@
                 <p:argument type="java.lang.Integer" value="${/parameter/record/@article_id}"/>
             </p:arguments>
         </p:method-invoke>
-        <!---->
         <batch-apply sourcepath="/parameter">
             <a:model-update model="doc.doc_article"/>
+            <a:batch-apply sourcePath="@current_parameter/demo_ds">
+                <p:switch test="@current_parameter/@_status">
+                    <p:case value="update">
+                        <model-update model="doc.doc_demo" />
+                    </p:case>
+                    <p:case value="insert">
+                        <model-insert model="doc.doc_demo" />
+                    </p:case>
+                </p:switch>
+            </a:batch-apply>
         </batch-apply>
     </a:init-procedure>
     <a:service-output output="/model/result"/>

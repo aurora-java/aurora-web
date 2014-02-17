@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: niujiaqing1265 $
+    $Date: 2010/11/18 08:23:24 $
+    $Revision: 1.2 $
+    $Purpose: 页面注册
+-->
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure><![CDATA[
+    ]]></a:init-procedure>
+    <a:view package="ui.template" template="main">
+        <div/>
+        <script><![CDATA[
+        
+            function queryService(){
+                $('sys_service_result_ds').query();
+            }
+            
+            function openReload(){
+                new Aurora.Window({url:'sys_reload.screen',title:'加载缓存',width:800,height:250});
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="sys_service_query_ds"/>
+            <a:dataSet id="sys_service_result_ds" autoCount="true" autoQuery="true" pageSize="50" fetchAll="false" model="sys.sys_service" queryDataSet="sys_service_query_ds" queryUrl="${/request/@context_path}/autocrud/sys.sys_service/query?ORDER_FIELD=service_name" selectable="true">
+                <a:fields>
+                    <a:field name="service_name" required="true"/>
+                    <a:field name="is_access_checked" checkedValue="1" defaultValue="0" uncheckedValue="0"/>
+                    <a:field name="is_login_required" checkedValue="1" defaultValue="0" uncheckedValue="0"/>
+                    <a:field name="is_entry_page" checkedValue="1" defaultValue="0" uncheckedValue="0"/>
+                    <a:field name="is_system_access" checkedValue="1" defaultValue="0" uncheckedValue="0"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:form column="2" style="margin-left:10px;margin-top:10px;" title="页面查询" width="450">
+            <a:textField name="service_name" bindTarget="sys_service_query_ds" prompt="页面名" width="350">
+                <a:events>
+                    <a:event name="enterdown" handler="queryService"/>
+                </a:events>
+            </a:textField>
+        </a:form>
+        <a:hBox style="margin-left:7px;">
+            <a:button click="queryService" text="查询"/>
+        </a:hBox>
+        <a:screenTitle title="aaaa"/>
+        <a:grid id="grid" bindTarget="sys_service_result_ds" height="500" navBar="true" style="margin-left:10px;margin-top:10px;" width="1200">
+            <a:toolBar>
+                <a:button type="add" text="新增"/>
+                <a:button type="delete" text="删除"/>
+                <a:button Type="Save" Text="保存"/>
+                <a:button Text="重载缓存" click="openReload"/>
+            </a:toolBar>
+            <a:columns>
+                <a:column name="service_name"  editor="sys_service_result_grid_tf" prompt="页面名" sortable="true" width="250"/>
+                <a:column name="title" editor="sys_service_result_grid_tf" prompt="页面标题" sortable="true" width="250"/>
+                <a:column name="is_access_checked" editor="sys_service_result_grid_ckb" prompt="是否权限控制" width="100"/>
+                <a:column name="is_login_required" editor="sys_service_result_grid_ckb" prompt="是否登录" width="100"/>
+                <a:column name="is_system_access" editor="sys_service_result_grid_ckb" prompt="是否系统页面" width="100"/>
+            </a:columns>
+            <a:editors>
+                <a:textField id="sys_service_result_grid_tf"/>
+                <a:checkBox id="sys_service_result_grid_ckb"/>
+            </a:editors>
+        </a:grid>
+    </a:view>
+</a:screen>

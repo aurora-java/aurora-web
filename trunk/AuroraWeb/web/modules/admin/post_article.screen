@@ -56,9 +56,10 @@
                     <a:event name="beforesubmit" handler="onBeforeSubmit"/>
                 </a:events>
             </a:dataSet>
+            <a:dataSet id="demo_ds" bindName="demo_ds" bindTarget="article_create_ds" submitUrl="${/request/@context_path}/modules/admin/article_demo_delete.svc" selectable="true"/>
         </a:dataSets>
         <style><![CDATA[
-                TH {
+                TH.label  {
                     background-color:#EEEEEE;
                     text-align:right;
                     padding-right:15px;
@@ -71,35 +72,55 @@
             <TABLE align="center" cellPadding="4" cellSpacing="1" style="background-color:#fff" width="100%">
                 <TBODY>
                     <TR>
-                        <TH align="right" width="100"><![CDATA[标题:]]></TH>
+                        <TH align="right" width="100" class="label"><![CDATA[标题:]]></TH>
                         <TD>
                             <a:textField name="article_title" bindTarget="article_create_ds" width="400"/>
                         </TD>
                     </TR>
                     <TR>
-                        <TH align="right" width="100"><![CDATA[目录:]]></TH>
+                        <TH align="right" width="100" class="label"><![CDATA[目录:]]></TH>
                         <TD>
-                            <a:lov name="category_name" bindTarget="article_create_ds" width="200"/>
+                            <a:lov name="category_name" bindTarget="article_create_ds" width="400"/>
                         </TD>
                     </TR>
                     <TR>
-                        <TH align="right"><![CDATA[内容:]]></TH>
+                        <TH align="right" class="label"><![CDATA[内容:]]></TH>
                         <TD>
-                            <a:textArea name="content" bindTarget="article_create_ds" className="postConent" height="520" width="800"/>
+                            <a:textArea name="content" bindTarget="article_create_ds" className="postConent" height="520" width="1000"/>
                         </TD>
                     </TR>
                     <TR>
-                        <TH align="right"><![CDATA[附件:]]></TH>
+                        <TH align="right" class="label"><![CDATA[文章插图:]]></TH>
                         <TD>
                             <div style="width:600px;">
-                                <a:upload buttonWidth="75" fileType="*.png;*.gif;*.jpg;*.screen;*.bm;*.xml;*.zip;*.rar;*.doc;*.docx;*.config;*.proc;*.jar" pkvalue="${/model/article/record/@sequence}" sourcetype="DOC_ARTICLE" text="上传附件"/>
+                                <a:upload buttonWidth="75" fileType="*.png;*.gif;*.jpg;" pkvalue="${/model/article/record/@sequence}" sourcetype="DOC_ARTICLE" text="上传图片"/>
                             </div>
                         </TD>
                     </TR>
                     <TR>
-                        <TH align="right" width="100"><![CDATA[标签:]]></TH>
+                        <TH align="right" class="label"><![CDATA[附件:]]></TH>
                         <TD>
-                            <a:textField name="tags" bindTarget="article_create_ds" emptyText="多个标签之间以逗号或者空格隔开" width="400"/>
+                            <div style="width:600px;">
+                                <a:upload buttonWidth="75" fileType="*.png;*.gif;*.jpg;*.screen;*.bm;*.xml;*.zip;*.rar;*.doc;*.docx;*.config;*.proc;*.jar" pkvalue="${/model/article/record/@sequence}" sourcetype="DOC_ARTICLE_ATT" text="上传附件"/>
+                            </div>
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TH align="right" width="100" class="label"><![CDATA[Demo:]]></TH>
+                        <TD>
+                            <a:grid bindTarget="demo_ds" height="250" navBar="false" width="800">
+                                <a:toolBar>
+                                    <a:button text="新增" type="add"/>
+                                    <a:button text="删除" type="delete"/>
+                                </a:toolBar>
+                                <a:columns>
+                                    <a:column name="demo_name" editor="demo_textField" prompt="名称" width="150"/>
+                                    <a:column name="demo_path" editor="demo_textField" prompt="路径" width="550"/>
+                                </a:columns>
+                                <a:editors>
+                                    <a:textField id="demo_textField"/>
+                                </a:editors>
+                            </a:grid>
                         </TD>
                     </TR>
                 </TBODY>

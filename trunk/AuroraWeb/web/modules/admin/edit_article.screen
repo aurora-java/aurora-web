@@ -2,6 +2,7 @@
 <a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
     <a:init-procedure>
         <model-query fetchAll="true" model="doc.doc_article_detail" rootPath="article"/>
+        <model-query fetchAll="true" model="doc.doc_demo" rootPath="demos"/>
     </a:init-procedure>
     <a:view package="aurora.ui.std" template="default">
         <a:switch test="/parameter/@article_id">
@@ -65,9 +66,12 @@
                             <a:event name="beforesubmit" handler="onBeforeSubmit"/>
                         </a:events>
                     </a:dataSet>
+                    <a:dataSet id="demo_ds" bindName="demo_ds" bindTarget="article_update_ds" submitUrl="${/request/@context_path}/modules/admin/article_demo_delete.svc" selectable="true">
+                        <a:datas dataSource="/model/demos"/>
+                    </a:dataSet>
                 </a:dataSets>
                 <style><![CDATA[
-            TH {
+            TH.label {
                 background-color:#EEEEEE;
                 text-align:right;
                 padding-right:15px;
@@ -75,44 +79,79 @@
             }
                 ]]></style>
                 <div style="margin:10px;">
-                    <div style="font-size:14px;"><![CDATA[更新文章]]></div>
-                    <div style="margin:5px 0px 5px 0px;height:2px;background-color:#97aecc"/>
-                    <TABLE align="center" cellPadding="4" cellSpacing="1" style="background-color:#fff" width="100%">
-                        <TBODY>
-                            <TR>
-                                <TH align="right" width="100"><![CDATA[标题:]]></TH>
-                                <TD>
-                                    <a:textField name="article_title" bindTarget="article_update_ds" width="400"/>
-                                </TD>
-                            </TR>
-                            <TR>
-                                <TH align="right" width="100"><![CDATA[目录:]]></TH>
-                                <TD>
-                                    <a:lov name="category_name" bindTarget="article_update_ds" width="200"/>
-                                </TD>
-                            </TR>
-                            <TR>
-                                <TH align="right"><![CDATA[内容:]]></TH>
-                                <TD>
-                                    <a:textArea name="content" bindTarget="article_update_ds" className="postConent" height="390" width="800"/>
-                                </TD>
-                            </TR>
-                            <TR>
-                                <TH align="right"><![CDATA[附件:]]></TH>
-                                <TD>
-                                    <div style="width:600px;">
-                                        <a:upload buttonWidth="75" fileType="*.png;*.gif;*.jpg;*.screen;*.bm;*.xml;*.zip;*.rar;*.doc;*.docx;*.config;*.proc;*.jar" pkvalue="${/model/article/record/@article_id}" sourcetype="DOC_ARTICLE" text="上传附件"/>
-                                    </div>
-                                </TD>
-                            </TR>
-                            <TR>
-                                <TH align="right" width="100"><![CDATA[标签:]]></TH>
-                                <TD>
-                                    <a:textField name="tags" bindTarget="article_update_ds" emptyText="多个标签之间以逗号或者空格隔开" width="400"/>
-                                </TD>
-                            </TR>
-                        </TBODY>
-                    </TABLE>
+                    <a:tabPanel width="970" height="570" >            
+                        <a:tabs>
+                            <a:tab prompt="更新文章" width="110">
+                                <TABLE align="center" cellPadding="4" cellSpacing="1" style="background-color:#fff" width="100%">
+                                    <TBODY>
+                                        <TR>
+                                            <TH align="right" width="100" class="label"><![CDATA[标题:]]></TH>
+                                            <TD>
+                                                <a:textField name="article_title" bindTarget="article_update_ds" width="400"/>
+                                            </TD>
+                                        </TR>
+                                        <TR>
+                                            <TH align="right" width="100" class="label"><![CDATA[目录:]]></TH>
+                                            <TD>
+                                                <a:lov name="category_name" bindTarget="article_update_ds" width="200"/>
+                                            </TD>
+                                        </TR>
+                                        <TR>
+                                            <TH align="right" class="label"><![CDATA[内容:]]></TH>
+                                            <TD>
+                                                <a:textArea name="content" autoSelect="false" bindTarget="article_update_ds" className="postConent" height="460" width="850"/>
+                                            </TD>
+                                        </TR>
+                                    </TBODY>
+                                </TABLE>
+                            </a:tab>
+                            <a:tab prompt="文章图片" width="110">
+                                <TABLE align="center" cellPadding="4" cellSpacing="1" style="background-color:#fff" width="100%">
+                                    <TBODY>
+                                        <TR>
+                                            <TH align="right" class="label"><![CDATA[文章插图:]]></TH>
+                                            <TD>
+                                                <div style="width:600px;">
+                                                    <a:upload buttonWidth="75" fileType="*.png;*.gif;*.jpg;" pkvalue="${/model/article/record/@article_id}" sourcetype="DOC_ARTICLE" text="上传图片"/>
+                                                </div>
+                                            </TD>
+                                        </TR>
+                                    </TBODY>
+                                </TABLE>
+                            </a:tab>
+                            <a:tab prompt="文章附件" width="110">
+                                <TABLE align="center" cellPadding="4" cellSpacing="1" style="background-color:#fff" width="100%">
+                                    <TBODY>
+                                        
+                                        <TR>
+                                            <TH align="right" class="label"><![CDATA[附件:]]></TH>
+                                            <TD>
+                                                <div style="width:600px;">
+                                                    <a:upload buttonWidth="75" fileType="*.png;*.gif;*.jpg;*.screen;*.bm;*.xml;*.zip;*.rar;*.doc;*.docx;*.config;*.proc;*.jar" pkvalue="${/model/article/record/@article_id}" sourcetype="DOC_ARTICLE_ATT" text="上传附件"/>
+                                                </div>
+                                            </TD>
+                                        </TR>
+                                    </TBODY>
+                                </TABLE>
+                            </a:tab>
+                            <a:tab prompt="Demo" width="110">
+                                <a:grid bindTarget="demo_ds" style="border:none" navBar="false" width="967" height="543">
+                                    <a:toolBar>
+                                        <a:button text="新增" type="add"/>
+                                        <a:button text="删除" type="delete"/>
+                                    </a:toolBar>
+                                    <a:columns>
+                                        <a:column name="demo_name" editor="demo_textField" prompt="名称" width="150"/>
+                                        <a:column name="demo_path" editor="demo_textField" prompt="路径" width="550"/>
+                                    </a:columns>
+                                    <a:editors>
+                                        <a:textField id="demo_textField"/>
+                                    </a:editors>
+                                </a:grid>
+                            </a:tab>
+                        </a:tabs>
+                    </a:tabPanel>
+                    
                     <a:button id="postButton" click="postArticle" height="30" style="margin-top:10px;" text="更 新 文 章" width="100"/>
                 </div>
             </a:case>
