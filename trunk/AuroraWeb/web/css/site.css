@@ -57,10 +57,8 @@ body,html {
 }
 
 #content {
-    padding-bottom:20px;
     overflow:hidden;
     background:url(../images/bk_vertline.jpg) 695px 0 repeat-y;
-    margin-top:25px;
 }
 
 #content #colLeft {
@@ -76,7 +74,7 @@ body,html {
 
 #footer {
     background:url(../images/bk_horiz_line.jpg) 0 0 repeat-x;
-    margin:10px 0 0;
+    
     color:#666;
     position:relative;
     padding-top:3px;    
