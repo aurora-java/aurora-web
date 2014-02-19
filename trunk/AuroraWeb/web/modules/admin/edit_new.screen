@@ -26,6 +26,7 @@
                         });
                         contentEditor = K.create('textarea[id="news_content"]', {
                             width:'100%',
+                            uploadJson : '${/request/@context_path}/kindeditor/jsp/upload_json.jsp',
                             allowFileManager : true
                         });
                     });
