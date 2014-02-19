@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view chartTheme="grid" template="empty.tplt">
+        <a:dataSets>
+            <a:dataSet id="ds">
+                <a:datas>
+                    <a:record ming="3" period="周一" wang="1"/>
+                    <a:record ming="4" period="周二" wang="3"/>
+                    <a:record ming="3" period="周三" wang="4"/>
+                    <a:record ming="5" period="周四" wang="3"/>
+                    <a:record ming="4" period="周五" wang="3"/>
+                    <a:record ming="10" period="周六" wang="5"/>
+                    <a:record ming="12" period="周日" wang="4"/>
+                </a:datas>
+                <a:fields>
+                    <a:field name="period"/>
+                    <a:field name="ming" datatype="float" prompt="小明"/>
+                    <a:field name="wang" datatype="float" prompt="小王"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:chart bindTarget="ds" colors="&apos;rgba(255,0,0,1)&apos;,&apos;rgba(0,255,0,1)&apos;" type="areaspline">
+            <a:title text="一周内的水果平均消费量"/>
+            <a:legend align="left" backgroundColor="#FFFFFF" borderWidth="1" floating="true" layout="vertical" verticalAlign="top" x="150" y="100"/>
+            <a:xAxis>
+                <a:xAxi name="period">
+                    <a:plotBands>
+                        <a:plotBand color="rgba(68,170,213,.2)" from="4.5" to="6.5"/>
+                    </a:plotBands>
+                </a:xAxi>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="ming,wang">
+                    <a:title text="水果单位"/>
+                </a:yAxi>
+            </a:yAxis>
+            <a:tooltip shared="true" valueSuffix=" units"/>
+            <a:seriesList>
+                <a:seriesItem name="ming">
+                    <a:fillColor linearGradient="0,0,0,300" stops="[0,&apos;rgba(255,0,0,1)&apos;],[1,&apos;rgba(255,0,0,0)&apos;]"/>
+                </a:seriesItem>
+                <a:seriesItem name="wang">
+                    <a:fillColor linearGradient="0,0,0,330" stops="[0,&apos;rgba(0,255,0,1)&apos;],[1,&apos;rgba(0,255,0,0)&apos;]"/>
+                </a:seriesItem>
+            </a:seriesList>
+        </a:chart>
+    </a:view>
+</a:screen>

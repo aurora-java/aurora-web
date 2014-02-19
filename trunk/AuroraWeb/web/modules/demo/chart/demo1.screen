@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view chartTheme="grid" template="empty.tplt">
+        <script type="text/javascript"><![CDATA[
+        	function formatter1(){
+        	    return this.value +'°';
+        	}
+        	function formatter2(){
+        	    return this.x;
+        	}
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="ds">
+                <a:datas>
+                    <a:record london="3.9" period="Jan" tokyo="7.0"/>
+                    <a:record london="4.2" period="Feb" tokyo="6.9"/>
+                    <a:record london="5.7" period="Mar" tokyo="9.5"/>
+                    <a:record london="8.5" period="Apr" tokyo="14.5"/>
+                    <a:record london="11.9" period="May" tokyo="18.2"/>
+                    <a:record london="15.2" period="Jun" tokyo="21.5"/>
+                    <a:record london="17.0" period="Jul" tokyo="25.2"/>
+                    <a:record london="16.6" period="Aug" tokyo="26.5"/>
+                    <a:record london="14.2" period="Sep" tokyo="23.3"/>
+                    <a:record london="10.3" period="Oct" tokyo="18.3"/>
+                    <a:record london="6.6" period="Nov" tokyo="13.9"/>
+                    <a:record london="4.8" period="Dec" tokyo="9.6"/>
+                </a:datas>
+                <a:fields>
+                    <a:field name="period" prompt="月"/>
+                    <a:field name="london" datatype="float" prompt="伦敦"/>
+                    <a:field name="tokyo" datatype="float" prompt="东京"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:chart bindTarget="ds" type="spline">
+            <a:title text="月平均温度"/>
+            <a:subtitle text="摘自：WorldClimate.com"/>
+            <a:xAxis>
+                <a:xAxi name="period"/>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="tokyo,london">
+                    <a:title text="温度"/>
+                    <a:labels formatter="formatter1"/>
+                </a:yAxi>
+            </a:yAxis>
+            <a:tooltip crosshairs="true" formatter="formatter2" shared="true"/>
+            <a:plotOptions>
+                <a:spline>
+                    <a:marker lineColor="#666666" lineWidth="2" radius="4"/>
+                </a:spline>
+            </a:plotOptions>
+            <a:seriesList>
+                <a:seriesItem name="tokyo">
+                    <a:seriesDatas>
+                        <a:seriesData x="7">
+                            <a:marker symbol="url(${/request/@context_path}/images/sun.png)"/>
+                        </a:seriesData>
+                    </a:seriesDatas>
+                </a:seriesItem>
+                <a:seriesItem name="london">
+                    <a:seriesDatas>
+                        <a:seriesData x="0">
+                            <a:marker symbol="url(${/request/@context_path}/images/snow.png)"/>
+                        </a:seriesData>
+                    </a:seriesDatas>
+                </a:seriesItem>
+            </a:seriesList>
+        </a:chart>
+    </a:view>
+</a:screen>
