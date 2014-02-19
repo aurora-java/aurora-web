@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
-    <a:init-procedure></a:init-procedure>
-    <a:view template="main" package="ui.template">
-         <script charset="utf-8" src="${/request/@context_path}/kindeditor/kindeditor-min.js"> </script>
-         <script charset="utf-8" src="${/request/@context_path}/kindeditor/lang/zh_CN.js"> </script>
-         <script><![CDATA[
+    <a:init-procedure/>
+    <a:view package="ui.template" template="main">
+        <script charset="utf-8" src="${/request/@context_path}/kindeditor/kindeditor-min.js"><![CDATA[ ]]></script>
+        <script charset="utf-8" src="${/request/@context_path}/kindeditor/lang/zh_CN.js"><![CDATA[ ]]></script>
+        <script><![CDATA[
             var summaryEditor, contentEditor
             KindEditor.ready(function(K) {
                 summaryEditor = K.create('textarea[id="news_summary"]', {
@@ -19,6 +19,7 @@
                 });
                 contentEditor = K.create('textarea[id="news_content"]', {
                     width:'100%',
+                    uploadJson : '${/request/@context_path}/kindeditor/jsp/upload_json.jsp',
                     allowFileManager : true
                 });
             });
@@ -37,7 +38,7 @@
             }
         ]]></script>
         <a:dataSets>
-            <a:dataSet id="doc_news" model="doc.doc_news" autoCreate="true">
+            <a:dataSet id="doc_news" autoCreate="true" model="doc.doc_news">
                 <a:fields>
                     <a:field name="title" required="true"/>
                 </a:fields>
@@ -46,39 +47,39 @@
                 </a:events>
             </a:dataSet>
         </a:dataSets>
-        <div >
-            <h1 style="font-size:16px;font-weight:bold;">发布新闻</h1>
-            <div style="margin:5px 0px 5px 0px;height:2px;background-color:#333"></div>
-            <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC" >
+        <div>
+            <h1 style="font-size:16px;font-weight:bold;"><![CDATA[发布新闻]]></h1>
+            <div style="margin:5px 0px 5px 0px;height:2px;background-color:#333"/>
+            <table bgcolor="#CCCCCC" border="0" cellpadding="0" cellspacing="1" width="100%">
                 <tr>
-                    <td width="10%" height="20" align="right" bgcolor="#FFFFFF">
-                        <strong>标题：</strong>
+                    <td align="right" bgcolor="#FFFFFF" height="20" width="10%">
+                        <strong><![CDATA[标题：]]></strong>
                     </td>
-                    <td width="90%" height="20" align="left" style="padding:5px;line-height:20px;" bgcolor="#FFFFFF">
-                        <a:textField name="title" width="450" style="float:left;" bindTarget="doc_news" maxLength="100"/>
-                        <span style="float:left;margin-left:10px;">新闻标题不能为空，长度限制在100个字符以内</span>
+                    <td align="left" bgcolor="#FFFFFF" height="20" style="padding:5px;line-height:20px;" width="90%">
+                        <a:textField name="title" bindTarget="doc_news" maxLength="100" style="float:left;" width="450"/>
+                        <span style="float:left;margin-left:10px;"><![CDATA[新闻标题不能为空，长度限制在100个字符以内]]></span>
                     </td>
                 </tr>
                 <tr>
-                    <td height="25" align="right" bgcolor="#FFFFFF" >
-                        <strong>摘要：</strong>
+                    <td align="right" bgcolor="#FFFFFF" height="25">
+                        <strong><![CDATA[摘要：]]></strong>
                     </td>
-                    <td height="25" align="left" bgcolor="#FFFFFF" style="padding:5px;">
-                        <a:textArea id="news_summary" style="width:700px;height:300px;visibility:hidden;"></a:textArea>
-                    </td>
-                </tr>
-                <tr>
-                    <td height="25" align="right" bgcolor="#FFFFFF">
-                        <strong>内容：</strong>
-                    </td>
-                    <td height="25" align="left" bgcolor="#FFFFFF" style="padding:5px;">
-                        <a:textArea id="news_content"  style="width:700px;height:500px;visibility:hidden;"></a:textArea>
+                    <td align="left" bgcolor="#FFFFFF" height="25" style="padding:5px;">
+                        <a:textArea id="news_summary" style="width:700px;height:300px;visibility:hidden;"/>
                     </td>
                 </tr>
                 <tr>
-                    <td height="25" align="right" bgcolor="#FFFFFF"> </td>
-                    <td height="25" align="left" bgcolor="#FFFFFF">
-                        <a:button text="发布" height="30" width="100" style="margin:5px;" click="postNew" />
+                    <td align="right" bgcolor="#FFFFFF" height="25">
+                        <strong><![CDATA[内容：]]></strong>
+                    </td>
+                    <td align="left" bgcolor="#FFFFFF" height="25" style="padding:5px;">
+                        <a:textArea id="news_content" style="width:700px;height:500px;visibility:hidden;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" bgcolor="#FFFFFF" height="25"><![CDATA[ ]]></td>
+                    <td align="left" bgcolor="#FFFFFF" height="25">
+                        <a:button click="postNew" height="30" style="margin:5px;" text="发布" width="100"/>
                     </td>
                 </tr>
             </table>
