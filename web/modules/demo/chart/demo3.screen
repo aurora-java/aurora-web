@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view chartTheme="grid" template="empty.tplt">
+        <script><![CDATA[
+    		function formatter1(){
+    		    return this.value/10000;
+    		}
+    		function formatter2(){
+    		    var html =['<table><caption>',this.x,'年</caption>'],
+    		    	points = this.points,total=points[0].total,
+		        	mod;
+    		    for(var i=0,len = points.length;i<len;i++){
+    		        var point = points[i],
+		        	series = point.series,
+		        	y = point.y;
+    		        html.push('<tr>',
+    		        	'<td style="color:',series.color,'">',series.name,'</td>',
+    		        	'<td style="text-align:right"><b>',(mod = y%10000)==y?y:((y-mod)/10000+'亿'+mod),'万</b></td>',
+		        	'</tr>');
+    		    }
+    		    html.push('<tr>',
+    		    	'<td>总计</td>',
+    		    	'<td style="text-align:right"><b>',(mod = total%10000)==total?total:((total-mod)/10000+'亿'+mod),'万</b></td>',
+    		    '</tr>',
+    		    '</table>');
+    		    return html.join('');
+    		}
+    	]]></script>
+        <a:dataSets>
+            <a:dataSet id="ds">
+                <a:datas>
+                    <a:record africa="10600" america="1800" asia="50200" europe="16300" oceania="200" period="1750"/>
+                    <a:record africa="10700" america="3100" asia="63500" europe="20300" oceania="200" period="1800"/>
+                    <a:record africa="11100" america="5400" asia="80900" europe="27600" oceania="200" period="1850"/>
+                    <a:record africa="13300" america="15600" asia="94700" europe="40800" oceania="600" period="1900"/>
+                    <a:record africa="22100" america="33900" asia="140200" europe="54700" oceania="1300" period="1950"/>
+                    <a:record africa="76700" america="81800" asia="363400" europe="72900" oceania="3000" period="1999"/>
+                    <a:record africa="176600" america="120100" asia="526800" europe="62800" oceania="4600" period="2000"/>
+                </a:datas>
+                <a:fields>
+                    <a:field name="period"/>
+                    <a:field name="asia" datatype="int" prompt="亚洲"/>
+                    <a:field name="africa" datatype="int" prompt="非洲"/>
+                    <a:field name="europe" datatype="int" prompt="欧洲"/>
+                    <a:field name="america" datatype="int" prompt="美洲"/>
+                    <a:field name="oceania" datatype="int" prompt="大洋洲"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:chart bindTarget="ds" type="area">
+            <a:title text="全世界各地区人口增长历史概况"/>
+            <a:subtitle text="来源：Wikipedia.org"/>
+            <a:xAxis>
+                <a:xAxi name="period" tickmarkPlacement="on"/>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="asia,africa,europe,america,oceania">
+                    <a:title text="亿"/>
+                    <a:labels formatter="formatter1"/>
+                </a:yAxi>
+            </a:yAxis>
+            <a:tooltip formatter="formatter2" shared="true" useHTML="true"/>
+            <a:plotOptions>
+                <a:area lineColor="#666666" lineWidth="1" stacking="normal">
+                    <a:marker lineColor="#666666" lineWidth="1"/>
+                </a:area>
+            </a:plotOptions>
+        </a:chart>
+    </a:view>
+</a:screen>
