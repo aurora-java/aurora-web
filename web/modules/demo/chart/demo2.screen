@@ -2,6 +2,9 @@
 <a:screen xmlns:a="http://www.aurora-framework.org/application">
     <a:init-procedure/>
     <a:view chartTheme="grid" template="empty.tplt">
+        <script><![CDATA[
+    		Aurora.Charts.setOptions({colors:['rgb(255,0,0)','rgb(0,255,0)']});
+    	]]></script>
         <a:dataSets>
             <a:dataSet id="ds">
                 <a:datas>
@@ -20,7 +23,7 @@
                 </a:fields>
             </a:dataSet>
         </a:dataSets>
-        <a:chart bindTarget="ds" colors="&apos;rgba(255,0,0,1)&apos;,&apos;rgba(0,255,0,1)&apos;" type="areaspline">
+        <a:chart bindTarget="ds" type="areaspline">
             <a:title text="一周内的水果平均消费量"/>
             <a:legend align="left" backgroundColor="#FFFFFF" borderWidth="1" floating="true" layout="vertical" verticalAlign="top" x="150" y="100"/>
             <a:xAxis>
@@ -38,10 +41,10 @@
             <a:tooltip shared="true" valueSuffix=" units"/>
             <a:seriesList>
                 <a:seriesItem name="ming">
-                    <a:fillColor linearGradient="0,0,0,300" stops="[0,&apos;rgba(255,0,0,1)&apos;],[1,&apos;rgba(255,0,0,0)&apos;]"/>
+                    <a:fillColor linearGradient="0,0,0,300" stops="[0,Aurora.Charts.getOptions().colors[0]],[1,Aurora.Charts.Color(Aurora.Charts.getOptions().colors[0]).setOpacity(0).get(&apos;rgba&apos;)]"/>
                 </a:seriesItem>
                 <a:seriesItem name="wang">
-                    <a:fillColor linearGradient="0,0,0,330" stops="[0,&apos;rgba(0,255,0,1)&apos;],[1,&apos;rgba(0,255,0,0)&apos;]"/>
+                    <a:fillColor linearGradient="0,0,0,330" stops="[0,Aurora.Charts.getOptions().colors[1]],[1,Aurora.Charts.Color(Aurora.Charts.getOptions().colors[1]).setOpacity(0).get(&apos;rgba&apos;)]"/>
                 </a:seriesItem>
             </a:seriesList>
         </a:chart>
