@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view chartTheme="grid" template="empty.tplt">
+        <script><![CDATA[
+        	Aurora.Charts.setOptions({
+        	    lang: {
+					months: ['1月', '2月', '3月', '4月', '5月', '6月', '7月',
+							'8月', '9月', '10月', '11月', '12月'],
+					weekdays: ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+				}
+        	});
+        	(function(){
+	        	var series1Datas=[4.3, 5.1, 4.3, 5.2, 5.4, 4.7, 3.5, 4.1, 5.6, 7.4, 6.9, 7.1,
+	                    7.9, 7.9, 7.5, 6.7, 7.7, 7.7, 7.4, 7.0, 7.1, 5.8, 5.9, 7.4,
+	                    8.2, 8.5, 9.4, 8.1, 10.9, 10.4, 10.9, 12.4, 12.1, 9.5, 7.5,
+	                    7.1, 7.5, 8.1, 6.8, 3.4, 2.1, 1.9, 2.8, 2.9, 1.3, 4.4, 4.2,
+	                    3.0, 3.0],
+	                series2Datas=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.0, 0.3, 0.0,
+	                    0.0, 0.4, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+	                    0.0, 0.6, 1.2, 1.7, 0.7, 2.9, 4.1, 2.6, 3.7, 3.9, 1.7, 2.3,
+	                    3.0, 3.3, 4.8, 5.0, 4.8, 5.0, 3.2, 2.0, 0.9, 0.4, 0.3, 0.5, 0.4],
+	                d=[];
+	            for(var i=0,len=series1Datas.length;i<len;i++){
+	                d.push([series1Datas[i],series2Datas[i]]);
+	            }
+	        	new Aurora.DataSet({
+	    	    	id:'ds',
+	    	    	datas:d,
+	    	    	datahead:['pudong','puxi'],
+	    	    	fields:[{
+	    	    	    name:'pudong',
+	    	    	    prompt:'浦东',
+	    	    	    datatype:'float'
+		    	    },{
+		    	        name:'puxi',
+		    	        prompt:'浦西',
+		    	        datatype:'float'
+	    	        }]
+		    	});
+        	})();
+    	]]></script>
+        <a:chart bindTarget="ds" type="spline">
+            <a:title text="两天的风速情况"/>
+            <a:subtitle text="2009年10月6号、7号，上海浦东和浦西"/>
+            <a:xAxis>
+                <a:xAxi gridLineWidth="0" type="datetime">
+                    <a:labels overflow="justify"/>
+                </a:xAxi>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="puxi,pudong" alternateGridColor="null" gridLineWidth="0" min="0" minorGridLineWidth="0">
+                    <a:title text="风速(m/s)"/>
+                    <a:plotBands>
+                        <a:plotBand color="rgba(68,170,213,.1)" from="0.3" to="1.5">
+                            <a:plotLabel style="color:#606060" text="一级风"/>
+                        </a:plotBand>
+                        <a:plotBand color="rgba(0,0,0,0)" from="1.5" to="3.3">
+                            <a:plotLabel style="color:#606060" text="二级风"/>
+                        </a:plotBand>
+                        <a:plotBand color="rgba(68,170,213,.1)" from="3.3" to="5.5">
+                            <a:plotLabel style="color:#606060" text="三级风"/>
+                        </a:plotBand>
+                        <a:plotBand color="rgba(0,0,0,0)" from="5.5" to="8">
+                            <a:plotLabel style="color:#606060" text="四级风"/>
+                        </a:plotBand>
+                        <a:plotBand color="rgba(68,170,213,.1)" from="8" to="11">
+                            <a:plotLabel style="color:#606060" text="五级风"/>
+                        </a:plotBand>
+                        <a:plotBand color="rgba(0,0,0,0)" from="11" to="14">
+                            <a:plotLabel style="color:#606060" text="六级风"/>
+                        </a:plotBand>
+                        <a:plotBand color="rgba(68,170,213,.1)" from="14" to="15">
+                            <a:plotLabel style="color:#606060" text="七级风"/>
+                        </a:plotBand>
+                    </a:plotBands>
+                </a:yAxi>
+            </a:yAxis>
+            <a:tooltip valueSuffix=" m/s" xDateFormat="%B%e日 %k:%M %A"/>
+            <a:plotOptions>
+                <a:spline lineWidth="4" pointInterval="3600000" pointStart="Date.UTC(2009,9,6,0,0,0)">
+                    <a:marker enabled="false"/>
+                    <a:states>
+                        <a:hover lineWidth="5"/>
+                    </a:states>
+                </a:spline>
+            </a:plotOptions>
+        </a:chart>
+    </a:view>
+</a:screen>
