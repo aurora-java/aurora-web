@@ -56,7 +56,7 @@
                     <a:event name="beforesubmit" handler="onBeforeSubmit"/>
                 </a:events>
             </a:dataSet>
-            <a:dataSet id="demo_ds" bindName="demo_ds" bindTarget="article_create_ds" submitUrl="${/request/@context_path}/modules/admin/article_demo_delete.svc" selectable="true"/>
+            <a:dataSet id="demo_ds" bindName="demo_ds" bindTarget="article_create_ds" selectable="true" submitUrl="${/request/@context_path}/modules/admin/article_demo_delete.svc"/>
         </a:dataSets>
         <style><![CDATA[
                 TH.label  {
@@ -72,13 +72,13 @@
             <TABLE align="center" cellPadding="4" cellSpacing="1" style="background-color:#fff" width="100%">
                 <TBODY>
                     <TR>
-                        <TH align="right" width="100" class="label"><![CDATA[标题:]]></TH>
+                        <TH align="right" class="label" width="100"><![CDATA[标题:]]></TH>
                         <TD>
                             <a:textField name="article_title" bindTarget="article_create_ds" width="400"/>
                         </TD>
                     </TR>
                     <TR>
-                        <TH align="right" width="100" class="label"><![CDATA[目录:]]></TH>
+                        <TH align="right" class="label" width="100"><![CDATA[目录:]]></TH>
                         <TD>
                             <a:lov name="category_name" bindTarget="article_create_ds" width="400"/>
                         </TD>
@@ -86,7 +86,7 @@
                     <TR>
                         <TH align="right" class="label"><![CDATA[内容:]]></TH>
                         <TD>
-                            <a:textArea name="content" bindTarget="article_create_ds" className="postConent" height="520" width="1000"/>
+                            <a:textArea name="content" autoSelect="false" bindTarget="article_create_ds" className="postConent" height="520" transformCharacter="false" width="1000"/>
                         </TD>
                     </TR>
                     <TR>
@@ -106,7 +106,7 @@
                         </TD>
                     </TR>
                     <TR>
-                        <TH align="right" width="100" class="label"><![CDATA[Demo:]]></TH>
+                        <TH align="right" class="label" width="100"><![CDATA[Demo:]]></TH>
                         <TD>
                             <a:grid bindTarget="demo_ds" height="250" navBar="false" width="800">
                                 <a:toolBar>

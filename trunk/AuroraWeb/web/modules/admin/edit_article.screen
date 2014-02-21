@@ -66,7 +66,7 @@
                             <a:event name="beforesubmit" handler="onBeforeSubmit"/>
                         </a:events>
                     </a:dataSet>
-                    <a:dataSet id="demo_ds" bindName="demo_ds" bindTarget="article_update_ds" submitUrl="${/request/@context_path}/modules/admin/article_demo_delete.svc" selectable="true">
+                    <a:dataSet id="demo_ds" bindName="demo_ds" bindTarget="article_update_ds" selectable="true" submitUrl="${/request/@context_path}/modules/admin/article_demo_delete.svc">
                         <a:datas dataSource="/model/demos"/>
                     </a:dataSet>
                 </a:dataSets>
@@ -79,19 +79,19 @@
             }
                 ]]></style>
                 <div style="margin:10px;">
-                    <a:tabPanel width="970" height="570" >            
+                    <a:tabPanel height="570" width="970">
                         <a:tabs>
                             <a:tab prompt="更新文章" width="110">
                                 <TABLE align="center" cellPadding="4" cellSpacing="1" style="background-color:#fff" width="100%">
                                     <TBODY>
                                         <TR>
-                                            <TH align="right" width="100" class="label"><![CDATA[标题:]]></TH>
+                                            <TH align="right" class="label" width="100"><![CDATA[标题:]]></TH>
                                             <TD>
                                                 <a:textField name="article_title" bindTarget="article_update_ds" width="400"/>
                                             </TD>
                                         </TR>
                                         <TR>
-                                            <TH align="right" width="100" class="label"><![CDATA[目录:]]></TH>
+                                            <TH align="right" class="label" width="100"><![CDATA[目录:]]></TH>
                                             <TD>
                                                 <a:lov name="category_name" bindTarget="article_update_ds" width="200"/>
                                             </TD>
@@ -99,7 +99,7 @@
                                         <TR>
                                             <TH align="right" class="label"><![CDATA[内容:]]></TH>
                                             <TD>
-                                                <a:textArea name="content" autoSelect="false" bindTarget="article_update_ds" className="postConent" height="460" width="850"/>
+                                                <a:textArea name="content" autoSelect="false" bindTarget="article_update_ds" className="postConent" height="460" transformCharacter="false" width="850"/>
                                             </TD>
                                         </TR>
                                     </TBODY>
@@ -122,7 +122,6 @@
                             <a:tab prompt="文章附件" width="110">
                                 <TABLE align="center" cellPadding="4" cellSpacing="1" style="background-color:#fff" width="100%">
                                     <TBODY>
-                                        
                                         <TR>
                                             <TH align="right" class="label"><![CDATA[附件:]]></TH>
                                             <TD>
@@ -135,7 +134,7 @@
                                 </TABLE>
                             </a:tab>
                             <a:tab prompt="Demo" width="110">
-                                <a:grid bindTarget="demo_ds" style="border:none" navBar="false" width="967" height="543">
+                                <a:grid bindTarget="demo_ds" height="543" navBar="false" style="border:none" width="967">
                                     <a:toolBar>
                                         <a:button text="新增" type="add"/>
                                         <a:button text="删除" type="delete"/>
@@ -151,7 +150,6 @@
                             </a:tab>
                         </a:tabs>
                     </a:tabPanel>
-                    
                     <a:button id="postButton" click="postArticle" height="30" style="margin-top:10px;" text="更 新 文 章" width="100"/>
                 </div>
             </a:case>
