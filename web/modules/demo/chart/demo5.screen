@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view chartTheme="grid" template="empty.tplt">
+        <script><![CDATA[
+        	function formatter1(){
+        	    return '<b>'+ this.x +'</b><br/>'+
+                    this.series.name +': '+ this.y +'<br/>'+
+                    '总计: '+ this.point.stackTotal;
+        	}
+    	]]></script>
+        <a:dataSets>
+            <a:dataSet id="ds">
+                <a:datas>
+                    <a:record fruit="苹果" hong="3" ming="5" wang="3" zi="2"/>
+                    <a:record fruit="橘子" hong="0" ming="3" wang="4" zi="5"/>
+                    <a:record fruit="生梨" hong="4" ming="4" wang="4" zi="6"/>
+                    <a:record fruit="葡萄" hong="4" ming="7" wang="2" zi="2"/>
+                    <a:record fruit="香蕉" hong="3" ming="2" wang="5" zi="1"/>
+                </a:datas>
+                <a:fields>
+                    <a:field name="ming" datatype="int" prompt="小明"/>
+                    <a:field name="wang" datatype="int" prompt="小王"/>
+                    <a:field name="zi" datatype="int" prompt="阿紫"/>
+                    <a:field name="hong" datatype="int" prompt="小红"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:chart bindTarget="ds" type="column">
+            <a:title text="根据性别分组的各水果总消耗量"/>
+            <a:xAxis>
+                <a:xAxi name="fruit"/>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="ming,wang,zi,hong" allowDecimals="false" min="0">
+                    <a:title text="水果数量"/>
+                </a:yAxi>
+            </a:yAxis>
+            <a:tooltip formatter="formatter1"/>
+            <a:plotOptions>
+                <a:chartcolumn stacking="normal"/>
+            </a:plotOptions>
+            <a:seriesList>
+                <a:seriesItem name="ming" stack="男"/>
+                <a:seriesItem name="wang" stack="男"/>
+                <a:seriesItem name="zi" stack="女"/>
+                <a:seriesItem name="hong" stack="女"/>
+            </a:seriesList>
+        </a:chart>
+    </a:view>
+</a:screen>
