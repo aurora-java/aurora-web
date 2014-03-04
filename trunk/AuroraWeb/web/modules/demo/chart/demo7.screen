@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view chartTheme="default" template="empty.tplt">
+        <script><![CDATA[
+    		function formatter1(){
+    		    return (Math.abs(this.value) / 1000000) + 'M';
+    		}
+    		function formatter2(){
+    		    return '<b>'+ this.series.name +', 年龄 '+ this.point.category +'</b><br/>'+
+                        '人口: '+ $A.formatNumber(Math.abs(this.point.y), 0);
+    		}
+    	]]></script>
+        <a:dataSets>
+            <a:dataSet id="ds">
+                <a:datas>
+                    <a:record agerange="0-4" female="1656154" male="1746181"/>
+                    <a:record agerange="5-9" female="1787564" male="1884428"/>
+                    <a:record agerange="10-14" female="1981671" male="2089758"/>
+                    <a:record agerange="15-19" female="2108575" male="2222362"/>
+                    <a:record agerange="20-24" female="2403438" male="2537431"/>
+                    <a:record agerange="25-29" female="2366003" male="2507081"/>
+                    <a:record agerange="30-34" female="2301402" male="2443179"/>
+                    <a:record agerange="35-39" female="2519874" male="2664537"/>
+                    <a:record agerange="40-44" female="3360596" male="3556505"/>
+                    <a:record agerange="45-49" female="3493473" male="3680231"/>
+                    <a:record agerange="50-54" female="3050775" male="3143062"/>
+                    <a:record agerange="55-59" female="2759560" male="2721122"/>
+                    <a:record agerange="60-64" female="2304444" male="2229181"/>
+                    <a:record agerange="65-69" female="2426504" male="2227768"/>
+                    <a:record agerange="70-74" female="2568938" male="2176300"/>
+                    <a:record agerange="75-79" female="1785638" male="1329968"/>
+                    <a:record agerange="80-84" female="1447162" male="836804"/>
+                    <a:record agerange="85-89" female="1005011" male="354784"/>
+                    <a:record agerange="90-94" female="330870" male="90569"/>
+                    <a:record agerange="95-99" female="130632" male="28367"/>
+                    <a:record agerange="100+" female="21208" male="3878"/>
+                </a:datas>
+                <a:fields>
+                    <a:field name="agerange" prompt="年龄范围"/>
+                    <a:field name="male" prompt="男"/>
+                    <a:field name="female" prompt="女"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:chart bindTarget="ds" type="bar">
+            <a:title text="2010年年中德国人口金字塔分布"/>
+            <a:tooltip formatter="formatter2"/>
+            <a:xAxis>
+                <a:xAxi name="agerange" reversed="false"/>
+                <a:xAxi name="agerange" linkedTo="0" opposite="true" reversed="false"/>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="male,female" max="4000000" min="-4000000">
+                    <a:labels formatter="formatter1"/>
+                </a:yAxi>
+            </a:yAxis>
+            <a:plotOptions>
+                <a:series stacking="normal"/>
+            </a:plotOptions>
+            <a:seriesList>
+                <a:seriesItem name="male" negative="true"/>
+            </a:seriesList>
+        </a:chart>
+    </a:view>
+</a:screen>

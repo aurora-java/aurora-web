@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view chartTheme="default" template="empty.tplt">
+        <a:dataSets>
+            <a:dataSet id="ds">
+                <a:datas>
+                    <a:record average="21.5" max="27.7" min="14.3" period="2009-07-01 08:00:00"/>
+                    <a:record average="22.1" max="27.8" min="14.5" period="2009-07-02 08:00:00"/>
+                    <a:record average="23" max="29.6" min="15.5" period="2009-07-03 08:00:00"/>
+                    <a:record average="23.8" max="30.7" min="16.7" period="2009-07-04 08:00:00"/>
+                    <a:record average="21.4" max="25.0" min="16.5" period="2009-07-05 08:00:00"/>
+                    <a:record average="21.3" max="25.7" min="17.8" period="2009-07-06 08:00:00"/>
+                    <a:record average="18.3" max="24.8" min="13.5" period="2009-07-07 08:00:00"/>
+                    <a:record average="15.4" max="21.4" min="10.5" period="2009-07-08 08:00:00"/>
+                    <a:record average="16.4" max="23.8" min="9.2" period="2009-07-09 08:00:00"/>
+                    <a:record average="17.7" max="21.8" min="11.6" period="2009-07-10 08:00:00"/>
+                    <a:record average="17.5" max="23.7" min="10.7" period="2009-07-11 08:00:00"/>
+                    <a:record average="17.6" max="23.3" min="11.0" period="2009-07-12 08:00:00"/>
+                    <a:record average="17.7" max="23.7" min="11.6" period="2009-07-13 08:00:00"/>
+                    <a:record average="16.8" max="20.7" min="11.8" period="2009-07-14 08:00:00"/>
+                    <a:record average="17.7" max="22.4" min="12.6" period="2009-07-15 08:00:00"/>
+                    <a:record average="16.3" max="19.6" min="13.6" period="2009-07-16 08:00:00"/>
+                    <a:record average="17.8" max="22.6" min="11.4" period="2009-07-17 08:00:00"/>
+                    <a:record average="18.1" max="25.0" min="13.2" period="2009-07-18 08:00:00"/>
+                    <a:record average="17.2" max="21.6" min="14.2" period="2009-07-19 08:00:00"/>
+                    <a:record average="14.4" max="17.1" min="13.1" period="2009-07-20 08:00:00"/>
+                    <a:record average="13.7" max="15.5" min="12.2" period="2009-07-21 08:00:00"/>
+                    <a:record average="15.7" max="20.8" min="12.0" period="2009-07-22 08:00:00"/>
+                    <a:record average="14.6" max="17.1" min="12.0" period="2009-07-23 08:00:00"/>
+                    <a:record average="15.3" max="18.3" min="12.7" period="2009-07-24 08:00:00"/>
+                    <a:record average="15.3" max="19.4" min="12.4" period="2009-07-25 08:00:00"/>
+                    <a:record average="15.8" max="19.9" min="12.6" period="2009-07-26 08:00:00"/>
+                    <a:record average="15.2" max="20.2" min="11.9" period="2009-07-27 08:00:00"/>
+                    <a:record average="14.8" max="19.3" min="11.0" period="2009-07-28 08:00:00"/>
+                    <a:record average="14.4" max="17.8" min="10.8" period="2009-07-29 08:00:00"/>
+                    <a:record average="15" max="18.5" min="11.8" period="2009-07-30 08:00:00"/>
+                    <a:record average="13.6" max="16.1" min="10.8" period="2009-07-31 08:00:00"/>
+                </a:datas>
+                <a:fields>
+                    <a:field name="period" datatype="date" prompt="日期"/>
+                    <a:field name="average" datatype="float" prompt="温度"/>
+                    <a:field name="max" datatype="float" prompt="最高温度"/>
+                    <a:field name="min" datatype="float" prompt="最低温度"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:chart bindTarget="ds" type="arearange">
+            <a:title text="7月温度"/>
+            <a:tooltip crosshairs="true" shared="true" valueSuffix="°C"/>
+            <a:xAxis>
+                <a:xAxi name="period" type="datetime"/>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="average,range(min~max)"><![CDATA[
+                ]]></a:yAxi>
+            </a:yAxis>
+            <a:seriesList>
+                <a:seriesItem name="average" type="line" zIndex="1">
+                    <a:marker fillColor="white" lineColor="Aurora.Charts.getOptions().colors[0]" lineWidth="2"/>
+                </a:seriesItem>
+                <a:seriesItem name="range(min~max)" color="Aurora.Charts.getOptions().colors[0]" fillOpacity="0.3" lineWidth="0" linkedTo=":previous"/>
+            </a:seriesList>
+        </a:chart>
+    </a:view>
+</a:screen>
