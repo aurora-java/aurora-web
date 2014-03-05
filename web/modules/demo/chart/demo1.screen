@@ -6,9 +6,6 @@
         	function formatter1(){
         	    return this.value +'°';
         	}
-        	function formatter2(){
-        	    return this.x;
-        	}
         ]]></script>
         <a:dataSets>
             <a:dataSet id="ds">
@@ -45,7 +42,7 @@
                     <a:labels formatter="formatter1"/>
                 </a:yAxi>
             </a:yAxis>
-            <a:tooltip crosshairs="true" formatter="formatter2" shared="true"/>
+            <a:tooltip crosshairs="true" shared="true"/>
             <a:plotOptions>
                 <a:spline>
                     <a:marker lineColor="#666666" lineWidth="2" radius="4"/>

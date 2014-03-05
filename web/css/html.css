@@ -247,3 +247,11 @@ body {
 	color: 	rgb(42,0,255);
 }
     
+.docbook ol{
+	list-style: decimal;
+	padding-left: 40px;
+}
+.docbook ul{
+	list-style: disc;
+	padding-left: 40px;
+}
