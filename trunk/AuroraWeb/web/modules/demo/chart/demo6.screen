@@ -2,6 +2,11 @@
 <a:screen xmlns:a="http://www.aurora-framework.org/application">
     <a:init-procedure/>
     <a:view chartTheme="default" template="empty.tplt">
+        <script><![CDATA[
+    		function getColor(){
+    		    return $A.Charts.getOptions().colors[0];
+    		}
+    	]]></script>
         <a:dataSets>
             <a:dataSet id="ds">
                 <a:datas>
@@ -57,9 +62,9 @@
             </a:yAxis>
             <a:seriesList>
                 <a:seriesItem name="average" type="line" zIndex="1">
-                    <a:marker fillColor="white" lineColor="Aurora.Charts.getOptions().colors[0]" lineWidth="2"/>
+                    <a:marker fillColor="white" lineColor="window[&apos;getColor&apos;]()" lineWidth="2"/>
                 </a:seriesItem>
-                <a:seriesItem name="range(min~max)" color="Aurora.Charts.getOptions().colors[0]" fillOpacity="0.3" lineWidth="0" linkedTo=":previous"/>
+                <a:seriesItem name="range(min~max)" color="window.getColor()" fillOpacity="0.3" lineWidth="0" linkedTo=":previous"/>
             </a:seriesList>
         </a:chart>
     </a:view>

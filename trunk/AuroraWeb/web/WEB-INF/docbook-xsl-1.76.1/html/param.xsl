@@ -201,7 +201,7 @@ set       toc,title
 <xsl:param name="header.rule" select="1"/>
 <xsl:param name="highlight.default.language"/>
 <xsl:param name="highlight.source" select="1"/>
-<xsl:param name="highlight.xslthl.config">file:///D:/WorkDevSpace/eclipse3.3/workspace/SaxonTest/docbook-xsl-1.76.1/highlighting/xslthl-config.xml</xsl:param>
+<xsl:param name="highlight.xslthl.config">file:///usr/Tomcat-6.0.32/webapps/ROOT/WEB-INF/docbook-xsl-1.76.1/highlighting/xslthl-config.xml</xsl:param>
 <xsl:param name="html.append"/>
 <xsl:param name="html.base"/>
 <xsl:param name="html.cellpadding"/>
@@ -282,7 +282,7 @@ set       toc,title
 <xsl:param name="javahelp.encoding">iso-8859-1</xsl:param>
 <xsl:param name="keep.relative.image.uris" select="1"/>
 
-<xsl:param name="l10n.gentext.default.language">en</xsl:param>
+<xsl:param name="l10n.gentext.default.language">zh_cn</xsl:param>
 <xsl:param name="l10n.gentext.language"/>
 <xsl:param name="l10n.gentext.use.xref.language" select="0"/>
 <xsl:param name="l10n.lang.value.rfc.compliant" select="1"/>
