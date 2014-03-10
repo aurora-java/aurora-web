@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view template="empty.tplt">
+        <a:dataSets>
+            <a:dataSet id="ds">
+                <a:datas>
+                    <a:record browser="Firefox" shares="45"/>
+                    <a:record browser="IE" shares="26.8"/>
+                    <a:record browser="Chrome" shares="12.8"/>
+                    <a:record browser="Safari" shares="8.5"/>
+                    <a:record browser="Opera" shares="6.2"/>
+                    <a:record browser="Others" shares="0.7"/>
+                </a:datas>
+                <a:fields>
+                    <a:field name="browser" prompt="浏览器"/>
+                    <a:field name="shares" datatype="float" prompt="份额"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:chart bindTarget="ds" plotBackgroundColor="null" plotBorderWidth="null" plotShadow="false" type="pie">
+            <a:title align="center" text="浏览器的市场份额" verticalAlign="middle" y="50"/>
+            <a:tooltip pointFormat="{series.name}: &lt;b&gt;{point.percentage:.1f}%&lt;/b&gt;"/>
+            <a:plotOptions>
+                <a:pie center="&apos;50%&apos;,&apos;70%&apos;" endAngle="90" innerSize="50%" startAngle="-90">
+                    <a:dataLabels distance="-50" enabled="true" style="fontWeight:bold;color:white;text-shadow:0px 1px 2px black"/>
+                </a:pie>
+            </a:plotOptions>
+            <a:xAxis>
+                <a:xAxi name="browser"/>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="shares"/>
+            </a:yAxis>
+        </a:chart>
+    </a:view>
+</a:screen>
