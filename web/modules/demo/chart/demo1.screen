@@ -51,14 +51,14 @@
             <a:seriesList>
                 <a:seriesItem name="tokyo">
                     <a:seriesDatas>
-                        <a:seriesData x="7">
+                        <a:seriesData dataIndex="7">
                             <a:marker symbol="url(${/request/@context_path}/images/sun.png)"/>
                         </a:seriesData>
                     </a:seriesDatas>
                 </a:seriesItem>
                 <a:seriesItem name="london">
                     <a:seriesDatas>
-                        <a:seriesData x="0">
+                        <a:seriesData dataIndex="0">
                             <a:marker symbol="url(${/request/@context_path}/images/snow.png)"/>
                         </a:seriesData>
                     </a:seriesDatas>
