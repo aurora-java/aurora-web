@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view chartTheme="default" template="empty.tplt">
+        <a:dataSets>
+            <a:dataSet id="ds">
+                <a:datas>
+                    <a:record group="1" size="63" x="9" y="81"/>
+                    <a:record group="1" size="89" x="98" y="5"/>
+                    <a:record group="1" size="73" x="51" y="50"/>
+                    <a:record group="1" size="14" x="41" y="22"/>
+                    <a:record group="1" size="20" x="58" y="24"/>
+                    <a:record group="1" size="34" x="78" y="37"/>
+                    <a:record group="1" size="53" x="55" y="56"/>
+                    <a:record group="1" size="70" x="18" y="45"/>
+                    <a:record group="1" size="28" x="42" y="44"/>
+                    <a:record group="1" size="59" x="3" y="52"/>
+                    <a:record group="1" size="97" x="31" y="18"/>
+                    <a:record group="1" size="63" x="79" y="91"/>
+                    <a:record group="1" size="23" x="93" y="23"/>
+                    <a:record group="1" size="22" x="44" y="83"/>
+                    <a:record group="2" size="20" x="42" y="38"/>
+                    <a:record group="2" size="1" x="6" y="18"/>
+                    <a:record group="2" size="55" x="1" y="93"/>
+                    <a:record group="2" size="90" x="57" y="2"/>
+                    <a:record group="2" size="22" x="80" y="76"/>
+                    <a:record group="2" size="96" x="11" y="74"/>
+                    <a:record group="2" size="10" x="88" y="56"/>
+                    <a:record group="2" size="49" x="30" y="47"/>
+                    <a:record group="2" size="98" x="57" y="62"/>
+                    <a:record group="2" size="16" x="4" y="16"/>
+                    <a:record group="2" size="11" x="46" y="10"/>
+                    <a:record group="2" size="89" x="22" y="87"/>
+                    <a:record group="2" size="82" x="57" y="91"/>
+                    <a:record group="2" size="98" x="45" y="15"/>
+                </a:datas>
+                <a:fields>
+                    <a:field name="x" datatype="int"/>
+                    <a:field name="y" datatype="int"/>
+                    <a:field name="size" datatype="int"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:chart bindTarget="ds" groupBy="group" plotBorderWidth="1" type="bubble" zoomType="xy">
+            <a:title text="3D气泡图"/>
+            <a:xAxis>
+                <a:xAxi name="x" gridLineWidth="1"/>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="y" endOnTick="false" startOnTick="false"/>
+            </a:yAxis>
+            <a:zAxis>
+                <a:zAxi name="size"/>
+            </a:zAxis>
+            <a:seriesList>
+                <a:seriesItem name="1">
+                    <a:marker>
+                        <a:fillColor radialGradient="0.4,0.3,0.7" stops="[0, &apos;rgba(255,255,255,0.5)&apos;],[1, &apos;rgba(69,114,167,0.5)&apos;]"/>
+                    </a:marker>
+                </a:seriesItem>
+                <a:seriesItem name="2">
+                    <a:marker>
+                        <a:fillColor radialGradient="0.4,0.3,0.7" stops="[0, &apos;rgba(255,255,255,0.5)&apos;],[1, &apos;rgba(170,70,67,0.5)&apos;]"/>
+                    </a:marker>
+                </a:seriesItem>
+            </a:seriesList>
+        </a:chart>
+    </a:view>
+</a:screen>
