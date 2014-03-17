@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view chartTheme="default" template="empty.tplt">
+        <script><![CDATA[
+        	function formatter1(){
+        	    return this.y + '°C';
+        	}
+    	]]></script>
+        <a:dataSets>
+            <a:dataSet id="ds">
+                <a:datas>
+                    <a:record max="9.4" min="-9.7" period="1月"/>
+                    <a:record max="6.5" min="-8.7" period="2月"/>
+                    <a:record max="9.4" min="-3.5" period="3月"/>
+                    <a:record max="19.9" min="-1.4" period="4月"/>
+                    <a:record max="22.6" min="0" period="5月"/>
+                    <a:record max="29.5" min="2.9" period="6月"/>
+                    <a:record max="30.7" min="9.2" period="7月"/>
+                    <a:record max="26.5" min="7.3" period="8月"/>
+                    <a:record max="18.0" min="4.4" period="9月"/>
+                    <a:record max="11.4" min="-3.1" period="10月"/>
+                    <a:record max="10.4" min="-5.2" period="11月"/>
+                    <a:record max="9.8" min="-13.5" period="12月"/>
+                </a:datas>
+                <a:fields>
+                    <a:field name="period" prompt="日期"/>
+                    <a:field name="max" datatype="float" prompt="最高温度"/>
+                    <a:field name="min" datatype="float" prompt="最低温度"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:chart bindTarget="ds" inverted="true" type="columnrange">
+            <a:title text="月温度变化"/>
+            <a:tooltip valueSuffix="°C"/>
+            <a:xAxis>
+                <a:xAxi name="period"/>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="range(min~max)">
+                    <a:title text="温度(°C)"/>
+                </a:yAxi>
+            </a:yAxis>
+            <a:plotOptions>
+                <a:columnrange>
+                    <a:dataLabels enabled="true" formatter="formatter1"/>
+                </a:columnrange>
+            </a:plotOptions>
+            <a:legend enabled="false"/>
+        </a:chart>
+    </a:view>
+</a:screen>
