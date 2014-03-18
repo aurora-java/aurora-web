@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view chartTheme="default" template="empty.tplt">
+        <script><![CDATA[
+    	function onLoad(e){
+    	    var sf = this;
+			if (!sf.renderer.forExport) {
+			    setInterval(function () {
+			        var record = $('ds').getCurrentRecord(),
+			        	y = record.get('speed'),
+			            newVal = y + Math.round((Math.random() - 0.5) * 20);
+			        if (newVal >= 0 && newVal <= 200) {
+				        record.set('speed',newVal);
+			        }
+			    }, 3000);
+			}
+    	}
+    	]]></script>
+        <a:dataSets>
+            <a:dataSet id="ds">
+                <a:datas>
+                    <a:record speed="80"/>
+                </a:datas>
+                <a:fields>
+                    <a:field name="speed" datatype="int"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:chart bindTarget="ds" plotBackgroundColor="null" plotBackgroundImage="null" plotBorderWidth="0" plotShadow="false" type="gauge">
+            <a:title text="马表"/>
+            <a:yAxis>
+                <a:yAxi name="speed" max="200" min="0" minorTickColor="#666" minorTickInterval="auto" minorTickLength="10" minorTickPosition="inside" minorTickWidth="1" tickColor="#666" tickLength="10" tickPixelInterval="30" tickPosition="inside" tickWidth="2">
+                    <a:title text="km/h"/>
+                    <a:labels rotation="auto" step="2"/>
+                    <a:plotBands>
+                        <a:plotBand color="#55BF3B" from="0" to="120"/>
+                        <a:plotBand color="#DDDF0D" from="120" to="160"/>
+                        <a:plotBand color="#DF5353" from="160" to="200"/>
+                    </a:plotBands>
+                </a:yAxi>
+            </a:yAxis>
+            <a:pane endAngle="150" startAngle="-150">
+                <a:backgrounds>
+                    <a:background borderWidth="0" outerRadius="109%">
+                        <a:backgroundColor linearGradient="0,0,0,1" stops="[0,&apos;#FFF&apos;],[1,&apos;#333&apos;]"/>
+                    </a:background>
+                    <a:background borderWidth="1" outerRadius="107%">
+                        <a:backgroundColor linearGradient="0,0,0,1" stops="[0,&apos;#333&apos;],[1,&apos;#FFF&apos;]"/>
+                    </a:background>
+                    <a:background/>
+                    <a:background backgroundColor="#DDD" borderWidth="0" innerRadius="103%" outerRadius="105%"><![CDATA[
+		    		]]></a:background>
+                </a:backgrounds>
+            </a:pane>
+            <a:events>
+                <a:event name="load" handler="onLoad"/>
+            </a:events>
+        </a:chart>
+    </a:view>
+</a:screen>
