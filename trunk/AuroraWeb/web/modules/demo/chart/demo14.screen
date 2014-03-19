@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view chartTheme="default" template="empty.tplt">
+        <script><![CDATA[
+    	function formatter1(){
+    	    return this.value + '°';
+    	}
+    	]]></script>
+        <a:dataSets>
+            <a:dataSet id="ds">
+                <a:datas>
+                    <a:record area="1" column="8" line="1"/>
+                    <a:record area="8" column="7" line="2"/>
+                    <a:record area="2" column="6" line="3"/>
+                    <a:record area="7" column="5" line="4"/>
+                    <a:record area="3" column="4" line="5"/>
+                    <a:record area="6" column="3" line="6"/>
+                    <a:record area="4" column="2" line="7"/>
+                    <a:record area="5" column="1" line="8"/>
+                </a:datas>
+                <a:fields>
+                    <a:field name="column" datatype="int" prompt="柱状图" type="column"/>
+                    <a:field name="line" datatype="int" prompt="线图" type="line"/>
+                    <a:field name="area" datatype="int" prompt="区域图" type="area"/>
+                </a:fields>
+            </a:dataSet>
+            <a:dataSet id="ds2">
+                <a:datas>
+                    <a:record budget="43000" dept="销售部" spending="50000"/>
+                    <a:record budget="19000" dept="市场部" spending="39000"/>
+                    <a:record budget="60000" dept="开发部" spending="42000"/>
+                    <a:record budget="35000" dept="客服部" spending="31000"/>
+                    <a:record budget="17000" dept="IT部" spending="26000"/>
+                    <a:record budget="10000" dept="行政部" spending="14000"/>
+                </a:datas>
+                <a:fields>
+                    <a:field name="budget" datatype="int" prompt="分配预算"/>
+                    <a:field name="spending" datatype="int" prompt="实际支出"/>
+                    <a:field name="dept" prompt="部门"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:chart bindTarget="ds" polar="true">
+            <a:title text="雷达图"/>
+            <a:xAxis>
+                <a:xAxi max="360" min="0" tickInterval="45">
+                    <a:labels formatter="formatter1"/>
+                </a:xAxi>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="column,line,area" min="0"/>
+            </a:yAxis>
+            <a:pane endAngle="360" startAngle="0"/>
+            <a:plotOptions>
+                <a:series pointInterval="45" pointStart="0"/>
+                <a:chartcolumn groupPadding="0" pointPadding="0" pointPlacement="between"/>
+            </a:plotOptions>
+        </a:chart>
+        <a:chart bindTarget="ds2" polar="true">
+            <a:title text="预算支出对比" x="-80"/>
+            <a:xAxis>
+                <a:xAxi name="dept" lineWidth="0" tickmarkPlacement="on"/>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="budget,spending" gridLineInterpolation="polygon" lineWidth="0" min="0"/>
+            </a:yAxis>
+            <a:pane size="80%"/>
+            <a:tooltip pointFormat="&lt;span style=&apos;color:{series.color}&apos;&gt;{series.name}: &lt;b&gt;${point.y:,.0f}&lt;/b&gt;&lt;br/&gt;" shared="true"/>
+            <a:legend align="right" layout="vertical" verticalAlign="top" y="70"/>
+            <a:plotOptions>
+                <a:series pointPlacement="on"/>
+            </a:plotOptions>
+        </a:chart>
+    </a:view>
+</a:screen>
