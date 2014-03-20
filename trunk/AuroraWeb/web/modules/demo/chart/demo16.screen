@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view chartTheme="default" template="empty.tplt">
+        <script><![CDATA[
+    		function formatter1(){
+    		    return this.value + '°C';
+    		}
+    		function formatter2(){
+    		    return this.value + ' mm';
+    		}
+    	]]></script>
+        <a:dataSets>
+            <a:dataSet id="ds">
+                <a:datas>
+                    <a:record errorhigh1="51" errorhigh2="8" errorlow1="48" errorlow2="6" period="1月" rainfall="49.9" temp="7"/>
+                    <a:record errorhigh1="73" errorhigh2="7.6" errorlow1="68" errorlow2="5.9" period="2月" rainfall="71.5" temp="6.9"/>
+                    <a:record errorhigh1="110" errorhigh2="10.4" errorlow1="92" errorlow2="9.4" period="3月" rainfall="106.4" temp="9.5"/>
+                    <a:record errorhigh1="136" errorhigh2="15.9" errorlow1="128" errorlow2="14.1" period="4月" rainfall="129.2" temp="14.5"/>
+                    <a:record errorhigh1="150" errorhigh2="20.1" errorlow1="140" errorlow2="18" period="5月" rainfall="144" temp="18.2"/>
+                    <a:record errorhigh1="179" errorhigh2="24" errorlow1="171" errorlow2="21" period="6月" rainfall="176" temp="21.5"/>
+                    <a:record errorhigh1="143" errorhigh2="25.3" errorlow1="135" errorlow2="23.2" period="7月" rainfall="135.6" temp="25.2"/>
+                    <a:record errorhigh1="149" errorhigh2="27.8" errorlow1="142" errorlow2="26.1" period="8月" rainfall="148.5" temp="26.5"/>
+                    <a:record errorhigh1="220" errorhigh2="23.9" errorlow1="204" errorlow2="23.2" period="9月" rainfall="216.4" temp="23.3"/>
+                    <a:record errorhigh1="199" errorhigh2="21.1" errorlow1="189" errorlow2="18" period="10月" rainfall="194.1" temp="18.3"/>
+                    <a:record errorhigh1="110" errorhigh2="14" errorlow1="95" errorlow2="12.9" period="11月" rainfall="95.6" temp="13.9"/>
+                    <a:record errorhigh1="56" errorhigh2="10" errorlow1="52" errorlow2="7.6" period="12月" rainfall="54.4" temp="9.6"/>
+                </a:datas>
+                <a:fields>
+                    <a:field name="rainfall" datatype="float" prompt="降雨"/>
+                    <a:field name="errorlow1" datatype="float" prompt="最低降雨"/>
+                    <a:field name="errorhigh1" datatype="float" prompt="最高降雨"/>
+                    <a:field name="temp" datatype="float" prompt="温度"/>
+                    <a:field name="errorlow2" datatype="float" prompt="最小温度"/>
+                    <a:field name="errorhigh2" datatype="float" prompt="最大温度"/>
+                    <a:field name="period" prompt="月份"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:chart bindTarget="ds" zoomType="xy">
+            <a:title text="温度和降雨"/>
+            <a:xAxis>
+                <a:xAxi name="period"/>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="rainfall,range(errorlow1~errorhigh1)" opposite="true">
+                    <a:title style="color:#4572A7" text="降雨"/>
+                    <a:labels formatter="formatter2" style="color:#4572A7"/>
+                </a:yAxi>
+                <a:yAxi name="temp,range(errorlow2~errorhigh2)">
+                    <a:title style="color:#89A54E" text="温度"/>
+                    <a:labels formatter="formatter1" style="color:#89A54E"/>
+                </a:yAxi>
+            </a:yAxis>
+            <a:tooltip shared="true"/>
+            <a:seriesList>
+                <a:seriesItem name="temp" color="#89A54E" type="spline">
+                    <a:tooltip pointFormat="&lt;span style=&apos;font-weight: bold; color: {series.color}&apos;&gt;{series.name}&lt;/span&gt;: &lt;b&gt;{point.y:.1f}°C&lt;/b&gt; "/>
+                </a:seriesItem>
+                <a:seriesItem name="range(errorlow2~errorhigh2)" type="errorbar">
+                    <a:tooltip pointFormat="(误差范围: {point.low}-{point.high}°C)&lt;br/&gt;"/>
+                </a:seriesItem>
+                <a:seriesItem name="rainfall" color="#4572A7" type="column">
+                    <a:tooltip pointFormat="&lt;span style=&apos;font-weight: bold; color: {series.color}&apos;&gt;{series.name}&lt;/span&gt;: &lt;b&gt;{point.y:.1f} mm&lt;/b&gt; "/>
+                </a:seriesItem>
+                <a:seriesItem name="range(errorlow1~errorhigh1)" type="errorbar">
+                    <a:tooltip pointFormat="(误差范围: {point.low}-{point.high} mm)&lt;br/&gt;"/>
+                </a:seriesItem>
+            </a:seriesList>
+        </a:chart>
+    </a:view>
+</a:screen>
