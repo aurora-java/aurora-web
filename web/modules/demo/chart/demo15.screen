@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view chartTheme="default" template="empty.tplt">
+        <a:dataSets>
+            <a:dataSet id="ds">
+                <a:datas>
+                    <a:record count="15654" method="网页访问"/>
+                    <a:record count="4064" method="下载"/>
+                    <a:record count="1987" method="报价"/>
+                    <a:record count="976" method="发送发票"/>
+                    <a:record count="846" method="结算"/>
+                </a:datas>
+                <a:fields>
+                    <a:field name="method" prompt="操作"/>
+                    <a:field name="count" datatype="int" prompt="量"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:chart bindTarget="ds" marginRight="100" type="funnel">
+            <a:title text="销售渠道" x="-50"/>
+            <a:xAxis>
+                <a:xAxi name="method"/>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="count"/>
+            </a:yAxis>
+            <a:legend enabled="false"/>
+            <a:plotOptions>
+                <a:series neckHeight="25%" neckWidth="30%">
+                    <a:dataLabels color="black" enabled="true" format="&lt;b&gt;{point.name}&lt;/b&gt; ({point.y:,.0f})" softConnector="true"/>
+                </a:series>
+            </a:plotOptions>
+        </a:chart>
+        <a:chart bindTarget="ds" marginRight="100" type="pyramid">
+            <a:title text="销售渠道" x="-50"/>
+            <a:xAxis>
+                <a:xAxi name="method"/>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="count"/>
+            </a:yAxis>
+            <a:legend enabled="false"/>
+            <a:plotOptions>
+                <a:series>
+                    <a:dataLabels color="black" enabled="true" format="&lt;b&gt;{point.name}&lt;/b&gt; ({point.y:,.0f})" softConnector="true"/>
+                </a:series>
+            </a:plotOptions>
+        </a:chart>
+    </a:view>
+</a:screen>
