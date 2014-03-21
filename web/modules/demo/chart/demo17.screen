@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view chartTheme="default" template="empty.tplt">
+        <a:dataSets>
+            <a:dataSet id="ds">
+                <a:datas>
+                    <a:record quarter="1" series1="80" series2="50" series3="30"/>
+                    <a:record quarter="2" series1="100" series2="60" series3="10"/>
+                    <a:record quarter="3" series1="70" series2="70" series3="80"/>
+                    <a:record quarter="4" series1="120" series2="80" series3="90"/>
+                </a:datas>
+            </a:dataSet>
+            <a:dataSet id="ds_opt">
+                <a:datas>
+                    <a:record value="series1"/>
+                    <a:record value="series2"/>
+                    <a:record value="series3"/>
+                </a:datas>
+            </a:dataSet>
+        </a:dataSets>
+        <a:chart bindTarget="ds">
+            <a:title text="动态字段"/>
+            <a:xAxis>
+                <a:xAxi name="quarter">
+                    <a:title text="季度"/>
+                </a:xAxi>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="value" bindTarget="ds_opt"/>
+            </a:yAxis>
+        </a:chart>
+    </a:view>
+</a:screen>
