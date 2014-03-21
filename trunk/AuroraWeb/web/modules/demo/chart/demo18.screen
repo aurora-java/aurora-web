@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure/>
+    <a:view chartTheme="default" template="empty.tplt">
+        <a:dataSet id="ds">
+            <a:datas>
+                <a:record name="12.00R20 18PR 154/149K PW01 EXPORT PW 外" value="1862145.36"/>
+                <a:record name="9.00R20 16PR 144/142K PW01 PW 外" value="1315060.89"/>
+                <a:record name="11.00R20 16PR 149/145K PW01 EXPORT PW 外" value="1266534.62"/>
+                <a:record name="11.00R20 18PR 152/149K PW605 尼龙 PW 外" value="1260492.72"/>
+                <a:record name="10.00R20 16PR 146/143K PW01 PW 外" value="1073862.95"/>
+                <a:record name="11.00R20 18PR 152/149K PW01N 尼龙 PW 外" value="1039822.90"/>
+                <a:record name="12.00R20 18PR*** 154/151J PW605 尼龙 PW 外" value="1003002.89"/>
+                <a:record name="10.00R20 18PR 149/146K PW605 尼龙 外" value="857643.03"/>
+                <a:record name="12.00R20 18PR PK31 PK 外" value="828473.51"/>
+                <a:record name="8.25R16LT 14PR 126/122M PW01 PW 外" value="802255.30"/>
+            </a:datas>
+            <a:fields>
+                <a:field name="seq" datatype="int" prompt="Top10"/>
+                <a:field name="name" prompt="物料描述"/>
+                <a:field name="value" datatype="float" prompt="销售毛利"/>
+            </a:fields>
+        </a:dataSet>
+        <a:chart bindTarget="ds" type="column">
+            <a:title text="利润分析-产品-TOP(累计)" x="-20"/>
+            <a:xAxis>
+                <a:xAxi name="name">
+                    <a:labels staggerLines="1" step="6"/>
+                </a:xAxi>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="value">
+                    <a:title text="销售毛利"/>
+                </a:yAxi>
+            </a:yAxis>
+        </a:chart>
+        <a:chart bindTarget="ds" type="column">
+            <a:title text="利润分析-产品-TOP(累计)" x="-20"/>
+            <a:xAxis>
+                <a:xAxi name="name">
+                    <a:labels staggerLines="6"/>
+                </a:xAxi>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="value">
+                    <a:title text="销售毛利"/>
+                </a:yAxi>
+            </a:yAxis>
+        </a:chart>
+        <a:chart bindTarget="ds" type="column">
+            <a:title text="利润分析-产品-TOP(累计)" x="-20"/>
+            <a:xAxis>
+                <a:xAxi name="name">
+                    <a:labels rotation="-30"/>
+                </a:xAxi>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="value">
+                    <a:title text="销售毛利"/>
+                </a:yAxi>
+            </a:yAxis>
+        </a:chart>
+        <a:chart bindTarget="ds" inverted="true" type="column">
+            <a:title text="利润分析-产品-TOP(累计)" x="-20"/>
+            <a:xAxis>
+                <a:xAxi name="name" step="1"/>
+            </a:xAxis>
+            <a:yAxis>
+                <a:yAxi name="value">
+                    <a:title text="销售毛利"/>
+                </a:yAxi>
+            </a:yAxis>
+        </a:chart>
+    </a:view>
+</a:screen>
