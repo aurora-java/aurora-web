@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure> 
+        <model-query model="demo.demo_announcements" rootPath="announcement" />   
+    </a:init-procedure>
+    <a:view package="ui.template" template="empty">
+        <div>${/model/announcement/record/@message}</div>
+    </a:view>
+</a:screen>

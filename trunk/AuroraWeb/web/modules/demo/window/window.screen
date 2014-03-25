@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure></a:init-procedure>
+    <a:view package="ui.template" template="empty">
+        <script>
+        <![CDATA[
+            function openWindow(){
+                new Aurora.Window({id:'train_win',title:'window', url:'box.screen', height:255,width:510});
+            }
+            function openWindow1(){
+               Aurora.showInfoMessage('提示', '提示信息');
+            }
+            function openWindow2(){
+               Aurora.showWarningMessage('警告', '警告信息');
+            }
+            function openWindow3(){
+               Aurora.showErrorMessage('错误', '错误信息');
+            }
+            
+            function openWindow4(){
+               Aurora.showConfirm('提示', '提示信息',function(){
+                    alert(1)
+               },function(){
+                    alert(2)
+               });
+            }
+        ]]>
+        </script>
+            <a:hBox>
+                <a:button text="普通窗口" style="margin:10px;" width="100" height="100" click="openWindow" />
+                <a:button text="提示窗口" style="margin:10px;" width="100" height="100" click="openWindow1" />
+                <a:button text="警告窗口" style="margin:10px;" width="100" height="100" click="openWindow2" />
+                <a:button text="错误窗口" style="margin:10px;" width="100" height="100" click="openWindow3" />
+                <a:button text="确认窗口" style="margin:10px;" width="100" height="100" click="openWindow4" />                
+            </a:hBox>
+    </a:view>
+</a:screen>
