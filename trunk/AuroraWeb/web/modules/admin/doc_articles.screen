@@ -23,7 +23,8 @@
             }
             
             function articleRenderer(value, record, name) {
-                return '<a class="link" style="font-size:12px;" href="javascript:locationTo(' + record.get('article_id') + ');">' + value + '</a>';
+                // return '<a class="link" style="font-size:12px;" href="javascript:locationTo(' + record.get('article_id') + ');">' + value + '</a>';
+                return '<a class="link" style="font-size:12px;" href="${/request/@context_path}/article.screen?article_id=' + record.get('article_id') + '" target="_blank">' + value + '</a>';
             }
             
             function openWindow(article_id) {                
@@ -36,9 +37,9 @@
                 });
             }
             
-            function locationTo(article_id) {
-                window.location.href = '${/request/@context_path}/article.screen?article_id=' + article_id;
-            }
+            // function locationTo(article_id) {
+                // window.location.href = '${/request/@context_path}/article.screen?article_id=' + article_id;
+            // }
             
             function query() {
                 $('doc_article_result_ds').query();
@@ -74,16 +75,36 @@
                     </a:field>
                 </a:fields>
             </a:dataSet>
-            <a:dataSet id="doc_article_result_ds" autoQuery="true" pageSize="20" model="doc.doc_article_v" queryDataSet="doc_article_query_ds"/>
+            <a:dataSet id="doc_article_result_ds" autoQuery="true" model="doc.doc_article_v" queryDataSet="doc_article_query_ds"/>
         </a:dataSets>
         
         <div style="margin:5px;float:left;width:99%;">
             <a:fieldSet column="3" labelWidth="120" title="查询">
-                <a:lov name="category_display" bindTarget="doc_article_query_ds" prompt="文章目录" title="文章目录"/>
-                <a:textField name="article_title" bindTarget="doc_article_query_ds" prompt="主题" width="350"/>
-                <a:textField name="nick_name" bindTarget="doc_article_query_ds" prompt="作者"/>
-                <a:datePicker name="date_from" bindTarget="doc_article_query_ds" prompt="发表日期从"/>
-                <a:datePicker name="date_to" bindTarget="doc_article_query_ds" prompt="发表日期至"/>
+                <a:lov name="category_display" bindTarget="doc_article_query_ds" prompt="文章目录" title="文章目录">
+                    <a:events>
+                        <a:event name="enterdown" handler="query"/>
+                    </a:events>
+                </a:lov>
+                <a:textField name="article_title" bindTarget="doc_article_query_ds" prompt="主题" width="350">
+                    <a:events>
+                        <a:event name="enterdown" handler="query"/>
+                    </a:events>
+                </a:textField>
+                <a:textField name="nick_name" bindTarget="doc_article_query_ds" prompt="作者">
+                    <a:events>
+                        <a:event name="enterdown" handler="query"/>
+                    </a:events>
+                </a:textField>
+                <a:datePicker name="date_from" bindTarget="doc_article_query_ds" prompt="发表日期从">
+                    <a:events>
+                        <a:event name="enterdown" handler="query"/>
+                    </a:events>
+                </a:datePicker>
+                <a:datePicker name="date_to" bindTarget="doc_article_query_ds" prompt="发表日期至">
+                    <a:events>
+                        <a:event name="enterdown" handler="query"/>
+                    </a:events>
+                </a:datePicker>
             </a:fieldSet>
         </div>
         <a:hBox style="margin:5px;float:left;">
