@@ -1,19 +1,20 @@
-
+<?xml version="1.0" encoding="UTF-8"?>
 <a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
     <a:init-procedure/>
     <a:view package="ui.template" template="empty">
         <a:dataSets>
             <a:dataSet id="test_ds">
                 <a:fields>
-                    <a:field name="a1" required="true" />
-                </a:fields>                
+                    <a:field name="a1" required="true"/>
+                </a:fields>
             </a:dataSet>
         </a:dataSets>
-        <a:form title="NumberField" column="1" style="margin:10px;">
-            <a:numberField name="num" prompt="数字" bindTarget="test_ds" width="200"></a:numberField>
-            <a:numberField name="num" prompt="非负整数" allowDecimals="false" allowNegative="false" bindTarget="test_ds" width="200"></a:numberField>
-            <a:numberField name="num" prompt="2位精度" bindTarget="test_ds" decimalPrecision="4" allowDecimals="true" width="200"></a:numberField>
-            <a:numberField name="num" prompt="测试千分位" allowFormat="true" decimalPrecision="6" allowDecimals="true" allowNegative="true" bindTarget="test_ds" width="200"></a:numberField>
-        </a:form>        
+        <a:form column="1" labelWidth="350" style="margin:10px;" title="NumberField">
+            <a:numberField name="num" bindTarget="test_ds" prompt="数字" width="200"/>
+            <a:numberField name="num" allowDecimals="false" allowNegative="false" bindTarget="test_ds" prompt="非负整数(allowDecimals=false;allowNegative=false)" width="200"/>
+            <a:numberField name="num" bindTarget="test_ds" decimalPrecision="4" prompt="4位精度(decimalPrecision=4)" width="200"/>
+            <a:numberField name="num" allowDecimals="true" allowFormat="true" allowNegative="true" bindTarget="test_ds" decimalPrecision="6" prompt="测试千分位(allowFormat=true)" width="200"/>
+            <a:numberField name="num" bindTarget="test_ds" maxLength="2" prompt="数字长度控制(maxLength=2)" width="200"/>
+        </a:form>
     </a:view>
 </a:screen>
