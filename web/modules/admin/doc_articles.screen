@@ -76,7 +76,7 @@
             </a:dataSet>
             <a:dataSet id="doc_article_result_ds" autoQuery="true" pageSize="20" model="doc.doc_article_v" queryDataSet="doc_article_query_ds"/>
         </a:dataSets>
-        <a href="${/request/@context_path}/modules/admin/post_article.screen" style="font-size:16px;float:right;margin-right:30px;"><![CDATA[发表文章]]></a>
+        
         <div style="margin:5px;float:left;width:99%;">
             <a:fieldSet column="3" labelWidth="120" title="查询">
                 <a:lov name="category_display" bindTarget="doc_article_query_ds" prompt="文章目录" title="文章目录"/>
@@ -90,6 +90,7 @@
             <a:button click="query" text="查询"/>
             <a:button click="reset" text="重置"/>
         </a:hBox>
+        <a href="${/request/@context_path}/modules/admin/post_article.screen" style="line-height:30px;font-size:16px;float:right;margin-right:30px;"><![CDATA[发表文章]]></a>
         <div style="margin:5px">
             <a:table bindTarget="doc_article_result_ds" canWheel="false" className="cateList" navBar="true" navBarType="simple" style="background-color:#fff;width:100%;float:left;">
                 <a:columns>
