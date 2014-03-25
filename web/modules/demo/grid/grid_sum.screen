@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application"  title="Grid Lock Head">
+    <a:init-procedure>
+    </a:init-procedure>
+    <a:view package="ui.template" template="empty">
+        <a:dataSets>
+            <a:dataSet id="demo_ds">
+                <a:datas>
+                    <a:record product="产品A" amount="100" a="a" b="b" c="c"/>
+                    <a:record product="产品B" amount="300" a="a" b="b" c="c"/>
+                    <a:record product="产品C" amount="2000" a="a" b="b" c="c"/>
+                    <a:record product="产品D" amount="950" a="a" b="b" c="c"/>
+                    <a:record product="产品E" amount="200" a="a" b="b" c="c"/>
+                </a:datas>
+            </a:dataSet>
+        </a:dataSets>
+        <script><![CDATA[
+             function summaryRenderer(datas,name){
+                var sum = 0;
+                for(var i=0;i<datas.length;i++){
+                    var r = datas[i];
+                    var d = r.get(name);
+                    var n = parseFloat(d);
+                    if(!isNaN(n)){                        
+                        sum +=n;
+                    }
+                }
+                return '合计金额: <font color="red">' + Aurora.formatNumber(sum,2) + '</font>';
+            }
+        ]]></script>
+        <a:screenBody> 
+            <a:form labelWidth="80" width="600" showMargin="false" title="列汇总" padding="0">
+                <a:grid bindTarget="demo_ds" height="300" navBar="false" style="border:none" width="900">
+                    <a:columns>
+                        <a:column name="product" prompt="产品" width="250"/>
+                        <a:column name="amount" prompt="金额" footerRenderer="summaryRenderer"  width="250"/>
+                        <a:column name="a" prompt="a" width="200"/>
+                        <a:column name="b" prompt="b" width="200"/>
+                        <a:column name="c" prompt="c" width="200"/>
+                    </a:columns>
+                </a:grid>                
+            </a:form>
+        </a:screenBody> 
+    </a:view>
+</a:screen>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application">
+    <a:init-procedure><![CDATA[
+    ]]></a:init-procedure>
+    <a:view package="ui.template" template="empty">
+        <div/>
+        <script><![CDATA[
+            function queryService(){
+                $('demo_announcements_result_ds').query();
+            }
+            function editRenderer(value, record, name) {
+                return '<a href="richeditor.screen?id=' + record.get('announcement_id') + '">编辑</a>';
+            }
+            function editRenderer2(value, record, name) {
+                return '<a target="_blank" href="view.screen?id=' + record.get('announcement_id') + '">查看</a>';
+            }
+            function newAnnouncement(){
+                window.location.href="richeditor.screen"
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="demo_announcements_result_ds" autoCount="true" autoQuery="true" pageSize="50" fetchAll="false" model="demo.demo_announcements" selectable="true"/>
+        </a:dataSets>
+        <a:grid id="grid" bindTarget="demo_announcements_result_ds" height="500" navBar="true" style="margin-left:10px;margin-top:10px;" width="1200">
+            <a:toolBar>
+                <a:button text="新增" click="newAnnouncement" width="250"/>
+                <a:button type="delete" text="删除"/>
+                <a:button Type="Save" Text="保存"/>
+            </a:toolBar>
+            <a:columns>
+                <a:column name="title" editor="demo_announcements_result_grid_tf" prompt="页面标题" sortable="true" width="250"/>
+                <a:column name="action_renderer" renderer="editRenderer" prompt="编辑" width="100"/>
+                <a:column name="action_renderer2" renderer="editRenderer2" prompt="查看" width="100"/>
+            </a:columns>
+        </a:grid>
+    </a:view>
+</a:screen>

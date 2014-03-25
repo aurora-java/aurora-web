@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure>
+        
+    </a:init-procedure>
+    <a:view package="ui.template" template="empty">
+        <a:dataSets>
+            <a:dataSet id="demo_ds" >
+                <a:fields>
+                    <a:field name="test" defaultValue="Y" checkedValue="Y" unCheckedValue="N"/>
+                </a:fields>
+                <a:datas>
+                    <a:record name="个人文件夹" id="1" parent="-1" sequence="1" expanded="Y" />                    
+                    <a:record name="草稿" id="2" parent="1" sequence="1" />                   
+                    <a:record name="发件箱" id="3" parent="1" sequence="2"/>                    
+                    <a:record name="垃圾邮件" id="4" parent="1" sequence="3" />                    
+                    <a:record name="收件箱" id="5" parent="1" sequence="4" expanded="Y"/>                    
+                    <a:record name="hand-china.com" id="6" parent="5" sequence="1" unread="7"/>                    
+                    <a:record name="126.com" id="7" parent="5" sequence="2" unread="10"/>
+                    <a:record name="gmail.com" id="17" parent="5" sequence="3" unread="0"/>                    
+                    <a:record name="未读文件" id="12" parent="11" sequence="2"/>                                
+                    <a:record name="存档文件夹" id="13" parent="-1" sequence="4" expanded="Y"/>                    
+                    <a:record name="已发送邮件" id="14" parent="13" sequence="1"/>
+                    <a:record name="已删除邮件" id="15" parent="16" sequence="2"/>
+                    <a:record name="搜索文件夹" id="16" parent="-1" sequence="3" expanded="Y"/>
+                    <a:record name="已发送邮件" id="8" parent="1" sequence="5" />
+                    <a:record name="已删除邮件" id="9" parent="1" sequence="6" />
+                    <a:record name="搜索文件夹" id="10" parent="1" sequence="7"/>
+                    <a:record name="大邮件" id="11" parent="1" sequence="10" expanded="Y"/>                    
+                </a:datas>
+            </a:dataSet>
+        </a:dataSets>   
+        <script>
+        <![CDATA[
+            function showSelectNode(){
+                var ds = $('demo_ds'),all = ds.getAll(),sall = [];
+                for(var i=0;i<all.length;i++){
+                
+                    if(all[i].data.checked == 'Y')
+                    sall.push(all[i].data.name);
+                } 
+                alert(sall.join(','))                
+            }
+            
+        ]]>
+        </script>
+        <a:vBox style="margin:10px;">
+            <a:button text="显示选中节点" click="showSelectNode"/>
+            <a:form padding="0" title="邮件文件夹" showMargin="false" >
+                <a:tree id="menu1" showCheckBox="true"  width="220" height="350" bindTarget="demo_ds" displayField="name" idField="id" parentField="parent"/>                
+            </a:form>            
+        </a:vBox>
+    </a:view>
+</a:screen>
