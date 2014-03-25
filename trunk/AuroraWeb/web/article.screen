@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc">
+<a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc" trace="true">
     <a:init-procedure>
+        <model-query fetchAll="true" model="doc.doc_demo" rootPath="demos"/>
         <p:method-invoke className="com.aurora.doc.actions.ArticleList" methodName="createList" resultPath="/model/category">
             <p:arguments>
                 <p:argument path="instance" type="uncertain.ocm.IObjectRegistry"/>
@@ -8,7 +9,7 @@
             </p:arguments>
         </p:method-invoke>
         <model-query fetchAll="true" model="doc.doc_article_detail" rootPath="article"/>
-        <model-query fetchAll="true" model="doc.doc_demo" rootPath="demos"/>
+        
         <model-query defaultWhereClause="fam.table_name = &apos;DOC_ARTICLE_ATT&apos;  and fam.table_pk_value = ${/parameter/@article_id}" fetchAll="true" model="fnd.fnd_atm_attachment" rootPath="atms"/>
     </a:init-procedure>
     <a:view package="ui.template" template="main" title="${/model/article/record/@article_title}">
@@ -125,9 +126,9 @@
                                     </ol>
                                 </div>
                                 <div style="margin:25px 0px 15px 0px;height:2px;"/>
-                                <div style="background-color:#f4f4f4;padding:10px;">
-                                    <div style="font-family:Tahoma, Arial, Verdana;font-size:16px;color:#222222"><![CDATA[Attachments]]></div>
-                                    <ol style="background-color:#fff;margin-top:5px;">
+                                <div style="background-color:#f4f4f4;">
+                                    <div style="padding:10px;font-family:Tahoma, Arial, Verdana;font-size:16px;color:#222222"><![CDATA[Attachments]]></div>
+                                    <ol style="background-color:#fff;margin:2px;">
                                         <a:repeater datamodel="/model/atms">
                                             <li style="border-bottom:1px dashed #ccc;height:25px;line-height:25px;padding-left:5px;font-size:12px;">
                                                 <a href="${/request/@context_path}/atm_download.svc?attachment_id=${@attachment_id}" target="_self"><![CDATA[${@file_name}]]></a>
