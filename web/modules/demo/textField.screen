@@ -1,7 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
     <a:init-procedure/>
     <a:view package="ui.template" template="empty">
-        
         <script><![CDATA[
         
             function onUpdate(dataSet, record,name, value, oldvalue){
@@ -14,31 +14,34 @@
         <a:dataSets>
             <a:dataSet id="test_ds">
                 <a:fields>
-                    <a:field name="a1" required="true" />
+                    <a:field name="a1" required="true"/>
                     <a:field name="a2" readonly="true"/>
-                </a:fields> 
+                </a:fields>
                 <a:events>
                     <a:event name="update" handler="onUpdate"/>
-                </a:events>               
+                </a:events>
             </a:dataSet>
         </a:dataSets>
-        <a:form title="TextField" column="1" style="margin:10px;">
-            <a:textField id="tf1" name="a"  bindTarget="test_ds" prompt="文本" width="150">
+        <a:form column="1" labelWidth="350" style="margin:10px;" title="TextField">
+            <a:textField name="a" id="tf1" bindTarget="test_ds" prompt="文本" width="150">
                 <a:events>
                     <a:event name="enterdown" handler="onenterdown"/>
                 </a:events>
             </a:textField>
-            <a:textField name="a1" bindTarget="test_ds" prompt="必输" width="150" maxlength="5"/>
-            <a:textField name="a"  bindTarget="test_ds" prompt="文本" emptyText="输入姓名" width="150"/>
-            <a:textField name="a2" bindTarget="test_ds" prompt="只读" width="150"/>
-            <a:textField name="a"  bindTarget="test_ds" prompt="大写" typecase="upper" width="150"/>
-            <a:textField name="a"  bindTarget="test_ds" prompt="小写" typecase="lower" width="150"/>
-        </a:form>   
+            <a:textField name="a1" bindTarget="test_ds" maxlength="5" prompt="必输(required=true)" width="150"/>
+            <a:textField name="a" bindTarget="test_ds" emptyText="输入姓名" prompt="文本(emptyText)" width="150"/>
+            <a:textField name="a2" bindTarget="test_ds" prompt="只读(readonly=true)" width="150"/>
+            <a:textField name="a" bindTarget="test_ds" prompt="大写(typecase=upper)" typecase="upper" width="150"/>
+            <a:textField name="a" bindTarget="test_ds" prompt="小写(typecase=lower)" typecase="lower" width="150"/>
+            <a:textField name="a" bindTarget="test_ds" prompt="正则校验(restrict=[1-9])" restrict="[1-9]" width="150"/>
+            <a:textField name="a" bindTarget="test_ds" maxLength="3" prompt="长度控制(maxLength=3)" width="150"/>
+            <a:textField name="a" bindTarget="test_ds" prompt="关闭全角半角自动转换(transformCharacter=false)" transformCharacter="false" width="150"/>
+        </a:form>
         <script><![CDATA[
         
             function test(){
                 $('tf1')
             }
-        ]]></script>     
+        ]]></script>
     </a:view>
 </a:screen>

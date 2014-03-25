@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure/>
+    <a:view package="ui.template" template="empty">
+        <script><![CDATA[
+    		function onCategoryUpdate(ds,record,name,value,oldvalue){
+    		    if(name == 'category_id'){
+    		        $('second_combobox_ds').setQueryParameter('category_id', value);
+					$('second_combobox_ds').query();
+    		    }
+    		}
+    	]]></script>
+        <a:dataSets>
+            <a:dataSet id="first_combobox_ds" autoQuery="true" model="demo.doc_category"/>
+            <a:dataSet id="second_combobox_ds" model="demo.doc_article"/>
+            <a:dataSet id="main_ds">
+                <a:fields>
+                    <a:field name="first_combo" displayField="category_name" options="first_combobox_ds" prompt="列表" returnField="category_id" valueField="category_id"/>
+                    <a:field name="second_combo" displayField="article_title" options="second_combobox_ds" prompt="文章" returnField="article_id" valueField="article_id"/>
+                </a:fields>
+                <a:events>
+                    <a:event name="update" handler="onCategoryUpdate"/>
+                </a:events>
+            </a:dataSet>
+        </a:dataSets>
+        <a:form column="1" style="margin:10px;" title="ComboBox——二级联动">
+            <a:comboBox name="first_combo" bindTarget="main_ds"/>
+            <a:comboBox name="second_combo" bindTarget="main_ds"/>
+        </a:form>
+        <a:form column="1" labelWidth="200" style="margin:10px;" title="ComboBox——其他特性">
+            <a:comboBox name="first_combo" bindTarget="main_ds" blankOption="true" prompt="空选项(blankOption=true)"/>
+            <a:comboBox name="first_combo" bindTarget="main_ds" fetchRecord="false" prompt="不匹配选项(fetchRecord=false)"/>
+            <a:comboBox name="first_combo" bindTarget="main_ds" editable="false" prompt="不可编辑(editable=false)"/>
+            <a:comboBox name="first_combo" bindTarget="main_ds" prompt="只读(readOnly=true)" readOnly="true"/>
+        </a:form>
+    </a:view>
+</a:screen>
