@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure/>
+    <a:view package="ui.template" template="empty">
+        <script><![CDATA[
+    		function onCategoryCommit(lov,r1,r2){
+    		    var category_id = r2.get('category_id'),
+    		    	article_title_field = r1.getField('article_title');
+    		    article_title_field.setLovPara('category_id',category_id);
+    		}
+    	]]></script>
+        <a:dataSets>
+            <a:dataSet id="ds" autoCreate="true">
+                <a:fields>
+                    <a:field name="article_title" autoComplete="true" fuzzyFetch="true" lovHeight="505" lovService="demo.doc_article_lov" lovWidth="485" prompt="自动模糊匹配——在尾部拼接%(autocomplete=true;fuzzyFetch=true;)">
+                        <a:mapping>
+                            <a:map from="article_id" to="article_id"/>
+                            <a:map from="article_title" to="article_title"/>
+                            <a:map from="category_name" to="category_name"/>
+                            <a:map from="category_id" to="category_id"/>
+                            <a:map from="nick_name" to="nick_name"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="category_name" autoComplete="true" autoCompleteField="article_title" fetchRemote="false" lovHeight="505" lovService="demo.doc_article_lov" lovWidth="485" prompt="自动指定匹配字段匹配;关闭获取记录功能(fetchRemote=false;autocomplete=true;autoCompleteField=article_title)">
+                        <a:mapping>
+                            <a:map from="article_id" to="article_id"/>
+                            <a:map from="article_title" to="article_title"/>
+                            <a:map from="category_name" to="category_name"/>
+                            <a:map from="category_id" to="category_id"/>
+                            <a:map from="nick_name" to="nick_name"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="category_id" fetchSingle="true" lovHeight="505" lovService="demo.doc_article_lov" lovWidth="485" prompt="获取记录有重复时弹出选择窗口(fetchSingle=true)">
+                        <a:mapping>
+                            <a:map from="article_id" to="article_id"/>
+                            <a:map from="article_title" to="article_title"/>
+                            <a:map from="category_name" to="category_name"/>
+                            <a:map from="category_id" to="category_id"/>
+                            <a:map from="nick_name" to="nick_name"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="article_id" lovAutoQuery="false" lovGridHeight="200" lovHeight="355" lovLabelWidth="300" lovService="demo.doc_article_lov" lovWidth="885" prompt="不自动查询以及各布局设置(lovAutoQuery=false;lovWidth=885;lovHeight=355;lovGridHeight=200;lovLabelWidth=300)">
+                        <a:mapping>
+                            <a:map from="article_id" to="article_id"/>
+                            <a:map from="article_title" to="article_title"/>
+                            <a:map from="category_name" to="category_name"/>
+                            <a:map from="category_id" to="category_id"/>
+                            <a:map from="nick_name" to="nick_name"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="nick_name" lovHeight="455" lovUrl="${/request/@context_path}/modules/demo/lov_url.screen" lovWidth="485" prompt="自定义lov(lovUrl)">
+                        <a:mapping>
+                            <a:map from="article_id" to="article_id"/>
+                            <a:map from="article_title" to="article_title"/>
+                            <a:map from="category_name" to="category_name"/>
+                            <a:map from="category_id" to="category_id"/>
+                            <a:map from="nick_name" to="nick_name"/>
+                        </a:mapping>
+                    </a:field>
+                </a:fields>
+            </a:dataSet>
+            <a:dataSet id="ds2" autoCreate="true">
+                <a:fields>
+                    <a:field name="category_name" lovHeight="505" lovService="demo.doc_category_lov" lovWidth="485" prompt="列表">
+                        <a:mapping>
+                            <a:map from="category_name" to="category_name"/>
+                            <a:map from="category_id" to="category_id"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="article_title" lovHeight="505" lovService="demo.doc_article_lov" lovWidth="485" prompt="文章">
+                        <a:mapping>
+                            <a:map from="article_title" to="article_title2"/>
+                        </a:mapping>
+                    </a:field>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:form column="1" labelWidth="300" style="margin:10px;" title="Lov">
+            <a:lov name="article_title" bindTarget="ds" width="300"/>
+            <a:lov name="category_name" bindTarget="ds" width="300"/>
+            <a:lov name="category_id" bindTarget="ds" width="300"/>
+            <a:lov name="article_id" bindTarget="ds" width="300"/>
+            <a:lov name="nick_name" id="nick_name_lov" bindTarget="ds" width="300"/>
+        </a:form>
+        <a:form column="1" labelWidth="300" style="margin:10px;" title="Lov二级联动">
+            <a:lov name="category_name" bindTarget="ds2" width="300">
+                <a:events>
+                    <a:event name="commit" handler="onCategoryCommit"/>
+                </a:events>
+            </a:lov>
+            <a:lov name="article_title" bindTarget="ds2" width="300"/>
+        </a:form>
+    </a:view>
+</a:screen>
