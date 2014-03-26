@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure></a:init-procedure>
+    <a:view template="default" package="aurora.ui.std">
+        <script language="javascript">
+        <![CDATA[
+            function test(){
+                $('querybtn').disable();
+            }
+
+            function test3(){
+                $('querybtn').enable();
+
+            }
+
+            function test2(){
+                alert(2)
+            }
+        ]]>
+        </script>
+        <a:form title="button" column="1" style="margin:10px;">
+            <a:button text="启用" click="test3"/>
+            <a:button text="停用" icon="${/request/@context_path}/images/save.gif" width="120" click="test" />
+            <a:button text="查询" title="测试一下是否可用" id="querybtn" click="test2"/>
+            <a:button text="登陆" height="72" width="72" click="test3" />            
+            <a:button text="个性化按钮" icon="${/request/@context_path}/images/clock.png"  width="270" height="45" btnStyle="padding-left:48px;color:red;font-weight:bold;font-size:35px;"  />
+           
+        </a:form>
+    </a:view>
+</a:screen>
