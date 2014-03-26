@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:ns2="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features" alias="t1" baseTable="DEMO_ANNOUNCEMENTS">
+    <bm:fields>
+        <bm:field name="announcement_id" databaseType="NUMBER" datatype="java.lang.Long"/>
+        <bm:field name="title" databaseType="VARCHAR2" datatype="java.lang.String"/>
+        <bm:field name="message" databaseType="CLOB" datatype="java.sql.Clob"/>
+    </bm:fields>
+    <bm:primary-key>
+        <bm:pk-field name="announcement_id"/>
+    </bm:primary-key>
+    <bm:query-fields>
+        <bm:query-field field="announcement_id" queryOperator="="/>
+    </bm:query-fields>
+    <bm:features>
+        <ns2:sequence-pk/>
+    </bm:features>
+</bm:model>

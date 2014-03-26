@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns1:model xmlns:ns1="http://www.aurora-framework.org/schema/bm" baseTable="fnd_descriptions">
+    <ns1:fields>
+        <ns1:field name="description_id" databaseType="NUMBER" datatype="java.lang.Long"/>
+        <ns1:field name="language" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <ns1:field name="ref_table" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <ns1:field name="ref_field" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <ns1:field name="description_text" databaseType="VARCHAR" datatype="java.lang.String"/>
+        <ns1:field name="function_name" databaseType="VARCHAR" datatype="java.lang.String"/>
+    </ns1:fields>
+    <ns1:primary-key>
+        <ns1:pk-field name="description_id"/>
+    </ns1:primary-key>
+    <ns1:operations>
+        <ns1:operation name="update">
+            <ns1:parameters>
+                <ns1:parameter name="DESCRIPTION_ID" dataType="java.lang.Long" required="true"/>
+                <ns1:parameter name="REF_TABLE" dataType="java.lang.String" required="true"/>
+                <ns1:parameter name="REF_FIELD" dataType="java.lang.String" required="true"/>
+                <ns1:parameter name="DESCRIPTION_TEXT" dataType="java.lang.String"/>
+            </ns1:parameters>
+            <ns1:update-sql><![CDATA[
+				begin 
+					fnd_description_pkg.reset_fnd_descriptions(${@DESCRIPTION_ID},
+                                                               ${@REF_TABLE},
+				                                               ${@REF_FIELD},
+				                                               ${@DESCRIPTION_TEXT},
+															   ${/session/@user_id},
+															   ${/session/@user_id},
+															   ${/session/@lang}
+				                                               );
+				end;				
+			]]></ns1:update-sql>
+        </ns1:operation>
+        <ns1:operation name="delete">
+            <ns1:parameters>
+                <ns1:parameter name="DESCRIPTION_ID" dataType="java.lang.Long" required="true"/>
+            </ns1:parameters>
+            <ns1:update-sql><![CDATA[
+				begin 
+					fnd_description_pkg.delete_fnd_descriptions(${@DESCRIPTION_ID});
+				end;				
+			]]></ns1:update-sql>
+        </ns1:operation>
+    </ns1:operations>
+    <ns1:ref-fields/>
+</ns1:model>
