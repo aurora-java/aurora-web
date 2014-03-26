@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:o="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" xmlns:f="aurora.database.features">
+    <bm:operations>
+        <bm:operation name="query">
+            <bm:query-sql><![CDATA[
+               select a.code_value_id,
+                     a.code_id,
+                     a.code_value,
+                     a.enabled_flag,
+                     b.description_text as code_value_name,
+                     b.creation_date,
+                     b.created_by,
+                     b.last_update_date,
+                     b.last_updated_by
+            from sys_code_values a, fnd_descriptions b
+         where a.code_value_name_id = b.description_id(+)
+           and b.language(+) = userenv('lang')
+           and b.ref_table(+) = 'SYS_CODE_VALUES'
+           and b.ref_field(+) = 'CODE_VALUE_NAME_ID'
+           and a.code_id=112
+            ]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+</bm:model>
