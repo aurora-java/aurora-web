@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:p="uncertain.proc">
+    <a:init-procedure>
+       <a:model-query model="demo.demo_radio" rootPath="radio_datas"/>
+    </a:init-procedure>
+    <a:view template="default" package="aurora.ui.std">
+            <script language="javascript">
+        <![CDATA[
+
+            function onRadioChange(radio, newValue, oldValue){
+                Ext.get('radio_value').update(newValue)
+            }
+            function onRadioChange2(radio, newValue, oldValue){
+                Ext.get('radio_value2').update(newValue)
+            }
+        ]]>
+        </script>
+        <a:form title="静态Radio演示" column="1" style="margin:10px;">
+            <div id="radio_value"></div>
+            <hr/>
+            <a:radio layout="vertical">
+                <a:items>
+                    <a:item label="选项1" value="1"/>
+                    <a:item label="选项2" value="2"/>
+                    <a:item label="选项3" value="3"/>
+                </a:items>
+                <a:events>
+                    <a:event name="change" handler="onRadioChange"/>
+                </a:events>
+            </a:radio>
+            </a:form>
+            <a:form title="数据集合Radio演示" column="1" style="margin:10px;">
+                 <div id="radio_value2"></div>
+                 <hr/>
+                <a:radio id="roleRadios" labelExpression="${@code_value_name}" layout="vertical" options="/model/radio_datas" valueField="code_value_id" width="230">
+                    <a:events>
+                        <a:event name="change" handler="onRadioChange2"/>
+                    </a:events>
+                </a:radio>
+            </a:form>
+    </a:view>
+</a:screen>
