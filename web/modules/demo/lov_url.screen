@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <parameter>
+        <param DataType="java.lang.String" Name="ORDER_FIELD"/>
+        <param DataType="java.lang.String" Name="ORDER_TYPE"/>
+    </parameter>
+    <a:init-procedure/>
+    <a:view package="aurora.ui.std" template="default">
+        <script language="JavaScript"><![CDATA[
+            function _onLovRowselect(grid,record,row){
+                $('nick_name_lov').commit(record);
+            }
+            function _onLovKeyDown(grid, e){
+                if(e.getKey() == 13){
+                    _lovok();
+                }
+                if(e.getKey() == 27){
+                    $('nick_name_lov').commit();
+                }
+            }
+            function _lovok(){
+                var record = $('SYS_LOV_RESULT_DS').getCurrentRecord();
+                $('nick_name_lov').commit(record);
+            }
+            function _lovquery(){
+                $('SYS_LOV_RESULT_DS').query();
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="SYS_LOV_QUERY_DS"/>
+            <a:dataSet id="SYS_LOV_RESULT_DS" autoQuery="true" model="demo.doc_article_lov" queryDataSet="SYS_LOV_QUERY_DS"/>
+        </a:dataSets>
+        <a:form className="lovForm" column="2" style="margin:7px;" title="查询条件">
+            <a:textField name="nick_name" bindTarget="SYS_LOV_QUERY_DS" prompt="作者"/>
+        </a:form>
+        <a:hBox>
+            <a:button click="_lovquery" style="margin-left:7px;" text="查询"/>
+            <a:button click="_lovok" style="margin-left:7px;" text="确定"/>
+        </a:hBox>
+        <a:grid bindTarget="SYS_LOV_RESULT_DS" height="320" navBar="true" style="margin:7px;" width="460">
+            <a:columns>
+                <a:column name="article_title" prompt="文章标题" width="150"/>
+                <a:column name="category_name" prompt="列表名称" width="150"/>
+                <a:column name="nick_name" prompt="作者" width="70"/>
+            </a:columns>
+            <a:events>
+                <a:event name="dblclick" handler="_onLovRowselect"/>
+                <a:event name="keydown" handler="_onLovKeyDown"/>
+            </a:events>
+        </a:grid>
+    </a:view>
+</a:screen>

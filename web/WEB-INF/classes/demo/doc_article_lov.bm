@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    $Author: andy  
+    $Date: 2011-11-30 上午10:23:25  
+    $Revision: 1.0  
+    $Purpose: 
+-->
+<bm:model xmlns:o="aurora.database.local.oracle" xmlns:bm="http://www.aurora-framework.org/schema/bm" baseTable="DOC_ARTICLE_V">
+    <bm:fields>
+        <bm:field name="article_title" databaseType="VARCHAR2" datatype="java.lang.String" forDisplay="true" forQuery="true" prompt="文章标题"/>
+        <bm:field name="article_id" databaseType="NUMBER" datatype="java.lang.Long" forQuery="true" prompt="文章编号" queryWidth="100"/>
+        <bm:field name="category_id" databaseType="NUMBER" datatype="java.lang.Long" prompt="列表编号" queryWidth="100"/>
+        <bm:field name="nick_name" databaseType="VARCHAR2" datatype="java.lang.String" displayWidth="70" forDisplay="true" forQuery="true" prompt="作者"/>
+    </bm:fields>
+    <bm:relations>
+        <bm:relation name="article" joinType="INNER" refModel="demo.doc_category">
+            <bm:reference foreignField="category_id" localField="category_id"/>
+        </bm:relation>
+    </bm:relations>
+    <bm:ref-fields>
+        <bm:ref-field name="category_name" displayWidth="150" forDisplay="true" prompt="列表名称" relationName="article" sourceField="category_name"/>
+    </bm:ref-fields>
+    <bm:primary-key>
+        <bm:pk-field name="article_id"/>
+    </bm:primary-key>
+    <bm:query-fields>
+        <bm:query-field field="article_title" queryOperator="like"/>
+        <bm:query-field field="category_id" queryOperator="="/>
+        <bm:query-field field="article_id" queryOperator="="/>
+        <bm:query-field field="nick_name" queryOperator="like"/>
+    </bm:query-fields>
+</bm:model>
