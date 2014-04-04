@@ -1,0 +1,12 @@
+<doc>
+<body>
+    
+    <p >
+        <t>图片实例</t>
+    </p>
+    <p>
+        <img src="Tulips.jpg"/>
+    </p>
+    <br/>
+</body>
+</doc>

@@ -1,0 +1,27 @@
+<doc>
+<body>
+    
+    <p >
+        <t>嵌入一段html</t>
+    </p>
+        <chunk type="html">
+    <![CDATA[
+            <html><body>
+<DIV style="WIDTH: 720px" id=m><P id=lg><IMG src="http://www.baidu.com/img/bdlogo.gif" width=270 height=129></P>
+<P id=nv><A href="http://news.baidu.com">新闻</A><B>网页</B><A href="http://tieba.baidu.com">贴吧</A><A href="http://zhidao.baidu.com">知道</A><A href="http://music.baidu.com">音乐</A><A href="http://image.baidu.com">图片</A><A href="http://v.baidu.com">视频</A><A href="http://map.baidu.com">地图</A><A href="http://baike.baidu.com">百科</A><A href="http://wenku.baidu.com">文库</A><A style="FONT-FAMILY: 宋体" href="http://www.baidu.com/more/">更多&gt;&gt;</A></P>
+<DIV id=s_fm>
+<FORM id=form1 onsubmit="javascript:F.call('ps/sug','pssubmit');" name=f action=http://www.baidu.com/s><INPUT style="WIDTH: 474px" id=kw1 name=wd maxLength=100 autocomplete="off"><INPUT name=rsv_spt value=1 type=hidden> <INPUT name=issp value=1 type=hidden><INPUT name=rsv_bp value=0 type=hidden><INPUT name=ie value=utf-8 type=hidden><INPUT name=tn value=baiduhome_pg type=hidden><SPAN class=btn_wr><INPUT id=su1 class=btn onmouseout="this.className='btn'" onmousedown="this.className='btn btn_h'" value=百度一下 type=submit></SPAN>
+<DIV style="DISPLAY: none" id=sd_1392011059216 class=s-ps-sug></DIV></FORM><SPAN id=mHolder1>
+<DIV id=mCon1><SPAN>输入法</SPAN></DIV></SPAN>
+<UL id=mMenu1>
+<LI><A href="javascript:;" name=ime_hw>手写</A>
+<LI><A href="javascript:;" name=ime_py>拼音</A></LI>
+<LI class=ln>
+<LI><A href="javascript:;" name=ime_cl>关闭</A></LI></UL></DIV>
+<DIV id=s_lm></DIV></DIV>
+</body></html>
+        ]]>
+    </chunk>
+    <br/>
+</body>
+</doc>

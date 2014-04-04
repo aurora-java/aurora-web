@@ -1,0 +1,19 @@
+<doc>
+    <header>
+    <p align="right">
+        <pbdr>
+            <bottom/>
+        </pbdr>
+        <t>上海国金融资租赁有限公司</t>
+        <ptab/>
+        <t>项目编号:xxxx</t>
+    </p>
+</header>
+<footer/>
+<body>
+    
+    <p>
+        <t fontSize="24">页眉页脚测试</t>
+    </p>
+</body>
+</doc>

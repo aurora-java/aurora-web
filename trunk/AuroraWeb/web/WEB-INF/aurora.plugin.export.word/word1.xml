@@ -1,0 +1,11 @@
+<doc>
+<body>
+    <p>
+        <t fontSize="24">Hello world</t>
+    </p>
+    <p />
+    <p>
+        <t fontSize="24" fontColor="ff0000" underline="single" bold="true" italic="true">Word !</t>
+    </p>
+</body>
+</doc>
