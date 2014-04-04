@@ -1,0 +1,17 @@
+<doc>
+<body>
+    <p align="center">
+        <t bold="true" fontSize="20" >公司:${company}</t>
+    </p>
+    <p align="center">
+        <t bold="true" fontSize="20">项目编号:${proj_code}</t>
+    </p>
+    <p/>
+    <p align="center">
+        <t bold="true" fontSize="20">日期:${sdt}</t>
+    </p>
+    <p align="center">
+        <t bold="true" fontSize="20">项目经理:${pro.pm}</t>
+    </p>
+</body>
+</doc>

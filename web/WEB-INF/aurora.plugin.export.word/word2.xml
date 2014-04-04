@@ -1,0 +1,140 @@
+<doc>
+<body>
+    <p></p><p></p>
+    <p>
+        <t fontSize="24">创建一个无边框的表格</t>
+    </p>
+<p></p>
+    <tbl border="false">
+        <tr>
+            <tc width="3.55">
+                <p>
+                    <t>合同/本合同</t>
+                </p>
+            </tc>
+            <tc width="11.98">
+                <p>
+                    <t>指本融资租赁合同及其所有附件，以及双方不时以书面形式对本合同所作的任何补充和变更；</t>
+                </p>
+            </tc>
+        </tr>
+        <tr>
+            <tc width="3.55">
+                <p>
+                    <t>附表</t>
+                </p>
+            </tc>
+            <tc width="11.98">
+                <p>
+                    <t>指出租人和承租人根据本合同不时以本合同附件一格式签署的租赁附表；</t>
+                </p>
+            </tc>
+        </tr>
+        <tr>
+            <tc width="3.55">
+                <p>
+                    <t>租赁物</t>
+                </p>
+            </tc>
+            <tc width="11.98">
+                <p>
+                    <t>也称租赁物件或转让合同项下的“资产”。是指本合同项下相应附表中描述的所有设备和设施及其组件、附属件、备件、软件和服务，及对该设备和设施做出的任何替代、更新和替换。</t>
+                </p>
+            </tc>
+        </tr>
+    </tbl>
+ <p></p><p></p><p></p>   
+    <p>
+        <t fontSize="24">创建一个有边框的表格</t>
+    </p>
+<p></p>
+    <tbl indLeft="1" border="true">
+    <tr>
+        <tc width="1.44">
+            <border type="bottom" color="000000" style="single"/>
+            <p  align="left">
+                <t>序号</t>
+            </p>
+        </tc>
+        <tc width="3.95">
+            <p align="left">
+                <t>项目</t>
+            </p>
+        </tc>
+        <tc width="9.06">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+    </tr>
+    <tr>
+        <tc width="1.44" vMerge="restart">
+            <p  align="center">
+                <t>1</t>
+            </p>
+        </tc>
+        <tc width="3.95">
+            <p align="left">
+                <t>出租人</t>
+            </p>
+        </tc>
+        <tc width="9.06">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+    </tr>
+    <tr>
+        <tc width="1.44" vMerge="continue">
+            <p  align="center">
+                <t>1</t>
+            </p>
+        </tc>
+        <tc width="3.95">
+            <p align="left">
+                <t>出租人</t>
+            </p>
+        </tc>
+        <tc width="9.06">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+    </tr>
+    <tr>
+        <tc width="1.44" vMerge="continue">
+            <p  align="center">
+                <t>1</t>
+            </p>
+        </tc>
+        <tc width="3.95">
+            <p align="left">
+                <t>出租人</t>
+            </p>
+        </tc>
+        <tc width="9.06">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+    </tr>
+    <tr>
+        <tc width="1.44" vMerge="continue">
+            <p  align="center">
+                <t>1</t>
+            </p>
+        </tc>
+        <tc width="3.95">
+            <p align="left">
+                <t>出租人</t>
+            </p>
+        </tc>
+        <tc width="9.06">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+    </tr>
+</tbl>
+</body>
+</doc>

@@ -1,0 +1,19 @@
+<doc>
+<header>
+        <p lineRule="exact" line="400" after="0" toc="false" align="right">
+            <pbdr>
+                <bottom space="1" sz="6" color="auto" value="single"/>
+            </pbdr>
+            <img type="relative" src="logo.png"/>
+            <ptab leader="none" alignment="right" relativeTo="margin"/>
+            <t italic="false" fontColor="000000" fontSize="24" fontFamily="宋体" bold="false">项目编号：PRJ131100112</t>
+        </p>
+    </header>
+<footer/>
+<body>
+    
+    <p>
+        <t fontSize="24">页眉页脚测试</t>
+    </p>
+</body>
+</doc>
