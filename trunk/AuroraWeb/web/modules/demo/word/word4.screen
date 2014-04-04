@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:w="aurora.plugin.export.word" trace="true" xmlns:p="uncertain.proc">
+    <a:init-procedure>
+        <w:word-export template="aurora.plugin.export.word/word4.xml" name="word4.docx">
+        </w:word-export>
+    </a:init-procedure>
+
+    <a:view>
+    </a:view>
+</a:screen>
