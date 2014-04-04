@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bm:model xmlns:bm="http://www.aurora-framework.org/schema/bm">
+    <bm:operations>
+    	<bm:operation name="query">
+            <bm:query-sql><![CDATA[
+            select '上海汉得信息技术股份有限公司' as company,'PRO00001' as proj_code, '张三' as pm,'李四' as mgr,'MAS' as dept,'2013-03-22' as sdt 
+             from dual
+             ]]></bm:query-sql>
+        </bm:operation>
+    </bm:operations>
+</bm:model>
