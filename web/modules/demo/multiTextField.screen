@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure/>
+    <a:view package="ui.template" template="empty">
+        <a:dataSets>
+            <a:dataSet id="ds" autoCreate="true">
+                <a:fields>
+                    <a:field name="article_title" autoComplete="true" autocompleteservice="demo.doc_article_lov" fuzzyFetch="true" prompt="自动模糊匹配——在尾部拼接%(autocomplete=true;fuzzyFetch=true;)">
+                        <a:mapping>
+                            <a:map from="article_id" to="article_id"/>
+                            <a:map from="article_title" to="article_title"/>
+                            <a:map from="category_name" to="category_name"/>
+                            <a:map from="category_id" to="category_id"/>
+                            <a:map from="nick_name" to="nick_name"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="category_name" autoComplete="true" autoCompleteField="article_title" autocompleteservice="demo.doc_article_lov" fetchRemote="false" prompt="自动指定匹配字段匹配;关闭获取记录功能(fetchRemote=false;autocomplete=true;autoCompleteField=article_title)">
+                        <a:mapping>
+                            <a:map from="article_id" to="article_id"/>
+                            <a:map from="article_title" to="article_title"/>
+                            <a:map from="category_name" to="category_name"/>
+                            <a:map from="category_id" to="category_id"/>
+                            <a:map from="nick_name" to="nick_name"/>
+                        </a:mapping>
+                    </a:field>
+                    <a:field name="category_id" autocompleteservice="demo.doc_article_lov" fetchSingle="true" prompt="获取记录有重复时弹出选择窗口(fetchSingle=true)">
+                        <a:mapping>
+                            <a:map from="article_id" to="article_id"/>
+                            <a:map from="article_title" to="article_title"/>
+                            <a:map from="category_name" to="category_name"/>
+                            <a:map from="category_id" to="category_id"/>
+                            <a:map from="nick_name" to="nick_name"/>
+                        </a:mapping>
+                    </a:field>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:form column="1" labelWidth="300" style="margin:10px;" title="MultiTextField">
+            <a:multiTextField name="article_title" bindTarget="ds" width="300"/>
+            <a:multiTextField name="category_name" bindTarget="ds" width="300"/>
+            <a:multiTextField name="category_id" bindTarget="ds" width="300"/>
+            <a:multiTextField name="article_id" bindTarget="ds" prompt="article_id" width="300"/>
+            <a:multiTextField name="nick_name" bindTarget="ds" prompt="nick_name" width="300"/>
+        </a:form>
+    </a:view>
+</a:screen>
