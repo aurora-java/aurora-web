@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<a:screen xmlns:a="http://www.aurora-framework.org/application" trace="true">
+    <a:init-procedure/>
+    <a:view package="ui.template" template="empty">
+        <script><![CDATA[
+        	function redDay(cell,date,text,currentmonth){
+        		var weekday = date.getDay(),month = date.getMonth()+1;
+        		if((weekday == 0|| weekday == 6) && month == currentmonth)
+        		return '<span href="#" style="color:red">'+text+'</span>'
+        	}
+        	function compareDate(start, end){
+                if(start > end){
+                    return false;
+                }
+                return true;
+            }
+            
+            function dateValidator(record, name, value){
+                if(name == 'start_date' || name == 'end_date'){
+                    var start_date = record.get('start_date');
+                    var end_date = record.get('end_date');
+                    if(typeof(end_date) != 'undefined' && !Ext.isEmpty(end_date)){
+                        if(!compareDate(start_date, end_date)){
+                            return '开始日期应小于截止日期';
+                        }
+                    }
+                    return true;
+                }
+            }
+            function beforeEndDate(cell,date,text,currentmonth){
+                var end_date = $('ds').getCurrentRecord().get('end_date');
+                if(end_date && !compareDate(date,end_date)){
+                    cell.disabled = true;
+                }
+                return text;
+            }
+            function afterStartDate(cell,date,text,currentmonth){
+                var start_date = $('ds').getCurrentRecord().get('start_date');
+                if(start_date && !compareDate(start_date,date)){
+                    cell.disabled = true;
+                }
+                return text;
+            }
+        ]]></script>
+        <a:dataSets>
+            <a:dataSet id="ds" autoCreate="true">
+                <a:fields>
+                    <a:field name="start_date" datatype="Date" validator="dateValidator"/>
+                    <a:field name="end_date" datatype="Date" validator="dateValidator"/>
+                </a:fields>
+            </a:dataSet>
+        </a:dataSets>
+        <a:form column="1" labelWidth="400" style="margin:10px;" title="DatePicker">
+            <a:datePicker name="start_date" bindTarget="ds" enableBesideDays="none" prompt="在当月不显示前后月的日期(enableBesideDays=none)"/>
+            <a:datePicker name="start_date" bindTarget="ds" enableBesideDays="pre" prompt="在当月只显示前月的日期(enableBesideDays=pre)"/>
+            <a:datePicker name="start_date" bindTarget="ds" enableBesideDays="next" prompt="在当月只显示前月的日期(enableBesideDays=next)"/>
+            <a:datePicker name="start_date" bindTarget="ds" enableMonthBtn="none" prompt="隐藏月份前后按钮(enableMonthBtn=none)"/>
+            <a:datePicker name="start_date" bindTarget="ds" enableMonthBtn="pre" prompt="隐藏月份向后按钮(enableMonthBtn=pre)"/>
+            <a:datePicker name="start_date" bindTarget="ds" enableMonthBtn="next" prompt="隐藏月份向前按钮(enableMonthBtn=next)"/>
+            <a:datePicker name="start_date" bindTarget="ds" enableYearBtn="none" prompt="隐藏年份前后按钮(enableYearBtn=none)"/>
+            <a:datePicker name="start_date" bindTarget="ds" enableYearBtn="pre" prompt="隐藏年份向后按钮(enableYearBtn=pre)"/>
+            <a:datePicker name="start_date" bindTarget="ds" enableYearBtn="next" prompt="隐藏年份向前按钮(enableYearBtn=next)"/>
+            <a:datePicker name="start_date" bindTarget="ds" dayRenderer="redDay" prompt="双休日标记为红色"/>
+            <a:datePicker name="start_date" bindTarget="ds" prompt="多窗口(viewSize=2)" viewSize="2"/>
+            <a:datePicker name="start_date" bindTarget="ds" format="yyyy/mm/dd" prompt="格式化(format=yyyy/mm/dd)"/>
+        </a:form>
+        <a:form column="1" labelWidth="400" style="margin:10px;" title="DatePicker之间关联">
+            <a:datePicker name="start_date" bindTarget="ds" prompt="起始日期"/>
+            <a:datePicker name="end_date" bindTarget="ds" prompt="截止日期"/>
+        </a:form>
+        <a:form column="1" labelWidth="400" style="margin:10px;" title="通过dayRenderer来实现上述功能">
+            <a:datePicker name="start_date" bindTarget="ds" dayRenderer="beforeEndDate" prompt="起始日期"/>
+            <a:datePicker name="end_date" bindTarget="ds" dayRenderer="afterStartDate" prompt="截止日期"/>
+        </a:form>
+        <a:form column="1" labelWidth="400" style="margin:10px;" title="DateTimePicker">
+            <a:dateTimePicker name="start_date" bindTarget="ds" hour="12" minute="30" prompt="设置初始时分秒(hour=12;minute=30;second=0)" second="0"/>
+        </a:form>
+    </a:view>
+</a:screen>
