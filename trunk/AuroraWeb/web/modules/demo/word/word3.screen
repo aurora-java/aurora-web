@@ -2,12 +2,14 @@
 <a:screen xmlns:a="http://www.aurora-framework.org/application" xmlns:w="aurora.plugin.export.word" trace="true" xmlns:p="uncertain.proc">
     <a:init-procedure>
         <a:model-query model="demo.word_company" rootPath="company"/>
+        <a:model-query model="demo.doc_tag" rootPath="tags"/>
         <w:word-export template="aurora.plugin.export.word/word3.xml" name="word3.docx">
             <w:replaces>
                 <w:replace name="company" path="/model/company/record/@company"/> <!--对应某个字段  ${company}-->
                 <w:replace name="proj_code" path="/model/company/record/@proj_code"/>
                 <w:replace name="sdt" path="/model/company/record/@sdt"/>
                 <w:replace name="pro" path="/model/company/record"/> <!--对应某个对象 ${pro.pm}-->
+                <w:replace name="tags" path="/model/tags"/> <!--对应某个对象 ${pro.pm}-->
             </w:replaces>
         </w:word-export>
     </a:init-procedure>

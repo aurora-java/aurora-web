@@ -40,6 +40,9 @@
             function demo10(){
                 openDemo("word10.screen")
             }
+            function demo11(){
+                openDemo("word11.screen")
+            }
         ]]>
         </script>
         <table border="1" width="800" cellpadding="3">
@@ -105,6 +108,12 @@
                 <td>水平翻转</td>
                 <td align="center">
                     <a:button text="Demo10" click="demo10"/>
+                </td>
+            </tr>
+            <tr height="30">
+                <td>导出成pdf格式</td>
+                <td align="center">
+                    <a:button text="Demo11" click="demo11"/>
                 </td>
             </tr>
         </table>
