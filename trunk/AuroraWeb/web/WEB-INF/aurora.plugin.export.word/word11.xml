@@ -1,0 +1,479 @@
+<doc watermark="上海汉得信息技术股份有限公司">
+<header>
+<!--        
+    <p lineRule="exact" line="400" after="0" align="right">
+        <pbdr>
+            <bottom space="1" sz="6" color="auto" value="single"/>
+        </pbdr>
+        <img type="relative" src="logo.png"/>
+        <ptab leader="none" alignment="right" relativeTo="margin"/>
+        <t italic="false" fontColor="000000" fontSize="24" fontFamily="宋体" bold="false">项目编号：PRJ131100112</t>
+    </p>
+-->
+    <p align="right">
+        <pbdr>
+            <bottom space="1" sz="6" color="auto" value="single"/>
+        </pbdr>
+        <t>上海xxx融资租赁有限公司</t>
+        <ptab/>
+        <t>项目编号:PRJ20140101001</t>
+    </p>
+    
+</header>
+<footer/>
+<body>
+
+    <toc/>
+     <p toc="true">
+       <t bold="true" fontSize="22">常规字体演示</t>
+    </p>
+    <p align="center">
+        <t fontSize="22" >居中字体</t>
+    </p>
+    <p>
+        <t bold="true" fontSize="22">加粗字体</t>
+    </p>
+    <p/>
+    <p >
+        <t fontFamily="SimHei" bold="true" fontSize="36">黑字体</t>
+    </p>
+    <p >
+        <t fontFamily="Microsoft YaHei" bold="true" fontSize="36">微软雅黑字体</t>
+    </p>
+    <p>
+        <t fontColor="ff0000"  fontSize="22">红色字体</t>
+    </p>
+    <p>
+        <t underline="single" fontSize="22">single下划线</t>
+    </p>
+    <p>
+        <t underline="double" fontSize="22">double下划线</t>
+    </p>
+    <p>
+        <t underline="dotted" fontSize="22">dotted下划线</t>
+    </p>
+    <p >
+        <t italic="true" fontSize="22">斜线格式</t>
+    </p>
+    <br/>
+    <p numId="1" ilvl="0" toc="true">
+       <t bold="true">定义和解释</t>
+    </p>
+        <p numId="1" ilvl="1">
+        <t>本合同所引用术语的定义和解释如下，如合同中无特别约定或合同双方未另行书面约定，本合同中出现的如下术语均按本条作特定解释：</t>
+    </p>
+    
+    <p numId="1" ilvl="1">
+        <t>本合同中凡提及条和附件时，是指本合同的条和附件；凡提及本合同或任何其它文件时应解释为提及不时予以修订或补充或更新的上述文件。</t>
+    </p>
+    <p numId="1" ilvl="1">
+        <t>本合同中凡提及条和附件时，是指本合同的条和附件；凡提及本合同或任何其它文件时应解释为提及不时予以修订或补充或更新的上述文件。</t>
+    </p>
+    <p numId="1" ilvl="2">
+       <t>附表列明租赁物件明细、租金、租金支付日及其他适用于该附表列明租赁物件之租赁交易的特定条款。每一附表经由双方签署构成双方之间就该附表列明的租赁物件的一项租赁交易。</t>
+    </p>
+    <p numId="1" ilvl="2">
+       <t>附表列明租赁物件明细、租金、租金支付日及其他适用于该附表列明租赁物件之租赁交易的特定条款。每一附表经由双方签署构成双方之间就该附表列明的租赁物件的一项租赁交易。</t>
+    </p>
+    <p numId="1" ilvl="3">
+        <t>这份报告是由解放军智库——军事科学院国防政策研究中心组织不同领域专家学者撰写的，这是解放军智库第二次发布中英文版的战略评估报告。</t>
+    </p>
+    <p numId="1" ilvl="3">
+        <t>这份报告是由解放军智库——军事科学院国防政策研究中心组织不同领域专家学者撰写的，这是解放军智库第二次发布中英文版的战略评估报告。</t>
+    </p>
+    <p numId="1" ilvl="3">
+        <t>这份报告是由解放军智库——军事科学院国防政策研究中心组织不同领域专家学者撰写的，这是解放军智库第二次发布中英文版的战略评估报告。</t>
+    </p>
+    <p numId="1" ilvl="4">
+        <t>这份报告是由解放军智库——军事科学院国防政策研究中心组织不同领域专家学者撰写的，这是解放军智库第二次发布中英文版的战略评估报告。</t>
+    </p>    
+    <p numId="1" ilvl="4">
+        <t>这份报告是由解放军智库——军事科学院国防政策研究中心组织不同领域专家学者撰写的，这是解放军智库第二次发布中英文版的战略评估报告。</t>
+    </p>    
+    <p numId="1" ilvl="4">
+        <t>这份报告是由解放军智库——军事科学院国防政策研究中心组织不同领域专家学者撰写的，这是解放军智库第二次发布中英文版的战略评估报告。</t>
+    </p>    
+    <p numId="1" ilvl="4">
+        <t>这份报告是由解放军智库——军事科学院国防政策研究中心组织不同领域专家学者撰写的，这是解放军智库第二次发布中英文版的战略评估报告。</t>
+    </p>
+    <p numId="1" ilvl="5">
+        <t>这份报告是由解放军智库——军事科学院国防政策研究中心组织不同领域专家学者撰写的，这是解放军智库第二次发布中英文版的战略评估报告。</t>
+    </p>
+    <p numId="1" ilvl="5">
+        <t>这份报告是由解放军智库——军事科学院国防政策研究中心组织不同领域专家学者撰写的，这是解放军智库第二次发布中英文版的战略评估报告。</t>
+    </p>
+    <p numId="1" ilvl="5">
+        <t>这份报告是由解放军智库——军事科学院国防政策研究中心组织不同领域专家学者撰写的，这是解放军智库第二次发布中英文版的战略评估报告。</t>
+    </p>
+    <p numId="1" ilvl="0" toc="true">
+        <t bold="true">时间重要性</t>
+    </p>
+    <p indFirstLine="1">
+        <t>就本合同及其项下任何租赁交易而言，时间和严格按时履行对双方而言均极为重要。</t>
+    </p>
+    <p align="center" orientation="portrait">
+        <t ></t>
+    </p>
+    <p align="center">
+        <t bold="true" fontSize="28">横向页面测试</t>
+    </p>
+    <p align="center">
+        <t bold="true" fontSize="28">横向页面测试</t>
+    </p>
+    <p align="center" orientation="landscape"></p>
+    <p toc="true">
+       <t bold="true" fontSize="28">图片测试</t>
+    </p>
+    <p></p>
+    <p>
+       <t >引入图片moon.jpg</t>
+    </p>
+    <p>
+        <img src="moon.jpg"/>
+    </p>
+    <br/>
+    <p toc="true">
+       <t bold="true" fontSize="28">表格演示</t>
+    </p>
+    <p></p>
+    <p>
+       <t>自定义表格边框</t>
+    </p>
+    <p></p>
+    <tbl border="false" align="center">
+      <tr>
+        <tc width="4.14">
+          <p>
+            <t>项目负责人 </t>
+          </p>
+        </tc>
+        <tc width="4.86">
+          <border type="bottom"/>
+          <border type="left"/>
+          <border type="right"/>
+          <border type="top"/>
+          <p>
+            <t>张三</t>
+          </p>
+        </tc>
+      </tr>
+      <tr>
+        <tc width="4.14">
+          <p>
+            <t>部门</t>
+          </p>
+        </tc>
+        <tc width="4.86">
+          <border type="bottom"/>
+          <p>
+            <t>MAS</t>
+          </p>
+        </tc>
+      </tr>
+      <tr>
+        <tc width="4.14">
+          <p>
+            <t>部门负责人</t>
+          </p>
+        </tc>
+        <tc width="4.86">
+          <p>
+            <t>周凡</t>
+          </p>
+        </tc>
+      </tr>
+    </tbl>
+    <p></p>
+    <p>
+       <t bold="true">横向跨列表格</t>
+    </p>
+    <tbl >
+        <tr>
+            <tc width="2">
+                <p  align="center">
+                    <t>序号</t>
+                </p>
+            </tc>
+            <tc width="12" span="6">
+                <p  align="center">
+                    <t>租金付款日</t>
+                </p>
+            </tc>
+            <tc width="3">
+                <p  align="center">
+                    <t>租金金额</t>
+                </p>
+            </tc>
+        </tr>
+        <tr>
+            <tc width="2">
+                <p align="center">
+                    <t>起租日</t>
+                </p>
+            </tc>
+            <tc width="2">
+                <p align="center">
+                    <t>2013</t>
+                </p>
+            </tc>
+            <tc width="2">
+                <p align="center">
+                    <t>年</t>
+                </p>
+            </tc>
+            <tc width="2">
+                <p align="center">
+                    <t></t>
+                </p>
+            </tc>
+            <tc width="2">
+                <p  align="center">
+                    <t>月</t>
+                </p>
+            </tc>
+            <tc width="2">
+                <p  align="center">
+                    <t></t>
+                </p>
+            </tc>
+            <tc width="2">
+                <p  align="center">
+                    <t>日</t>
+                </p>
+            </tc>
+            <tc width="3">
+                <p  align="center">
+                    <t></t>
+                </p>
+            </tc>
+        </tr>
+    </tbl>
+    <p></p>
+    <p>
+       <t  bold="true">纵向跨行表格</t>
+    </p>
+    <tbl>
+        <tr>
+            <tc width="3" vMerge="restart">
+                <p>
+                    <t>附件列表</t>
+                </p>
+            </tc>
+            <tc width="7">
+                <p>
+                    <t>营业执照</t>
+                </p>
+            </tc>
+        </tr>
+        <tr>
+            <tc width="3"  vMerge="continue">
+                <p>
+                    <t>附件列表</t>
+                </p>
+            </tc>
+            <tc width="7">
+                <p>
+                    <t>组织机构代码证</t>
+                </p>
+            </tc>
+        </tr>
+        <tr>
+            <tc width="3"  vMerge="continue">
+                <p>
+                    <t>附件列表</t>
+                </p>
+            </tc>
+            <tc width="7">
+                <p>
+                    <t>法人身份证</t>
+                </p>
+            </tc>
+        </tr>
+    </tbl>
+    
+    <p/><p/>
+    <p>
+       <t  bold="true">复杂表格</t>
+    </p>
+    <tbl border="true">
+    <tr>
+        <tc width="1.44">
+            <border type="bottom" color="000000" style="single"/>
+            <p  align="center">
+                <t>序号</t>
+            </p>
+        </tc>
+        <tc width="3.95">
+            <p align="center">
+                <t>项目</t>
+            </p>
+        </tc>
+        <tc width="9.2" span="4">
+            <p align="center">
+                <t>季度</t>
+            </p>
+        </tc>
+    </tr>
+    <tr>
+        <tc width="1.44" vMerge="restart">
+            <p  align="center">
+                <t>1</t>
+            </p>
+        </tc>
+        <tc width="3.95">
+            <p align="left">
+                <t>项目A</t>
+            </p>
+        </tc>
+        <tc width="2.3">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+        <tc width="2.3">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+        <tc width="2.3">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+        <tc width="2.3">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+    </tr>
+    <tr>
+        <tc width="1.44" vMerge="continue">
+            <p  align="center">
+                <t>1</t>
+            </p>
+        </tc>
+        <tc width="3.95">
+            <p align="left">
+                <t>项目B</t>
+            </p>
+        </tc>
+        <tc width="2.3">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+        <tc width="2.3">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+        <tc width="2.3">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+        <tc width="2.3">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+    </tr>
+    <tr>
+        <tc width="1.44" vMerge="continue">
+            <p  align="center">
+                <t>1</t>
+            </p>
+        </tc>
+        <tc width="3.95">
+            <p align="left">
+                <t>项目C</t>
+            </p>
+        </tc>
+        <tc width="2.3">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+        <tc width="2.3">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+        <tc width="2.3">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+        <tc width="2.3">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+    </tr>
+    <tr>
+        <tc width="1.44" vMerge="restart">
+            <p  align="center">
+                <t>2</t>
+            </p>
+        </tc>
+        <tc width="3.95">
+            <p align="left">
+                <t>项目D</t>
+            </p>
+        </tc>
+        <tc width="2.3">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+        <tc width="2.3">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+        <tc width="2.3">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+        <tc width="2.3">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+    </tr>
+    <tr>
+        <tc width="1.44" vMerge="continue">
+            <p  align="center">
+                <t>2</t>
+            </p>
+        </tc>
+        <tc width="3.95">
+            <p align="left">
+                <t>项目E</t>
+            </p>
+        </tc>
+        <tc width="2.3">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+        <tc width="2.3">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+        <tc width="2.3">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+        <tc width="2.3">
+            <p align="left">
+                <t></t>
+            </p>
+        </tc>
+    </tr>
+</tbl>
+</body>
+</doc>

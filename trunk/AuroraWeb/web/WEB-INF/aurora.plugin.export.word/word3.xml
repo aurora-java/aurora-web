@@ -13,5 +13,36 @@
     <p align="center">
         <t bold="true" fontSize="20">项目经理:${pro.pm}</t>
     </p>
+    <p></p>
+    
+    <tbl indLeft="1" border="true">
+    <tr>
+        <tc width="1.44">
+            <border type="bottom" color="000000" style="single"/>
+            <p  align="left">
+                <t>tag_id</t>
+            </p>
+        </tc>
+        <tc width="3.95">
+            <p align="left">
+                <t>tag_name</t>
+            </p>
+        </tc>
+    </tr>
+        <#list tags.getChilds() as tag>
+    <tr>
+        <tc width="1.44">
+            <p  align="center">
+                <t>${tag.tag_id}</t>
+            </p>
+        </tc>
+        <tc width="3.95">
+            <p align="left">
+                <t>${tag.tag_name!}</t>
+            </p>
+        </tc>
+    </tr>
+    </#list>
+</tbl>
 </body>
 </doc>
